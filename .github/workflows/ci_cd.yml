@@ -42,8 +42,7 @@ jobs:
         uses: expo/expo-github-action@v8
         with:
           eas-version: latest
-          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
-          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+          token: ${{ secrets.EXPO_CLI_TOKEN }}
 
       - name: 📦 Install dependencies
         run: yarn
