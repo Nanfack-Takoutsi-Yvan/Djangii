@@ -1,0 +1,28 @@
+name: Expo CI CD
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+    branches:
+      - main
+jobs:
+  test:
+    name: Test App
+    runs-on: macos-latest
+    steps:
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v3
+
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: yarn
+
+      - name: 📦 Install dependencies
+        run: yarn
+
+      - name: 🧪 Test App
+        run: yarn test
