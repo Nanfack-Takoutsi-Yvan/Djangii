@@ -24,8 +24,8 @@ jobs:
   #     - name: 🧪 Test App
   #       run: yarn test
 
-  depoy:
-    needs: test
+  deploy:
+    # needs: test
     name: Deploy App
     runs-on: macos-latest
     steps:
