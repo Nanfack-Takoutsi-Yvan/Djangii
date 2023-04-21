@@ -16,13 +16,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yvanov.djangii"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.yvanov.djangii"
     },
     "web": {
       "bundler": "metro",
@@ -30,7 +32,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "02ad2cba-ed0e-4c7a-a165-8f0822a0de04"
+        "projectId": "e669eb09-c3e2-4528-bd98-a18541e57214"
       }
     },
     "owner": "yvanov",
@@ -38,7 +40,7 @@
       "policy": "sdkVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/02ad2cba-ed0e-4c7a-a165-8f0822a0de04"
+      "url": "https://u.expo.dev/e669eb09-c3e2-4528-bd98-a18541e57214"
     }
   }
 }
