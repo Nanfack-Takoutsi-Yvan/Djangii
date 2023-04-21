@@ -1,14 +1,14 @@
 {
   "expo": {
     "name": "Djangii",
-    "slug": "Djangii",
+    "slug": "djangii",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/djangii_splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -27,6 +27,12 @@
     "web": {
       "bundler": "metro",
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "02ad2cba-ed0e-4c7a-a165-8f0822a0de04"
+      }
+    },
+    "owner": "yvanov"
   }
 }
