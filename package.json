@@ -59,7 +59,7 @@
   },
   "private": true,
   "lint-staged": {
-    "app/**/*.{jsx,tsx}": "eslint --cache --fix",
-    "components/**/*.{jsx,tsx}": "eslint --cache --fix"
+    "app/**/*.{jsx,tsx}": "eslint --fix",
+    "components/**/*.{jsx,tsx}": "eslint --fix"
   }
 }
