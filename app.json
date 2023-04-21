@@ -33,6 +33,12 @@
         "projectId": "02ad2cba-ed0e-4c7a-a165-8f0822a0de04"
       }
     },
-    "owner": "yvanov"
+    "owner": "yvanov",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/02ad2cba-ed0e-4c7a-a165-8f0822a0de04"
+    }
   }
 }
