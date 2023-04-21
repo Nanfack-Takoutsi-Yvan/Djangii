@@ -44,11 +44,11 @@ jobs:
           eas-version: latest
           expo-version: latest
           token: ${{ secrets.EXPO_CLI_TOKEN }}
-          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
-          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+          username: ${{ secrets.EXPO_CLI_USERNAME }}
+          password: ${{ secrets.EXPO_CLI_PASSWORD }}
 
       - name: 📦 Install dependencies
         run: yarn
 
       - name: 🚀 Publish expo app
-        run: expo publish
+        run: eas update --auto
