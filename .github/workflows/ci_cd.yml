@@ -53,4 +53,4 @@ jobs:
           git config --global user.email "dev@yvannanfack.com"
 
       - name: 🚀 Publish expo app
-        run: eas update --auto --non-interactive
+        run: expo publish
