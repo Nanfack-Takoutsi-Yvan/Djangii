@@ -2,12 +2,17 @@ import { StyleSheet } from "react-native"
 
 import { Text, View } from "@components/Themed"
 import EditScreenInfo from "@components/EditScreenInfo"
+import { useContext } from "react"
+import AppStateContext from "@services/context/context"
 
 export default function TabOneScreen() {
+  const { locale } = useContext(AppStateContext)
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Hi! I'm Yvan Nanfack</Text>
       <Text style={styles.title}>Tab One</Text>
+      <Text style={styles.title}>{locale.t("message")}</Text>
       <View
         style={styles.separator}
         lightColor="#eee"
