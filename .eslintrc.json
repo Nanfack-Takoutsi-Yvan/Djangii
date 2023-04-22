@@ -27,7 +27,7 @@
       "error",
       {
         "singleQuote": false,
-        "trailingComma": "all",
+        "trailingComma": "none",
         "arrowParens": "avoid",
         "endOfLine": "auto",
         "semi": false

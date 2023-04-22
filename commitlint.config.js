@@ -1,9 +1,11 @@
+/* eslint-disable import/extensions */
+/* eslint-disable @typescript-eslint/no-var-requires */
 // Learn more: https://blog.tericcabrel.com/apply-conventional-commit-style-on-your-project-with-commitlint/
 
-const conventionalCommit = require("./conventionalCommit.json");
+const conventionalCommit = require("./conventionalCommit.json")
 
-const typesEnum = Object.keys(conventionalCommit.types);
-const scopesEnum = Object.keys(conventionalCommit.scopes);
+const typesEnum = Object.keys(conventionalCommit.types)
+const scopesEnum = Object.keys(conventionalCommit.scopes)
 
 module.exports = {
   extends: ["@commitlint/config-conventional"],
@@ -13,6 +15,6 @@ module.exports = {
     "scope-enum": [2, "always", scopesEnum],
     "subject-empty": [2, "never"],
     "subject-case": [2, "always", ["lower-case"]],
-    "header-max-length": [2, "always", 72],
-  },
-};
+    "header-max-length": [2, "always", 72]
+  }
+}

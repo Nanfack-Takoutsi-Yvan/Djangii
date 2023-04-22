@@ -20,7 +20,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint
       }}
     >
       <Tabs.Screen
@@ -41,14 +41,14 @@ export default function TabLayout() {
                 )}
               </Pressable>
             </Link>
-          ),
+          )
         }}
       />
       <Tabs.Screen
         name="two"
         options={{
           title: "Tab Two",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />
         }}
       />
     </Tabs>
