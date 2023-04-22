@@ -32,15 +32,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "e669eb09-c3e2-4528-bd98-a18541e57214"
+        "projectId": "4ee3105a-0cf0-419a-a0d8-1a0e274b0762"
       }
     },
-    "owner": "yvanov",
-    "runtimeVersion": {
-      "policy": "sdkVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/e669eb09-c3e2-4528-bd98-a18541e57214"
-    }
+    "owner": "yvanov"
   }
 }
