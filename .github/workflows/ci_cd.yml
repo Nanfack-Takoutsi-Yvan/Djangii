@@ -41,11 +41,8 @@ jobs:
       - name: 🏗 Setup EAS
         uses: expo/expo-github-action@v5
         with:
-          eas-version: latest
           expo-version: latest
           token: ${{ secrets.EXPO_CLI_TOKEN }}
-          username: ${{ secrets.EXPO_CLI_USERNAME }}
-          password: ${{ secrets.EXPO_CLI_PASSWORD }}
 
       - name: 📦 Install dependencies
         run: yarn
