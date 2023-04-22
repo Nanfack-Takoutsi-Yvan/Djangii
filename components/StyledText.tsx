@@ -1,5 +1,8 @@
-import { Text, TextProps } from './Themed';
+/* eslint-disable import/prefer-default-export */
+/* eslint-disable react/function-component-definition */
+import { FC } from "react"
+import { Text, TextProps } from "./Themed"
 
-export function MonoText(props: TextProps) {
-  return <Text {...props} style={[props.style, { fontFamily: 'SpaceMono' }]} />;
-}
+export const MonoText: FC<TextProps> = ({ style, ...props }) => (
+  <Text {...props} style={[style, { fontFamily: "SpaceMono" }]} />
+)

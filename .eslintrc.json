@@ -3,10 +3,7 @@
     "airbnb",
     "airbnb/hooks",
     "plugin:@typescript-eslint/recommended",
-    "prettier",
-    "prettier/react",
-    "prettier/@typescript-eslint",
-    "plugin:prettier/recommended"
+    "prettier"
   ],
   "plugins": ["@typescript-eslint", "react", "prettier"],
   "parser": "@typescript-eslint/parser",
@@ -14,7 +11,7 @@
     "ecmaFeatures": {
       "jsx": true
     },
-    "ecmaVersion": 2018,
+    "ecmaVersion": "latest",
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
@@ -29,18 +26,23 @@
     "prettier/prettier": [
       "error",
       {
-        "singleQuote": true,
-        "trailingComma": "all",
+        "singleQuote": false,
+        "trailingComma": "none",
         "arrowParens": "avoid",
-        "endOfLine": "auto"
+        "endOfLine": "auto",
+        "semi": false
       }
     ],
-    "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["error"],
     "import/extensions": ["error", "never"],
     "react/prop-types": 0,
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["error"],
-    "ignorePatterns": ["temp.js", "**/vendor/*.js", "node_modules/*", "dist/*","expo/*"]
+    "react/react-in-jsx-scope": "off",
+    "react/no-unescaped-entities": "off",
+    "no-use-before-define": "off",
+    "react/jsx-props-no-spreading": "off",
+    "global-require": "off",
+    "react/no-unstable-nested-components": "off",
+    "camelcase": "off"
   }
 }
