@@ -26,6 +26,7 @@ module.exports = function (api) {
             "@hooks": "./hooks",
             "@theme": "./theme",
             "@assets": "./assets",
+            "@locales": "./locales",
             "@services": "./services",
             "@constants": "./constants",
             "@components": "./components"
