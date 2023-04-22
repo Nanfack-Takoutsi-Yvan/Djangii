@@ -39,7 +39,7 @@ jobs:
           cache: yarn
 
       - name: 🏗 Setup EAS
-        uses: expo/expo-github-action@v8
+        uses: expo/expo-github-action@v5
         with:
           eas-version: latest
           expo-version: latest
@@ -51,4 +51,4 @@ jobs:
         run: yarn
 
       - name: 🚀 Publish expo app
-        run: eas update --auto
+        run: expo publish
