@@ -62,7 +62,7 @@
   },
   "private": true,
   "lint-staged": {
-    "app/**/*.{jsx,tsx}": "eslint",
-    "components/**/*.{jsx,tsx}": "eslint"
+    "app/**/*.{jsx,tsx}": ["prettier --write", "eslint --fix"],
+    "components/**/*.{jsx,tsx}": ["prettier --write", "eslint --fix"]
   }
 }
