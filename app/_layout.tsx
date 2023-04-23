@@ -32,7 +32,7 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(tabs)"
+  initialRouteName: "onboarding"
 }
 
 export default function RootLayout() {
@@ -71,11 +71,7 @@ function RootLayoutNav() {
     <AppStateContext.Provider value={{ locale: i18n, setLocale }}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack>
-          {/* <Stack.Screen
-            name="Onboarding"
-            component={OnboardingScreen}
-            options={{ headerShown: false }}
-          /> */}
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         </Stack>

@@ -2,8 +2,9 @@
 module.exports = function (api) {
   api.cache(true)
   return {
-    presets: ["module:metro-react-native-babel-preset"],
+    presets: ["babel-preset-expo", "module:metro-react-native-babel-preset"],
     plugins: [
+      "react-native-reanimated/plugin",
       require.resolve("expo-router/babel"),
       [
         "module-resolver",
@@ -27,6 +28,7 @@ module.exports = function (api) {
             "@theme": "./theme",
             "@assets": "./assets",
             "@locales": "./locales",
+            "@typings": "./typings",
             "@services": "./services",
             "@constants": "./constants",
             "@components": "./components"
