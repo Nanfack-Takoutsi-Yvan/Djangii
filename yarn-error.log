@@ -1816,7 +1816,7 @@ Lockfile:
     dependencies:
       "@jest/console" "^29.5.0"
       "@jest/reporters" "^29.5.0"
-      "@jest/test-result" "^29.5.0"
+      "@/test-result" "^29.5.0"
       "@jest/transform" "^29.5.0"
       "@jest/types" "^29.5.0"
       "@types/node" "*"
