@@ -1,0 +1,230 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  accessibilityIgnoresInvertColors={true}
+  style={
+    {
+      "flex": 1,
+    }
+  }
+>
+  <Image
+    source={1}
+    style={
+      [
+        {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        {
+          "height": undefined,
+          "width": undefined,
+        },
+        undefined,
+      ]
+    }
+  />
+  <RNCSafeAreaView
+    edges={
+      [
+        "bottom",
+        "left",
+        "right",
+        "top",
+      ]
+    }
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#fff",
+          },
+          {
+            "backgroundColor": "transparent",
+            "flex": 4,
+            "marginTop": 133.4,
+            "paddingHorizontal": 30,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#000",
+            },
+            [
+              {
+                "color": "white",
+                "fontFamily": "SoraBold",
+                "fontSize": 45,
+                "width": "89%",
+              },
+            ],
+          ]
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#000",
+              },
+              {
+                "color": "white",
+              },
+            ]
+          }
+        >
+          onboarding.title.fistPart
+        </Text>
+        <Text
+          style={
+            [
+              {
+                "color": "#000",
+              },
+              {
+                "color": "#90F800",
+              },
+            ]
+          }
+        >
+           
+          onboarding.title.emphasis
+        </Text>
+        <Text
+          style={
+            [
+              {
+                "color": "#000",
+              },
+              {
+                "color": "white",
+              },
+            ]
+          }
+        >
+          ,
+        </Text>
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000",
+            },
+            {
+              "color": "white",
+              "fontFamily": "SoraBold",
+              "fontSize": 45,
+              "width": "89%",
+            },
+          ]
+        }
+      >
+        onboarding.title.lastPart
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000",
+            },
+            [
+              {
+                "color": "white",
+                "fontFamily": "SoraMedium",
+                "fontSize": 30,
+                "marginTop": 16,
+              },
+            ],
+          ]
+        }
+      >
+        onboarding.subtitle
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#fff",
+          },
+          {
+            "alignItems": "center",
+            "backgroundColor": "transparent",
+            "flex": 1,
+            "justifyContent": "center",
+          },
+        ]
+      }
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "#8483839C",
+            "borderRadius": 20,
+            "height": 50,
+            "justifyContent": "center",
+            "marginVertical": 10,
+            "opacity": 1,
+            "paddingHorizontal": 56,
+          }
+        }
+      >
+        <Text
+          style={
+            {
+              "color": "#fff",
+              "fontFamily": "SoraSemibold",
+              "fontSize": 26.250000000000004,
+            }
+          }
+        >
+          onboarding.button
+        </Text>
+      </View>
+    </View>
+  </RNCSafeAreaView>
+</View>
+`;

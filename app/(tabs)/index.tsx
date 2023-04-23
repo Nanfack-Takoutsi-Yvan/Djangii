@@ -10,7 +10,9 @@ export default function TabOneScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Hi! I'm Yvan Nanfack</Text>
+      <Text style={[styles.title, { fontFamily: "SoraBold" }]}>
+        Hi! I'm Yvan Nanfack
+      </Text>
       <Text style={styles.title}>Tab One</Text>
       <Text style={styles.title}>{locale.t("message")}</Text>
       <View

@@ -1,3 +1,12 @@
 {
-  "message": "Hello, world!"
+  "message": "Hello, world!",
+  "onboarding": {
+    "title": {
+      "fistPart": "With",
+      "emphasis": "Djangii",
+      "lastPart": "Your Community is bigger than you think..."
+    },
+    "subtitle": "Keep your community closer as it grows!",
+    "button": "Lets'go"
+  }
 }

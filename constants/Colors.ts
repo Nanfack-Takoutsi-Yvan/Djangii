@@ -6,6 +6,7 @@ export default {
     text: "#000",
     background: "#fff",
     tint: tintColorLight,
+    accent: "#90F800",
     tabIconDefault: "#ccc",
     tabIconSelected: tintColorLight
   },
@@ -13,6 +14,7 @@ export default {
     text: "#fff",
     background: "#000",
     tint: tintColorDark,
+    accent: "#90F800",
     tabIconDefault: "#ccc",
     tabIconSelected: tintColorDark
   }

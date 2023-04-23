@@ -1,3 +1,12 @@
 {
-  "message": "Bonjour le monde"
+  "message": "Bonjour le monde",
+  "onboarding": {
+    "title": {
+      "fistPart": "Avec",
+      "emphasis": "Djangii",
+      "lastPart": "votre communauté est plus grande que vous ne le pensez..."
+    },
+    "subtitle": "Rapprochez votre communauté au fur et à mesure qu'elle s'agrandit !",
+    "button": "Commençons"
+  }
 }
