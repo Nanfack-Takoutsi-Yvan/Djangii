@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/jsx-no-constructed-context-values */
 import FontAwesome from "@expo/vector-icons/FontAwesome"
 import {
@@ -6,12 +7,23 @@ import {
   ThemeProvider
 } from "@react-navigation/native"
 import AppStateContext from "@services/context/context"
-import { useFonts } from "expo-font"
 import { SplashScreen, Stack } from "expo-router"
 import { useEffect } from "react"
 import { useColorScheme } from "react-native"
 import * as localization from "expo-localization"
 import useLocales from "@hooks/useLocales"
+import {
+  useFonts,
+  Sora_100Thin,
+  Sora_200ExtraLight,
+  Sora_300Light,
+  Sora_400Regular,
+  Sora_500Medium,
+  Sora_600SemiBold,
+  Sora_700Bold,
+  Sora_800ExtraBold
+} from "@expo-google-fonts/sora"
+// import OnboardingScreen from "./screen/onboarding"
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -25,6 +37,14 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
+    sora: Sora_400Regular,
+    SoraBold: Sora_700Bold,
+    SoraThin: Sora_100Thin,
+    SoraLight: Sora_300Light,
+    SoraMedium: Sora_500Medium,
+    SoraSemibold: Sora_600SemiBold,
+    SoraExtraBold: Sora_800ExtraBold,
+    SoraExtraLight: Sora_200ExtraLight,
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font
   })
@@ -51,6 +71,11 @@ function RootLayoutNav() {
     <AppStateContext.Provider value={{ locale: i18n, setLocale }}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack>
+          {/* <Stack.Screen
+            name="Onboarding"
+            component={OnboardingScreen}
+            options={{ headerShown: false }}
+          /> */}
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         </Stack>

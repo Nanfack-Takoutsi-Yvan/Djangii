@@ -5,14 +5,12 @@ import EditScreenInfo from "@components/EditScreenInfo"
 import { useContext } from "react"
 import AppStateContext from "@services/context/context"
 
-export default function TabOneScreen() {
+export default function OnboardingScreen() {
   const { locale } = useContext(AppStateContext)
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, { fontFamily: "SoraBold" }]}>
-        Hi! I'm Yvan Nanfack
-      </Text>
+      <Text style={styles.title}>Hi! I'm Yvan Nanfack</Text>
       <Text style={styles.title}>Tab One</Text>
       <Text style={styles.title}>{locale.t("message")}</Text>
       <View
