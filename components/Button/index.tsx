@@ -7,30 +7,47 @@ import {
   ViewStyle,
   Dimensions
 } from "react-native"
+import { Icon, IconComponentProvider } from "@react-native-material/core"
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
 
 type ButtonProps = {
   text: string
   color?: string
   style?: StyleProp<ViewStyle>
+  iconRight?: string
+  iconSize?: number
+  iconColor?: string
 }
 
-export default function Button({ text, style, color }: ButtonProps) {
+export default function Button({
+  text,
+  style,
+  color,
+  iconRight,
+  iconSize,
+  iconColor
+}: ButtonProps) {
   return (
-    <TouchableOpacity
-      activeOpacity={0.8}
-      // eslint-disable-next-line no-console
-      onPress={() => console.log("pressed")}
-      style={[styles.btn, style]}
-    >
-      <Text
-        style={{
-          ...styles.buttonText,
-          color
-        }}
+    <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        // eslint-disable-next-line no-console
+        onPress={() => console.log("pressed")}
+        style={[styles.btn, style]}
       >
-        {text}
-      </Text>
-    </TouchableOpacity>
+        <Text
+          style={{
+            ...styles.buttonText,
+            color
+          }}
+        >
+          {text}
+        </Text>
+        {iconRight && (
+          <Icon name={iconRight} size={iconSize || 24} color={iconColor} />
+        )}
+      </TouchableOpacity>
+    </IconComponentProvider>
   )
 }
 
@@ -41,7 +58,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 56,
-    marginVertical: 10
+    marginVertical: 10,
+    flexDirection: "row",
+    columnGap: 12
   },
   buttonText: {
     fontSize: 0.035 * Dimensions.get("window").width,

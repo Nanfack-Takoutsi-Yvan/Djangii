@@ -47,6 +47,9 @@ export default function TabOneScreen() {
             text={locale.t("onboarding.button")}
             color="#fff"
             style={styles.button}
+            iconRight="chevron-right"
+            iconColor={Colors.light.accent}
+            iconSize={0.05 * width}
           />
         </View>
       </SafeAreaView>
