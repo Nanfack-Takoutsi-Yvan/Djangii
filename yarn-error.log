@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/yvanov/.nvm/versions/node/v16.19.1/bin/node /Users/yvanov/.nvm/versions/node/v16.19.1/bin/yarn add -D @types/react-test-renderer
+  /Users/yvanov/.nvm/versions/node/v16.19.1/bin/node /Users/yvanov/.nvm/versions/node/v16.19.1/bin/yarn add @testing-library/jest-native/extend-expect
 
 PATH: 
   /Users/yvanov/.rvm/gems/ruby-3.0.0/bin:/Users/yvanov/.rvm/gems/ruby-3.0.0@global/bin:/Users/yvanov/.rvm/rubies/ruby-3.0.0/bin:/Users/yvanov/.nvm/versions/node/v16.19.1/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/bin:/usr/local/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:~/.dotnet/tools:/Library/Apple/usr/bin:/Users/yvanov/.rvm/bin
@@ -14,8 +14,17 @@ Platform:
   darwin arm64
 
 Trace: 
-  Error: getaddrinfo ENOTFOUND registry.yarnpkg.com
-      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:109:26)
+  Error: https://registry.yarnpkg.com/@testing-library%2fjest-native/extend-expect: Request "https://registry.yarnpkg.com/@testing-library%2fjest-native/extend-expect" returned a 405
+      at Request.params.callback [as _callback] (/Users/yvanov/.nvm/versions/node/v16.19.1/lib/node_modules/yarn/lib/cli.js:66154:18)
+      at Request.self.callback (/Users/yvanov/.nvm/versions/node/v16.19.1/lib/node_modules/yarn/lib/cli.js:140890:22)
+      at Request.emit (node:events:513:28)
+      at Request.<anonymous> (/Users/yvanov/.nvm/versions/node/v16.19.1/lib/node_modules/yarn/lib/cli.js:141862:10)
+      at Request.emit (node:events:513:28)
+      at IncomingMessage.<anonymous> (/Users/yvanov/.nvm/versions/node/v16.19.1/lib/node_modules/yarn/lib/cli.js:141784:12)
+      at Object.onceWrapper (node:events:627:28)
+      at IncomingMessage.emit (node:events:525:35)
+      at endReadableNT (node:internal/streams/readable:1358:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
 
 npm manifest: 
   {
@@ -30,9 +39,6 @@ npm manifest:
       "prepare": "husky install",
       "lint": "eslint --fix",
       "prettier": "prettier --write"
-    },
-    "jest": {
-      "preset": "jest-expo"
     },
     "dependencies": {
       "@expo-google-fonts/sora": "^0.2.3",
@@ -54,6 +60,7 @@ npm manifest:
       "i18n-js": "^4.2.3",
       "react": "18.2.0",
       "react-dom": "18.2.0",
+      "react-i18next": "^12.2.0",
       "react-native": "0.71.6",
       "react-native-reanimated": "~2.14.4",
       "react-native-safe-area-context": "4.5.0",
@@ -65,7 +72,9 @@ npm manifest:
       "@commitlint/cli": "^17.6.1",
       "@commitlint/config-conventional": "^17.6.1",
       "@tsconfig/react-native": "^3.0.0",
+      "@types/jest": "^29.5.1",
       "@types/react": "~18.0.14",
+      "@types/react-test-renderer": "^18.0.0",
       "@typescript-eslint/eslint-plugin": "^5.43.0",
       "@typescript-eslint/parser": "^5.59.0",
       "babel-plugin-module-resolver": "^5.0.0",
@@ -1157,7 +1166,7 @@ Lockfile:
     resolved "https://registry.npmjs.org/@babel/regjsgen/-/regjsgen-0.8.0.tgz"
     integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
   
-  "@babel/runtime@^7.0.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.18.6", "@babel/runtime@^7.20.0", "@babel/runtime@^7.20.7", "@babel/runtime@^7.8.4":
+  "@babel/runtime@^7.0.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.10", "@babel/runtime@^7.18.6", "@babel/runtime@^7.20.0", "@babel/runtime@^7.20.6", "@babel/runtime@^7.20.7", "@babel/runtime@^7.8.4":
     version "7.21.0"
     resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.21.0.tgz"
     integrity sha512-xwII0//EObnq89Ji5AKYQaRYiW/nZ3llSv29d49IuxPhKbtJoLP+9QUUZ4nVragQVtaVGeZrpB+ZtG/Pdy/POw==
@@ -1816,7 +1825,7 @@ Lockfile:
     dependencies:
       "@jest/console" "^29.5.0"
       "@jest/reporters" "^29.5.0"
-      "@/test-result" "^29.5.0"
+      "@jest/test-result" "^29.5.0"
       "@jest/transform" "^29.5.0"
       "@jest/types" "^29.5.0"
       "@types/node" "*"
@@ -2497,6 +2506,14 @@ Lockfile:
     dependencies:
       "@types/istanbul-lib-report" "*"
   
+  "@types/jest@^29.5.1":
+    version "29.5.1"
+    resolved "https://registry.yarnpkg.com/@types/jest/-/jest-29.5.1.tgz#83c818aa9a87da27d6da85d3378e5a34d2f31a47"
+    integrity sha512-tEuVcHrpaixS36w7hpsfLBLpjtMRJUE09/MHXn923LOVojDwyC14cWcfc0rDs0VEfUyYmt/+iX1kxxp+gZMcaQ==
+    dependencies:
+      expect "^29.0.0"
+      pretty-format "^29.0.0"
+  
   "@types/jsdom@^20.0.0":
     version "20.0.1"
     resolved "https://registry.npmjs.org/@types/jsdom/-/jsdom-20.0.1.tgz"
@@ -2550,6 +2567,13 @@ Lockfile:
     version "0.71.6"
     resolved "https://registry.npmjs.org/@types/react-native/-/react-native-0.71.6.tgz"
     integrity sha512-eCqEZ+GhW9L9o6yVoPqCCAq8Sbd6liaKlh6WviD0X7O035NEe7VQ+q9KXYL+mhyZrLI5sbX7f3G973gG6fuiyQ==
+    dependencies:
+      "@types/react" "*"
+  
+  "@types/react-test-renderer@^18.0.0":
+    version "18.0.0"
+    resolved "https://registry.yarnpkg.com/@types/react-test-renderer/-/react-test-renderer-18.0.0.tgz#7b7f69ca98821ea5501b21ba24ea7b6139da2243"
+    integrity sha512-C7/5FBJ3g3sqUahguGi03O79b8afNeSD6T8/GU50oQrJCU0bVCCGQHaGKUbg2Ce8VQEEqTw8/HiS6lXHHdgkdQ==
     dependencies:
       "@types/react" "*"
   
@@ -4913,7 +4937,7 @@ Lockfile:
       snapdragon "^0.8.1"
       to-regex "^3.0.1"
   
-  expect@^29.5.0:
+  expect@^29.0.0, expect@^29.5.0:
     version "29.5.0"
     resolved "https://registry.npmjs.org/expect/-/expect-29.5.0.tgz"
     integrity sha512-yM7xqUrCO2JdpFo4XpM82t+PJBFybdqoQuJLDGeDX2ij8NZzqRHyu3Hp188/JX7SWqud+7t4MUdvcgGBICMHZg==
@@ -5814,6 +5838,13 @@ Lockfile:
     version "2.0.2"
     resolved "https://registry.npmjs.org/html-escaper/-/html-escaper-2.0.2.tgz"
     integrity sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==
+  
+  html-parse-stringify@^3.0.1:
+    version "3.0.1"
+    resolved "https://registry.yarnpkg.com/html-parse-stringify/-/html-parse-stringify-3.0.1.tgz#dfc1017347ce9f77c8141a507f233040c59c55d2"
+    integrity sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==
+    dependencies:
+      void-elements "3.1.0"
   
   http-errors@2.0.0:
     version "2.0.0"
@@ -8692,7 +8723,7 @@ Lockfile:
       ansi-styles "^4.0.0"
       react-is "^17.0.1"
   
-  pretty-format@^29.5.0:
+  pretty-format@^29.0.0, pretty-format@^29.5.0:
     version "29.5.0"
     resolved "https://registry.npmjs.org/pretty-format/-/pretty-format-29.5.0.tgz"
     integrity sha512-V2mGkI31qdttvTFX7Mt4efOqHXqJWMu4/r66Xh3Z3BwZaPfPJgp6/gbwoujRpPUtfEF6AUUWx3Jim3GCw5g/Qw==
@@ -8899,6 +8930,14 @@ Lockfile:
       prop-types "^15.7.2"
       react-fast-compare "^3.2.0"
       shallowequal "^1.1.0"
+  
+  react-i18next@^12.2.0:
+    version "12.2.0"
+    resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-12.2.0.tgz#010e3f6070b8d700442947233352ebe4b252d7a1"
+    integrity sha512-5XeVgSygaGfyFmDd2WcXvINRw2WEC1XviW1LXY/xLOEMzsCFRwKqfnHN+hUjla8ZipbVJR27GCMSuTr0BhBBBQ==
+    dependencies:
+      "@babel/runtime" "^7.20.6"
+      html-parse-stringify "^3.0.1"
   
   "react-is@^16.12.0 || ^17.0.0 || ^18.0.0", react-is@^18.0.0, react-is@^18.2.0:
     version "18.2.0"
@@ -10697,6 +10736,11 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.npmjs.org/vlq/-/vlq-1.0.1.tgz"
     integrity sha512-gQpnTgkubC6hQgdIcRdYGDSDc+SaujOdyesZQMv6JlfQee/9Mp0Qhnys6WxDWvQnL5WZdT7o2Ul187aSt0Rq+w==
+  
+  void-elements@3.1.0:
+    version "3.1.0"
+    resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-3.1.0.tgz#614f7fbf8d801f0bb5f0661f5b2f5785750e4f09"
+    integrity sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==
   
   w3c-xmlserializer@^4.0.0:
     version "4.0.0"
