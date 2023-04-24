@@ -2,7 +2,8 @@ import {
   StyleSheet,
   Dimensions,
   ImageBackground,
-  StatusBar
+  StatusBar,
+  Pressable
 } from "react-native"
 
 import AppStateContext from "@services/context/context"
@@ -17,7 +18,7 @@ const { width, height } = Dimensions.get("window")
 
 export default function TabOneScreen() {
   const { locale } = useContext(AppStateContext)
-  // const navigator = useRouter()
+  const router = useRouter()
 
   return (
     <ImageBackground
@@ -52,7 +53,7 @@ export default function TabOneScreen() {
             iconRight="chevron-right"
             iconColor={Colors.light.accent}
             iconSize={0.05 * width}
-            OnPress={() => null}
+            OnPress={() => router.push("login")}
           />
         </View>
       </SafeAreaView>
