@@ -11,11 +11,13 @@ import { useContext } from "react"
 import Colors from "@constants/Colors"
 import Button from "@components/Button"
 import { SafeAreaView } from "react-native-safe-area-context"
+import { useRouter } from "expo-router"
 
 const { width, height } = Dimensions.get("window")
 
 export default function TabOneScreen() {
   const { locale } = useContext(AppStateContext)
+  // const navigator = useRouter()
 
   return (
     <ImageBackground
@@ -50,6 +52,7 @@ export default function TabOneScreen() {
             iconRight="chevron-right"
             iconColor={Colors.light.accent}
             iconSize={0.05 * width}
+            OnPress={() => null}
           />
         </View>
       </SafeAreaView>

@@ -8,5 +8,16 @@
     },
     "subtitle": "Keep your community closer as it grows!",
     "button": "Lets'go"
+  },
+  "login": {
+    "connection": "Connection",
+    "labels": {
+      "userName": "Username",
+      "password": "Password"
+    },
+    "passwordForgotten": "Password forgotten ?",
+    "noAccount": "You don't have an account ?",
+    "signUp": "Sign up",
+    "connect": "Login"
   }
 }

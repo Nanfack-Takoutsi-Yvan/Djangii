@@ -13,10 +13,11 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
 type ButtonProps = {
   text: string
   color?: string
-  style?: StyleProp<ViewStyle>
-  iconRight?: string
   iconSize?: number
+  iconRight?: string
   iconColor?: string
+  style?: StyleProp<ViewStyle>
+  OnPress?: () => void
 }
 
 export default function Button({
@@ -25,14 +26,15 @@ export default function Button({
   color,
   iconRight,
   iconSize,
-  iconColor
+  iconColor,
+  OnPress
 }: ButtonProps) {
   return (
     <IconComponentProvider IconComponent={MaterialCommunityIcons}>
       <TouchableOpacity
         activeOpacity={0.8}
         // eslint-disable-next-line no-console
-        onPress={() => console.log("pressed")}
+        onPress={OnPress}
         style={[styles.btn, style]}
       >
         <Text

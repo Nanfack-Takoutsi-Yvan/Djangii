@@ -8,5 +8,16 @@
     },
     "subtitle": "Rapprochez votre communauté au fur et à mesure qu'elle s'agrandit !",
     "button": "Commençons"
+  },
+  "login": {
+    "connection": "Connexion",
+    "labels": {
+      "userName": "Nom d'utilisateur",
+      "password": "Mot de passe"
+    },
+    "passwordForgotten": "Mot de passe oublié ?",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "signUp": "Inscrivez vous",
+    "connect": "Connexion"
   }
 }
