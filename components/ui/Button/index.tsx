@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontFamily: "SoraSemibold",
-    fontSize: 0.035 * Dimensions.get("window").width
+    fontSize: 16
   },
   flexStyle: {
     columnGap: 12,

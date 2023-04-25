@@ -1,10 +1,9 @@
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable import/no-extraneous-dependencies */
 import {
   StyleSheet,
   Dimensions,
   ImageBackground,
-  StatusBar
+  StatusBar,
+  ScrollView
 } from "react-native"
 
 import { Formik } from "formik"
@@ -30,21 +29,15 @@ export default function TabOneScreen() {
       source={require("../../assets/images/screens/background.png")}
     >
       <StatusBar barStyle="light-content" />
-      <SafeAreaView style={styles.container}>
-        <View style={styles.titleContainer}>
-          <View
-            style={{
-              columnGap: 16,
-              alignItems: "center",
-              flexDirection: "row",
-              backgroundColor: "transparent"
-            }}
-          >
-            <Text style={styles.title}>{locale.t("login.connection")}</Text>
-            <Icon name="login" size={0.07 * width} color="#90F800" />
-          </View>
-        </View>
-        <View style={styles.formContainer}>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>{locale.t("login.connection")}</Text>
+        <Icon name="login" size={32} color="#90F800" />
+      </View>
+      <View style={styles.formContainer}>
+        <ScrollView
+          contentContainerStyle={styles.container}
+          showsVerticalScrollIndicator={false}
+        >
           <Formik
             initialValues={{ userName: "", password: "" }}
             onSubmit={values => console.log(values)}
@@ -54,7 +47,7 @@ export default function TabOneScreen() {
                 <Field
                   iconColor="#532181"
                   icon="account-outline"
-                  iconSize={0.07 * width}
+                  iconSize={32}
                   value={values.userName}
                   labelStyle={styles.labels}
                   inputStyle={styles.textInput}
@@ -63,13 +56,13 @@ export default function TabOneScreen() {
                   onChangeText={handleChange("userName")}
                   label={locale.t("login.labels.userName")}
                   placeholder={locale.t("login.labels.userName")}
-                  placeholderTextColor="rgba(0, 0, 0, 20)"
+                  placeholderTextColor="rgba(0, 0, 0, 0.20)"
                 />
 
                 <Field
                   iconColor="#532181"
                   secureTextEntry
-                  iconSize={0.07 * width}
+                  iconSize={32}
                   value={values.password}
                   labelStyle={styles.labels}
                   icon="form-textbox-password"
@@ -79,7 +72,7 @@ export default function TabOneScreen() {
                   onChangeText={handleChange("password")}
                   label={locale.t("login.labels.password")}
                   placeholder={locale.t("login.labels.password")}
-                  placeholderTextColor="rgba(0, 0, 0, 20)"
+                  placeholderTextColor="rgba(0, 0, 0, 0.20)"
                 />
 
                 <View style={styles.buttonContainer}>
@@ -102,7 +95,7 @@ export default function TabOneScreen() {
                     color="white"
                     text={locale.t("login.connect")}
                     iconRight="chevron-right"
-                    iconSize={0.05 * width}
+                    iconSize={32}
                     iconColor="#90F800"
                   />
                 </View>
@@ -120,8 +113,8 @@ export default function TabOneScreen() {
               OnPress={() => router.push("signUp")}
             />
           </View>
-        </View>
-      </SafeAreaView>
+        </ScrollView>
+      </View>
     </ImageBackground>
   )
 }
@@ -133,7 +126,8 @@ const styles = StyleSheet.create({
   titleContainer: {
     flex: 1,
     backgroundColor: "transparent",
-    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    flexDirection: "row",
     paddingHorizontal: 30,
     paddingVertical: 40,
     columnGap: 16
@@ -144,8 +138,8 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent"
   },
   formContainer: {
-    flex: 5,
-    paddingTop: 56,
+    flex: 3,
+    paddingVertical: 56,
     borderTopLeftRadius: 31,
     borderTopRightRadius: 31,
     paddingHorizontal: 0.13 * width,
@@ -154,19 +148,19 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "SoraBold",
     color: Colors.light.background,
-    fontSize: 0.065 * width
+    fontSize: 24
   },
   textInput: {
     fontFamily: "SoraLight",
-    borderBottomColor: "rgba(0, 0, 0,50)",
+    borderBottomColor: "rgba(0, 0, 0, 0.50)",
     borderBottomWidth: 1,
-    fontSize: 0.044 * width,
+    fontSize: 18,
     flex: 1
   },
   labels: {
     fontFamily: "SoraSemibold",
-    fontSize: 0.047 * width,
-    marginBottom: 12,
+    fontSize: 20,
+    marginBottom: 8,
     color: "#000"
   },
   field: {
@@ -191,11 +185,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     backgroundColor: "transparent",
-    alignItems: "baseline",
+    alignItems: "flex-end",
     columnGap: 16
   },
   signUpText: {
-    fontSize: 0.035 * Dimensions.get("window").width,
+    fontSize: 16,
     fontFamily: "SoraMedium",
     color: "#000"
   }
