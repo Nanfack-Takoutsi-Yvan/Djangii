@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Field renders correctly 1`] = `
+<View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "transparent",
+        "columnGap": 16,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <TextInput
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      placeholder="Hello World"
+    />
+  </View>
+</View>
+`;

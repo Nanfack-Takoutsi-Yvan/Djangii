@@ -11,103 +11,72 @@ import {
 import { Formik } from "formik"
 import { useContext } from "react"
 import Colors from "@constants/Colors"
-import Button from "@components/Button"
 import { Text, View } from "@components/Themed"
 import AppStateContext from "@services/context/context"
 import { SafeAreaView } from "react-native-safe-area-context"
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
-import { Icon, IconComponentProvider } from "@react-native-material/core"
+import { Icon } from "@react-native-material/core"
 
-const { width, height } = Dimensions.get("window")
+const { width } = Dimensions.get("window")
 
 export default function TabOneScreen() {
   const { locale } = useContext(AppStateContext)
 
   return (
-    <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-      <ImageBackground
-        style={styles.container}
-        source={require("../../assets/images/screens/background.png")}
-      >
-        <StatusBar barStyle="light-content" />
-        <SafeAreaView style={styles.container}>
-          <View style={styles.titleContainer}>
-            <View
-              style={{
-                alignItems: "center",
-                flexDirection: "row",
-                backgroundColor: "transparent",
-                columnGap: 16
-              }}
-            >
-              <Text style={styles.title}>{locale.t("login.connection")}</Text>
-              <Icon name="login" size={0.07 * width} color="green" />
-            </View>
+    <ImageBackground
+      style={styles.container}
+      source={require("../../assets/images/screens/background.png")}
+    >
+      <StatusBar barStyle="light-content" />
+      <SafeAreaView style={styles.container}>
+        <View style={styles.titleContainer}>
+          <View
+            style={{
+              alignItems: "center",
+              flexDirection: "row",
+              backgroundColor: "transparent",
+              columnGap: 16
+            }}
+          >
+            <Text style={styles.title}>{locale.t("login.connection")}</Text>
+            <Icon name="login" size={0.07 * width} color="green" />
           </View>
-          <View style={styles.formContainer}>
-            <Formik
-              initialValues={{ userName: "" }}
-              onSubmit={values => console.log(values)}
-            >
-              {({ handleChange, handleBlur, handleSubmit, values }) => (
-                <View style={styles.form}>
-                  <View style={styles.fieldContainer}>
-                    <View
-                      style={{ width: "85%", backgroundColor: "transparent" }}
-                    >
-                      <Text style={styles.labels}>
-                        {locale.t("login.labels.userName")}
-                      </Text>
-                    </View>
-                    <View style={styles.field}>
-                      <Icon
-                        name="account-outline"
-                        size={0.05 * width}
-                        color="green"
-                      />
-                      <TextInput
-                        placeholder={locale.t("login.labels.userName")}
-                        onChangeText={handleChange("email")}
-                        onBlur={handleBlur("email")}
-                        value={values.userName}
-                        style={[styles.textInput, { width: "75%" }]}
-                      />
-                    </View>
+        </View>
+        <View style={styles.formContainer}>
+          <Formik
+            initialValues={{ userName: "" }}
+            onSubmit={values => console.log(values)}
+          >
+            {({ handleChange, handleBlur, handleSubmit, values }) => (
+              <View style={styles.form}>
+                <View style={styles.fieldContainer}>
+                  <View
+                    style={{ width: "85%", backgroundColor: "transparent" }}
+                  >
+                    <Text style={styles.labels}>
+                      {locale.t("login.labels.userName")}
+                    </Text>
                   </View>
-
-                  <View style={styles.fieldContainer}>
-                    <View
-                      style={{ width: "85%", backgroundColor: "transparent" }}
-                    >
-                      <Text style={styles.labels}>
-                        {locale.t("login.labels.password")}
-                      </Text>
-                    </View>
-                    <View style={styles.field}>
-                      <Icon
-                        name="account-outline"
-                        size={0.05 * width}
-                        color="green"
-                      />
-                      <TextInput
-                        placeholder={locale.t("login.labels.password")}
-                        onChangeText={handleChange("email")}
-                        onBlur={handleBlur("email")}
-                        value={values.userName}
-                        style={[styles.textInput, { width: "75%" }]}
-                      />
-                    </View>
-                    <TouchableOpacity>
-                      <Text style={{ color: "black" }}>Hello world</Text>
-                    </TouchableOpacity>
+                  <View style={styles.field}>
+                    <Icon
+                      name="account-outline"
+                      size={0.05 * width}
+                      color="green"
+                    />
+                    <TextInput
+                      placeholder={locale.t("login.labels.userName")}
+                      onChangeText={handleChange("email")}
+                      onBlur={handleBlur("email")}
+                      value={values.userName}
+                      style={[styles.textInput, { width: "75%" }]}
+                    />
                   </View>
                 </View>
-              )}
-            </Formik>
-          </View>
-        </SafeAreaView>
-      </ImageBackground>
-    </IconComponentProvider>
+              </View>
+            )}
+          </Formik>
+        </View>
+      </SafeAreaView>
+    </ImageBackground>
   )
 }
 

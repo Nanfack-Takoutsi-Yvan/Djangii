@@ -10,7 +10,7 @@ import AppStateContext from "@services/context/context"
 import { Text, View } from "@components/Themed"
 import { useContext } from "react"
 import Colors from "@constants/Colors"
-import Button from "@components/Button"
+import Button from "@components/ui/Button"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { useRouter } from "expo-router"
 

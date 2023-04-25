@@ -33,7 +33,6 @@ export default function Button({
     <IconComponentProvider IconComponent={MaterialCommunityIcons}>
       <TouchableOpacity
         activeOpacity={0.8}
-        // eslint-disable-next-line no-console
         onPress={OnPress}
         style={[styles.btn, style]}
       >

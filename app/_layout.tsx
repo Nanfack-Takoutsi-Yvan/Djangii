@@ -23,6 +23,8 @@ import {
   Sora_700Bold,
   Sora_800ExtraBold
 } from "@expo-google-fonts/sora"
+import { IconComponentProvider } from "@react-native-material/core"
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
 // import OnboardingScreen from "./screen/onboarding"
 
 export {
@@ -69,13 +71,17 @@ function RootLayoutNav() {
 
   return (
     <AppStateContext.Provider value={{ locale: i18n, setLocale }}>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-        </Stack>
-      </ThemeProvider>
+      <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <Stack>
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+          </Stack>
+        </ThemeProvider>
+      </IconComponentProvider>
     </AppStateContext.Provider>
   )
 }
