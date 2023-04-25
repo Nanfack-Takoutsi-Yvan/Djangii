@@ -45,11 +45,16 @@ exports[`renders correctly 1`] = `
 >
   <Text
     style={
-      {
-        "color": undefined,
-        "fontFamily": "SoraSemibold",
-        "fontSize": 26.250000000000004,
-      }
+      [
+        undefined,
+        {
+          "fontFamily": "SoraSemibold",
+          "fontSize": 26.250000000000004,
+        },
+        {
+          "color": undefined,
+        },
+      ]
     }
   >
     Hello world

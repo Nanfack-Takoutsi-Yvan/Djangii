@@ -216,11 +216,16 @@ exports[`renders correctly 1`] = `
       >
         <Text
           style={
-            {
-              "color": "#fff",
-              "fontFamily": "SoraSemibold",
-              "fontSize": 26.250000000000004,
-            }
+            [
+              undefined,
+              {
+                "fontFamily": "SoraSemibold",
+                "fontSize": 26.250000000000004,
+              },
+              {
+                "color": "#fff",
+              },
+            ]
           }
         >
           onboarding.button

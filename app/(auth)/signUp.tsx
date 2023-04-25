@@ -16,13 +16,11 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { Icon } from "@react-native-material/core"
 import Field from "@components/ui/Field"
 import Button from "@components/ui/Button"
-import { useRouter } from "expo-router"
 
 const { width } = Dimensions.get("window")
 
 export default function TabOneScreen() {
   const { locale } = useContext(AppStateContext)
-  const router = useRouter()
 
   return (
     <ImageBackground
@@ -117,7 +115,6 @@ export default function TabOneScreen() {
               underlined
               color="#F40303"
               text={locale.t("login.signUp")}
-              OnPress={() => router.push("signUp")}
             />
           </View>
         </View>

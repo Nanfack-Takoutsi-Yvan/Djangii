@@ -39,7 +39,7 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    sora: Sora_400Regular,
+    Sora: Sora_400Regular,
     SoraBold: Sora_700Bold,
     SoraThin: Sora_100Thin,
     SoraLight: Sora_300Light,

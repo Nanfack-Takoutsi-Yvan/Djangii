@@ -13,8 +13,8 @@ exports[`Field renders correctly 1`] = `
     }
   >
     <TextInput
-      onBlur={[Function]}
-      onChangeText={[Function]}
+      handleBlur={[Function]}
+      handleChange={[Function]}
       placeholder="Hello World"
     />
   </View>

@@ -16,17 +16,21 @@ type ButtonProps = {
   iconSize?: number
   iconRight?: string
   iconColor?: string
+  underlined?: boolean
   style?: StyleProp<ViewStyle>
+  type?: "text" | "button" | "icon" | "outlined"
   OnPress?: () => void
 }
 
 export default function Button({
   text,
-  style,
   color,
-  iconRight,
+  style,
   iconSize,
   iconColor,
+  iconRight,
+  underlined,
+  type = "button",
   OnPress
 }: ButtonProps) {
   return (
@@ -34,13 +38,22 @@ export default function Button({
       <TouchableOpacity
         activeOpacity={0.8}
         onPress={OnPress}
-        style={[styles.btn, style]}
+        style={[
+          style,
+          styles.flexStyle,
+          (type === "button" || type === "outlined") && styles.btn
+        ]}
       >
         <Text
-          style={{
-            ...styles.buttonText,
-            color
-          }}
+          style={[
+            underlined &&
+              type === "text" && {
+                ...styles.underLinedButton,
+                textDecorationColor: color
+              },
+            styles.buttonText,
+            { color }
+          ]}
         >
           {text}
         </Text>
@@ -56,15 +69,20 @@ const styles = StyleSheet.create({
   btn: {
     height: 50,
     borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 56,
     marginVertical: 10,
-    flexDirection: "row",
-    columnGap: 12
+    paddingHorizontal: 56
   },
   buttonText: {
-    fontSize: 0.035 * Dimensions.get("window").width,
-    fontFamily: "SoraSemibold"
+    fontFamily: "SoraSemibold",
+    fontSize: 0.035 * Dimensions.get("window").width
+  },
+  flexStyle: {
+    columnGap: 12,
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "center"
+  },
+  underLinedButton: {
+    textDecorationLine: "underline"
   }
 })
