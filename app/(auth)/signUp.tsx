@@ -29,7 +29,6 @@ export default function TabOneScreen() {
       source={require("../../assets/images/screens/background.png")}
     >
       <StatusBar barStyle="light-content" />
-      {/* <SafeAreaView style={styles.container}> */}
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{locale.t("signUp.signUp")}</Text>
         <Icon name="account-check" size={36} color="#90F800" />
@@ -60,7 +59,6 @@ export default function TabOneScreen() {
                   value={values.userName}
                   inputStyle={styles.textInput}
                   onBlur={handleBlur("userName")}
-                  wrapperStyle={styles.fieldContainer}
                   onChangeText={handleChange("userName")}
                   placeholder={locale.t("signUp.labels.userName")}
                   placeholderTextColor="rgba(0, 0, 0, 0.4)"
@@ -73,7 +71,6 @@ export default function TabOneScreen() {
                   value={values.firstName}
                   inputStyle={styles.textInput}
                   onBlur={handleBlur("firstName")}
-                  wrapperStyle={styles.fieldContainer}
                   onChangeText={handleChange("firstName")}
                   placeholder={locale.t("signUp.labels.firstName")}
                   placeholderTextColor="rgba(0, 0, 0, 0.4)"
@@ -86,7 +83,6 @@ export default function TabOneScreen() {
                   value={values.lastName}
                   inputStyle={styles.textInput}
                   onBlur={handleBlur("lastName")}
-                  wrapperStyle={styles.fieldContainer}
                   onChangeText={handleChange("lastName")}
                   placeholder={locale.t("signUp.labels.lastName")}
                   placeholderTextColor="rgba(0, 0, 0, 0.4)"
@@ -99,7 +95,6 @@ export default function TabOneScreen() {
                   value={values.email}
                   inputStyle={styles.textInput}
                   onBlur={handleBlur("email")}
-                  wrapperStyle={styles.fieldContainer}
                   onChangeText={handleChange("email")}
                   placeholder={locale.t("signUp.labels.email")}
                   placeholderTextColor="rgba(0, 0, 0, 0.4)"
@@ -112,7 +107,6 @@ export default function TabOneScreen() {
                   value={values.phoneNumber}
                   inputStyle={styles.textInput}
                   onBlur={handleBlur("phoneNumber")}
-                  wrapperStyle={styles.fieldContainer}
                   onChangeText={handleChange("phoneNumber")}
                   placeholder={locale.t("signUp.labels.phoneNumber")}
                   placeholderTextColor="rgba(0, 0, 0, 0.4)"
@@ -126,7 +120,6 @@ export default function TabOneScreen() {
                   icon="form-textbox-password"
                   inputStyle={styles.textInput}
                   onBlur={handleBlur("password")}
-                  wrapperStyle={styles.fieldContainer}
                   onChangeText={handleChange("password")}
                   placeholder={locale.t("signUp.labels.password")}
                   placeholderTextColor="rgba(0, 0, 0, 0.4)"
@@ -140,7 +133,6 @@ export default function TabOneScreen() {
                   icon="form-textbox-password"
                   inputStyle={styles.textInput}
                   onBlur={handleBlur("confirmPassword")}
-                  wrapperStyle={styles.fieldContainer}
                   onChangeText={handleChange("confirmPassword")}
                   placeholder={locale.t("signUp.labels.confirmPassword")}
                   placeholderTextColor="rgba(0, 0, 0, 0.4)"
@@ -179,7 +171,6 @@ export default function TabOneScreen() {
           </View>
         </ScrollView>
       </View>
-      {/* </SafeAreaView> */}
     </ImageBackground>
   )
 }
@@ -220,6 +211,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "rgba(0, 0, 0, 0.5)",
     borderBottomWidth: 1,
     fontSize: 18,
+    height: 46,
     flex: 1
   },
   field: {

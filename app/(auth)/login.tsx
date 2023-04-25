@@ -52,7 +52,6 @@ export default function TabOneScreen() {
                   labelStyle={styles.labels}
                   inputStyle={styles.textInput}
                   onBlur={handleBlur("userName")}
-                  wrapperStyle={styles.fieldContainer}
                   onChangeText={handleChange("userName")}
                   label={locale.t("login.labels.userName")}
                   placeholder={locale.t("login.labels.userName")}
@@ -68,7 +67,6 @@ export default function TabOneScreen() {
                   icon="form-textbox-password"
                   inputStyle={styles.textInput}
                   onBlur={handleBlur("password")}
-                  wrapperStyle={styles.fieldContainer}
                   onChangeText={handleChange("password")}
                   label={locale.t("login.labels.password")}
                   placeholder={locale.t("login.labels.password")}
@@ -155,6 +153,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "rgba(0, 0, 0, 0.50)",
     borderBottomWidth: 1,
     fontSize: 18,
+    height: 46,
     flex: 1
   },
   labels: {
@@ -173,9 +172,6 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "flex-start",
     backgroundColor: "transparent"
-  },
-  fieldContainer: {
-    rowGap: 8
   },
   loginButton: {
     backgroundColor: "#532181",
