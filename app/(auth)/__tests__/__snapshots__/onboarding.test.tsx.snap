@@ -68,7 +68,7 @@ exports[`renders correctly 1`] = `
               {
                 "color": "white",
                 "fontFamily": "SoraBold",
-                "fontSize": 45,
+                "fontSize": 26,
                 "width": "89%",
               },
             ],
@@ -128,7 +128,7 @@ exports[`renders correctly 1`] = `
             {
               "color": "white",
               "fontFamily": "SoraBold",
-              "fontSize": 45,
+              "fontSize": 26,
               "width": "89%",
             },
           ]
@@ -146,7 +146,7 @@ exports[`renders correctly 1`] = `
               {
                 "color": "white",
                 "fontFamily": "SoraMedium",
-                "fontSize": 30,
+                "fontSize": 16,
                 "marginTop": 16,
               },
             ],
@@ -220,7 +220,7 @@ exports[`renders correctly 1`] = `
               undefined,
               {
                 "fontFamily": "SoraSemibold",
-                "fontSize": 26.250000000000004,
+                "fontSize": 16,
               },
               {
                 "color": "#fff",

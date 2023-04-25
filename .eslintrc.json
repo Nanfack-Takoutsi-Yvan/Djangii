@@ -44,6 +44,7 @@
     "react/jsx-props-no-spreading": "off",
     "import/extensions": ["error", "never"],
     "@typescript-eslint/no-shadow": ["error"],
-    "react/no-unstable-nested-components": "off"
+    "react/no-unstable-nested-components": "off",
+    "import/no-extraneous-dependencies": "off"
   }
 }

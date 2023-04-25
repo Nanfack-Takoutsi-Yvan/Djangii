@@ -49,7 +49,7 @@ exports[`renders correctly 1`] = `
         undefined,
         {
           "fontFamily": "SoraSemibold",
-          "fontSize": 26.250000000000004,
+          "fontSize": 16,
         },
         {
           "color": undefined,

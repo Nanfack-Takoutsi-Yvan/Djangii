@@ -2,21 +2,20 @@ import {
   StyleSheet,
   Dimensions,
   ImageBackground,
-  StatusBar,
-  Pressable
+  StatusBar
 } from "react-native"
 
-import AppStateContext from "@services/context/context"
-import { Text, View } from "@components/Themed"
 import { useContext } from "react"
 import Colors from "@constants/Colors"
-import Button from "@components/ui/Button"
-import { SafeAreaView } from "react-native-safe-area-context"
 import { useRouter } from "expo-router"
+import Button from "@components/ui/Button"
+import { Text, View } from "@components/Themed"
+import AppStateContext from "@services/context/context"
+import { SafeAreaView } from "react-native-safe-area-context"
 
 const { width, height } = Dimensions.get("window")
 
-export default function TabOneScreen() {
+export default function Onboarding() {
   const { locale } = useContext(AppStateContext)
   const router = useRouter()
 
@@ -52,7 +51,7 @@ export default function TabOneScreen() {
             style={styles.button}
             iconRight="chevron-right"
             iconColor={Colors.light.accent}
-            iconSize={0.05 * width}
+            iconSize={32}
             OnPress={() => router.push("login")}
           />
         </View>
@@ -66,7 +65,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   title: {
-    fontSize: 0.06 * width,
+    fontSize: 26,
     width: "89%",
     fontFamily: "SoraBold",
     color: "white"
@@ -75,7 +74,7 @@ const styles = StyleSheet.create({
     color: Colors.light.accent
   },
   subtitle: {
-    fontSize: 0.04 * width,
+    fontSize: 16,
     marginTop: 16,
     fontFamily: "SoraMedium",
     color: "white"
