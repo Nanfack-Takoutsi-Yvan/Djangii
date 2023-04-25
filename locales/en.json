@@ -8,5 +8,30 @@
     },
     "subtitle": "Keep your community closer as it grows!",
     "button": "Lets'go"
+  },
+  "login": {
+    "connection": "Connection",
+    "labels": {
+      "userName": "Username",
+      "password": "Password"
+    },
+    "passwordForgotten": "Password forgotten ?",
+    "noAccount": "You don't have an account ?",
+    "signUp": "Sign up",
+    "connect": "Login"
+  },
+  "signUp": {
+    "signUp": "Sign up",
+    "labels": {
+      "userName": "Username",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "email": "Email",
+      "phoneNumber": "696000000"
+    },
+    "existingAccount": "You already have an account ?",
+    "connect": "Login"
   }
 }

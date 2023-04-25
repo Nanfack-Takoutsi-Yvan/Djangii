@@ -23,6 +23,8 @@ import {
   Sora_700Bold,
   Sora_800ExtraBold
 } from "@expo-google-fonts/sora"
+import { IconComponentProvider } from "@react-native-material/core"
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
 // import OnboardingScreen from "./screen/onboarding"
 
 export {
@@ -37,7 +39,7 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    sora: Sora_400Regular,
+    Sora: Sora_400Regular,
     SoraBold: Sora_700Bold,
     SoraThin: Sora_100Thin,
     SoraLight: Sora_300Light,
@@ -69,13 +71,17 @@ function RootLayoutNav() {
 
   return (
     <AppStateContext.Provider value={{ locale: i18n, setLocale }}>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-        </Stack>
-      </ThemeProvider>
+      <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
+          <Stack>
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+          </Stack>
+        </ThemeProvider>
+      </IconComponentProvider>
     </AppStateContext.Provider>
   )
 }

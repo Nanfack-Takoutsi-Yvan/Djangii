@@ -28,6 +28,7 @@
     "expo-system-ui": "~2.2.1",
     "expo-updates": "~0.16.4",
     "expo-web-browser": "~12.1.1",
+    "formik": "^2.2.9",
     "i18n-js": "^4.2.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",

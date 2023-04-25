@@ -204,6 +204,8 @@ exports[`renders correctly 1`] = `
             "alignItems": "center",
             "backgroundColor": "#8483839C",
             "borderRadius": 20,
+            "columnGap": 12,
+            "flexDirection": "row",
             "height": 50,
             "justifyContent": "center",
             "marginVertical": 10,
@@ -214,15 +216,21 @@ exports[`renders correctly 1`] = `
       >
         <Text
           style={
-            {
-              "color": "#fff",
-              "fontFamily": "SoraSemibold",
-              "fontSize": 26.250000000000004,
-            }
+            [
+              undefined,
+              {
+                "fontFamily": "SoraSemibold",
+                "fontSize": 26.250000000000004,
+              },
+              {
+                "color": "#fff",
+              },
+            ]
           }
         >
           onboarding.button
         </Text>
+        <Text />
       </View>
     </View>
   </RNCSafeAreaView>

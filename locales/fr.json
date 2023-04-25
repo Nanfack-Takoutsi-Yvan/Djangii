@@ -8,5 +8,30 @@
     },
     "subtitle": "Rapprochez votre communauté au fur et à mesure qu'elle s'agrandit !",
     "button": "Commençons"
+  },
+  "login": {
+    "connection": "Connexion",
+    "labels": {
+      "userName": "Nom d'utilisateur",
+      "password": "Mot de passe"
+    },
+    "passwordForgotten": "Mot de passe oublié ?",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "signUp": "Inscrivez vous",
+    "connect": "Connexion"
+  },
+  "signUp": {
+    "connection": "Connexion",
+    "labels": {
+      "userName": "Nom d'utilisateur",
+      "firstName": "Prénoms",
+      "lastName": "Noms",
+      "password": "Mot de passe",
+      "confirmPassword": "Confirmez votre mot de passe",
+      "email": "email",
+      "phoneNumber": "696000000"
+    },
+    "existingAccount": "Vous avez déjà un compte ?",
+    "connect": "Connectez vous."
   }
 }
