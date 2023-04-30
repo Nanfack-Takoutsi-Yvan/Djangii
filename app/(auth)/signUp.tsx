@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import {
   StyleSheet,
   Dimensions,
@@ -7,21 +8,42 @@ import {
 } from "react-native"
 
 import { Formik } from "formik"
-import { useContext } from "react"
-import Colors from "@constants/Colors"
-import { Text, View } from "@components/Themed"
+import { Dispatch, SetStateAction, useContext, useState } from "react"
+import Colors from "@constants/Theme/Colors"
+import { View } from "@components/Themed"
 import AppStateContext from "@services/context/context"
-import { SafeAreaView } from "react-native-safe-area-context"
-import { Icon } from "@react-native-material/core"
 import Field from "@components/ui/Field"
-import Button from "@components/ui/Button"
+import { Text, TextInput, Button } from "react-native-paper"
+import Icon from "react-native-paper/src/components/Icon"
 import { useRouter } from "expo-router"
+import PhoneInput from "react-native-phone-input"
 
 const { width } = Dimensions.get("window")
 
 export default function TabOneScreen() {
+  const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true)
+  const [isPasswordConfirmationHidden, setIsPasswordConfirmationHidden] =
+    useState<boolean>(true)
   const { locale } = useContext(AppStateContext)
   const router = useRouter()
+
+  function PasswordIcon(
+    showPassword: boolean,
+    setShowPassword: Dispatch<SetStateAction<boolean>>
+  ) {
+    function togglePasswordVisibility() {
+      setShowPassword(currentValue => !currentValue)
+    }
+
+    return showPassword ? (
+      <TextInput.Icon onPress={togglePasswordVisibility} icon="eye-outline" />
+    ) : (
+      <TextInput.Icon
+        onPress={togglePasswordVisibility}
+        icon="eye-off-outline"
+      />
+    )
+  }
 
   return (
     <ImageBackground
@@ -31,7 +53,7 @@ export default function TabOneScreen() {
       <StatusBar barStyle="light-content" />
       <View style={styles.titleContainer}>
         <Text style={styles.title}>{locale.t("signUp.signUp")}</Text>
-        <Icon name="account-check" size={36} color="#90F800" />
+        <Icon source="account-check" size={36} color="#90F800" />
       </View>
       <View style={styles.formContainer}>
         <ScrollView
@@ -52,64 +74,109 @@ export default function TabOneScreen() {
           >
             {({ handleChange, handleBlur, handleSubmit, values }) => (
               <View style={styles.form}>
-                <Field
-                  iconColor="#532181"
-                  icon="account-outline"
-                  iconSize={32}
+                <TextInput
+                  label={locale.t("signUp.labels.userName")}
+                  placeholder={locale.t("signUp.labels.userName")}
+                  placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                  keyboardType="name-phone-pad"
                   value={values.userName}
-                  inputStyle={styles.textInput}
                   onBlur={handleBlur("userName")}
                   onChangeText={handleChange("userName")}
-                  placeholder={locale.t("signUp.labels.userName")}
-                  placeholderTextColor="rgba(0, 0, 0, 0.4)"
+                  style={{ backgroundColor: "transparent" }}
+                  left={<TextInput.Icon icon="account-outline" />}
                 />
 
-                <Field
-                  iconColor="#532181"
-                  icon="account-outline"
-                  iconSize={32}
+                <TextInput
+                  label={locale.t("signUp.labels.firstName")}
+                  placeholder={locale.t("signUp.labels.firstName")}
+                  placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                  keyboardType="name-phone-pad"
                   value={values.firstName}
-                  inputStyle={styles.textInput}
                   onBlur={handleBlur("firstName")}
                   onChangeText={handleChange("firstName")}
-                  placeholder={locale.t("signUp.labels.firstName")}
-                  placeholderTextColor="rgba(0, 0, 0, 0.4)"
+                  style={{ backgroundColor: "transparent" }}
+                  left={<TextInput.Icon icon="account-outline" />}
                 />
 
-                <Field
-                  iconColor="#532181"
-                  icon="account-outline"
-                  iconSize={32}
+                <TextInput
+                  label={locale.t("signUp.labels.lastName")}
+                  placeholder={locale.t("signUp.labels.lastName")}
+                  placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                  keyboardType="name-phone-pad"
                   value={values.lastName}
-                  inputStyle={styles.textInput}
                   onBlur={handleBlur("lastName")}
                   onChangeText={handleChange("lastName")}
-                  placeholder={locale.t("signUp.labels.lastName")}
-                  placeholderTextColor="rgba(0, 0, 0, 0.4)"
+                  style={{ backgroundColor: "transparent" }}
+                  left={<TextInput.Icon icon="account-outline" />}
                 />
 
-                <Field
-                  iconColor="#532181"
-                  icon="at"
-                  iconSize={32}
+                <TextInput
+                  label={locale.t("signUp.labels.email")}
+                  placeholder={locale.t("signUp.labels.email")}
+                  placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                  keyboardType="email-address"
                   value={values.email}
-                  inputStyle={styles.textInput}
                   onBlur={handleBlur("email")}
                   onChangeText={handleChange("email")}
-                  placeholder={locale.t("signUp.labels.email")}
-                  placeholderTextColor="rgba(0, 0, 0, 0.4)"
+                  style={{ backgroundColor: "transparent" }}
+                  left={<TextInput.Icon icon="at" />}
                 />
 
-                <Field
-                  iconColor="#532181"
-                  icon="phone-outline"
-                  iconSize={32}
-                  value={values.phoneNumber}
-                  inputStyle={styles.textInput}
+                <TextInput
+                  label={locale.t("signUp.labels.phoneNumber")}
+                  placeholder={locale.t("signUp.labels.phoneNumber")}
+                  placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                  keyboardType="phone-pad"
+                  value={values.email}
                   onBlur={handleBlur("phoneNumber")}
                   onChangeText={handleChange("phoneNumber")}
-                  placeholder={locale.t("signUp.labels.phoneNumber")}
-                  placeholderTextColor="rgba(0, 0, 0, 0.4)"
+                  style={{ backgroundColor: "transparent" }}
+                  // left={<TextInput.Icon icon="phone-outline" />}
+                />
+                <PhoneInput
+                  initialCountry="cm"
+                  autoFormat
+                  flagStyle={{ borderRadius: 5 }}
+                  allowZeroAfterCountryCode={false}
+                  style={{
+                    borderBottomColor: "black",
+                    borderBottomWidth: 1,
+                    paddingLeft: 24
+                  }}
+                  textStyle={{
+                    height: 44,
+                    fontSize: 16,
+                    fontFamily: "SoraMedium"
+                  }}
+                />
+
+                <TextInput
+                  placeholder={locale.t("signUp.labels.password")}
+                  placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                  keyboardType="visible-password"
+                  secureTextEntry={isPasswordHidden}
+                  right={PasswordIcon(isPasswordHidden, setIsPasswordHidden)}
+                  left={<TextInput.Icon icon="lock-outline" />}
+                  value={values.password}
+                  onBlur={handleBlur("password")}
+                  onChangeText={handleChange("password")}
+                  style={{ backgroundColor: "transparent" }}
+                />
+
+                <TextInput
+                  placeholder={locale.t("signUp.labels.confirmPassword")}
+                  placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                  keyboardType="visible-password"
+                  secureTextEntry={isPasswordHidden}
+                  right={PasswordIcon(
+                    isPasswordConfirmationHidden,
+                    setIsPasswordConfirmationHidden
+                  )}
+                  left={<TextInput.Icon icon="lock-outline" />}
+                  value={values.confirmPassword}
+                  onBlur={handleBlur("confirmPassword")}
+                  onChangeText={handleChange("confirmPassword")}
+                  style={{ backgroundColor: "transparent" }}
                 />
 
                 <Field

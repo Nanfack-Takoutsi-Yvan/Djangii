@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import {
   StyleSheet,
   Dimensions,
@@ -7,21 +8,35 @@ import {
 } from "react-native"
 
 import { Formik } from "formik"
-import { useContext } from "react"
-import Colors from "@constants/Colors"
-import { Text, View } from "@components/Themed"
+import { useContext, useState } from "react"
+import Colors from "@constants/Theme/Colors"
+import { View } from "@components/Themed"
 import AppStateContext from "@services/context/context"
-import { SafeAreaView } from "react-native-safe-area-context"
-import { Icon } from "@react-native-material/core"
-import Field from "@components/ui/Field"
-import Button from "@components/ui/Button"
 import { useRouter } from "expo-router"
+import { Text, TextInput, Button } from "react-native-paper"
+import Icon from "react-native-paper/src/components/Icon"
 
 const { width } = Dimensions.get("window")
 
 export default function TabOneScreen() {
+  const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(false)
   const { locale } = useContext(AppStateContext)
   const router = useRouter()
+
+  function togglePasswordVisibility() {
+    setIsPasswordHidden(currentValue => !currentValue)
+  }
+
+  function PasswordIcon(showPassword: boolean) {
+    return showPassword ? (
+      <TextInput.Icon onPress={togglePasswordVisibility} icon="eye-outline" />
+    ) : (
+      <TextInput.Icon
+        onPress={togglePasswordVisibility}
+        icon="eye-off-outline"
+      />
+    )
+  }
 
   return (
     <ImageBackground
@@ -30,8 +45,8 @@ export default function TabOneScreen() {
     >
       <StatusBar barStyle="light-content" />
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>{locale.t("login.connection")}</Text>
-        <Icon name="login" size={32} color="#90F800" />
+        <Text variant="headlineMedium">{locale.t("login.connection")}</Text>
+        <Icon source="login" size={32} color="#90F800" />
       </View>
       <View style={styles.formContainer}>
         <ScrollView
@@ -44,42 +59,50 @@ export default function TabOneScreen() {
           >
             {({ handleChange, handleBlur, handleSubmit, values }) => (
               <View style={styles.form}>
-                <Field
-                  iconColor="#532181"
-                  icon="account-outline"
-                  iconSize={32}
-                  value={values.userName}
-                  labelStyle={styles.labels}
-                  inputStyle={styles.textInput}
-                  onBlur={handleBlur("userName")}
-                  onChangeText={handleChange("userName")}
-                  label={locale.t("login.labels.userName")}
-                  placeholder={locale.t("login.labels.userName")}
-                  placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                />
+                <View>
+                  <Text variant="titleLarge">
+                    {locale.t("login.labels.userName")}
+                  </Text>
+                  <TextInput
+                    placeholder={locale.t("login.labels.userName")}
+                    placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                    keyboardType="name-phone-pad"
+                    value={values.userName}
+                    onBlur={handleBlur("userName")}
+                    onChangeText={handleChange("userName")}
+                    style={{ backgroundColor: "transparent" }}
+                    contentStyle={{ paddingLeft: 0 }}
+                  />
+                </View>
 
-                <Field
-                  iconColor="#532181"
-                  secureTextEntry
-                  iconSize={32}
-                  value={values.password}
-                  labelStyle={styles.labels}
-                  icon="form-textbox-password"
-                  inputStyle={styles.textInput}
-                  onBlur={handleBlur("password")}
-                  onChangeText={handleChange("password")}
-                  label={locale.t("login.labels.password")}
-                  placeholder={locale.t("login.labels.password")}
-                  placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                />
+                <View>
+                  <Text variant="titleLarge">
+                    {locale.t("login.labels.password")}
+                  </Text>
+                  <TextInput
+                    placeholder={locale.t("login.labels.password")}
+                    placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                    keyboardType="visible-password"
+                    secureTextEntry={isPasswordHidden}
+                    right={PasswordIcon(isPasswordHidden)}
+                    value={values.password}
+                    onBlur={handleBlur("password")}
+                    onChangeText={handleChange("password")}
+                    style={{ backgroundColor: "transparent" }}
+                    contentStyle={{ paddingLeft: 0 }}
+                  />
+                </View>
 
                 <View style={styles.buttonContainer}>
                   <Button
-                    type="text"
-                    underlined
-                    color="#F40303"
-                    text={locale.t("login.passwordForgotten")}
-                  />
+                    mode="text"
+                    textColor="#F40303"
+                    compact
+                    onPress={() => console.log("pressed")}
+                    labelStyle={{ textDecorationLine: "underline" }}
+                  >
+                    {locale.t("login.passwordForgotten")}
+                  </Button>
                 </View>
 
                 <View
@@ -90,12 +113,15 @@ export default function TabOneScreen() {
                 >
                   <Button
                     style={styles.loginButton}
-                    color="white"
-                    text={locale.t("login.connect")}
-                    iconRight="chevron-right"
-                    iconSize={32}
-                    iconColor="#90F800"
-                  />
+                    mode="contained"
+                    buttonColor="#532181"
+                    contentStyle={{ flexDirection: "row-reverse" }}
+                    icon={() => (
+                      <Icon source="chevron-right" size={36} color="#90F800" />
+                    )}
+                  >
+                    {locale.t("login.connect")}
+                  </Button>
                 </View>
               </View>
             )}
@@ -104,12 +130,13 @@ export default function TabOneScreen() {
           <View style={styles.signUpContainer}>
             <Text style={styles.signUpText}>{locale.t("login.noAccount")}</Text>
             <Button
-              type="text"
-              underlined
-              color="#F40303"
-              text={locale.t("login.signUp")}
-              OnPress={() => router.push("signUp")}
-            />
+              mode="text"
+              textColor="#F40303"
+              compact
+              onPress={() => router.push("signUp")}
+            >
+              {locale.t("login.signUp")}
+            </Button>
           </View>
         </ScrollView>
       </View>
@@ -174,15 +201,14 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent"
   },
   loginButton: {
-    backgroundColor: "#532181",
     width: "100%"
   },
   signUpContainer: {
     flex: 1,
     flexDirection: "row",
     backgroundColor: "transparent",
-    alignItems: "flex-end",
-    columnGap: 16
+    alignItems: "center",
+    columnGap: 4
   },
   signUpText: {
     fontSize: 16,
