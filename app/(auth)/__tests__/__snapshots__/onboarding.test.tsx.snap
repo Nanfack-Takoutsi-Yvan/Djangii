@@ -47,7 +47,7 @@ exports[`renders correctly 1`] = `
       style={
         [
           {
-            "backgroundColor": "#fff",
+            "backgroundColor": "#E8E8E8F5",
           },
           {
             "backgroundColor": "transparent",
@@ -118,7 +118,7 @@ exports[`renders correctly 1`] = `
                 "writingDirection": "ltr",
               },
               {
-                "color": "#90F800",
+                "color": undefined,
               },
             ]
           }
@@ -203,7 +203,7 @@ exports[`renders correctly 1`] = `
       style={
         [
           {
-            "backgroundColor": "#fff",
+            "backgroundColor": "#E8E8E8F5",
           },
           {
             "alignItems": "center",

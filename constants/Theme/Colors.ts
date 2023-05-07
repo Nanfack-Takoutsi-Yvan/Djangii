@@ -1,21 +1,22 @@
-const tintColorLight = "#2f95dc"
-const tintColorDark = "#fff"
+import { MD3Colors } from "react-native-paper/src/types"
 
 export default {
   light: {
-    text: "#000",
-    background: "#fff",
-    tint: tintColorLight,
-    accent: "#90F800",
-    tabIconDefault: "#ccc",
-    tabIconSelected: tintColorLight
-  },
+    primary: "#5E3187",
+    secondary: "#90F800",
+    tertiary: "#fff",
+    error: "#F72706",
+    background: "#E8E8E8F5",
+    surface: "rgb(255, 251, 255)",
+    backdrop: "#532181"
+  } as MD3Colors,
   dark: {
-    text: "#fff",
-    background: "#000",
-    tint: tintColorDark,
-    accent: "#90F800",
-    tabIconDefault: "#ccc",
-    tabIconSelected: tintColorDark
-  }
+    primary: "#5E3187",
+    secondary: "#90F800",
+    tertiary: "#fff",
+    error: "#F72706",
+    background: "#E8E8E8F5",
+    surface: "rgb(255, 251, 255)",
+    backdrop: "#532181"
+  } as MD3Colors
 }

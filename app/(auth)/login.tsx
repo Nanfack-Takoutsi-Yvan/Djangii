@@ -9,34 +9,20 @@ import {
 
 import { Formik } from "formik"
 import { useContext, useState } from "react"
-import Colors from "@constants/Theme/Colors"
 import { View } from "@components/Themed"
 import AppStateContext from "@services/context/context"
 import { useRouter } from "expo-router"
-import { Text, TextInput, Button } from "react-native-paper"
+import { Text, TextInput, Button, useTheme } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
+import PasswordIcon from "@components/ui/PasswordIcon"
 
 const { width } = Dimensions.get("window")
 
 export default function TabOneScreen() {
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(false)
   const { locale } = useContext(AppStateContext)
+  const { colors } = useTheme()
   const router = useRouter()
-
-  function togglePasswordVisibility() {
-    setIsPasswordHidden(currentValue => !currentValue)
-  }
-
-  function PasswordIcon(showPassword: boolean) {
-    return showPassword ? (
-      <TextInput.Icon onPress={togglePasswordVisibility} icon="eye-outline" />
-    ) : (
-      <TextInput.Icon
-        onPress={togglePasswordVisibility}
-        icon="eye-off-outline"
-      />
-    )
-  }
 
   return (
     <ImageBackground
@@ -45,7 +31,9 @@ export default function TabOneScreen() {
     >
       <StatusBar barStyle="light-content" />
       <View style={styles.titleContainer}>
-        <Text variant="headlineMedium">{locale.t("login.connection")}</Text>
+        <Text variant="headlineMedium" style={{}}>
+          {locale.t("login.connection")}
+        </Text>
         <Icon source="login" size={32} color="#90F800" />
       </View>
       <View style={styles.formContainer}>
@@ -59,7 +47,7 @@ export default function TabOneScreen() {
           >
             {({ handleChange, handleBlur, handleSubmit, values }) => (
               <View style={styles.form}>
-                <View>
+                <View style={{ backgroundColor: "transparent" }}>
                   <Text variant="titleLarge">
                     {locale.t("login.labels.userName")}
                   </Text>
@@ -75,7 +63,7 @@ export default function TabOneScreen() {
                   />
                 </View>
 
-                <View>
+                <View style={{ backgroundColor: "transparent" }}>
                   <Text variant="titleLarge">
                     {locale.t("login.labels.password")}
                   </Text>
@@ -84,7 +72,12 @@ export default function TabOneScreen() {
                     placeholderTextColor="rgba(0, 0, 0, 0.20)"
                     keyboardType="visible-password"
                     secureTextEntry={isPasswordHidden}
-                    right={PasswordIcon(isPasswordHidden)}
+                    right={
+                      <PasswordIcon
+                        showEye={isPasswordHidden}
+                        toggleEye={setIsPasswordHidden}
+                      />
+                    }
                     value={values.password}
                     onBlur={handleBlur("password")}
                     onChangeText={handleChange("password")}
@@ -167,12 +160,10 @@ const styles = StyleSheet.create({
     paddingVertical: 56,
     borderTopLeftRadius: 31,
     borderTopRightRadius: 31,
-    paddingHorizontal: 0.13 * width,
-    backgroundColor: Colors.light.background
+    paddingHorizontal: 0.13 * width
   },
   title: {
     fontFamily: "SoraBold",
-    color: Colors.light.background,
     fontSize: 24
   },
   textInput: {

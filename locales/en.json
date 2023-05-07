@@ -32,6 +32,8 @@
       "phoneNumber": "696000000"
     },
     "existingAccount": "You already have an account ?",
-    "connect": "Login"
+    "connect": "Login",
+    "pickerCancel": "Cancel",
+    "pickerConfirm": "Confirm"
   }
 }

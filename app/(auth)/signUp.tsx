@@ -4,7 +4,8 @@ import {
   Dimensions,
   ImageBackground,
   StatusBar,
-  ScrollView
+  ScrollView,
+  Image
 } from "react-native"
 
 import { Formik } from "formik"
@@ -12,11 +13,11 @@ import { Dispatch, SetStateAction, useContext, useState } from "react"
 import Colors from "@constants/Theme/Colors"
 import { View } from "@components/Themed"
 import AppStateContext from "@services/context/context"
-import Field from "@components/ui/Field"
 import { Text, TextInput, Button } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
 import { useRouter } from "expo-router"
 import PhoneInput from "react-native-phone-input"
+import PasswordIcon from "@components/ui/PasswordIcon"
 
 const { width } = Dimensions.get("window")
 
@@ -26,24 +27,6 @@ export default function TabOneScreen() {
     useState<boolean>(true)
   const { locale } = useContext(AppStateContext)
   const router = useRouter()
-
-  function PasswordIcon(
-    showPassword: boolean,
-    setShowPassword: Dispatch<SetStateAction<boolean>>
-  ) {
-    function togglePasswordVisibility() {
-      setShowPassword(currentValue => !currentValue)
-    }
-
-    return showPassword ? (
-      <TextInput.Icon onPress={togglePasswordVisibility} icon="eye-outline" />
-    ) : (
-      <TextInput.Icon
-        onPress={togglePasswordVisibility}
-        icon="eye-off-outline"
-      />
-    )
-  }
 
   return (
     <ImageBackground
@@ -74,136 +57,150 @@ export default function TabOneScreen() {
           >
             {({ handleChange, handleBlur, handleSubmit, values }) => (
               <View style={styles.form}>
-                <TextInput
-                  label={locale.t("signUp.labels.userName")}
-                  placeholder={locale.t("signUp.labels.userName")}
-                  placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                  keyboardType="name-phone-pad"
-                  value={values.userName}
-                  onBlur={handleBlur("userName")}
-                  onChangeText={handleChange("userName")}
-                  style={{ backgroundColor: "transparent" }}
-                  left={<TextInput.Icon icon="account-outline" />}
-                />
+                <View style={styles.fieldRow}>
+                  <Icon source="account-outline" size={32} />
+                  <TextInput
+                    placeholder={locale.t("signUp.labels.userName")}
+                    placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                    keyboardType="name-phone-pad"
+                    value={values.userName}
+                    onBlur={handleBlur("userName")}
+                    onChangeText={handleChange("userName")}
+                    style={{ backgroundColor: "transparent", width: "100%" }}
+                    contentStyle={{ paddingLeft: 0 }}
+                  />
+                </View>
 
-                <TextInput
-                  label={locale.t("signUp.labels.firstName")}
-                  placeholder={locale.t("signUp.labels.firstName")}
-                  placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                  keyboardType="name-phone-pad"
-                  value={values.firstName}
-                  onBlur={handleBlur("firstName")}
-                  onChangeText={handleChange("firstName")}
-                  style={{ backgroundColor: "transparent" }}
-                  left={<TextInput.Icon icon="account-outline" />}
-                />
+                <View style={styles.fieldRow}>
+                  <Icon source="account-outline" size={32} />
+                  <TextInput
+                    placeholder={locale.t("signUp.labels.firstName")}
+                    placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                    keyboardType="name-phone-pad"
+                    value={values.firstName}
+                    onBlur={handleBlur("firstName")}
+                    onChangeText={handleChange("firstName")}
+                    style={{ backgroundColor: "transparent", width: "100%" }}
+                    contentStyle={{ paddingLeft: 0 }}
+                  />
+                </View>
 
-                <TextInput
-                  label={locale.t("signUp.labels.lastName")}
-                  placeholder={locale.t("signUp.labels.lastName")}
-                  placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                  keyboardType="name-phone-pad"
-                  value={values.lastName}
-                  onBlur={handleBlur("lastName")}
-                  onChangeText={handleChange("lastName")}
-                  style={{ backgroundColor: "transparent" }}
-                  left={<TextInput.Icon icon="account-outline" />}
-                />
+                <View style={styles.fieldRow}>
+                  <Icon source="account-outline" size={32} />
+                  <TextInput
+                    placeholder={locale.t("signUp.labels.lastName")}
+                    placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                    keyboardType="name-phone-pad"
+                    value={values.lastName}
+                    onBlur={handleBlur("lastName")}
+                    onChangeText={handleChange("lastName")}
+                    style={{ backgroundColor: "transparent", width: "100%" }}
+                    contentStyle={{ paddingLeft: 0 }}
+                  />
+                </View>
 
-                <TextInput
-                  label={locale.t("signUp.labels.email")}
-                  placeholder={locale.t("signUp.labels.email")}
-                  placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                  keyboardType="email-address"
-                  value={values.email}
-                  onBlur={handleBlur("email")}
-                  onChangeText={handleChange("email")}
-                  style={{ backgroundColor: "transparent" }}
-                  left={<TextInput.Icon icon="at" />}
-                />
+                <View style={styles.fieldRow}>
+                  <Icon source="at" size={32} />
+                  <TextInput
+                    placeholder={locale.t("signUp.labels.email")}
+                    placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                    keyboardType="email-address"
+                    value={values.email}
+                    onBlur={handleBlur("email")}
+                    onChangeText={handleChange("email")}
+                    style={{ backgroundColor: "transparent", width: "100%" }}
+                    contentStyle={{ paddingLeft: 0 }}
+                  />
+                </View>
 
-                <TextInput
-                  label={locale.t("signUp.labels.phoneNumber")}
-                  placeholder={locale.t("signUp.labels.phoneNumber")}
-                  placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                  keyboardType="phone-pad"
-                  value={values.email}
-                  onBlur={handleBlur("phoneNumber")}
-                  onChangeText={handleChange("phoneNumber")}
-                  style={{ backgroundColor: "transparent" }}
-                  // left={<TextInput.Icon icon="phone-outline" />}
-                />
                 <PhoneInput
                   initialCountry="cm"
                   autoFormat
                   flagStyle={{ borderRadius: 5 }}
                   allowZeroAfterCountryCode={false}
-                  style={{
-                    borderBottomColor: "black",
-                    borderBottomWidth: 1,
-                    paddingLeft: 24
-                  }}
+                  confirmText={locale.t("signUp.pickerConfirm")}
+                  cancelText={locale.t("signUp.pickerCancel")}
+                  offset={18}
+                  renderFlag={({ imageSource }) => (
+                    <View>
+                      <Image
+                        source={require("../../assets/images/icons/chevron-down.png")}
+                        style={{
+                          position: "absolute",
+                          zIndex: 2,
+                          right: -4,
+                          bottom: -2
+                        }}
+                      />
+                      <Image
+                        source={imageSource}
+                        style={{
+                          width: 28,
+                          height: 20,
+                          borderRadius: 5
+                        }}
+                      />
+                    </View>
+                  )}
                   textStyle={{
                     height: 44,
                     fontSize: 16,
-                    fontFamily: "SoraMedium"
+                    fontFamily: "SoraMedium",
+                    borderBottomColor: "black",
+                    borderBottomWidth: 1,
+                    marginBottom: 2
+                  }}
+                  confirmTextStyle={{
+                    fontFamily: "SoraMedium",
+                    color: "green"
+                  }}
+                  cancelTextStyle={{
+                    fontFamily: "SoraMedium",
+                    color: "red"
                   }}
                 />
 
-                <TextInput
-                  placeholder={locale.t("signUp.labels.password")}
-                  placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                  keyboardType="visible-password"
-                  secureTextEntry={isPasswordHidden}
-                  right={PasswordIcon(isPasswordHidden, setIsPasswordHidden)}
-                  left={<TextInput.Icon icon="lock-outline" />}
-                  value={values.password}
-                  onBlur={handleBlur("password")}
-                  onChangeText={handleChange("password")}
-                  style={{ backgroundColor: "transparent" }}
-                />
+                <View style={styles.fieldRow}>
+                  <Icon source="lock-outline" size={32} />
+                  <TextInput
+                    placeholder={locale.t("signUp.labels.password")}
+                    placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                    keyboardType="visible-password"
+                    secureTextEntry={isPasswordHidden}
+                    value={values.password}
+                    onBlur={handleBlur("password")}
+                    onChangeText={handleChange("password")}
+                    contentStyle={{ paddingLeft: 0 }}
+                    style={{ backgroundColor: "transparent", width: "100%" }}
+                    right={
+                      <PasswordIcon
+                        showEye={isPasswordHidden}
+                        toggleEye={setIsPasswordHidden}
+                      />
+                    }
+                  />
+                </View>
 
-                <TextInput
-                  placeholder={locale.t("signUp.labels.confirmPassword")}
-                  placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                  keyboardType="visible-password"
-                  secureTextEntry={isPasswordHidden}
-                  right={PasswordIcon(
-                    isPasswordConfirmationHidden,
-                    setIsPasswordConfirmationHidden
-                  )}
-                  left={<TextInput.Icon icon="lock-outline" />}
-                  value={values.confirmPassword}
-                  onBlur={handleBlur("confirmPassword")}
-                  onChangeText={handleChange("confirmPassword")}
-                  style={{ backgroundColor: "transparent" }}
-                />
-
-                <Field
-                  iconColor="#532181"
-                  secureTextEntry
-                  iconSize={32}
-                  value={values.password}
-                  icon="form-textbox-password"
-                  inputStyle={styles.textInput}
-                  onBlur={handleBlur("password")}
-                  onChangeText={handleChange("password")}
-                  placeholder={locale.t("signUp.labels.password")}
-                  placeholderTextColor="rgba(0, 0, 0, 0.4)"
-                />
-
-                <Field
-                  iconColor="#532181"
-                  secureTextEntry
-                  iconSize={32}
-                  value={values.confirmPassword}
-                  icon="form-textbox-password"
-                  inputStyle={styles.textInput}
-                  onBlur={handleBlur("confirmPassword")}
-                  onChangeText={handleChange("confirmPassword")}
-                  placeholder={locale.t("signUp.labels.confirmPassword")}
-                  placeholderTextColor="rgba(0, 0, 0, 0.4)"
-                />
+                <View style={styles.fieldRow}>
+                  <Icon source="lock-outline" size={32} />
+                  <TextInput
+                    placeholder={locale.t("signUp.labels.confirmPassword")}
+                    placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                    keyboardType="visible-password"
+                    secureTextEntry={isPasswordHidden}
+                    right={
+                      <PasswordIcon
+                        showEye={isPasswordConfirmationHidden}
+                        toggleEye={setIsPasswordConfirmationHidden}
+                      />
+                    }
+                    value={values.confirmPassword}
+                    onBlur={handleBlur("confirmPassword")}
+                    onChangeText={handleChange("confirmPassword")}
+                    contentStyle={{ paddingLeft: 0 }}
+                    style={{ backgroundColor: "transparent", width: "100%" }}
+                  />
+                </View>
 
                 <View
                   style={[
@@ -213,28 +210,37 @@ export default function TabOneScreen() {
                 >
                   <Button
                     style={styles.loginButton}
-                    color="white"
-                    text={locale.t("login.connect")}
-                    iconRight="chevron-right"
-                    iconSize={0.05 * width}
-                    iconColor="#90F800"
-                  />
+                    mode="contained"
+                    buttonColor="#532181"
+                    contentStyle={{ flexDirection: "row-reverse" }}
+                    icon={() => (
+                      <Icon source="chevron-right" size={36} color="#90F800" />
+                    )}
+                  >
+                    {locale.t("signUp.signUp")}
+                  </Button>
                 </View>
               </View>
             )}
           </Formik>
 
           <View style={styles.signUpContainer}>
-            <Text style={styles.signUpText}>
+            <Text
+              style={[
+                styles.signUpText,
+                { justifyContent: "center", alignItems: "center" }
+              ]}
+            >
               {locale.t("signUp.existingAccount")}
             </Text>
             <Button
-              type="text"
-              underlined
-              color="#F40303"
-              text={locale.t("signUp.connect")}
-              OnPress={() => router.push("login")}
-            />
+              mode="text"
+              textColor="#F40303"
+              contentStyle={{ flexDirection: "row-reverse" }}
+              onPress={() => router.push("login")}
+            >
+              {locale.t("signUp.connect")}
+            </Button>
           </View>
         </ScrollView>
       </View>
@@ -261,7 +267,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent"
   },
   formContainer: {
-    flex: 3,
+    flex: 4,
     paddingVertical: 56,
     borderTopLeftRadius: 31,
     borderTopRightRadius: 31,
@@ -282,6 +288,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   field: {
+    flex: 1,
     flexDirection: "row",
     columnGap: 16,
     alignItems: "center",
@@ -294,6 +301,12 @@ const styles = StyleSheet.create({
   },
   fieldContainer: {
     rowGap: 8
+  },
+  fieldRow: {
+    flexDirection: "row",
+    columnGap: 16,
+    alignItems: "center",
+    backgroundColor: "transparent"
   },
   loginButton: {
     backgroundColor: "#532181",

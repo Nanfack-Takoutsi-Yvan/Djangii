@@ -21,7 +21,7 @@
     "connect": "Connexion"
   },
   "signUp": {
-    "connection": "Connexion",
+    "signUp": "inscription",
     "labels": {
       "userName": "Nom d'utilisateur",
       "firstName": "Prénoms",
@@ -32,6 +32,8 @@
       "phoneNumber": "696000000"
     },
     "existingAccount": "Vous avez déjà un compte ?",
-    "connect": "Connectez vous."
+    "connect": "Connectez vous.",
+    "pickerCancel": "Annuler",
+    "pickerConfirm": "Confirmer"
   }
 }
