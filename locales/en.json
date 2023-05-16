@@ -12,7 +12,7 @@
   "login": {
     "connection": "Connection",
     "labels": {
-      "userName": "Username",
+      "username": "Username",
       "password": "Password"
     },
     "passwordForgotten": "Password forgotten ?",
@@ -23,7 +23,7 @@
   "signUp": {
     "signUp": "Sign up",
     "labels": {
-      "userName": "Username",
+      "username": "Username",
       "firstName": "First name",
       "lastName": "Last name",
       "password": "Password",
@@ -35,5 +35,24 @@
     "connect": "Login",
     "pickerCancel": "Cancel",
     "pickerConfirm": "Confirm"
+  }, 
+  "passwordReset": {
+    "title": "Reset your password",
+    "labels": {
+      "otp": "Enter your OTP",
+      "newPassword": "Enter your new password",
+      "passwordConfirmation": "Confirm your password"
+    },
+    "cta": "Reset password"
+  },
+  "checkEmail": {
+    "title": "Verify your email",
+    "indication": "An OTP was sent to",
+    "labels": {
+      "otpCheck": "Enter the OTP"
+    },
+    "cta": "Confirm",
+    "resendTitle": "You didn't receive an OTP? ",
+    "resend": "Resend an OTP"
   }
 }

@@ -35,5 +35,24 @@
     "connect": "Connectez vous.",
     "pickerCancel": "Annuler",
     "pickerConfirm": "Confirmer"
+  },
+  "passwordReset": {
+    "title": "Réinitialiser le mot de passe",
+    "labels": {
+      "otp": "Entrez votre OTP",
+      "newPassword": "Nouveau mot de passe",
+      "passwordConfirmation": "Confirmez le mot de passe"
+    },
+    "cta": "Réinitialiser le mot de passe"
+  },
+  "checkEmail": {
+    "title": "Verifier votre email",
+    "indication": "Un OTP a été envoyé à",
+    "labels": {
+      "otpCheck": "Veillez entrer l'OTP"
+    },
+    "cta": "Confirmer",
+    "resendTitle": "Vous n’avez pas obtenu d’OTP? ",
+    "resend": "Renvoyez l’OTP"
   }
 }

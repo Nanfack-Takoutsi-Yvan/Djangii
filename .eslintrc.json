@@ -37,12 +37,12 @@
     "no-shadow": "off",
     "react/prop-types": 0,
     "global-require": "off",
+    "import/extensions": "off",
     "no-use-before-define": "off",
     "react/react-in-jsx-scope": "off",
     "react/no-unescaped-entities": "off",
     "react/require-default-props": "off",
     "react/jsx-props-no-spreading": "off",
-    "import/extensions": ["error", "never"],
     "@typescript-eslint/no-shadow": ["error"],
     "react/no-unstable-nested-components": "off",
     "import/no-extraneous-dependencies": "off"

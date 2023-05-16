@@ -9,7 +9,7 @@ import { useContext } from "react"
 import Colors from "@constants/Theme/Colors"
 import { useRouter } from "expo-router"
 import { View } from "@components/Themed"
-import { Text, Button } from "react-native-paper"
+import { Text, Button, useTheme } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
 import AppStateContext from "@services/context/context"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -18,6 +18,7 @@ const { height } = Dimensions.get("window")
 
 export default function Onboarding() {
   const { locale } = useContext(AppStateContext)
+  const { colors } = useTheme()
   const router = useRouter()
 
   return (
@@ -28,20 +29,23 @@ export default function Onboarding() {
       <StatusBar barStyle="light-content" />
       <SafeAreaView style={styles.container}>
         <View style={styles.titleContainer}>
-          <Text>
+          <Text style={{ color: colors.surface }}>
             <Text variant="headlineMedium">
               {locale.t("onboarding.title.fistPart")}
             </Text>
-            <Text variant="headlineMedium" style={styles.emphasis}>
+            <Text variant="headlineMedium" style={{ color: colors.secondary }}>
               {" "}
               {locale.t("onboarding.title.emphasis")}
             </Text>
             <Text variant="headlineMedium">,</Text>
           </Text>
-          <Text variant="headlineMedium">
+          <Text variant="headlineMedium" style={{ color: colors.surface }}>
             {locale.t("onboarding.title.lastPart")}
           </Text>
-          <Text variant="titleMedium" style={styles.subtitle}>
+          <Text
+            variant="titleMedium"
+            style={[styles.subtitle, { color: colors.surface }]}
+          >
             {locale.t("onboarding.subtitle")}
           </Text>
         </View>
@@ -55,7 +59,7 @@ export default function Onboarding() {
               <Icon source="chevron-right" size={36} color="#90F800" />
             )}
             contentStyle={{ flexDirection: "row-reverse" }}
-            onPress={() => router.push("login")}
+            onPress={() => router.replace("login")}
           >
             {locale.t("onboarding.button")}
           </Button>
@@ -68,9 +72,6 @@ export default function Onboarding() {
 const styles = StyleSheet.create({
   container: {
     flex: 1
-  },
-  emphasis: {
-    color: Colors.light.accent
   },
   subtitle: {
     marginTop: 16

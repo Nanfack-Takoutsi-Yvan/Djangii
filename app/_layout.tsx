@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/jsx-no-constructed-context-values */
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { SplashScreen, Stack } from "expo-router"
 import * as localization from "expo-localization"
 import useLocales from "@hooks/locale/useLocales"
@@ -33,10 +33,13 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const { i18n, setLocale } = useLocales(localization.locale)
+  const [user, setUser] = useState<IUser>({} as IUser)
   const theme = useDjangiiTheme()
 
   return (
-    <AppStateContext.Provider value={{ locale: i18n, setLocale }}>
+    <AppStateContext.Provider
+      value={{ locale: i18n, setLocale, user, setUser }}
+    >
       <PaperProvider theme={theme}>
         <Stack>
           <Stack.Screen name="(auth)" options={{ headerShown: false }} />

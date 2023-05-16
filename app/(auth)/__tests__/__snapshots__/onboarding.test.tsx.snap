@@ -47,7 +47,7 @@ exports[`renders correctly 1`] = `
       style={
         [
           {
-            "backgroundColor": "#E8E8E8F5",
+            "backgroundColor": "#fff",
           },
           {
             "backgroundColor": "transparent",
@@ -73,7 +73,9 @@ exports[`renders correctly 1`] = `
             {
               "writingDirection": "ltr",
             },
-            undefined,
+            {
+              "color": "rgba(255, 251, 254, 1)",
+            },
           ]
         }
       >
@@ -118,7 +120,7 @@ exports[`renders correctly 1`] = `
                 "writingDirection": "ltr",
               },
               {
-                "color": undefined,
+                "color": "rgba(98, 91, 113, 1)",
               },
             ]
           }
@@ -167,7 +169,9 @@ exports[`renders correctly 1`] = `
               "color": "rgba(28, 27, 31, 1)",
               "writingDirection": "ltr",
             },
-            undefined,
+            {
+              "color": "rgba(255, 251, 254, 1)",
+            },
           ]
         }
       >
@@ -190,9 +194,14 @@ exports[`renders correctly 1`] = `
               "color": "rgba(28, 27, 31, 1)",
               "writingDirection": "ltr",
             },
-            {
-              "marginTop": 16,
-            },
+            [
+              {
+                "marginTop": 16,
+              },
+              {
+                "color": "rgba(255, 251, 254, 1)",
+              },
+            ],
           ]
         }
       >
@@ -203,7 +212,7 @@ exports[`renders correctly 1`] = `
       style={
         [
           {
-            "backgroundColor": "#E8E8E8F5",
+            "backgroundColor": "#fff",
           },
           {
             "alignItems": "center",

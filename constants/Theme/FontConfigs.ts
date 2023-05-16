@@ -69,21 +69,21 @@ const fontConfigs: MD3Typescale = {
 
   labelSmall: {
     fontFamily: "SoraMedium",
-    fontSize: 11,
+    fontSize: 14,
     fontWeight: "500",
     letterSpacing: 0.5,
     lineHeight: 16
   },
   labelMedium: {
     fontFamily: "SoraMedium",
-    fontSize: 12,
+    fontSize: 16,
     fontWeight: "500",
     letterSpacing: 0.5,
     lineHeight: 16
   },
   labelLarge: {
-    fontFamily: "SoraMedium",
-    fontSize: 14,
+    fontFamily: "SoraBold",
+    fontSize: 18,
     fontWeight: "500",
     letterSpacing: 0.1,
     lineHeight: 20
