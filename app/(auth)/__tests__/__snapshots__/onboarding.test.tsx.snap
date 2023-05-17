@@ -227,17 +227,8 @@ exports[`renders correctly 1`] = `
         collapsable={false}
         style={
           {
-            "alignSelf": undefined,
             "backgroundColor": "rgba(132, 131, 131, 0.3)",
             "borderRadius": 20,
-            "bottom": undefined,
-            "end": undefined,
-            "flex": undefined,
-            "height": undefined,
-            "left": undefined,
-            "opacity": undefined,
-            "position": undefined,
-            "right": undefined,
             "shadowColor": "#000",
             "shadowOffset": {
               "height": 0,
@@ -245,10 +236,6 @@ exports[`renders correctly 1`] = `
             },
             "shadowOpacity": 0,
             "shadowRadius": 0,
-            "start": undefined,
-            "top": undefined,
-            "transform": undefined,
-            "width": undefined,
           }
         }
         testID="button-container-outer-layer"
@@ -311,7 +298,6 @@ exports[`renders correctly 1`] = `
                 {
                   "overflow": "hidden",
                 },
-                false,
                 {
                   "borderRadius": 20,
                 },

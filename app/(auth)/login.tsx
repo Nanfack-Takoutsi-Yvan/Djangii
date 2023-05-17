@@ -33,7 +33,7 @@ export default function Login() {
     <KeyboardAvoidingView
       style={styles.screen}
       contentContainerStyle={styles.screen}
-      behavior="height"
+      behavior="position"
     >
       <ImageBackground
         style={styles.screen}
@@ -70,17 +70,20 @@ export default function Login() {
                         color={colors.primary}
                         size={40}
                       />
-                      <TextInput
-                        placeholder={locale.t("login.labels.username")}
-                        placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                        keyboardType="name-phone-pad"
-                        value={values.username}
-                        onBlur={handleBlur("username")}
-                        onChangeText={handleChange("username")}
-                        style={styles.textInputContainer}
-                        contentStyle={styles.textInput}
-                        autoComplete="username"
-                      />
+                      <View style={styles.screen}>
+                        <TextInput
+                          placeholder={locale.t("login.labels.username")}
+                          placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                          keyboardType="name-phone-pad"
+                          value={values.username}
+                          onBlur={handleBlur("username")}
+                          onChangeText={handleChange("username")}
+                          style={styles.textInput}
+                          autoComplete="username"
+                          dense
+                          underlineColor="rgba(0,0,0,0.5)"
+                        />
+                      </View>
                     </View>
                   </View>
 
@@ -94,70 +97,70 @@ export default function Login() {
                         color={colors.primary}
                         size={40}
                       />
-                      <TextInput
-                        placeholder={locale.t("login.labels.password")}
-                        placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                        keyboardType="visible-password"
-                        value={values.password}
-                        onBlur={handleBlur("password")}
-                        onChangeText={handleChange("password")}
-                        style={styles.textInputContainer}
-                        contentStyle={styles.textInput}
-                        autoComplete="password"
-                        secureTextEntry
-                        right={
-                          <PasswordIcon
-                            showEye={isPasswordHidden}
-                            toggleEye={setIsPasswordHidden}
-                          />
-                        }
-                      />
+                      <View style={styles.screen}>
+                        <TextInput
+                          placeholder={locale.t("login.labels.password")}
+                          placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                          keyboardType="visible-password"
+                          value={values.password}
+                          onBlur={handleBlur("password")}
+                          onChangeText={handleChange("password")}
+                          style={styles.textInput}
+                          autoComplete="password"
+                          secureTextEntry
+                          dense
+                          underlineColor="rgba(0,0,0,0.5)"
+                          right={
+                            <Icon
+                              source="form-textbox-password"
+                              color={colors.primary}
+                              size={40}
+                            />
+                          }
+                        />
+                      </View>
                     </View>
                   </View>
 
-                  <Button
-                    mode="text"
-                    textColor={colors.tertiary}
-                    onPress={() => console.log("pressed")}
-                    labelStyle={styles.buttonTitle}
-                    style={styles.button}
-                  >
-                    {locale.t("login.passwordForgotten")}
-                  </Button>
+                  <View style={styles.fieldContainer}>
+                    <Button
+                      mode="text"
+                      textColor={colors.tertiary}
+                      onPress={() => console.log("pressed")}
+                      labelStyle={styles.buttonTitle}
+                      style={styles.button}
+                    >
+                      {locale.t("login.passwordForgotten")}
+                    </Button>
 
-                  <Button
-                    mode="contained"
-                    textColor={colors.surface}
-                    onPress={() => handleSubmit()}
-                    contentStyle={styles.signUpButton}
-                    loading={isUserLoading}
-                    icon={() => (
-                      <Icon
-                        source="chevron-right"
-                        size={32}
-                        color={colors.secondary}
-                      />
-                    )}
-                  >
-                    {locale.t("login.connect")}
-                  </Button>
+                    <Button
+                      mode="contained"
+                      textColor={colors.surface}
+                      onPress={() => handleSubmit()}
+                      contentStyle={styles.signUpButton}
+                      loading={isUserLoading}
+                      icon={() => (
+                        <Icon
+                          source="chevron-right"
+                          size={32}
+                          color={colors.secondary}
+                        />
+                      )}
+                    >
+                      {locale.t("login.connect")}
+                    </Button>
+                  </View>
                 </View>
               )}
             </Formik>
-            <View
-              style={{
-                flex: 1,
-                paddingHorizontal: 30,
-                flexDirection: "row",
-                alignItems: "center"
-              }}
-            >
-              <Text>{locale.t("login.noAccount")}</Text>
+
+            <View style={styles.signUpButtonContainer}>
+              <Text variant="titleSmall">{locale.t("login.noAccount")}</Text>
               <Button
                 mode="text"
                 textColor={colors.tertiary}
                 labelStyle={{ fontSize: 14 }}
-                onPress={() => router.replace("passwordReset")}
+                onPress={() => router.replace("signUp")}
               >
                 {locale.t("login.signUp")}
               </Button>
@@ -193,31 +196,21 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30
   },
   form: {
-    backgroundColor: "transparent",
+    flex: 1,
+    rowGap: 12,
     paddingHorizontal: 30,
-    paddingVertical: 30,
-    rowGap: 24,
-    flex: 3
+    paddingVertical: 30
   },
   fieldContainer: {
-    backgroundColor: "transparent",
+    flex: 1,
     rowGap: 12
   },
   field: {
     flexDirection: "row",
-    columnGap: 12,
-    backgroundColor: "transparent",
-    alignItems: "baseline"
-  },
-  textInputContainer: {
-    flex: 1,
-    height: 40,
-    borderBottomWidth: 1,
-    backgroundColor: "transparent",
-    borderBottomColor: "rgba(0,0,0,0.5)"
+    columnGap: 12
   },
   textInput: {
-    paddingLeft: 0
+    paddingHorizontal: 0
   },
   button: {
     alignItems: "flex-start"
@@ -228,5 +221,11 @@ const styles = StyleSheet.create({
   signUpButton: {
     flexDirection: "row-reverse",
     paddingVertical: 4
+  },
+  signUpButtonContainer: {
+    flex: 1,
+    paddingHorizontal: 30,
+    flexDirection: "row",
+    alignItems: "center"
   }
 })
