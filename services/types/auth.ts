@@ -1,4 +1,6 @@
-interface IUser {
+import OTP_CANAL from "./miscelaneaous"
+
+export interface IUser {
   id: string
   username: string
   accountActivate: boolean
@@ -7,7 +9,7 @@ interface IUser {
   userInfos: IUserInfo
 }
 
-interface IUserInfo {
+export interface IUserInfo {
   id: string
   firstName: string
   lastName: string
@@ -19,20 +21,20 @@ interface IUserInfo {
   datation: IDatation
 }
 
-interface ISocialProfile {
+export interface ISocialProfile {
   hobbies: string[]
   interestCenters: string[]
   activityAreas: string[]
   socialNetworkLinks: string[]
 }
 
-interface IDatation {
+export interface IDatation {
   creationTime: string
   lastUpdateTime: string
   version: number
 }
 
-interface NewUserData {
+export interface NewUserData {
   newUser: {
     password: string
     userInfos: {
@@ -48,7 +50,9 @@ interface NewUserData {
   }
 }
 
-interface IAuthController {
+export interface IAuthController {
   login: (username: string, password: string) => Promise<IUser>
-  register: (userData: NewUserData) => Promise<IUser>
+  register: (userData: NewUserData, otp: string) => Promise<IUser>
+  sendOTP: (email: string, lang?: string, canal?: OTP_CANAL) => Promise<boolean>
+  validateOTP: (email: string, otp: string) => Promise<boolean>
 }

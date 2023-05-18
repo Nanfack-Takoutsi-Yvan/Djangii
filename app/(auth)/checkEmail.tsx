@@ -5,28 +5,46 @@ import {
   ImageBackground,
   StatusBar,
   KeyboardAvoidingView,
-  ScrollView,
   View
 } from "react-native"
 
-import { Text, TextInput, Button, useTheme } from "react-native-paper"
+import {
+  Text,
+  TextInput,
+  Button,
+  useTheme,
+  ActivityIndicator
+} from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
 
 import { Formik } from "formik"
 import { useContext, useState } from "react"
-import { useRouter } from "expo-router"
+// import { useRouter } from "expo-router"
 
 import AppStateContext from "@services/context/context"
-import PasswordIcon from "@components/ui/PasswordIcon"
+import User from "@services/models/user"
+import { NewUserData } from "@services/types/auth"
+import LoadingModal from "@components/ui/LoadingModal"
 
-export default function Login() {
-  const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(false)
-  const [isUserLoading, setIsUserLoading] = useState<boolean>(false)
+export default function CheckEmail() {
+  const [loading, setLoading] = useState<boolean>(false)
 
   const { locale, user } = useContext(AppStateContext)
   const { colors } = useTheme()
 
-  const router = useRouter()
+  // const router = useRouter()
+
+  const validateOTP = async ({ otp }: { otp: string }) => {
+    setLoading(true)
+
+    const isOTPValid = await User.validateOTP("", otp)
+
+    if (isOTPValid) {
+      User.register({} as NewUserData, otp).finally(() => {
+        setLoading(false)
+      })
+    }
+  }
 
   return (
     <KeyboardAvoidingView
@@ -39,6 +57,7 @@ export default function Login() {
         source={require("../../assets/images/screens/background.png")}
       >
         <StatusBar barStyle="light-content" />
+        <LoadingModal displayModal={loading} />
         <View style={styles.titleContainer}>
           <Text variant="headlineMedium" style={{ color: colors.surface }}>
             {locale.t("checkEmail.title")}
@@ -46,13 +65,15 @@ export default function Login() {
           <Icon source="email-check-outline" size={32} color="#90F800" />
         </View>
         <View style={styles.formContainer}>
-          <Formik initialValues={{ otp: "" }} onSubmit={console.log}>
+          <Formik initialValues={{ otp: "" }} onSubmit={validateOTP}>
             {({ handleChange, handleBlur, handleSubmit, values }) => (
               <View style={styles.form}>
-                <Text variant="titleMedium">
-                  {locale.t("checkEmail.indication")}
-                  <Text>{user?.userInfos?.email}</Text>
-                </Text>
+                <View style={styles.screen}>
+                  <Text variant="titleMedium">
+                    {locale.t("checkEmail.indication")}
+                    <Text>{user?.userInfos?.email}</Text>
+                  </Text>
+                </View>
 
                 <View style={styles.fieldContainer}>
                   <Text variant="labelLarge">
@@ -64,36 +85,41 @@ export default function Login() {
                       color={colors.primary}
                       size={40}
                     />
-                    <TextInput
-                      placeholder={locale.t("checkEmail.labels.otpCheck")}
-                      placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                      keyboardType="numeric"
-                      value={values.otp}
-                      onBlur={handleBlur("otp")}
-                      onChangeText={handleChange("otp")}
-                      style={styles.textInputContainer}
-                      contentStyle={styles.textInput}
-                      autoComplete="sms-otp"
-                    />
+                    <View style={styles.screen}>
+                      <TextInput
+                        placeholder={locale.t("checkEmail.labels.otpCheck")}
+                        placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                        keyboardType="numeric"
+                        value={values.otp}
+                        onBlur={handleBlur("otp")}
+                        onChangeText={handleChange("otp")}
+                        style={styles.textInput}
+                        autoComplete="sms-otp"
+                        dense
+                        underlineColor="rgba(0,0,0,0.5)"
+                      />
+                    </View>
                   </View>
                 </View>
 
-                <Button
-                  mode="contained"
-                  textColor={colors.surface}
-                  onPress={() => router.replace("checkEmail")}
-                  contentStyle={styles.signUpButton}
-                  loading={isUserLoading}
-                  icon={() => (
-                    <Icon
-                      source="chevron-right"
-                      size={32}
-                      color={colors.secondary}
-                    />
-                  )}
-                >
-                  {locale.t("checkEmail.cta")}
-                </Button>
+                <View style={styles.buttonContainer}>
+                  <Button
+                    mode="contained"
+                    textColor={colors.surface}
+                    onPress={() => handleSubmit()}
+                    contentStyle={styles.signUpButton}
+                    loading={loading}
+                    icon={() => (
+                      <Icon
+                        source="chevron-right"
+                        size={32}
+                        color={colors.secondary}
+                      />
+                    )}
+                  >
+                    {locale.t("checkEmail.cta")}
+                  </Button>
+                </View>
               </View>
             )}
           </Formik>
@@ -101,11 +127,10 @@ export default function Login() {
         <View
           style={{
             flex: 1,
-            // alignItems: "center",
+            alignItems: "center",
             justifyContent: "center",
             paddingHorizontal: 30,
-            flexDirection: "row",
-            flexWrap: "wrap"
+            flexDirection: "row"
           }}
         >
           <Text
@@ -152,21 +177,16 @@ const styles = StyleSheet.create({
   },
   form: {
     flex: 1,
-    backgroundColor: "transparent",
     paddingHorizontal: 30,
-    paddingVertical: 30,
-    justifyContent: "space-between",
-    rowGap: 24
+    paddingVertical: 30
   },
   fieldContainer: {
-    backgroundColor: "transparent",
-    rowGap: 12
+    rowGap: 12,
+    flex: 1
   },
   field: {
     flexDirection: "row",
-    columnGap: 12,
-    backgroundColor: "transparent",
-    alignItems: "baseline"
+    columnGap: 12
   },
   textInputContainer: {
     flex: 1,
@@ -176,10 +196,15 @@ const styles = StyleSheet.create({
     borderBottomColor: "rgba(0,0,0,0.5)"
   },
   textInput: {
-    paddingLeft: 0
+    paddingHorizontal: 0
   },
   signUpButton: {
     flexDirection: "row-reverse",
-    paddingVertical: 4
+    paddingVertical: 4,
+    marginBottom: 0
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: "flex-end"
   }
 })

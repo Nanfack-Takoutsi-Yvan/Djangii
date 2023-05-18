@@ -1,5 +1,3 @@
-/* eslint-disable import/extensions */
-/* eslint-disable react/jsx-no-bind */
 import {
   StyleSheet,
   ImageBackground,
@@ -20,16 +18,35 @@ import { useRouter } from "expo-router"
 import AppStateContext from "@services/context/context"
 import PasswordIcon from "@components/ui/PasswordIcon"
 import PhoneInput from "react-native-phone-input"
-import handleLogin from "@utils/methods"
+import User from "@services/models/user"
+import LoadingModal from "@components/ui/LoadingModal"
 
 export default function SignUp() {
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(false)
-  const [isUserLoading, setIsUserLoading] = useState<boolean>(false)
+  const [isOtpSending, setIsOtpSending] = useState<boolean>(false)
 
-  const { locale, setUser } = useContext(AppStateContext)
+  const { locale } = useContext(AppStateContext)
   const { colors } = useTheme()
 
   const router = useRouter()
+
+  type payload = {
+    username: string
+    firstName: string
+    lastName: string
+    email: string
+    phoneNumber: string
+    password: string
+    passwordConfirm: string
+  }
+
+  const sendOTP = async (values: payload, lang?: string) => {
+    const otpSent = await User.sendOTP(values.email, lang)
+
+    if (otpSent) {
+      router.replace({ pathname: "checkEmail", params: values })
+    }
+  }
 
   return (
     <KeyboardAvoidingView
@@ -41,6 +58,7 @@ export default function SignUp() {
         style={styles.screen}
         source={require("../../assets/images/screens/background.png")}
       >
+        <LoadingModal displayModal={isOtpSending} />
         <StatusBar barStyle="light-content" />
         <View style={styles.titleContainer}>
           <Text variant="headlineMedium" style={{ color: colors.surface }}>
@@ -63,9 +81,13 @@ export default function SignUp() {
                 password: "",
                 passwordConfirm: ""
               }}
-              onSubmit={values =>
-                handleLogin(values, setUser, setIsUserLoading)
-              }
+              onSubmit={values => {
+                setIsOtpSending(true)
+                sendOTP(values, locale.locale)
+                  // eslint-disable-next-line no-console
+                  .catch(err => console.log(err))
+                  .finally(() => setIsOtpSending(false))
+              }}
             >
               {({ handleChange, handleBlur, handleSubmit, values }) => (
                 <View style={styles.form}>
@@ -75,17 +97,20 @@ export default function SignUp() {
                       color={colors.primary}
                       size={40}
                     />
-                    <TextInput
-                      placeholder={locale.t("signUp.labels.username")}
-                      placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                      keyboardType="name-phone-pad"
-                      value={values.username}
-                      onBlur={handleBlur("username")}
-                      onChangeText={handleChange("username")}
-                      style={styles.textInputContainer}
-                      contentStyle={styles.textInput}
-                      autoComplete="username"
-                    />
+                    <View style={styles.screen}>
+                      <TextInput
+                        placeholder={locale.t("signUp.labels.username")}
+                        placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                        keyboardType="name-phone-pad"
+                        value={values.username}
+                        onBlur={handleBlur("username")}
+                        onChangeText={handleChange("username")}
+                        style={styles.textInput}
+                        dense
+                        underlineColor="rgba(0,0,0,0.5)"
+                        autoComplete="username"
+                      />
+                    </View>
                   </View>
 
                   <View style={styles.field}>
@@ -94,17 +119,20 @@ export default function SignUp() {
                       color={colors.primary}
                       size={40}
                     />
-                    <TextInput
-                      placeholder={locale.t("signUp.labels.firstName")}
-                      placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                      keyboardType="name-phone-pad"
-                      value={values.firstName}
-                      onBlur={handleBlur("firstName")}
-                      onChangeText={handleChange("firstName")}
-                      style={styles.textInputContainer}
-                      contentStyle={styles.textInput}
-                      autoComplete="name-given"
-                    />
+                    <View style={styles.screen}>
+                      <TextInput
+                        placeholder={locale.t("signUp.labels.firstName")}
+                        placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                        keyboardType="name-phone-pad"
+                        value={values.firstName}
+                        onBlur={handleBlur("firstName")}
+                        onChangeText={handleChange("firstName")}
+                        style={styles.textInput}
+                        dense
+                        underlineColor="rgba(0,0,0,0.5)"
+                        autoComplete="name-given"
+                      />
+                    </View>
                   </View>
 
                   <View style={styles.field}>
@@ -113,32 +141,38 @@ export default function SignUp() {
                       color={colors.primary}
                       size={40}
                     />
-                    <TextInput
-                      placeholder={locale.t("signUp.labels.lastName")}
-                      placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                      keyboardType="name-phone-pad"
-                      value={values.lastName}
-                      onBlur={handleBlur("lastName")}
-                      onChangeText={handleChange("lastName")}
-                      style={styles.textInputContainer}
-                      contentStyle={styles.textInput}
-                      autoComplete="name-family"
-                    />
+                    <View style={styles.screen}>
+                      <TextInput
+                        placeholder={locale.t("signUp.labels.lastName")}
+                        placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                        keyboardType="name-phone-pad"
+                        value={values.lastName}
+                        onBlur={handleBlur("lastName")}
+                        onChangeText={handleChange("lastName")}
+                        style={styles.textInput}
+                        dense
+                        underlineColor="rgba(0,0,0,0.5)"
+                        autoComplete="name-family"
+                      />
+                    </View>
                   </View>
 
                   <View style={styles.field}>
                     <Icon source="at" color={colors.primary} size={40} />
-                    <TextInput
-                      placeholder={locale.t("signUp.labels.email")}
-                      placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                      keyboardType="email-address"
-                      value={values.email}
-                      onBlur={handleBlur("email")}
-                      onChangeText={handleChange("email")}
-                      style={styles.textInputContainer}
-                      contentStyle={styles.textInput}
-                      autoComplete="email"
-                    />
+                    <View style={styles.screen}>
+                      <TextInput
+                        placeholder={locale.t("signUp.labels.email")}
+                        placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                        keyboardType="email-address"
+                        value={values.email}
+                        onBlur={handleBlur("email")}
+                        dense
+                        underlineColor="rgba(0,0,0,0.5)"
+                        onChangeText={handleChange("email")}
+                        style={styles.textInput}
+                        autoComplete="email"
+                      />
+                    </View>
                   </View>
 
                   <PhoneInput
@@ -169,24 +203,27 @@ export default function SignUp() {
                       color={colors.primary}
                       size={40}
                     />
-                    <TextInput
-                      placeholder={locale.t("login.labels.password")}
-                      placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                      keyboardType="visible-password"
-                      value={values.password}
-                      onBlur={handleBlur("password")}
-                      onChangeText={handleChange("password")}
-                      style={styles.textInputContainer}
-                      contentStyle={styles.textInput}
-                      autoComplete="password"
-                      secureTextEntry
-                      right={
-                        <PasswordIcon
-                          showEye={isPasswordHidden}
-                          toggleEye={setIsPasswordHidden}
-                        />
-                      }
-                    />
+                    <View style={styles.screen}>
+                      <TextInput
+                        placeholder={locale.t("login.labels.password")}
+                        placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                        keyboardType="visible-password"
+                        value={values.password}
+                        onBlur={handleBlur("password")}
+                        onChangeText={handleChange("password")}
+                        style={styles.textInput}
+                        dense
+                        underlineColor="rgba(0,0,0,0.5)"
+                        autoComplete="password"
+                        secureTextEntry
+                        right={
+                          <PasswordIcon
+                            showEye={isPasswordHidden}
+                            toggleEye={setIsPasswordHidden}
+                          />
+                        }
+                      />
+                    </View>
                   </View>
 
                   <View style={styles.field}>
@@ -195,53 +232,52 @@ export default function SignUp() {
                       color={colors.primary}
                       size={40}
                     />
-                    <TextInput
-                      placeholder={locale.t("signUp.labels.confirmPassword")}
-                      placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                      keyboardType="visible-password"
-                      value={values.passwordConfirm}
-                      onBlur={handleBlur("passwordConfirm")}
-                      onChangeText={handleChange("passwordConfirm")}
-                      style={styles.textInputContainer}
-                      contentStyle={styles.textInput}
-                      autoComplete="password"
-                      secureTextEntry
-                      right={
-                        <PasswordIcon
-                          showEye={isPasswordHidden}
-                          toggleEye={setIsPasswordHidden}
-                        />
-                      }
-                    />
+                    <View style={styles.screen}>
+                      <TextInput
+                        placeholder={locale.t("signUp.labels.confirmPassword")}
+                        placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                        keyboardType="visible-password"
+                        value={values.passwordConfirm}
+                        onBlur={handleBlur("passwordConfirm")}
+                        onChangeText={handleChange("passwordConfirm")}
+                        style={styles.textInput}
+                        autoComplete="password"
+                        dense
+                        underlineColor="rgba(0,0,0,0.5)"
+                        secureTextEntry
+                        right={
+                          <PasswordIcon
+                            showEye={isPasswordHidden}
+                            toggleEye={setIsPasswordHidden}
+                          />
+                        }
+                      />
+                    </View>
                   </View>
 
-                  <Button
-                    mode="contained"
-                    textColor={colors.surface}
-                    onPress={() => handleSubmit()}
-                    contentStyle={styles.signUpButton}
-                    loading={isUserLoading}
-                    icon={() => (
-                      <Icon
-                        source="chevron-right"
-                        size={32}
-                        color={colors.secondary}
-                      />
-                    )}
-                  >
-                    {locale.t("signUp.signUp")}
-                  </Button>
+                  <View style={styles.screen}>
+                    <Button
+                      mode="contained"
+                      textColor={colors.surface}
+                      onPress={() => handleSubmit()}
+                      contentStyle={styles.signUpButton}
+                      loading={isOtpSending}
+                      icon={() => (
+                        <Icon
+                          source="chevron-right"
+                          size={32}
+                          color={colors.secondary}
+                        />
+                      )}
+                    >
+                      {locale.t("signUp.signUp")}
+                    </Button>
+                  </View>
                 </View>
               )}
             </Formik>
-            <View
-              style={{
-                flex: 1,
-                paddingHorizontal: 30,
-                flexDirection: "row",
-                alignItems: "center"
-              }}
-            >
+
+            <View style={styles.loginContainer}>
               <Text>{locale.t("signUp.existingAccount")}</Text>
               <Button
                 mode="text"
@@ -295,19 +331,10 @@ const styles = StyleSheet.create({
   },
   field: {
     flexDirection: "row",
-    columnGap: 12,
-    backgroundColor: "transparent",
-    alignItems: "baseline"
-  },
-  textInputContainer: {
-    flex: 1,
-    height: 40,
-    borderBottomWidth: 1,
-    backgroundColor: "transparent",
-    borderBottomColor: "rgba(0,0,0,0.5)"
+    columnGap: 12
   },
   textInput: {
-    paddingLeft: 0
+    paddingHorizontal: 0
   },
   button: {
     alignItems: "flex-start"
@@ -335,7 +362,7 @@ const styles = StyleSheet.create({
     height: 40,
     fontSize: 16,
     fontFamily: "SoraMedium",
-    borderBottomColor: "rgba(0,0,0,0.5)",
+    borderBottomColor: "rgba(0,0,0,0.2)",
     borderBottomWidth: 1,
     marginBottom: 1
   },
@@ -346,5 +373,11 @@ const styles = StyleSheet.create({
   phoneInputCancelTextStyle: {
     fontFamily: "SoraMedium",
     color: "red"
+  },
+  loginContainer: {
+    flex: 1,
+    paddingHorizontal: 30,
+    flexDirection: "row",
+    alignItems: "center"
   }
 })

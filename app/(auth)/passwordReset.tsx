@@ -19,7 +19,7 @@ import { useRouter } from "expo-router"
 import AppStateContext from "@services/context/context"
 import PasswordIcon from "@components/ui/PasswordIcon"
 
-export default function Login() {
+export default function PasswordReset() {
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(false)
   const [isUserLoading, setIsUserLoading] = useState<boolean>(false)
 
@@ -59,17 +59,20 @@ export default function Login() {
                       color={colors.primary}
                       size={40}
                     />
-                    <TextInput
-                      placeholder={locale.t("passwordReset.labels.otp")}
-                      placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                      keyboardType="name-phone-pad"
-                      value={values.otp}
-                      onBlur={handleBlur("otp")}
-                      onChangeText={handleChange("otp")}
-                      style={styles.textInputContainer}
-                      contentStyle={styles.textInput}
-                      autoComplete="sms-otp"
-                    />
+                    <View style={styles.screen}>
+                      <TextInput
+                        placeholder={locale.t("passwordReset.labels.otp")}
+                        placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                        keyboardType="name-phone-pad"
+                        value={values.otp}
+                        onBlur={handleBlur("otp")}
+                        onChangeText={handleChange("otp")}
+                        style={styles.textInput}
+                        dense
+                        underlineColor="rgba(0,0,0,0.5)"
+                        autoComplete="sms-otp"
+                      />
+                    </View>
                   </View>
 
                   <View style={styles.field}>
@@ -78,24 +81,29 @@ export default function Login() {
                       color={colors.primary}
                       size={40}
                     />
-                    <TextInput
-                      placeholder={locale.t("passwordReset.labels.newPassword")}
-                      placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                      keyboardType="visible-password"
-                      value={values.password}
-                      onBlur={handleBlur("password")}
-                      onChangeText={handleChange("password")}
-                      style={styles.textInputContainer}
-                      contentStyle={styles.textInput}
-                      autoComplete="password"
-                      secureTextEntry
-                      right={
-                        <PasswordIcon
-                          showEye={isPasswordHidden}
-                          toggleEye={setIsPasswordHidden}
-                        />
-                      }
-                    />
+                    <View style={styles.screen}>
+                      <TextInput
+                        placeholder={locale.t(
+                          "passwordReset.labels.newPassword"
+                        )}
+                        placeholderTextColor="rgba(0, 0, 0, 0.30)"
+                        keyboardType="visible-password"
+                        value={values.password}
+                        onBlur={handleBlur("password")}
+                        onChangeText={handleChange("password")}
+                        style={styles.textInput}
+                        autoComplete="password"
+                        dense
+                        underlineColor="rgba(0,0,0,0.5)"
+                        secureTextEntry
+                        right={
+                          <PasswordIcon
+                            showEye={isPasswordHidden}
+                            toggleEye={setIsPasswordHidden}
+                          />
+                        }
+                      />
+                    </View>
                   </View>
 
                   <View style={styles.field}>
@@ -104,26 +112,29 @@ export default function Login() {
                       color={colors.primary}
                       size={40}
                     />
-                    <TextInput
-                      placeholder={locale.t(
-                        "passwordReset.labels.passwordConfirmation"
-                      )}
-                      placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                      keyboardType="visible-password"
-                      value={values.passwordConfirm}
-                      onBlur={handleBlur("passwordConfirm")}
-                      onChangeText={handleChange("passwordConfirm")}
-                      style={styles.textInputContainer}
-                      contentStyle={styles.textInput}
-                      autoComplete="password"
-                      secureTextEntry
-                      right={
-                        <PasswordIcon
-                          showEye={isPasswordHidden}
-                          toggleEye={setIsPasswordHidden}
-                        />
-                      }
-                    />
+                    <View style={styles.screen}>
+                      <TextInput
+                        placeholder={locale.t(
+                          "passwordReset.labels.passwordConfirmation"
+                        )}
+                        placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                        keyboardType="visible-password"
+                        value={values.passwordConfirm}
+                        onBlur={handleBlur("passwordConfirm")}
+                        onChangeText={handleChange("passwordConfirm")}
+                        style={styles.textInput}
+                        autoComplete="password"
+                        dense
+                        underlineColor="rgba(0,0,0,0.5)"
+                        secureTextEntry
+                        right={
+                          <PasswordIcon
+                            showEye={isPasswordHidden}
+                            toggleEye={setIsPasswordHidden}
+                          />
+                        }
+                      />
+                    </View>
                   </View>
                 </View>
 
@@ -188,19 +199,10 @@ const styles = StyleSheet.create({
   },
   field: {
     flexDirection: "row",
-    columnGap: 12,
-    backgroundColor: "transparent",
-    alignItems: "baseline"
-  },
-  textInputContainer: {
-    flex: 1,
-    height: 40,
-    borderBottomWidth: 1,
-    backgroundColor: "transparent",
-    borderBottomColor: "rgba(0,0,0,0.5)"
+    columnGap: 12
   },
   textInput: {
-    paddingLeft: 0
+    paddingHorizontal: 0
   },
   signUpButton: {
     flexDirection: "row-reverse",

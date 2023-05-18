@@ -8,7 +8,7 @@ export default {
     error: "#F72706",
     background: "#fff",
     surface: "rgb(255, 255, 255)",
-    backdrop: "#532181"
+    backdrop: "rgba(83,33,129,0.3)"
   } as MD3Colors,
   dark: {
     primary: "#5E3187",
