@@ -15,6 +15,13 @@
       "userName": "Nom d'utilisateur",
       "password": "Mot de passe"
     },
+    "errors": {
+      "password": {
+        "required": "le mot de passe est obligatoire",
+        "length": "mot de passe trop court"
+      },
+      "username": "username is required"
+    },
     "passwordForgotten": "Mot de passe oublié ?",
     "noAccount": "Vous n'avez pas de compte ?",
     "signUp": "Inscrivez vous",

@@ -20,6 +20,7 @@ import AppStateContext from "@services/context/context"
 import PasswordIcon from "@components/ui/PasswordIcon"
 import handleLogin from "@utils/methods"
 import LoadingModal from "@components/ui/LoadingModal"
+import vaidationSchema from "@services/validations"
 
 export default function Login() {
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(false)
@@ -57,11 +58,18 @@ export default function Login() {
             >
               <Formik
                 initialValues={{ username: "", password: "" }}
+                validationSchema={vaidationSchema.loginValidationSchema}
                 onSubmit={values =>
                   handleLogin(values, setUser, setIsUserLoading)
                 }
               >
-                {({ handleChange, handleBlur, handleSubmit, values }) => (
+                {({
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                  values,
+                  errors
+                }) => (
                   <View style={styles.form}>
                     <View style={styles.fieldContainer}>
                       <Text variant="labelLarge">
@@ -74,18 +82,33 @@ export default function Login() {
                           size={40}
                         />
                         <View style={styles.screen}>
-                          <TextInput
-                            placeholder={locale.t("login.labels.username")}
-                            placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                            keyboardType="name-phone-pad"
-                            value={values.username}
-                            onBlur={handleBlur("username")}
-                            onChangeText={handleChange("username")}
-                            style={styles.textInput}
-                            autoComplete="username"
-                            dense
-                            underlineColor="rgba(0,0,0,0.5)"
-                          />
+                          <View style={styles.screen}>
+                            <TextInput
+                              dense
+                              placeholder={locale.t("login.labels.username")}
+                              placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                              keyboardType="name-phone-pad"
+                              value={values.username}
+                              onBlur={handleBlur("username")}
+                              onChangeText={handleChange("username")}
+                              style={styles.textInput}
+                              autoComplete="username"
+                              underlineColor="rgba(0,0,0,0.5)"
+                              error={!!errors.username}
+                            />
+                          </View>
+                          {errors.username && (
+                            <View style={styles.errorContainer}>
+                              <Text
+                                style={{
+                                  color: colors.error,
+                                  fontStyle: "italic"
+                                }}
+                              >
+                                {locale.t(errors.username)}
+                              </Text>
+                            </View>
+                          )}
                         </View>
                       </View>
                     </View>
@@ -101,26 +124,41 @@ export default function Login() {
                           size={40}
                         />
                         <View style={styles.screen}>
-                          <TextInput
-                            placeholder={locale.t("login.labels.password")}
-                            placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                            keyboardType="visible-password"
-                            value={values.password}
-                            onBlur={handleBlur("password")}
-                            onChangeText={handleChange("password")}
-                            style={styles.textInput}
-                            autoComplete="password"
-                            secureTextEntry
-                            dense
-                            underlineColor="rgba(0,0,0,0.5)"
-                            right={
-                              <Icon
-                                source="form-textbox-password"
-                                color={colors.primary}
-                                size={40}
-                              />
-                            }
-                          />
+                          <View style={styles.screen}>
+                            <TextInput
+                              dense
+                              placeholder={locale.t("login.labels.password")}
+                              placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                              keyboardType="visible-password"
+                              value={values.password}
+                              onBlur={handleBlur("password")}
+                              onChangeText={handleChange("password")}
+                              style={styles.textInput}
+                              autoComplete="password"
+                              secureTextEntry
+                              underlineColor="rgba(0,0,0,0.5)"
+                              error={!!errors.password}
+                              right={
+                                <Icon
+                                  source="form-textbox-password"
+                                  color={colors.primary}
+                                  size={40}
+                                />
+                              }
+                            />
+                          </View>
+                          {errors.password && (
+                            <View style={styles.errorContainer}>
+                              <Text
+                                style={{
+                                  color: colors.error,
+                                  fontStyle: "italic"
+                                }}
+                              >
+                                {locale.t(errors.password)}
+                              </Text>
+                            </View>
+                          )}
                         </View>
                       </View>
                     </View>
@@ -231,5 +269,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     flexDirection: "row",
     alignItems: "center"
+  },
+  errorContainer: {
+    top: 24
   }
 })

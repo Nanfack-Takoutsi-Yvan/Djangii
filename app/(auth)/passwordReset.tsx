@@ -141,7 +141,7 @@ export default function PasswordReset() {
                 <Button
                   mode="contained"
                   textColor={colors.surface}
-                  onPress={() => router.replace("checkEmail")}
+                  onPress={handleSubmit.bind(null, "")}
                   contentStyle={styles.signUpButton}
                   loading={isUserLoading}
                   icon={() => (
