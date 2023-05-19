@@ -10,7 +10,7 @@ export default class AuthController implements IAuthController {
   constructor() {
     this.resource = {
       login: "login",
-      register: "register",
+      register: "api/register",
       resetPassword: "users/me/change-password",
       sendOTP: "api/public/otp/send",
       verifyOTP: "api/public/otp/verify"
@@ -49,16 +49,14 @@ export default class AuthController implements IAuthController {
       )
 
       if (!res) {
-        throw new Error(
-          `An error occurred while saving : ${userData.newUser.username}`
-        )
+        throw new Error(`An error occurred while saving : ${userData.username}`)
       }
 
       return res.data
     } catch (error) {
       console.log(error)
 
-      throw new Error(`Error while getting user: ${JSON.stringify(error)}`)
+      throw new Error(`Error while saving new user: ${JSON.stringify(error)}`)
     }
   }
 

@@ -35,19 +35,17 @@ export interface IDatation {
 }
 
 export interface NewUserData {
-  newUser: {
-    password: string
-    userInfos: {
-      countryCode: string
-      email: string
-      firstName: string
-      id: string
-      lang: string
-      lastName: string
-      phone: string
-    }
-    username: string
+  password: string
+  userInfos: {
+    countryCode?: string
+    email: string
+    firstName: string
+    id?: string
+    lang: string
+    lastName: string
+    phone: string
   }
+  username: string
 }
 
 export interface IAuthController {
@@ -55,4 +53,14 @@ export interface IAuthController {
   register: (userData: NewUserData, otp: string) => Promise<IUser>
   sendOTP: (email: string, lang?: string, canal?: OTP_CANAL) => Promise<boolean>
   validateOTP: (email: string, otp: string) => Promise<boolean>
+}
+
+export type userFormInputs = {
+  username: string
+  firstName: string
+  lastName: string
+  email: string
+  phoneNumber: string
+  password: string
+  passwordConfirm: string
 }

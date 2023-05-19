@@ -8,6 +8,7 @@ import useSoraFonts from "@hooks/font/useSoraFonts"
 import AppStateContext from "@services/context/context"
 import { Provider as PaperProvider } from "react-native-paper"
 import useDjangiiTheme from "@hooks/theme/useDjangiiTheme"
+import { IUser } from "@services/types/auth"
 
 export {
   // Catch any errors thrown by the Layout component.

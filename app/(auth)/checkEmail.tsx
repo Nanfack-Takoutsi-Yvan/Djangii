@@ -1,5 +1,4 @@
-/* eslint-disable import/extensions */
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable no-console */
 import {
   StyleSheet,
   ImageBackground,
@@ -8,42 +7,83 @@ import {
   View
 } from "react-native"
 
-import {
-  Text,
-  TextInput,
-  Button,
-  useTheme,
-  ActivityIndicator
-} from "react-native-paper"
+import { Text, TextInput, Button, useTheme } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
 
 import { Formik } from "formik"
 import { useContext, useState } from "react"
-// import { useRouter } from "expo-router"
+import { useRouter, useLocalSearchParams } from "expo-router"
 
 import AppStateContext from "@services/context/context"
 import User from "@services/models/user"
-import { NewUserData } from "@services/types/auth"
+import { NewUserData, userFormInputs } from "@services/types/auth"
 import LoadingModal from "@components/ui/LoadingModal"
+
+import validations from "@services/validations"
 
 export default function CheckEmail() {
   const [loading, setLoading] = useState<boolean>(false)
 
-  const { locale, user } = useContext(AppStateContext)
+  const { locale, setUser } = useContext(AppStateContext)
   const { colors } = useTheme()
 
-  // const router = useRouter()
+  const params = useLocalSearchParams() as userFormInputs
+  const router = useRouter()
 
   const validateOTP = async ({ otp }: { otp: string }) => {
     setLoading(true)
 
-    const isOTPValid = await User.validateOTP("", otp)
+    const countryCode = params.phoneNumber.split(",")[1].toLocaleUpperCase()
+    const phone = params.phoneNumber.split(",")[0].split(" ").join("")
 
-    if (isOTPValid) {
-      User.register({} as NewUserData, otp).finally(() => {
+    const newUser: NewUserData = {
+      password: params.password,
+      userInfos: {
+        countryCode,
+        email: params.email,
+        firstName: params.firstName,
+        lang: locale.locale.split("-")[0],
+        lastName: params.lastName,
+        phone
+      },
+      username: params.username
+    }
+
+    User.validateOTP(params.email, otp)
+      .then(isOTPValid => {
+        if (isOTPValid) {
+          User.register(newUser, otp)
+            .then(user => {
+              setUser(user)
+            })
+            .catch(err => {
+              console.log("error occurred when saving user", err)
+            })
+            .finally(() => {
+              setLoading(false)
+            })
+        }
+      })
+      .catch(err => {
+        console.log("error occurred when validating the otp", err)
+      })
+      .finally(() => {
         setLoading(false)
       })
-    }
+  }
+
+  const resentOTP = async () => {
+    setLoading(true)
+    User.sendOTP(params.email, locale.locale)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log("An error occurred white sending otp: ", err)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   return (
@@ -65,13 +105,29 @@ export default function CheckEmail() {
           <Icon source="email-check-outline" size={32} color="#90F800" />
         </View>
         <View style={styles.formContainer}>
-          <Formik initialValues={{ otp: "" }} onSubmit={validateOTP}>
-            {({ handleChange, handleBlur, handleSubmit, values }) => (
+          <Formik
+            initialValues={{ otp: "" }}
+            validationSchema={validations.otpValidationSchema}
+            onSubmit={validateOTP}
+          >
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              touched
+            }) => (
               <View style={styles.form}>
                 <View style={styles.screen}>
                   <Text variant="titleMedium">
-                    {locale.t("checkEmail.indication")}
-                    <Text>{user?.userInfos?.email}</Text>
+                    {locale.t("checkEmail.indication")}{" "}
+                    <Text
+                      variant="titleMedium"
+                      style={{ color: colors.secondary }}
+                    >
+                      {params?.email}
+                    </Text>
                   </Text>
                 </View>
 
@@ -82,22 +138,40 @@ export default function CheckEmail() {
                   <View style={styles.field}>
                     <Icon
                       source="email-check-outline"
-                      color={colors.primary}
+                      color={
+                        errors.otp && touched.otp
+                          ? colors.error
+                          : colors.primary
+                      }
                       size={40}
                     />
                     <View style={styles.screen}>
-                      <TextInput
-                        placeholder={locale.t("checkEmail.labels.otpCheck")}
-                        placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                        keyboardType="numeric"
-                        value={values.otp}
-                        onBlur={handleBlur("otp")}
-                        onChangeText={handleChange("otp")}
-                        style={styles.textInput}
-                        autoComplete="sms-otp"
-                        dense
-                        underlineColor="rgba(0,0,0,0.5)"
-                      />
+                      <View style={styles.screen}>
+                        <TextInput
+                          placeholder={locale.t("checkEmail.labels.otpCheck")}
+                          placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                          keyboardType="numeric"
+                          value={values.otp}
+                          onBlur={handleBlur("otp")}
+                          onChangeText={handleChange("otp")}
+                          style={styles.textInput}
+                          autoComplete="sms-otp"
+                          dense
+                          underlineColor="rgba(0,0,0,0.5)"
+                          error={!!errors.otp && touched.otp}
+                        />
+                      </View>
+                      {errors.otp && touched.otp && (
+                        <View style={styles.errorContainer}>
+                          <Text
+                            style={{
+                              color: colors.error
+                            }}
+                          >
+                            {locale.t(errors.otp)}
+                          </Text>
+                        </View>
+                      )}
                     </View>
                   </View>
                 </View>
@@ -143,7 +217,7 @@ export default function CheckEmail() {
             mode="text"
             textColor={colors.secondary}
             labelStyle={{ fontSize: 16, fontFamily: "SoraMedium" }}
-            onPress={console.log}
+            onPress={resentOTP}
           >
             {locale.t("checkEmail.resend")}
           </Button>
@@ -206,5 +280,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     justifyContent: "flex-end"
+  },
+  errorContainer: {
+    top: 24
   }
 })

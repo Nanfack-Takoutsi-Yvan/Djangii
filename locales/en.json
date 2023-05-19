@@ -18,9 +18,9 @@
     "errors": {
       "password": {
         "required": "Password required",
-        "length": "password too short"
+        "length": "Password too short"
       },
-      "username": "username is required"
+      "username": "Username is required"
     },
     "passwordForgotten": "Password forgotten ?",
     "noAccount": "You don't have an account ?",
@@ -37,6 +37,21 @@
       "confirmPassword": "Confirm password",
       "email": "Email",
       "phoneNumber": "696000000"
+    },
+    "errors": {
+      "username": "Username is required",
+      "firstName": "First name is required",
+      "lastName": "Last name is required",
+      "phoneNumber": "Phone number is required",
+      "email": {
+        "notValid": "Enter a valid email address",
+        "required": "Email is required"
+      },
+      "password": {
+        "required": "Password required",
+        "length": "Password too short",
+        "match": "Passwords must match"
+      }
     },
     "existingAccount": "You already have an account ?",
     "connect": "Login",
@@ -57,6 +72,12 @@
     "indication": "An OTP was sent to",
     "labels": {
       "otpCheck": "Enter the OTP"
+    },
+    "errors": {
+      "otpCheck": {
+        "length": "OTP must be 5 characters long",
+        "required": "OPT is required"
+      }
     },
     "cta": "Confirm",
     "resendTitle": "You didn't receive an OTP? ",

@@ -68,7 +68,8 @@ export default function Login() {
                   handleBlur,
                   handleSubmit,
                   values,
-                  errors
+                  errors,
+                  touched
                 }) => (
                   <View style={styles.form}>
                     <View style={styles.fieldContainer}>
@@ -78,7 +79,11 @@ export default function Login() {
                       <View style={styles.field}>
                         <Icon
                           source="account-outline"
-                          color={colors.primary}
+                          color={
+                            errors.username && touched.username
+                              ? colors.error
+                              : colors.primary
+                          }
                           size={40}
                         />
                         <View style={styles.screen}>
@@ -94,15 +99,14 @@ export default function Login() {
                               style={styles.textInput}
                               autoComplete="username"
                               underlineColor="rgba(0,0,0,0.5)"
-                              error={!!errors.username}
+                              error={!!errors.username && !!touched.username}
                             />
                           </View>
-                          {errors.username && (
+                          {errors.username && touched.username && (
                             <View style={styles.errorContainer}>
                               <Text
                                 style={{
-                                  color: colors.error,
-                                  fontStyle: "italic"
+                                  color: colors.error
                                 }}
                               >
                                 {locale.t(errors.username)}
@@ -120,7 +124,11 @@ export default function Login() {
                       <View style={styles.field}>
                         <Icon
                           source="form-textbox-password"
-                          color={colors.primary}
+                          color={
+                            errors.password && touched.password
+                              ? colors.error
+                              : colors.primary
+                          }
                           size={40}
                         />
                         <View style={styles.screen}>
@@ -137,7 +145,7 @@ export default function Login() {
                               autoComplete="password"
                               secureTextEntry
                               underlineColor="rgba(0,0,0,0.5)"
-                              error={!!errors.password}
+                              error={!!errors.password && !!touched.password}
                               right={
                                 <Icon
                                   source="form-textbox-password"
@@ -147,7 +155,7 @@ export default function Login() {
                               }
                             />
                           </View>
-                          {errors.password && (
+                          {errors.password && touched.password && (
                             <View style={styles.errorContainer}>
                               <Text
                                 style={{
