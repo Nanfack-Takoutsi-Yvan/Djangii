@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   StyleSheet,
   ImageBackground,
@@ -11,8 +12,8 @@ import {
 import { Text, TextInput, Button, useTheme } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
 
-import { Formik } from "formik"
-import { useContext, useState } from "react"
+import { Formik, useField } from "formik"
+import { forwardRef, useContext, useRef, useState } from "react"
 import { useRouter } from "expo-router"
 
 import AppStateContext from "@services/context/context"
@@ -23,6 +24,7 @@ import LoadingModal from "@components/ui/LoadingModal"
 
 import validations from "@services/validations"
 import { userFormInputs } from "@services/types/auth"
+import limits from "@constants/validation/limits"
 
 export default function SignUp() {
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(false)
@@ -33,17 +35,46 @@ export default function SignUp() {
 
   const router = useRouter()
 
+  const phoneInputRef = useRef<any>(null)
+
+  const CustomPhoneInput = forwardRef((props, ref) => {
+    const [field, meta] = useField({ name: "phoneNumber" })
+
+    return (
+      <TextInput
+        {...props}
+        placeholderTextColor="rgba(0, 0, 0, 0.20)"
+        style={styles.textInput}
+        dense
+        underlineColor="rgba(0,0,0,0.5)"
+        autoComplete="tel"
+        onBlur={e => {
+          field.onBlur("phoneNumber")(e)
+          const { value } = e.target
+          if (value && value.length >= limits.phoneNumberLength.min) {
+            User.isPhoneNumberUsed(e.target.value.split(" ").join(""))
+          }
+        }}
+        error={!!meta.error && !!meta.touched}
+        ref={ref as any}
+      />
+    )
+  })
+
   const sendOTP = async (values: userFormInputs, lang?: string) => {
     const otpSent = await User.sendOTP(values.email, lang)
 
     if (otpSent) {
-      router.replace({ pathname: "checkEmail", params: values })
+      router.replace({
+        pathname: "checkOTP",
+        params: { values: encodeURIComponent(JSON.stringify(values)) }
+      })
     }
   }
 
   const vaidateFormik = async (values: userFormInputs) => {
     setIsOtpSending(true)
-    sendOTP(values, locale.locale)
+    sendOTP(values, locale.locale.split("-")[0])
       // eslint-disable-next-line no-console
       .catch(err => console.log(err))
       .finally(() => setIsOtpSending(false))
@@ -111,7 +142,12 @@ export default function SignUp() {
                           placeholderTextColor="rgba(0, 0, 0, 0.20)"
                           keyboardType="name-phone-pad"
                           value={values.username}
-                          onBlur={handleBlur("username")}
+                          onBlur={e => {
+                            handleBlur("username")(e)
+                            if (e.target.value) {
+                              User.isUsernameUsed(e.target.value)
+                            }
+                          }}
                           onChangeText={handleChange("username")}
                           style={styles.textInput}
                           dense
@@ -231,7 +267,12 @@ export default function SignUp() {
                           placeholderTextColor="rgba(0, 0, 0, 0.20)"
                           keyboardType="email-address"
                           value={values.email}
-                          onBlur={handleBlur("email")}
+                          onBlur={e => {
+                            handleBlur("email")(e)
+                            if (e.target.value) {
+                              User.isEmailUsed(e.target.value)
+                            }
+                          }}
                           dense
                           underlineColor="rgba(0,0,0,0.5)"
                           onChangeText={handleChange("email")}
@@ -283,6 +324,8 @@ export default function SignUp() {
                             <Image source={imageSource} style={styles.flag} />
                           </View>
                         )}
+                        textComponent={CustomPhoneInput}
+                        ref={phoneInputRef}
                       />
                     </View>
                     {errors.phoneNumber && touched.phoneNumber && (
@@ -385,7 +428,7 @@ export default function SignUp() {
                         />
                       </View>
 
-                      {errors.passwordConfirm && touched.password && (
+                      {errors.passwordConfirm && touched.passwordConfirm && (
                         <View style={styles.errorContainer}>
                           <Text
                             style={{
@@ -500,7 +543,8 @@ const styles = StyleSheet.create({
   flag: {
     width: 28,
     height: 20,
-    borderRadius: 5
+    borderRadius: 5,
+    marginLeft: 8
   },
   phoneInputTextStyle: {
     height: 40,

@@ -20,7 +20,9 @@
         "required": "le mot de passe est obligatoire",
         "length": "mot de passe trop court"
       },
-      "username": "username is required"
+      "username": "username is required",
+      "notFoundTitle": "L'utilisateur n'existe pas!",
+      "notFoundDescription": "Veuillez verifier votre nom d'utilisateur et mot de passe puis reessayez."
     },
     "passwordForgotten": "Mot de passe oublié ?",
     "noAccount": "Vous n'avez pas de compte ?",
@@ -65,9 +67,23 @@
       "newPassword": "Nouveau mot de passe",
       "passwordConfirmation": "Confirmez le mot de passe"
     },
+    "error": {
+      "otp": {
+        "length":"L'OTP doit avoir une longueur de 5 characters",
+        "required":"L'OTP est obligatoire"
+      },
+      "password": {
+        "min": "Password trop court",
+        "required":"Password est obligatoire"
+      },
+      "passwordConfirm": {
+        "min": "Password trop court",
+        "required":"Confirmation du mot de passe obligatoire"
+      }
+    },
     "cta": "Réinitialiser le mot de passe"
   },
-  "checkEmail": {
+  "checkOTP": {
     "title": "Verifier votre email",
     "indication": "Un OTP a été envoyé à",
     "labels": {
@@ -76,11 +92,24 @@
     "errors": {
       "otpCheck": {
         "length": "L'OTP doit avoir une longueur de 5 characters",
-        "required": "L'OTP est Obligatoire"
+        "required": "L'OTP est obligatoire"
       }
     },
     "cta": "Confirmer",
     "resendTitle": "Vous n’avez pas obtenu d’OTP? ",
     "resend": "Renvoyez l’OTP"
+  },
+  "checkEmail": {
+    "title": "Verifier votre email",
+    "description": "Un OTP sera envoyé à votre adresse mail",
+    "labels": {
+      "emailCheck": "Entrez votre adresse mail"
+    },
+    "errors": {
+      "emailCheck": {
+        "valid": "Entrez une adresse mail valide",
+        "required": "Email obligatoire"
+      }
+    }
   }
 }

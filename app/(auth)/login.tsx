@@ -21,10 +21,14 @@ import PasswordIcon from "@components/ui/PasswordIcon"
 import handleLogin from "@utils/methods"
 import LoadingModal from "@components/ui/LoadingModal"
 import vaidationSchema from "@services/validations"
+import ActionModal from "@components/ActionModal"
 
 export default function Login() {
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(false)
   const [isUserLoading, setIsUserLoading] = useState<boolean>(false)
+  const [displayActionModal, setDisplayActionModal] = useState<boolean>(false)
+  const [actionModalTitle, setActionModalTitle] = useState<string>("")
+  const [actionModalDescription, setActionModalDescription] = useState<string>()
 
   const { locale, setUser } = useContext(AppStateContext)
   const { colors } = useTheme()
@@ -34,6 +38,14 @@ export default function Login() {
   return (
     <>
       <LoadingModal displayModal={isUserLoading} />
+      <ActionModal
+        setDisplayModal={setDisplayActionModal}
+        displayModal={displayActionModal}
+        title={actionModalTitle}
+        description={actionModalDescription}
+        state="error"
+        icon
+      />
       <KeyboardAvoidingView
         style={styles.screen}
         contentContainerStyle={styles.screen}
@@ -60,7 +72,13 @@ export default function Login() {
                 initialValues={{ username: "", password: "" }}
                 validationSchema={vaidationSchema.loginValidationSchema}
                 onSubmit={values =>
-                  handleLogin(values, setUser, setIsUserLoading)
+                  handleLogin(values, setUser, setIsUserLoading).catch(() => {
+                    setDisplayActionModal(true)
+                    setActionModalTitle(locale.t("login.errors.notFoundTitle"))
+                    setActionModalDescription(
+                      locale.t("login.errors.notFoundDescription")
+                    )
+                  })
                 }
               >
                 {({
@@ -175,7 +193,7 @@ export default function Login() {
                       <Button
                         mode="text"
                         textColor={colors.tertiary}
-                        onPress={router.replace.bind(null, "passwordReset")}
+                        onPress={router.replace.bind(null, "checkEmail")}
                         labelStyle={styles.buttonTitle}
                         style={styles.button}
                       >

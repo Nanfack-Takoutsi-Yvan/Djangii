@@ -20,7 +20,9 @@
         "required": "Password required",
         "length": "Password too short"
       },
-      "username": "Username is required"
+      "username": "Username is required",
+      "notFoundTitle": "User not found !",
+      "notFoundDescription": "Check your username and password then try again."
     },
     "passwordForgotten": "Password forgotten ?",
     "noAccount": "You don't have an account ?",
@@ -65,9 +67,23 @@
       "newPassword": "Enter your new password",
       "passwordConfirmation": "Confirm your password"
     },
+    "error": {
+      "otp": {
+        "length":"OTP must be 5 characters long",
+        "required":"OPT is required"
+      },
+      "password": {
+        "min": "Password too short",
+        "required":"Password required"
+      },
+      "passwordConfirm": {
+        "min": "Password too short",
+        "required":"Password confirmation is required"
+      }
+    },
     "cta": "Reset password"
   },
-  "checkEmail": {
+  "checkOTP": {
     "title": "Verify your email",
     "indication": "An OTP was sent to",
     "labels": {
@@ -82,5 +98,18 @@
     "cta": "Confirm",
     "resendTitle": "You didn't receive an OTP? ",
     "resend": "Resend an OTP"
+  },
+  "checkEmail": {
+    "title": "Verify your email",
+    "description": "An OTP will be sent to your email address",
+    "labels": {
+      "checkEmail": "Enter email username, address or phoneNumber "
+    },
+    "errors": {
+      "emailCheck": {
+        "valid": "Enter a valid email address",
+        "required": "Email is required"
+      }
+    }
   }
 }

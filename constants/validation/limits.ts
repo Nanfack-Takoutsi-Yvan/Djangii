@@ -3,7 +3,7 @@ const field = {
     min: 4
   },
   phoneNumberLength: {
-    min: 5
+    min: 8
   },
   otp: {
     length: 5

@@ -93,4 +93,60 @@ export default class User implements IUser {
 
     return isOTPValid
   }
+
+  static getPasswordChangeOTP = async (email: string): Promise<IUser> => {
+    assert(email, "Email cannot be empty")
+
+    const controller = new AuthController()
+
+    const user = await controller.resetPasswordOTP(email)
+
+    return new User(user)
+  }
+
+  static resetPassword = async (
+    otp: string,
+    newPassword: string,
+    username: string
+  ): Promise<IUser> => {
+    assert(newPassword, "Password can not be empty")
+    assert(otp, "Otp can not be empty")
+    assert(username, "Username cannot be empty")
+
+    const controller = new AuthController()
+
+    const user = await controller.resetPassword(otp, newPassword, username)
+
+    return new User(user)
+  }
+
+  static isUsernameUsed = async (username: string): Promise<string> => {
+    assert(username, "Username cannot be empty")
+
+    const controller = new AuthController()
+
+    const res = await controller.verifyUsername(username)
+
+    return res
+  }
+
+  static isPhoneNumberUsed = async (phoneNumber: string): Promise<string> => {
+    assert(phoneNumber, "phoneNumber cannot be empty")
+
+    const controller = new AuthController()
+
+    const res = await controller.verifyPhoneNumber(phoneNumber)
+
+    return res
+  }
+
+  static isEmailUsed = async (email: string): Promise<string> => {
+    assert(email, "Email cannot be empty")
+
+    const controller = new AuthController()
+
+    const res = await controller.verifyEmail(email)
+
+    return res
+  }
 }

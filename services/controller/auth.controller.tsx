@@ -11,9 +11,16 @@ export default class AuthController implements IAuthController {
     this.resource = {
       login: "login",
       register: "api/register",
-      resetPassword: "users/me/change-password",
+      resetPassword: "api/public/users/reset-password",
       sendOTP: "api/public/otp/send",
-      verifyOTP: "api/public/otp/verify"
+      verifyOTP: "api/public/otp/verify",
+      verifyUsername: "api/public/users/username-used",
+      verifyPhoneNumber: "backend/api/public/users/phone-used",
+      verifyEmail: "api/public/users/email-used",
+      resetPasswordOTP: {
+        start: "api/public/users/",
+        end: "/reset-password-request"
+      }
     }
   }
 
@@ -33,8 +40,6 @@ export default class AuthController implements IAuthController {
 
       return user.data
     } catch (error) {
-      console.log(error)
-
       throw new Error(`Error while getting user: ${JSON.stringify(error)}`)
     }
   }
@@ -54,8 +59,6 @@ export default class AuthController implements IAuthController {
 
       return res.data
     } catch (error) {
-      console.log(error)
-
       throw new Error(`Error while saving new user: ${JSON.stringify(error)}`)
     }
   }
@@ -76,9 +79,7 @@ export default class AuthController implements IAuthController {
 
       return res.data
     } catch (error) {
-      console.log(error)
-
-      throw new Error(`An error occurred while sending otp`)
+      throw new Error(`An error occurred while sending otp: ${error}`)
     }
   }
 
@@ -97,9 +98,99 @@ export default class AuthController implements IAuthController {
 
       return res.data
     } catch (error) {
-      console.log(error)
+      throw new Error(`An error occurred while verifying otp: ${error}`)
+    }
+  }
 
-      throw new Error(`An error occurred while verifying otp`)
+  public resetPasswordOTP = async (email: string) => {
+    assert(email, "email is required")
+
+    try {
+      const res = await apiClient.post<IUser>(
+        `${this.resource.resetPasswordOTP.start}${email}${this.resource.resetPasswordOTP.end}`
+      )
+
+      if (!res) {
+        throw new Error(`An error occurred while getting password reset otp`)
+      }
+
+      return res.data
+    } catch (error) {
+      throw new Error(
+        `An error occurred while getting password reset otp: ${error}`
+      )
+    }
+  }
+
+  public resetPassword = async (
+    otp: string,
+    newPassword: string,
+    username: string
+  ) => {
+    assert(username, "username is required")
+    assert(otp, "otp is required")
+    assert(newPassword, "password is required")
+
+    try {
+      const res = await apiClient.post(this.resource.resetPassword, {
+        otp,
+        newPassword,
+        username
+      })
+
+      if (!res) {
+        throw new Error(`An error occurred while resetting password`)
+      }
+
+      return res.data
+    } catch (error) {
+      throw new Error(`An error occurred while resetting password: ${error}`)
+    }
+  }
+
+  public verifyUsername = async (username: string) => {
+    assert(username, "username is required")
+
+    try {
+      const res = await apiClient.get(
+        `${this.resource.verifyUsername}/${username}`
+      )
+
+      return res.data
+    } catch (error) {
+      throw new Error(
+        `An error occurred while checking if user name exist: ${error}`
+      )
+    }
+  }
+
+  public verifyPhoneNumber = async (phoneNumber: string) => {
+    assert(phoneNumber, "phoneNumber is required")
+
+    try {
+      const res = await apiClient.get(
+        `${this.resource.verifyPhoneNumber}/${phoneNumber}`
+      )
+
+      return res.data
+    } catch (error) {
+      throw new Error(
+        `An error occurred while verifying the phone number: ${error}`
+      )
+    }
+  }
+
+  public verifyEmail = async (email: string) => {
+    assert(email, "email is required")
+
+    try {
+      const res = await apiClient.get(`${this.resource.verifyEmail}/${email}`)
+
+      return res.data
+    } catch (error) {
+      throw new Error(
+        `An error occurred while verifying the email address: ${error}`
+      )
     }
   }
 }

@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import User from "@services/models/user"
+import { IUser } from "@services/types/auth"
 
 const handleLogin = async (
   {

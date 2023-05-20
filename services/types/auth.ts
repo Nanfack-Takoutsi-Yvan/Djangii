@@ -53,6 +53,15 @@ export interface IAuthController {
   register: (userData: NewUserData, otp: string) => Promise<IUser>
   sendOTP: (email: string, lang?: string, canal?: OTP_CANAL) => Promise<boolean>
   validateOTP: (email: string, otp: string) => Promise<boolean>
+  resetPasswordOTP: (email: string, password: string) => Promise<IUser>
+  verifyUsername: (username: string) => Promise<string>
+  verifyPhoneNumber: (phoneNumber: string) => Promise<string>
+  verifyEmail: (email: string) => Promise<string>
+  resetPassword: (
+    email: string,
+    otp: string,
+    username: string
+  ) => Promise<IUser>
 }
 
 export type userFormInputs = {
