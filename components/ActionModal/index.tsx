@@ -56,11 +56,7 @@ export default function ActionModal({
     description
   }
 }: Props) {
-  const { width, height } = useWindowDimensions()
   const { colors } = useTheme()
-
-  const marginTop = height * 0.5 - 100
-  const marginLeft = width * 0.5 - 50
 
   const { color } = iconLib[state]
   const iconColor = colors[color]

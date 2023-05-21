@@ -1,5 +1,3 @@
-/* eslint-disable import/extensions */
-/* eslint-disable react/jsx-no-bind */
 import {
   StyleSheet,
   ImageBackground,
@@ -13,25 +11,52 @@ import { Text, TextInput, Button, useTheme } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
 
 import { Formik } from "formik"
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { useRouter } from "expo-router"
 
 import AppStateContext from "@services/context/context"
 import PasswordIcon from "@components/ui/PasswordIcon"
-import handleLogin from "@utils/methods"
 import vaidationSchema from "@services/validations"
-import ActionModal from "@components/ActionModal"
+import User from "@services/models/user"
 
 export default function Login() {
-  const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(false)
-  const [displayActionModal, setDisplayActionModal] = useState<boolean>(false)
-  const [actionModalTitle, setActionModalTitle] = useState<string>("")
-  const [actionModalDescription, setActionModalDescription] = useState<string>()
-
-  const { locale, setUser, setLoading } = useContext(AppStateContext)
+  const { locale, setUser, setLoading, setActionModalProps } =
+    useContext(AppStateContext)
   const { colors } = useTheme()
 
   const router = useRouter()
+
+  const handleLogin = ({
+    username,
+    password
+  }: {
+    username: string
+    password: string
+  }) => {
+    setLoading(true)
+    User.login(username, password)
+      .then(user => setUser(user))
+      .catch(err => {
+        setLoading(false)
+        const error = JSON.parse(err.message)
+        const error401 = error.error.status === 401
+
+        setActionModalProps({
+          icon: true,
+          state: "error",
+          shouldDisplay: true,
+          title: locale.t(
+            error401 ? "login.errors.notFoundTitle" : "commonErrors.title"
+          ),
+          description: locale.t(
+            error401
+              ? "login.errors.notFoundDescription"
+              : "commonErrors.description"
+          )
+        })
+      })
+      .finally(() => setLoading(false))
+  }
 
   return (
     <KeyboardAvoidingView
@@ -59,15 +84,7 @@ export default function Login() {
             <Formik
               initialValues={{ username: "", password: "" }}
               validationSchema={vaidationSchema.loginValidationSchema}
-              onSubmit={values =>
-                handleLogin(values, setUser, setLoading).catch(() => {
-                  setDisplayActionModal(true)
-                  setActionModalTitle(locale.t("login.errors.notFoundTitle"))
-                  setActionModalDescription(
-                    locale.t("login.errors.notFoundDescription")
-                  )
-                })
-              }
+              onSubmit={handleLogin}
             >
               {({
                 handleChange,
@@ -181,7 +198,7 @@ export default function Login() {
                     <Button
                       mode="text"
                       textColor={colors.tertiary}
-                      onPress={router.replace.bind(null, "checkEmail")}
+                      onPress={() => router.replace("checkEmail")}
                       labelStyle={styles.buttonTitle}
                       style={styles.button}
                     >

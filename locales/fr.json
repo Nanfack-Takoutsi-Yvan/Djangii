@@ -1,5 +1,8 @@
 {
-  "message": "Bonjour le monde",
+  "commonErrors": {
+    "title": "Une erreur s'est produite",
+    "description": "Verifiez votre connection internet et essayer de nouveau."
+  },
   "onboarding": {
     "title": {
       "fistPart": "Avec",
@@ -41,13 +44,20 @@
       "phoneNumber": "696000000"
     },
     "errors": {
-      "username": "Nom d'utilisateur obligatoire",
+      "username": {
+        "taken":"Cet nom d'utilisateur est et déjà pris",
+        "required": "Nom d'utilisateur obligatoire"
+      },
       "firstName": "Prénoms obligatoire",
       "lastName": "Noms obligatoire",
-      "phoneNumber": "Numero de telephone obligatoire",
+      "phoneNumber": {
+        "required": "Numero de telephone obligatoire",
+        "taken": "Cet numero de téléphone est et déjà utilisé"
+      },
       "email": {
         "notValid": "Entrez un email valide",
-        "required": "Email obligatoire"
+        "required": "Email obligatoire",
+        "taken": "Cette adresse email et déjà prise"
       },
       "password": {
         "required": "Mot de passe est obligatoire",

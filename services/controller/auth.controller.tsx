@@ -200,7 +200,7 @@ export default class AuthController implements IAuthController {
 
     try {
       const res = await apiClient.get(
-        `${this.resource.verifyPhoneNumber}/${phoneNumber.split("+237")[1]}`
+        `${this.resource.verifyPhoneNumber}/${phoneNumber}`
       )
 
       return res.data

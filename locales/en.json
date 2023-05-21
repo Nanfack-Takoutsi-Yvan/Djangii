@@ -1,5 +1,9 @@
 {
-  "message": "Hello, world!",
+  "commonErrors": {
+    "title": "An error occurred",
+    "description": "Check your internet connection and try again",
+    "tooManyAttempts": "Too many attempts, try again later"
+  },
   "onboarding": {
     "title": {
       "fistPart": "With",
@@ -41,13 +45,20 @@
       "phoneNumber": "696000000"
     },
     "errors": {
-      "username": "Username is required",
+      "username": {
+        "required": "Username is required",
+        "taken": "This username is already used"
+      },
       "firstName": "First name is required",
       "lastName": "Last name is required",
-      "phoneNumber": "Phone number is required",
+      "phoneNumber": {
+        "required": "Phone number is required",
+        "taken":"This phone number is already used"
+      },
       "email": {
         "notValid": "Enter a valid email address",
-        "required": "Email is required"
+        "required": "Email is required",
+        "taken": "This email is already used"
       },
       "password": {
         "required": "Password required",

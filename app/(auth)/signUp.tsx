@@ -1,3 +1,7 @@
+/* eslint-disable no-console */
+/* eslint-disable no-useless-escape */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   StyleSheet,
@@ -6,7 +10,8 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   View,
-  Image
+  Image,
+  Platform
 } from "react-native"
 
 import { Text, TextInput, Button, useTheme } from "react-native-paper"
@@ -24,7 +29,6 @@ import LoadingModal from "@components/ui/LoadingModal"
 
 import validations from "@services/validations"
 import { userFormInputs } from "@services/types/auth"
-import limits from "@constants/validation/limits"
 
 export default function SignUp() {
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(false)
@@ -48,21 +52,7 @@ export default function SignUp() {
         dense
         underlineColor="rgba(0,0,0,0.5)"
         autoComplete="tel"
-        onBlur={e => {
-          field.onBlur("phoneNumber")(e)
-          const { value } = e.target
-          if (value && value.length >= limits.phoneNumberLength.min) {
-            User.isPhoneNumberUsed(e.target.value.split(" ").join(""))
-              .then(res => {
-                console.log(res)
-              })
-              .catch(err => {
-                console.log("yvan error catch:", {
-                  err: JSON.parse(err.message)
-                })
-              })
-          }
-        }}
+        onBlur={field.onBlur("phoneNumber")}
         error={!!meta.error && !!meta.touched}
         ref={ref as any}
       />
@@ -70,14 +60,28 @@ export default function SignUp() {
   })
 
   const sendOTP = async (values: userFormInputs, lang?: string) => {
-    const otpSent = await User.sendOTP(values.email, lang)
-
-    if (otpSent) {
-      router.replace({
-        pathname: "checkOTP",
-        params: { values: encodeURIComponent(JSON.stringify(values)) }
+    User.sendOTP(values.email, lang)
+      .then(otpSent => {
+        if (otpSent)
+          router.replace({
+            pathname: "checkOTP",
+            params: { values: encodeURIComponent(JSON.stringify(values)) }
+          })
       })
-    }
+      .catch(err => {
+        const error = JSON.parse(err.message)
+        const error429 = error.error.status === 429
+
+        setActionModalProps({
+          icon: true,
+          state: "error",
+          shouldDisplay: true,
+          title: locale.t(
+            error429 ? "commonErrors.tooManyAttempts" : "commonErrors.title"
+          ),
+          description: locale.t(error429 ? "" : "commonErrors.description")
+        })
+      })
   }
 
   const vaidateFormik = async (values: userFormInputs) => {
@@ -150,12 +154,7 @@ export default function SignUp() {
                           placeholderTextColor="rgba(0, 0, 0, 0.20)"
                           keyboardType="name-phone-pad"
                           value={values.username}
-                          onBlur={e => {
-                            handleBlur("username")(e)
-                            if (e.target.value) {
-                              User.isUsernameUsed(e.target.value)
-                            }
-                          }}
+                          onBlur={handleBlur("username")}
                           onChangeText={handleChange("username")}
                           style={styles.textInput}
                           dense
@@ -275,12 +274,7 @@ export default function SignUp() {
                           placeholderTextColor="rgba(0, 0, 0, 0.20)"
                           keyboardType="email-address"
                           value={values.email}
-                          onBlur={e => {
-                            handleBlur("email")(e)
-                            if (e.target.value) {
-                              User.isEmailUsed(e.target.value)
-                            }
-                          }}
+                          onBlur={handleBlur("email")}
                           dense
                           underlineColor="rgba(0,0,0,0.5)"
                           onChangeText={handleChange("email")}
@@ -303,11 +297,19 @@ export default function SignUp() {
                     </View>
                   </View>
 
-                  <View style={styles.screen}>
+                  <View
+                    style={[
+                      styles.field,
+                      {
+                        flexDirection: "column",
+                        flex: Platform.OS === "web" ? undefined : 1
+                      }
+                    ]}
+                  >
                     <View style={styles.screen}>
                       <PhoneInput
                         autoFormat
-                        offset={24}
+                        offset={20}
                         initialCountry="cm"
                         flagStyle={styles.flagStyle}
                         allowZeroAfterCountryCode={false}
@@ -336,7 +338,7 @@ export default function SignUp() {
                         ref={phoneInputRef}
                       />
                     </View>
-                    {errors.phoneNumber && touched.phoneNumber && (
+                    {errors?.phoneNumber && touched?.phoneNumber && (
                       <View
                         style={[styles.errorContainer, { left: 56, top: 14 }]}
                       >
@@ -345,7 +347,7 @@ export default function SignUp() {
                             color: colors.error
                           }}
                         >
-                          {locale.t(errors.phoneNumber)}
+                          {locale.t(errors?.phoneNumber)}
                         </Text>
                       </View>
                     )}
@@ -589,3 +591,12 @@ const styles = StyleSheet.create({
     top: 24
   }
 })
+function setActionModalProps(arg0: {
+  icon: boolean
+  state: string
+  shouldDisplay: boolean
+  title: string
+  description: string
+}) {
+  throw new Error("Function not implemented.")
+}

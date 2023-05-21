@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useMemo, useState } from "react"
 import { SplashScreen, Stack } from "expo-router"
 import * as localization from "expo-localization"
