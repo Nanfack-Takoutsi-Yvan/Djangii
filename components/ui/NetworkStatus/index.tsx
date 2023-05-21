@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import AppStateContext from "@services/context/context"
 import { useContext } from "react"
 import { Platform, StyleSheet, View } from "react-native"
@@ -32,7 +33,11 @@ export default function NetworkStatus({ connected }: Props) {
           <View>
             <Icon
               source={
-                connected ? "wifi-arrow-up-down" : "wifi-strength-off-outline"
+                connected
+                  ? Platform.OS === "ios"
+                    ? "wifi"
+                    : "wifi-arrow-up-down"
+                  : "wifi-strength-off-outline"
               }
               size={24}
               color={textColor.color}

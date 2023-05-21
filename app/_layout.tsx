@@ -10,6 +10,8 @@ import useDjangiiTheme from "@hooks/theme/useDjangiiTheme"
 import { IUser } from "@services/types/auth"
 import useNetInfo from "@hooks/web/useNetInfo"
 import NetworkStatus from "@components/ui/NetworkStatus"
+import LoadingModal from "@components/ui/LoadingModal"
+import ActionModal, { ActionModalProps } from "@components/ActionModal"
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -38,18 +40,53 @@ function RootLayoutNav() {
   const [appConnected, showHeader] = useNetInfo()
   const theme = useDjangiiTheme()
 
+  const [loading, setLoading] = useState<boolean>(false)
   const [user, setUser] = useState<IUser>({} as IUser)
+  const [actionModalProps, setActionModalProps] = useState<ActionModalProps>({
+    title: "",
+    icon: false,
+    state: "info",
+    description: "",
+    shouldDisplay: false
+  })
 
   const contextValue = useMemo(
-    () => ({ locale: i18n, user, setLocale, setUser }),
-    [i18n, user, setLocale, setUser]
+    () => ({
+      user,
+      setUser,
+      setLocale,
+      setLoading,
+      locale: i18n,
+      setActionModalProps,
+      isAppConnected: appConnected
+    }),
+    [
+      i18n,
+      user,
+      setLocale,
+      setUser,
+      setLoading,
+      appConnected,
+      setActionModalProps
+    ]
   )
 
   const headerStyle = appConnected ? theme.colors.secondary : theme.colors.error
 
+  const closeActionModal = () =>
+    setActionModalProps({
+      icon: false,
+      state: "info",
+      title: "",
+      shouldDisplay: false,
+      description: ""
+    })
+
   return (
     <AppStateContext.Provider value={contextValue}>
       <PaperProvider theme={theme}>
+        <LoadingModal displayModal={loading} />
+        <ActionModal settings={{ ...actionModalProps, closeActionModal }} />
         <Stack
           screenOptions={{
             headerStyle: { backgroundColor: headerStyle },

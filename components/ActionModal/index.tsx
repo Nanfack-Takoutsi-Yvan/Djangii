@@ -1,51 +1,60 @@
-import { Dispatch, SetStateAction } from "react"
 import { StyleSheet, useWindowDimensions, View } from "react-native"
 import { Portal, Modal, useTheme, Text, Button } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
-import { MD3Colors } from "react-native-paper/src/types"
 
-enum STATE {
-  INFO = "info",
-  ERROR = "error",
-  WARNING = "warning",
-  SUCCESS = "success"
-}
+type State = "info" | "error" | "warning" | "success"
 
-interface Props {
-  displayModal: boolean
-  setDisplayModal: Dispatch<SetStateAction<boolean>>
+export interface ActionModalProps {
+  shouldDisplay: boolean
   icon?: boolean
-  state?: "info" | "error" | "warning" | "success"
+  state?: State
   title: string
   description?: string
 }
 
-const iconLib = {
+interface Settings extends ActionModalProps {
+  closeActionModal: () => void
+}
+
+interface Props {
+  settings: Settings
+}
+
+type IconLib = {
+  [key in State]: {
+    name: string
+    color: "primary" | "secondary" | "error"
+  }
+}
+
+const iconLib: IconLib = {
   info: {
     name: "information-outline",
-    color: "primary" as MD3Colors["primary"]
+    color: "primary"
   },
   error: {
     name: "alpha-x-circle-outline",
-    color: "error" as MD3Colors["error"]
+    color: "error"
   },
   warning: {
     name: "alert-circle-outline",
-    color: "secondary" as MD3Colors["secondary"]
+    color: "secondary"
   },
   success: {
     name: "check-circle-outline",
-    color: "secondary" as MD3Colors["secondary"]
+    color: "secondary"
   }
 }
 
 export default function ActionModal({
-  displayModal,
-  setDisplayModal,
-  icon,
-  state = STATE.WARNING,
-  title,
-  description
+  settings: {
+    shouldDisplay,
+    closeActionModal,
+    icon,
+    state = "info",
+    title,
+    description
+  }
 }: Props) {
   const { width, height } = useWindowDimensions()
   const { colors } = useTheme()
@@ -60,8 +69,8 @@ export default function ActionModal({
     <Portal>
       <Modal
         contentContainerStyle={styles.modal}
-        visible={displayModal}
-        onDismiss={() => setDisplayModal(false)}
+        visible={shouldDisplay}
+        onDismiss={closeActionModal}
         style={[styles.modalContainer]}
       >
         <View style={styles.screen}>
@@ -88,7 +97,7 @@ export default function ActionModal({
               mode="contained"
               textColor={colors.background}
               labelStyle={{ fontSize: 14 }}
-              onPress={() => setDisplayModal(false)}
+              onPress={closeActionModal}
             >
               OK
             </Button>

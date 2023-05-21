@@ -19,224 +19,210 @@ import { useRouter } from "expo-router"
 import AppStateContext from "@services/context/context"
 import PasswordIcon from "@components/ui/PasswordIcon"
 import handleLogin from "@utils/methods"
-import LoadingModal from "@components/ui/LoadingModal"
 import vaidationSchema from "@services/validations"
 import ActionModal from "@components/ActionModal"
 
 export default function Login() {
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(false)
-  const [isUserLoading, setIsUserLoading] = useState<boolean>(false)
   const [displayActionModal, setDisplayActionModal] = useState<boolean>(false)
   const [actionModalTitle, setActionModalTitle] = useState<string>("")
   const [actionModalDescription, setActionModalDescription] = useState<string>()
 
-  const { locale, setUser } = useContext(AppStateContext)
+  const { locale, setUser, setLoading } = useContext(AppStateContext)
   const { colors } = useTheme()
 
   const router = useRouter()
 
   return (
-    <>
-      <LoadingModal displayModal={isUserLoading} />
-      <ActionModal
-        setDisplayModal={setDisplayActionModal}
-        displayModal={displayActionModal}
-        title={actionModalTitle}
-        description={actionModalDescription}
-        state="error"
-        icon
-      />
-      <KeyboardAvoidingView
+    <KeyboardAvoidingView
+      style={styles.screen}
+      contentContainerStyle={styles.screen}
+      behavior="position"
+    >
+      <ImageBackground
         style={styles.screen}
-        contentContainerStyle={styles.screen}
-        behavior="position"
+        source={require("../../assets/images/screens/background.png")}
       >
-        <ImageBackground
-          style={styles.screen}
-          source={require("../../assets/images/screens/background.png")}
-        >
-          <StatusBar barStyle="light-content" />
-          <View style={styles.titleContainer}>
-            <Text variant="headlineMedium" style={{ color: colors.surface }}>
-              {locale.t("login.connection")}
-            </Text>
-            <Icon source="login" size={32} color="#90F800" />
-          </View>
-          <View style={styles.formContainer}>
-            <ScrollView
-              style={styles.screen}
-              contentContainerStyle={styles.screen}
-              bounces={false}
+        <StatusBar barStyle="light-content" />
+        <View style={styles.titleContainer}>
+          <Text variant="headlineMedium" style={{ color: colors.surface }}>
+            {locale.t("login.connection")}
+          </Text>
+          <Icon source="login" size={32} color="#90F800" />
+        </View>
+        <View style={styles.formContainer}>
+          <ScrollView
+            style={styles.screen}
+            contentContainerStyle={styles.screen}
+            bounces={false}
+          >
+            <Formik
+              initialValues={{ username: "", password: "" }}
+              validationSchema={vaidationSchema.loginValidationSchema}
+              onSubmit={values =>
+                handleLogin(values, setUser, setLoading).catch(() => {
+                  setDisplayActionModal(true)
+                  setActionModalTitle(locale.t("login.errors.notFoundTitle"))
+                  setActionModalDescription(
+                    locale.t("login.errors.notFoundDescription")
+                  )
+                })
+              }
             >
-              <Formik
-                initialValues={{ username: "", password: "" }}
-                validationSchema={vaidationSchema.loginValidationSchema}
-                onSubmit={values =>
-                  handleLogin(values, setUser, setIsUserLoading).catch(() => {
-                    setDisplayActionModal(true)
-                    setActionModalTitle(locale.t("login.errors.notFoundTitle"))
-                    setActionModalDescription(
-                      locale.t("login.errors.notFoundDescription")
-                    )
-                  })
-                }
-              >
-                {({
-                  handleChange,
-                  handleBlur,
-                  handleSubmit,
-                  values,
-                  errors,
-                  touched
-                }) => (
-                  <View style={styles.form}>
-                    <View style={styles.fieldContainer}>
-                      <Text variant="labelLarge">
-                        {locale.t("login.labels.username")}
-                      </Text>
-                      <View style={styles.field}>
-                        <Icon
-                          source="account-outline"
-                          color={
-                            errors.username && touched.username
-                              ? colors.error
-                              : colors.primary
-                          }
-                          size={40}
-                        />
+              {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                values,
+                errors,
+                touched
+              }) => (
+                <View style={styles.form}>
+                  <View style={styles.fieldContainer}>
+                    <Text variant="labelLarge">
+                      {locale.t("login.labels.username")}
+                    </Text>
+                    <View style={styles.field}>
+                      <Icon
+                        source="account-outline"
+                        color={
+                          errors.username && touched.username
+                            ? colors.error
+                            : colors.primary
+                        }
+                        size={40}
+                      />
+                      <View style={styles.screen}>
                         <View style={styles.screen}>
-                          <View style={styles.screen}>
-                            <TextInput
-                              dense
-                              placeholder={locale.t("login.labels.username")}
-                              placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                              keyboardType="name-phone-pad"
-                              value={values.username}
-                              onBlur={handleBlur("username")}
-                              onChangeText={handleChange("username")}
-                              style={styles.textInput}
-                              autoComplete="username"
-                              underlineColor="rgba(0,0,0,0.5)"
-                              error={!!errors.username && !!touched.username}
-                            />
-                          </View>
-                          {errors.username && touched.username && (
-                            <View style={styles.errorContainer}>
-                              <Text
-                                style={{
-                                  color: colors.error
-                                }}
-                              >
-                                {locale.t(errors.username)}
-                              </Text>
-                            </View>
-                          )}
-                        </View>
-                      </View>
-                    </View>
-
-                    <View style={styles.fieldContainer}>
-                      <Text variant="labelLarge" style={{}}>
-                        {locale.t("login.labels.password")}
-                      </Text>
-                      <View style={styles.field}>
-                        <Icon
-                          source="form-textbox-password"
-                          color={
-                            errors.password && touched.password
-                              ? colors.error
-                              : colors.primary
-                          }
-                          size={40}
-                        />
-                        <View style={styles.screen}>
-                          <View style={styles.screen}>
-                            <TextInput
-                              dense
-                              placeholder={locale.t("login.labels.password")}
-                              placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                              keyboardType="visible-password"
-                              value={values.password}
-                              onBlur={handleBlur("password")}
-                              onChangeText={handleChange("password")}
-                              style={styles.textInput}
-                              autoComplete="password"
-                              secureTextEntry
-                              underlineColor="rgba(0,0,0,0.5)"
-                              error={!!errors.password && !!touched.password}
-                              right={
-                                <Icon
-                                  source="form-textbox-password"
-                                  color={colors.primary}
-                                  size={40}
-                                />
-                              }
-                            />
-                          </View>
-                          {errors.password && touched.password && (
-                            <View style={styles.errorContainer}>
-                              <Text
-                                style={{
-                                  color: colors.error,
-                                  fontStyle: "italic"
-                                }}
-                              >
-                                {locale.t(errors.password)}
-                              </Text>
-                            </View>
-                          )}
-                        </View>
-                      </View>
-                    </View>
-
-                    <View style={styles.fieldContainer}>
-                      <Button
-                        mode="text"
-                        textColor={colors.tertiary}
-                        onPress={router.replace.bind(null, "checkEmail")}
-                        labelStyle={styles.buttonTitle}
-                        style={styles.button}
-                      >
-                        {locale.t("login.passwordForgotten")}
-                      </Button>
-
-                      <Button
-                        mode="contained"
-                        textColor={colors.surface}
-                        onPress={() => handleSubmit()}
-                        contentStyle={styles.signUpButton}
-                        loading={isUserLoading}
-                        icon={() => (
-                          <Icon
-                            source="chevron-right"
-                            size={32}
-                            color={colors.secondary}
+                          <TextInput
+                            dense
+                            placeholder={locale.t("login.labels.username")}
+                            placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                            keyboardType="name-phone-pad"
+                            value={values.username}
+                            onBlur={handleBlur("username")}
+                            onChangeText={handleChange("username")}
+                            style={styles.textInput}
+                            autoComplete="username"
+                            underlineColor="rgba(0,0,0,0.5)"
+                            error={!!errors.username && !!touched.username}
                           />
+                        </View>
+                        {errors.username && touched.username && (
+                          <View style={styles.errorContainer}>
+                            <Text
+                              style={{
+                                color: colors.error
+                              }}
+                            >
+                              {locale.t(errors.username)}
+                            </Text>
+                          </View>
                         )}
-                      >
-                        {locale.t("login.connect")}
-                      </Button>
+                      </View>
                     </View>
                   </View>
-                )}
-              </Formik>
 
-              <View style={styles.signUpButtonContainer}>
-                <Text variant="titleSmall">{locale.t("login.noAccount")}</Text>
-                <Button
-                  mode="text"
-                  textColor={colors.tertiary}
-                  labelStyle={{ fontSize: 14 }}
-                  onPress={() => router.replace("signUp")}
-                >
-                  {locale.t("login.signUp")}
-                </Button>
-              </View>
-            </ScrollView>
-          </View>
-        </ImageBackground>
-      </KeyboardAvoidingView>
-    </>
+                  <View style={styles.fieldContainer}>
+                    <Text variant="labelLarge" style={{}}>
+                      {locale.t("login.labels.password")}
+                    </Text>
+                    <View style={styles.field}>
+                      <Icon
+                        source="form-textbox-password"
+                        color={
+                          errors.password && touched.password
+                            ? colors.error
+                            : colors.primary
+                        }
+                        size={40}
+                      />
+                      <View style={styles.screen}>
+                        <View style={styles.screen}>
+                          <TextInput
+                            dense
+                            placeholder={locale.t("login.labels.password")}
+                            placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                            keyboardType="visible-password"
+                            value={values.password}
+                            onBlur={handleBlur("password")}
+                            onChangeText={handleChange("password")}
+                            style={styles.textInput}
+                            autoComplete="password"
+                            secureTextEntry
+                            underlineColor="rgba(0,0,0,0.5)"
+                            error={!!errors.password && !!touched.password}
+                            right={
+                              <Icon
+                                source="form-textbox-password"
+                                color={colors.primary}
+                                size={40}
+                              />
+                            }
+                          />
+                        </View>
+                        {errors.password && touched.password && (
+                          <View style={styles.errorContainer}>
+                            <Text
+                              style={{
+                                color: colors.error,
+                                fontStyle: "italic"
+                              }}
+                            >
+                              {locale.t(errors.password)}
+                            </Text>
+                          </View>
+                        )}
+                      </View>
+                    </View>
+                  </View>
+
+                  <View style={styles.fieldContainer}>
+                    <Button
+                      mode="text"
+                      textColor={colors.tertiary}
+                      onPress={router.replace.bind(null, "checkEmail")}
+                      labelStyle={styles.buttonTitle}
+                      style={styles.button}
+                    >
+                      {locale.t("login.passwordForgotten")}
+                    </Button>
+
+                    <Button
+                      mode="contained"
+                      textColor={colors.surface}
+                      onPress={() => handleSubmit()}
+                      contentStyle={styles.signUpButton}
+                      icon={() => (
+                        <Icon
+                          source="chevron-right"
+                          size={32}
+                          color={colors.secondary}
+                        />
+                      )}
+                    >
+                      {locale.t("login.connect")}
+                    </Button>
+                  </View>
+                </View>
+              )}
+            </Formik>
+
+            <View style={styles.signUpButtonContainer}>
+              <Text variant="titleSmall">{locale.t("login.noAccount")}</Text>
+              <Button
+                mode="text"
+                textColor={colors.tertiary}
+                labelStyle={{ fontSize: 14 }}
+                onPress={() => router.replace("signUp")}
+              >
+                {locale.t("login.signUp")}
+              </Button>
+            </View>
+          </ScrollView>
+        </View>
+      </ImageBackground>
+    </KeyboardAvoidingView>
   )
 }
 
