@@ -111,5 +111,15 @@
         "required": "Email is required"
       }
     }
+  },
+  "networkStatus": {
+    "title": {
+      "notConnected": "Oops ! no network.",
+      "connected": "Internet is back, enjoy !"
+    },
+    "message": {
+      "notConnected": "Please check your internet connection, and try again.",
+      "connected": "You can continue to use the app."
+    }
   }
 }

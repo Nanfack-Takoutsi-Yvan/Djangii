@@ -111,5 +111,15 @@
         "required": "Email obligatoire"
       }
     }
+  },
+  "networkStatus": {
+    "title": {
+      "notConnected": "Oops ! pas de connection.",
+      "connected": "Connection retablie, profitez !"
+    },
+    "message": {
+      "notConnected": "Veuillez verifier votre connection internet et essayez a nouveau.",
+      "connected": "Vous pouvez continuer a utiliser l'application."
+    }
   }
 }

@@ -15,7 +15,7 @@ export default class AuthController implements IAuthController {
       sendOTP: "api/public/otp/send",
       verifyOTP: "api/public/otp/verify",
       verifyUsername: "api/public/users/username-used",
-      verifyPhoneNumber: "backend/api/public/users/phone-used",
+      verifyPhoneNumber: "api/public/users/phone-used",
       verifyEmail: "api/public/users/email-used",
       resetPasswordOTP: {
         start: "api/public/users/",
@@ -40,7 +40,12 @@ export default class AuthController implements IAuthController {
 
       return user.data
     } catch (error) {
-      throw new Error(`Error while getting user: ${JSON.stringify(error)}`)
+      const err = {
+        message: `Error while getting user: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
     }
   }
 
@@ -59,7 +64,12 @@ export default class AuthController implements IAuthController {
 
       return res.data
     } catch (error) {
-      throw new Error(`Error while saving new user: ${JSON.stringify(error)}`)
+      const err = {
+        message: `Error while saving new user: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
     }
   }
 
@@ -79,7 +89,12 @@ export default class AuthController implements IAuthController {
 
       return res.data
     } catch (error) {
-      throw new Error(`An error occurred while sending otp: ${error}`)
+      const err = {
+        message: `An error occurred while sending otp: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
     }
   }
 
@@ -98,7 +113,12 @@ export default class AuthController implements IAuthController {
 
       return res.data
     } catch (error) {
-      throw new Error(`An error occurred while verifying otp: ${error}`)
+      const err = {
+        message: `An error occurred while verifying otp: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
     }
   }
 
@@ -116,9 +136,12 @@ export default class AuthController implements IAuthController {
 
       return res.data
     } catch (error) {
-      throw new Error(
-        `An error occurred while getting password reset otp: ${error}`
-      )
+      const err = {
+        message: `An error occurred while getting password reset otp: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
     }
   }
 
@@ -144,7 +167,12 @@ export default class AuthController implements IAuthController {
 
       return res.data
     } catch (error) {
-      throw new Error(`An error occurred while resetting password: ${error}`)
+      const err = {
+        message: `An error occurred while resetting password: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
     }
   }
 
@@ -158,9 +186,12 @@ export default class AuthController implements IAuthController {
 
       return res.data
     } catch (error) {
-      throw new Error(
-        `An error occurred while checking if user name exist: ${error}`
-      )
+      const err = {
+        message: `An error occurred while checking if user name exist: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
     }
   }
 
@@ -169,14 +200,17 @@ export default class AuthController implements IAuthController {
 
     try {
       const res = await apiClient.get(
-        `${this.resource.verifyPhoneNumber}/${phoneNumber}`
+        `${this.resource.verifyPhoneNumber}/${phoneNumber.split("+237")[1]}`
       )
 
       return res.data
     } catch (error) {
-      throw new Error(
-        `An error occurred while verifying the phone number: ${error}`
-      )
+      const err = {
+        message: "An error occurred while verifying the phone number",
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
     }
   }
 
@@ -188,9 +222,12 @@ export default class AuthController implements IAuthController {
 
       return res.data
     } catch (error) {
-      throw new Error(
-        `An error occurred while verifying the email address: ${error}`
-      )
+      const err = {
+        message: "An error occurred while verifying the email address",
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
     }
   }
 }

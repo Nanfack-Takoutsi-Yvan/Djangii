@@ -53,6 +53,14 @@ export default function SignUp() {
           const { value } = e.target
           if (value && value.length >= limits.phoneNumberLength.min) {
             User.isPhoneNumberUsed(e.target.value.split(" ").join(""))
+              .then(res => {
+                console.log(res)
+              })
+              .catch(err => {
+                console.log("yvan error catch:", {
+                  err: JSON.parse(err.message)
+                })
+              })
           }
         }}
         error={!!meta.error && !!meta.touched}
