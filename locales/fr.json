@@ -1,5 +1,8 @@
 {
-  "message": "Bonjour le monde",
+  "commonErrors": {
+    "title": "Une erreur s'est produite",
+    "description": "Verifiez votre connection internet et essayer de nouveau."
+  },
   "onboarding": {
     "title": {
       "fistPart": "Avec",
@@ -15,13 +18,22 @@
       "userName": "Nom d'utilisateur",
       "password": "Mot de passe"
     },
+    "errors": {
+      "password": {
+        "required": "le mot de passe est obligatoire",
+        "length": "mot de passe trop court"
+      },
+      "username": "username is required",
+      "notFoundTitle": "L'utilisateur n'existe pas!",
+      "notFoundDescription": "Veuillez verifier votre nom d'utilisateur et mot de passe puis reessayez."
+    },
     "passwordForgotten": "Mot de passe oublié ?",
     "noAccount": "Vous n'avez pas de compte ?",
     "signUp": "Inscrivez vous",
     "connect": "Connexion"
   },
   "signUp": {
-    "connection": "Connexion",
+    "signUp": "inscription",
     "labels": {
       "userName": "Nom d'utilisateur",
       "firstName": "Prénoms",
@@ -31,7 +43,93 @@
       "email": "email",
       "phoneNumber": "696000000"
     },
+    "errors": {
+      "username": {
+        "taken":"Cet nom d'utilisateur est et déjà pris",
+        "required": "Nom d'utilisateur obligatoire"
+      },
+      "firstName": "Prénoms obligatoire",
+      "lastName": "Noms obligatoire",
+      "phoneNumber": {
+        "required": "Numero de telephone obligatoire",
+        "taken": "Cet numero de téléphone est et déjà utilisé"
+      },
+      "email": {
+        "notValid": "Entrez un email valide",
+        "required": "Email obligatoire",
+        "taken": "Cette adresse email et déjà prise"
+      },
+      "password": {
+        "required": "Mot de passe est obligatoire",
+        "length": "Mot de passe trop court",
+        "match": "Les mots de passe doivent correspondre"
+      }
+    },
     "existingAccount": "Vous avez déjà un compte ?",
-    "connect": "Connectez vous."
+    "connect": "Connectez vous.",
+    "pickerCancel": "Annuler",
+    "pickerConfirm": "Confirmer"
+  },
+  "passwordReset": {
+    "title": "Réinitialiser le mot de passe",
+    "labels": {
+      "otp": "Entrez votre OTP",
+      "newPassword": "Nouveau mot de passe",
+      "passwordConfirmation": "Confirmez le mot de passe"
+    },
+    "error": {
+      "otp": {
+        "length":"L'OTP doit avoir une longueur de 5 characters",
+        "required":"L'OTP est obligatoire"
+      },
+      "password": {
+        "min": "Password trop court",
+        "required":"Password est obligatoire"
+      },
+      "passwordConfirm": {
+        "min": "Password trop court",
+        "required":"Confirmation du mot de passe obligatoire"
+      }
+    },
+    "cta": "Réinitialiser le mot de passe"
+  },
+  "checkOTP": {
+    "title": "Verifier votre email",
+    "indication": "Un OTP a été envoyé à",
+    "labels": {
+      "otpCheck": "Veillez entrer l'OTP"
+    },
+    "errors": {
+      "otpCheck": {
+        "length": "L'OTP doit avoir une longueur de 5 characters",
+        "required": "L'OTP est obligatoire"
+      }
+    },
+    "cta": "Confirmer",
+    "resendTitle": "Vous n’avez pas obtenu d’OTP? ",
+    "resend": "Renvoyez l’OTP"
+  },
+  "checkEmail": {
+    "title": "Verifier votre email",
+    "description": "Un OTP sera envoyé à votre adresse mail",
+    "labels": {
+      "emailCheck": "Entrez votre adresse mail"
+    },
+    "errors": {
+      "emailCheck": {
+        "valid": "Entrez une adresse mail valide",
+        "required": "Email obligatoire"
+      }
+    }
+  },
+  "networkStatus": {
+    "title": {
+      "notConnected": "Oops ! pas de connection.",
+      "connected": "Connection retablie, profitez !"
+    },
+    "message": {
+      "notConnected": "Veuillez verifier votre connection internet et essayez a nouveau.",
+      "connected": "Vous pouvez continuer a utiliser l'application."
+    }
   }
 }

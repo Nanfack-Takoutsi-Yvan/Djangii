@@ -1,55 +1,24 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable react/jsx-no-constructed-context-values */
-import FontAwesome from "@expo/vector-icons/FontAwesome"
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider
-} from "@react-navigation/native"
-import AppStateContext from "@services/context/context"
+import { useEffect, useMemo, useState } from "react"
 import { SplashScreen, Stack } from "expo-router"
-import { useEffect } from "react"
-import { useColorScheme } from "react-native"
 import * as localization from "expo-localization"
-import useLocales from "@hooks/useLocales"
-import {
-  useFonts,
-  Sora_100Thin,
-  Sora_200ExtraLight,
-  Sora_300Light,
-  Sora_400Regular,
-  Sora_500Medium,
-  Sora_600SemiBold,
-  Sora_700Bold,
-  Sora_800ExtraBold
-} from "@expo-google-fonts/sora"
-import { IconComponentProvider } from "@react-native-material/core"
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
-// import OnboardingScreen from "./screen/onboarding"
+import useLocales from "@hooks/locale/useLocales"
+import useSoraFonts from "@hooks/font/useSoraFonts"
+import AppStateContext from "@services/context/context"
+import { Provider as PaperProvider } from "react-native-paper"
+import useDjangiiTheme from "@hooks/theme/useDjangiiTheme"
+import { IUser } from "@services/types/auth"
+import useNetInfo from "@hooks/web/useNetInfo"
+import NetworkStatus from "@components/ui/NetworkStatus"
+import LoadingModal from "@components/ui/LoadingModal"
+import ActionModal, { ActionModalProps } from "@components/ActionModal"
 
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary
 } from "expo-router"
 
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "onboarding"
-}
-
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    Sora: Sora_400Regular,
-    SoraBold: Sora_700Bold,
-    SoraThin: Sora_100Thin,
-    SoraLight: Sora_300Light,
-    SoraMedium: Sora_500Medium,
-    SoraSemibold: Sora_600SemiBold,
-    SoraExtraBold: Sora_800ExtraBold,
-    SoraExtraLight: Sora_200ExtraLight,
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-    ...FontAwesome.font
-  })
+  const [loaded, error] = useSoraFonts()
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
@@ -66,22 +35,68 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme()
   const { i18n, setLocale } = useLocales(localization.locale)
+  const [appConnected, showHeader] = useNetInfo()
+  const theme = useDjangiiTheme()
+
+  const [loading, setLoading] = useState<boolean>(false)
+  const [user, setUser] = useState<IUser>({} as IUser)
+  const [actionModalProps, setActionModalProps] = useState<ActionModalProps>({
+    title: "",
+    icon: false,
+    state: "info",
+    description: "",
+    shouldDisplay: false
+  })
+
+  const contextValue = useMemo(
+    () => ({
+      user,
+      setUser,
+      setLocale,
+      setLoading,
+      locale: i18n,
+      setActionModalProps,
+      isAppConnected: appConnected
+    }),
+    [
+      i18n,
+      user,
+      setLocale,
+      setUser,
+      setLoading,
+      appConnected,
+      setActionModalProps
+    ]
+  )
+
+  const headerStyle = appConnected ? theme.colors.secondary : theme.colors.error
+
+  const closeActionModal = () =>
+    setActionModalProps({
+      icon: false,
+      state: "info",
+      title: "",
+      shouldDisplay: false,
+      description: ""
+    })
 
   return (
-    <AppStateContext.Provider value={{ locale: i18n, setLocale }}>
-      <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-        <ThemeProvider
-          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+    <AppStateContext.Provider value={contextValue}>
+      <PaperProvider theme={theme}>
+        <LoadingModal displayModal={loading} />
+        <ActionModal settings={{ ...actionModalProps, closeActionModal }} />
+        <Stack
+          screenOptions={{
+            headerStyle: { backgroundColor: headerStyle },
+            headerTitle: NetworkStatus.bind(null, { connected: appConnected })
+          }}
         >
-          <Stack>
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-          </Stack>
-        </ThemeProvider>
-      </IconComponentProvider>
+          <Stack.Screen name="(auth)" options={{ headerShown: showHeader }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: showHeader }} />
+          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+        </Stack>
+      </PaperProvider>
     </AppStateContext.Provider>
   )
 }

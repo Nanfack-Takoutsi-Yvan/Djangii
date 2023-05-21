@@ -4,11 +4,8 @@ import {
   Text,
   StyleSheet,
   StyleProp,
-  ViewStyle,
-  Dimensions
+  ViewStyle
 } from "react-native"
-import { Icon, IconComponentProvider } from "@react-native-material/core"
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
 
 type ButtonProps = {
   text: string
@@ -34,34 +31,32 @@ export default function Button({
   OnPress
 }: ButtonProps) {
   return (
-    <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={OnPress}
+    <TouchableOpacity
+      activeOpacity={0.8}
+      onPress={OnPress}
+      style={[
+        style,
+        styles.flexStyle,
+        (type === "button" || type === "outlined") && styles.btn
+      ]}
+    >
+      <Text
         style={[
-          style,
-          styles.flexStyle,
-          (type === "button" || type === "outlined") && styles.btn
+          underlined &&
+            type === "text" && {
+              ...styles.underLinedButton,
+              textDecorationColor: color
+            },
+          styles.buttonText,
+          { color }
         ]}
       >
-        <Text
-          style={[
-            underlined &&
-              type === "text" && {
-                ...styles.underLinedButton,
-                textDecorationColor: color
-              },
-            styles.buttonText,
-            { color }
-          ]}
-        >
-          {text}
-        </Text>
-        {iconRight && (
-          <Icon name={iconRight} size={iconSize || 24} color={iconColor} />
-        )}
-      </TouchableOpacity>
-    </IconComponentProvider>
+        {text}
+      </Text>
+      {/* {iconRight && (
+        <Icon name={iconRight} size={iconSize || 24} color={iconColor} />
+      )} */}
+    </TouchableOpacity>
   )
 }
 

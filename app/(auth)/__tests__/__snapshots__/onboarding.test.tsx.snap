@@ -62,16 +62,20 @@ exports[`renders correctly 1`] = `
         style={
           [
             {
-              "color": "#000",
+              "textAlign": "left",
             },
-            [
-              {
-                "color": "white",
-                "fontFamily": "SoraBold",
-                "fontSize": 26,
-                "width": "89%",
-              },
-            ],
+            {
+              "color": "rgba(28, 27, 31, 1)",
+              "fontFamily": "System",
+              "fontWeight": "400",
+              "letterSpacing": 0,
+            },
+            {
+              "writingDirection": "ltr",
+            },
+            {
+              "color": "rgba(255, 251, 254, 1)",
+            },
           ]
         }
       >
@@ -79,11 +83,20 @@ exports[`renders correctly 1`] = `
           style={
             [
               {
-                "color": "#000",
+                "fontFamily": "System",
+                "fontSize": 28,
+                "fontWeight": "400",
+                "letterSpacing": 0,
+                "lineHeight": 36,
               },
               {
-                "color": "white",
+                "textAlign": "left",
               },
+              {
+                "color": "rgba(28, 27, 31, 1)",
+                "writingDirection": "ltr",
+              },
+              undefined,
             ]
           }
         >
@@ -93,10 +106,21 @@ exports[`renders correctly 1`] = `
           style={
             [
               {
-                "color": "#000",
+                "fontFamily": "System",
+                "fontSize": 28,
+                "fontWeight": "400",
+                "letterSpacing": 0,
+                "lineHeight": 36,
               },
               {
-                "color": "#90F800",
+                "textAlign": "left",
+              },
+              {
+                "color": "rgba(28, 27, 31, 1)",
+                "writingDirection": "ltr",
+              },
+              {
+                "color": "rgba(98, 91, 113, 1)",
               },
             ]
           }
@@ -108,11 +132,20 @@ exports[`renders correctly 1`] = `
           style={
             [
               {
-                "color": "#000",
+                "fontFamily": "System",
+                "fontSize": 28,
+                "fontWeight": "400",
+                "letterSpacing": 0,
+                "lineHeight": 36,
               },
               {
-                "color": "white",
+                "textAlign": "left",
               },
+              {
+                "color": "rgba(28, 27, 31, 1)",
+                "writingDirection": "ltr",
+              },
+              undefined,
             ]
           }
         >
@@ -123,13 +156,21 @@ exports[`renders correctly 1`] = `
         style={
           [
             {
-              "color": "#000",
+              "fontFamily": "System",
+              "fontSize": 28,
+              "fontWeight": "400",
+              "letterSpacing": 0,
+              "lineHeight": 36,
             },
             {
-              "color": "white",
-              "fontFamily": "SoraBold",
-              "fontSize": 26,
-              "width": "89%",
+              "textAlign": "left",
+            },
+            {
+              "color": "rgba(28, 27, 31, 1)",
+              "writingDirection": "ltr",
+            },
+            {
+              "color": "rgba(255, 251, 254, 1)",
             },
           ]
         }
@@ -140,14 +181,25 @@ exports[`renders correctly 1`] = `
         style={
           [
             {
-              "color": "#000",
+              "fontFamily": "System",
+              "fontSize": 16,
+              "fontWeight": "500",
+              "letterSpacing": 0.15,
+              "lineHeight": 24,
+            },
+            {
+              "textAlign": "left",
+            },
+            {
+              "color": "rgba(28, 27, 31, 1)",
+              "writingDirection": "ltr",
             },
             [
               {
-                "color": "white",
-                "fontFamily": "SoraMedium",
-                "fontSize": 16,
                 "marginTop": 16,
+              },
+              {
+                "color": "rgba(255, 251, 254, 1)",
               },
             ],
           ]
@@ -172,65 +224,170 @@ exports[`renders correctly 1`] = `
       }
     >
       <View
-        accessibilityState={
-          {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
         collapsable={false}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
         style={
           {
-            "alignItems": "center",
-            "backgroundColor": "#8483839C",
+            "backgroundColor": "rgba(132, 131, 131, 0.3)",
             "borderRadius": 20,
-            "columnGap": 12,
-            "flexDirection": "row",
-            "height": 50,
-            "justifyContent": "center",
-            "marginVertical": 10,
-            "opacity": 1,
-            "paddingHorizontal": 56,
+            "shadowColor": "#000",
+            "shadowOffset": {
+              "height": 0,
+              "width": 0,
+            },
+            "shadowOpacity": 0,
+            "shadowRadius": 0,
           }
         }
+        testID="button-container-outer-layer"
       >
-        <Text
+        <View
+          collapsable={false}
           style={
-            [
-              undefined,
-              {
-                "fontFamily": "SoraSemibold",
-                "fontSize": 16,
+            {
+              "backgroundColor": "rgba(132, 131, 131, 0.3)",
+              "borderColor": "transparent",
+              "borderRadius": 20,
+              "borderStyle": "solid",
+              "borderWidth": 0,
+              "flex": undefined,
+              "minWidth": 64,
+              "shadowColor": "#000",
+              "shadowOffset": {
+                "height": 0,
+                "width": 0,
               },
-              {
-                "color": "#fff",
-              },
-            ]
+              "shadowOpacity": 0,
+              "shadowRadius": 0,
+            }
           }
+          testID="button-container"
         >
-          onboarding.button
-        </Text>
-        <Text />
+          <View
+            accessibilityRole="button"
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              [
+                {
+                  "overflow": "hidden",
+                },
+                {
+                  "borderRadius": 20,
+                },
+              ]
+            }
+            testID="button"
+          >
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  {
+                    "flexDirection": "row-reverse",
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  [
+                    {
+                      "marginLeft": -4,
+                      "marginRight": 12,
+                    },
+                    {
+                      "marginLeft": -16,
+                      "marginRight": 16,
+                    },
+                    false,
+                  ]
+                }
+                testID="button-icon-container"
+              >
+                <Text />
+              </View>
+              <Text
+                numberOfLines={1}
+                selectable={false}
+                style={
+                  [
+                    {
+                      "fontFamily": "System",
+                      "fontSize": 14,
+                      "fontWeight": "500",
+                      "letterSpacing": 0.1,
+                      "lineHeight": 20,
+                    },
+                    {
+                      "textAlign": "left",
+                    },
+                    {
+                      "color": "rgba(28, 27, 31, 1)",
+                      "writingDirection": "ltr",
+                    },
+                    [
+                      {
+                        "marginHorizontal": 16,
+                        "marginVertical": 9,
+                        "textAlign": "center",
+                      },
+                      false,
+                      {
+                        "marginHorizontal": 24,
+                        "marginVertical": 10,
+                      },
+                      undefined,
+                      false,
+                      {
+                        "color": "#fff",
+                        "fontFamily": "System",
+                        "fontSize": 14,
+                        "fontWeight": "500",
+                        "letterSpacing": 0.1,
+                        "lineHeight": 20,
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
+                testID="button-text"
+              >
+                onboarding.button
+              </Text>
+            </View>
+          </View>
+        </View>
       </View>
     </View>
   </RNCSafeAreaView>

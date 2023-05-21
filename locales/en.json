@@ -1,5 +1,9 @@
 {
-  "message": "Hello, world!",
+  "commonErrors": {
+    "title": "An error occurred",
+    "description": "Check your internet connection and try again",
+    "tooManyAttempts": "Too many attempts, try again later"
+  },
   "onboarding": {
     "title": {
       "fistPart": "With",
@@ -12,8 +16,17 @@
   "login": {
     "connection": "Connection",
     "labels": {
-      "userName": "Username",
+      "username": "Username",
       "password": "Password"
+    },
+    "errors": {
+      "password": {
+        "required": "Password required",
+        "length": "Password too short"
+      },
+      "username": "Username is required",
+      "notFoundTitle": "User not found !",
+      "notFoundDescription": "Check your username and password then try again."
     },
     "passwordForgotten": "Password forgotten ?",
     "noAccount": "You don't have an account ?",
@@ -23,7 +36,7 @@
   "signUp": {
     "signUp": "Sign up",
     "labels": {
-      "userName": "Username",
+      "username": "Username",
       "firstName": "First name",
       "lastName": "Last name",
       "password": "Password",
@@ -31,7 +44,93 @@
       "email": "Email",
       "phoneNumber": "696000000"
     },
+    "errors": {
+      "username": {
+        "required": "Username is required",
+        "taken": "This username is already used"
+      },
+      "firstName": "First name is required",
+      "lastName": "Last name is required",
+      "phoneNumber": {
+        "required": "Phone number is required",
+        "taken":"This phone number is already used"
+      },
+      "email": {
+        "notValid": "Enter a valid email address",
+        "required": "Email is required",
+        "taken": "This email is already used"
+      },
+      "password": {
+        "required": "Password required",
+        "length": "Password too short",
+        "match": "Passwords must match"
+      }
+    },
     "existingAccount": "You already have an account ?",
-    "connect": "Login"
+    "connect": "Login",
+    "pickerCancel": "Cancel",
+    "pickerConfirm": "Confirm"
+  }, 
+  "passwordReset": {
+    "title": "Reset your password",
+    "labels": {
+      "otp": "Enter your OTP",
+      "newPassword": "Enter your new password",
+      "passwordConfirmation": "Confirm your password"
+    },
+    "error": {
+      "otp": {
+        "length":"OTP must be 5 characters long",
+        "required":"OPT is required"
+      },
+      "password": {
+        "min": "Password too short",
+        "required":"Password required"
+      },
+      "passwordConfirm": {
+        "min": "Password too short",
+        "required":"Password confirmation is required"
+      }
+    },
+    "cta": "Reset password"
+  },
+  "checkOTP": {
+    "title": "Verify your email",
+    "indication": "An OTP was sent to",
+    "labels": {
+      "otpCheck": "Enter the OTP"
+    },
+    "errors": {
+      "otpCheck": {
+        "length": "OTP must be 5 characters long",
+        "required": "OPT is required"
+      }
+    },
+    "cta": "Confirm",
+    "resendTitle": "You didn't receive an OTP? ",
+    "resend": "Resend an OTP"
+  },
+  "checkEmail": {
+    "title": "Verify your email",
+    "description": "An OTP will be sent to your email address",
+    "labels": {
+      "checkEmail": "Enter email username, address or phoneNumber "
+    },
+    "errors": {
+      "emailCheck": {
+        "valid": "Enter a valid email address",
+        "required": "Email is required"
+      }
+    }
+  },
+  "networkStatus": {
+    "title": {
+      "notConnected": "Oops ! no network.",
+      "connected": "Internet is back, enjoy !"
+    },
+    "message": {
+      "notConnected": "Please check your internet connection, and try again.",
+      "connected": "You can continue to use the app."
+    }
   }
 }
