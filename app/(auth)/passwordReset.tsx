@@ -23,8 +23,9 @@ export default function PasswordReset() {
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(false)
   const [isUserLoading, setIsUserLoading] = useState<boolean>(false)
 
-  const { locale } = useContext(AppStateContext)
   const { colors } = useTheme()
+  const { locale, setActionModalProps, setLoading } =
+    useContext(AppStateContext)
 
   type Params = { email: string }
 
@@ -41,13 +42,21 @@ export default function PasswordReset() {
     newPassword: string
   }) => {
     setIsUserLoading(true)
-    User.resetPassword(
-      otp,
-      newPassword,
-      decodeURIComponent(params.email)
-    ).finally(() => {
-      setIsUserLoading(false)
-    })
+    User.resetPassword(otp, newPassword, decodeURIComponent(params.email))
+      .catch(() => {
+        setLoading(false)
+
+        setActionModalProps({
+          icon: true,
+          state: "error",
+          shouldDisplay: true,
+          title: locale.t("commonErrors.title"),
+          description: locale.t("commonErrors.description")
+        })
+      })
+      .finally(() => {
+        setIsUserLoading(false)
+      })
   }
 
   return (

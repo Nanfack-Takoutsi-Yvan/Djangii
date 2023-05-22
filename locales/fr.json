@@ -1,6 +1,8 @@
 {
   "commonErrors": {
     "title": "Une erreur s'est produite",
+    "badOtp": "L'otp reçu n'est pas valide",
+    "tooManyAttempts": "Too many attempts, try again later",
     "description": "Verifiez votre connection internet et essayer de nouveau."
   },
   "onboarding": {

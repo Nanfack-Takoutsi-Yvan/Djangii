@@ -1,7 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable no-useless-escape */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   StyleSheet,
@@ -29,12 +25,14 @@ import LoadingModal from "@components/ui/LoadingModal"
 
 import validations from "@services/validations"
 import { userFormInputs } from "@services/types/auth"
+import StatusesHttp from "@constants/Statuses.http"
 
 export default function SignUp() {
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(false)
   const [isOtpSending, setIsOtpSending] = useState<boolean>(false)
 
-  const { locale } = useContext(AppStateContext)
+  const { locale, setLoading, setActionModalProps } =
+    useContext(AppStateContext)
   const { colors } = useTheme()
 
   const router = useRouter()
@@ -60,6 +58,7 @@ export default function SignUp() {
   })
 
   const sendOTP = async (values: userFormInputs, lang?: string) => {
+    setLoading(true)
     User.sendOTP(values.email, lang)
       .then(otpSent => {
         if (otpSent)
@@ -70,7 +69,7 @@ export default function SignUp() {
       })
       .catch(err => {
         const error = JSON.parse(err.message)
-        const error429 = error.error.status === 429
+        const error429 = error.error.status === StatusesHttp.tooManyRequests
 
         setActionModalProps({
           icon: true,
@@ -79,9 +78,10 @@ export default function SignUp() {
           title: locale.t(
             error429 ? "commonErrors.tooManyAttempts" : "commonErrors.title"
           ),
-          description: locale.t(error429 ? "" : "commonErrors.description")
+          description: error429 ? "" : locale.t("commonErrors.description")
         })
       })
+      .finally(() => setLoading(false))
   }
 
   const vaidateFormik = async (values: userFormInputs) => {
@@ -456,7 +456,9 @@ export default function SignUp() {
                     <Button
                       mode="contained"
                       textColor={colors.surface}
-                      onPress={() => handleSubmit()}
+                      onPress={() => {
+                        handleSubmit()
+                      }}
                       contentStyle={styles.signUpButton}
                       loading={isOtpSending}
                       icon={() => (
@@ -591,12 +593,3 @@ const styles = StyleSheet.create({
     top: 24
   }
 })
-function setActionModalProps(arg0: {
-  icon: boolean
-  state: string
-  shouldDisplay: boolean
-  title: string
-  description: string
-}) {
-  throw new Error("Function not implemented.")
-}
