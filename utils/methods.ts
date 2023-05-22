@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
-import { ActionModalProps } from "@components/ActionModal"
 import User from "@services/models/user"
 import { IUser } from "@services/types/auth"
+import * as SecureStore from "expo-secure-store"
 
-const handleLogin = async (
+export const handleLogin = async (
   {
     username,
     password
@@ -25,4 +25,31 @@ const handleLogin = async (
   }
 }
 
-export default handleLogin
+export async function saveInSecureStore(key: string, value: string) {
+  const isStoreAvailable = await SecureStore.isAvailableAsync()
+  if (!isStoreAvailable) return
+
+  await SecureStore.setItemAsync(key, value)
+}
+
+export async function getValueFromSecureStoreFor(key: string) {
+  const isStoreAvailable = await SecureStore.isAvailableAsync()
+  if (isStoreAvailable) {
+    const result = await SecureStore.getItemAsync(key)
+
+    return result
+  }
+
+  return null
+}
+
+export async function deleteValueFromSecureStoreFor(key: string) {
+  const isStoreAvailable = await SecureStore.isAvailableAsync()
+  if (isStoreAvailable) {
+    const result = await SecureStore.deleteItemAsync(key)
+
+    return result
+  }
+
+  return null
+}

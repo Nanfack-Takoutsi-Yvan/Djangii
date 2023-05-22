@@ -1,6 +1,8 @@
-import { StyleSheet, useWindowDimensions, View } from "react-native"
 import { Portal, Modal, useTheme, Text, Button } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
+import { StyleSheet, View } from "react-native"
+import * as Haptics from "expo-haptics"
+import { useEffect } from "react"
 
 type State = "info" | "error" | "warning" | "success"
 
@@ -46,6 +48,13 @@ const iconLib: IconLib = {
   }
 }
 
+const hapticType: { [key: string]: Haptics.NotificationFeedbackType } = {
+  info: Haptics.NotificationFeedbackType.Warning,
+  warning: Haptics.NotificationFeedbackType.Warning,
+  error: Haptics.NotificationFeedbackType.Error,
+  success: Haptics.NotificationFeedbackType.Success
+}
+
 export default function ActionModal({
   settings: {
     shouldDisplay,
@@ -60,6 +69,10 @@ export default function ActionModal({
 
   const { color } = iconLib[state]
   const iconColor = colors[color]
+
+  useEffect(() => {
+    if (shouldDisplay) Haptics.notificationAsync(hapticType[state])
+  }, [shouldDisplay, state])
 
   return (
     <Portal>

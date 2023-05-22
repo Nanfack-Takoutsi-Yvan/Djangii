@@ -6,7 +6,6 @@ import {
 } from "react-native"
 
 import { useContext } from "react"
-import Colors from "@constants/Theme/Colors"
 import { useRouter } from "expo-router"
 import { View } from "@components/Themed"
 import { Text, Button, useTheme } from "react-native-paper"

@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
-  StyleSheet,
-  ImageBackground,
-  StatusBar,
-  KeyboardAvoidingView,
-  ScrollView,
   View,
   Image,
-  Platform
+  Platform,
+  StyleSheet,
+  ScrollView,
+  ImageBackground,
+  KeyboardAvoidingView
 } from "react-native"
 
 import { Text, TextInput, Button, useTheme } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
 
-import { Formik, useField } from "formik"
-import { forwardRef, useContext, useRef, useState } from "react"
 import { useRouter } from "expo-router"
+import { Formik, useField } from "formik"
+import { StatusBar } from "expo-status-bar"
+import { forwardRef, useContext, useRef, useState } from "react"
 
 import AppStateContext from "@services/context/context"
 import PasswordIcon from "@components/ui/PasswordIcon"
@@ -43,17 +43,30 @@ export default function SignUp() {
     const [field, meta] = useField({ name: "phoneNumber" })
 
     return (
-      <TextInput
-        {...props}
-        placeholderTextColor="rgba(0, 0, 0, 0.20)"
-        style={styles.textInput}
-        dense
-        underlineColor="rgba(0,0,0,0.5)"
-        autoComplete="tel"
-        onBlur={field.onBlur("phoneNumber")}
-        error={!!meta.error && !!meta.touched}
-        ref={ref as any}
-      />
+      <View>
+        <TextInput
+          {...props}
+          placeholderTextColor="rgba(0, 0, 0, 0.20)"
+          style={styles.textInput}
+          dense
+          underlineColor="rgba(0,0,0,0.5)"
+          autoComplete="tel"
+          onBlur={field.onBlur("phoneNumber")}
+          error={!!meta.error && !!meta.touched}
+          ref={ref as any}
+        />
+        {meta.error && meta.touched && (
+          <View>
+            <Text
+              style={{
+                color: colors.error
+              }}
+            >
+              {locale.t(meta.error)}
+            </Text>
+          </View>
+        )}
+      </View>
     )
   })
 
@@ -96,14 +109,15 @@ export default function SignUp() {
     <KeyboardAvoidingView
       style={styles.screen}
       contentContainerStyle={styles.screen}
-      behavior="position"
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <ImageBackground
         style={styles.screen}
         source={require("../../assets/images/screens/background.png")}
       >
         <LoadingModal displayModal={isOtpSending} />
-        <StatusBar barStyle="light-content" />
+        {/* eslint-disable-next-line react/style-prop-object */}
+        <StatusBar style="light" />
         <View style={styles.titleContainer}>
           <Text variant="headlineMedium" style={{ color: colors.surface }}>
             {locale.t("login.connection")}
@@ -111,383 +125,370 @@ export default function SignUp() {
           <Icon source="login" size={32} color="#90F800" />
         </View>
         <View style={styles.formContainer}>
-          <ScrollView
-            style={styles.screen}
-            contentContainerStyle={styles.screen}
+          <Formik
+            initialValues={{
+              username: "",
+              firstName: "",
+              lastName: "",
+              email: "",
+              phoneNumber: "",
+              password: "",
+              passwordConfirm: ""
+            }}
+            validationSchema={validations.signUpValidationSchema}
+            onSubmit={vaidateFormik}
           >
-            <Formik
-              initialValues={{
-                username: "",
-                firstName: "",
-                lastName: "",
-                email: "",
-                phoneNumber: "",
-                password: "",
-                passwordConfirm: ""
-              }}
-              validationSchema={validations.signUpValidationSchema}
-              onSubmit={vaidateFormik}
-            >
-              {({
-                handleChange,
-                handleBlur,
-                handleSubmit,
-                values,
-                errors,
-                touched
-              }) => (
-                <View style={styles.form}>
-                  <View style={styles.field}>
-                    <Icon
-                      source="account-outline"
-                      color={
-                        errors.username && touched.username
-                          ? colors.error
-                          : colors.primary
-                      }
-                      size={40}
-                    />
-                    <View style={styles.screen}>
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              touched
+            }) => (
+              <View style={{ flex: 6 }}>
+                <ScrollView
+                  style={styles.screen}
+                  bounces={false}
+                  showsVerticalScrollIndicator={false}
+                >
+                  <View style={styles.form}>
+                    <View style={styles.field}>
+                      <Icon
+                        source="account-outline"
+                        color={
+                          errors.username && touched.username
+                            ? colors.error
+                            : colors.primary
+                        }
+                        size={40}
+                      />
                       <View style={styles.screen}>
-                        <TextInput
-                          placeholder={locale.t("signUp.labels.username")}
-                          placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                          keyboardType="name-phone-pad"
-                          value={values.username}
-                          onBlur={handleBlur("username")}
-                          onChangeText={handleChange("username")}
-                          style={styles.textInput}
-                          dense
-                          underlineColor="rgba(0,0,0,0.5)"
-                          autoComplete="username"
-                          error={!!errors.username && !!touched.username}
-                        />
-                      </View>
-                      {errors.username && touched.username && (
-                        <View style={styles.errorContainer}>
-                          <Text
-                            style={{
-                              color: colors.error
-                            }}
-                          >
-                            {locale.t(errors.username)}
-                          </Text>
+                        <View>
+                          <TextInput
+                            placeholder={locale.t("signUp.labels.username")}
+                            placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                            keyboardType="name-phone-pad"
+                            value={values.username}
+                            onBlur={handleBlur("username")}
+                            onChangeText={handleChange("username")}
+                            style={styles.textInput}
+                            dense
+                            underlineColor="rgba(0,0,0,0.5)"
+                            autoComplete="username"
+                            error={!!errors.username && !!touched.username}
+                          />
                         </View>
-                      )}
-                    </View>
-                  </View>
-
-                  <View style={styles.field}>
-                    <Icon
-                      source="account-outline"
-                      color={
-                        errors.firstName && touched.firstName
-                          ? colors.error
-                          : colors.primary
-                      }
-                      size={40}
-                    />
-                    <View style={styles.screen}>
-                      <View style={styles.screen}>
-                        <TextInput
-                          placeholder={locale.t("signUp.labels.firstName")}
-                          placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                          keyboardType="name-phone-pad"
-                          value={values.firstName}
-                          onBlur={handleBlur("firstName")}
-                          onChangeText={handleChange("firstName")}
-                          style={styles.textInput}
-                          dense
-                          underlineColor="rgba(0,0,0,0.5)"
-                          autoComplete="name-given"
-                          error={!!errors.firstName && !!touched.firstName}
-                        />
-                      </View>
-                      {errors.firstName && touched.firstName && (
-                        <View style={styles.errorContainer}>
-                          <Text
-                            style={{
-                              color: colors.error
-                            }}
-                          >
-                            {locale.t(errors.firstName)}
-                          </Text>
-                        </View>
-                      )}
-                    </View>
-                  </View>
-
-                  <View style={styles.field}>
-                    <Icon
-                      source="account-outline"
-                      color={
-                        errors.lastName && touched.lastName
-                          ? colors.error
-                          : colors.primary
-                      }
-                      size={40}
-                    />
-                    <View style={styles.screen}>
-                      <View style={styles.screen}>
-                        <TextInput
-                          placeholder={locale.t("signUp.labels.lastName")}
-                          placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                          keyboardType="name-phone-pad"
-                          value={values.lastName}
-                          onBlur={handleBlur("lastName")}
-                          onChangeText={handleChange("lastName")}
-                          style={styles.textInput}
-                          dense
-                          underlineColor="rgba(0,0,0,0.5)"
-                          autoComplete="name-family"
-                          error={!!errors.lastName && !!touched.lastName}
-                        />
-                        {errors.lastName && touched.lastName && (
-                          <View style={[styles.errorContainer, { top: 8 }]}>
+                        {errors.username && touched.username && (
+                          <View>
                             <Text
                               style={{
                                 color: colors.error
                               }}
                             >
-                              {locale.t(errors.lastName)}
+                              {locale.t(errors.username)}
                             </Text>
                           </View>
                         )}
                       </View>
                     </View>
-                  </View>
 
-                  <View style={styles.field}>
-                    <Icon
-                      source="at"
-                      color={
-                        errors.email && touched.email
-                          ? colors.error
-                          : colors.primary
-                      }
-                      size={40}
-                    />
-                    <View style={styles.screen}>
-                      <View style={styles.screen}>
-                        <TextInput
-                          placeholder={locale.t("signUp.labels.email")}
-                          placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                          keyboardType="email-address"
-                          value={values.email}
-                          onBlur={handleBlur("email")}
-                          dense
-                          underlineColor="rgba(0,0,0,0.5)"
-                          onChangeText={handleChange("email")}
-                          style={styles.textInput}
-                          autoComplete="email"
-                          error={!!errors.email && touched.email}
-                        />
-                      </View>
-                      {errors.email && touched.email && (
-                        <View style={styles.errorContainer}>
-                          <Text
-                            style={{
-                              color: colors.error
-                            }}
-                          >
-                            {locale.t(errors.email)}
-                          </Text>
-                        </View>
-                      )}
-                    </View>
-                  </View>
-
-                  <View
-                    style={[
-                      styles.field,
-                      {
-                        flexDirection: "column",
-                        flex: Platform.OS === "web" ? undefined : 1
-                      }
-                    ]}
-                  >
-                    <View style={styles.screen}>
-                      <PhoneInput
-                        autoFormat
-                        offset={20}
-                        initialCountry="cm"
-                        flagStyle={styles.flagStyle}
-                        allowZeroAfterCountryCode={false}
-                        onChangePhoneNumber={(value, iso) => {
-                          handleChange("phoneNumber")(`${value},${iso}`)
-                        }}
-                        confirmText={locale.t("signUp.pickerConfirm")}
-                        cancelText={locale.t("signUp.pickerCancel")}
-                        textStyle={
-                          errors.phoneNumber && touched.phoneNumber
-                            ? styles.phoneInputErrorState
-                            : styles.phoneInputTextStyle
+                    <View style={styles.field}>
+                      <Icon
+                        source="account-outline"
+                        color={
+                          errors.firstName && touched.firstName
+                            ? colors.error
+                            : colors.primary
                         }
-                        confirmTextStyle={styles.phoneInputConfirmTextStyle}
-                        cancelTextStyle={styles.phoneInputCancelTextStyle}
-                        renderFlag={({ imageSource }) => (
+                        size={40}
+                      />
+                      <View style={styles.screen}>
+                        <View>
+                          <TextInput
+                            placeholder={locale.t("signUp.labels.firstName")}
+                            placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                            keyboardType="name-phone-pad"
+                            value={values.firstName}
+                            onBlur={handleBlur("firstName")}
+                            onChangeText={handleChange("firstName")}
+                            style={styles.textInput}
+                            dense
+                            underlineColor="rgba(0,0,0,0.5)"
+                            autoComplete="name-given"
+                            error={!!errors.firstName && !!touched.firstName}
+                          />
+                        </View>
+                        {errors.firstName && touched.firstName && (
                           <View>
-                            <Image
-                              source={require("../../assets/images/icons/chevron-down.png")}
-                              style={styles.flagChevronDown}
-                            />
-                            <Image source={imageSource} style={styles.flag} />
+                            <Text
+                              style={{
+                                color: colors.error
+                              }}
+                            >
+                              {locale.t(errors.firstName)}
+                            </Text>
                           </View>
                         )}
-                        textComponent={CustomPhoneInput}
-                        ref={phoneInputRef}
+                      </View>
+                    </View>
+
+                    <View style={styles.field}>
+                      <Icon
+                        source="account-outline"
+                        color={
+                          errors.lastName && touched.lastName
+                            ? colors.error
+                            : colors.primary
+                        }
+                        size={40}
                       />
-                    </View>
-                    {errors?.phoneNumber && touched?.phoneNumber && (
-                      <View
-                        style={[styles.errorContainer, { left: 56, top: 14 }]}
-                      >
-                        <Text
-                          style={{
-                            color: colors.error
-                          }}
-                        >
-                          {locale.t(errors?.phoneNumber)}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-
-                  <View style={styles.field}>
-                    <Icon
-                      source="form-textbox-password"
-                      color={
-                        errors.password && touched.password
-                          ? colors.error
-                          : colors.primary
-                      }
-                      size={40}
-                    />
-                    <View style={styles.screen}>
                       <View style={styles.screen}>
-                        <TextInput
-                          placeholder={locale.t("login.labels.password")}
-                          placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                          keyboardType="visible-password"
-                          value={values.password}
-                          onBlur={handleBlur("password")}
-                          onChangeText={handleChange("password")}
-                          style={styles.textInput}
-                          dense
-                          underlineColor="rgba(0,0,0,0.5)"
-                          autoComplete="password"
-                          secureTextEntry
-                          error={!!errors.password && touched.password}
-                          right={
-                            <PasswordIcon
-                              showEye={isPasswordHidden}
-                              toggleEye={setIsPasswordHidden}
-                            />
-                          }
-                        />
-                      </View>
-                      {errors.password && touched.password && (
-                        <View style={styles.errorContainer}>
-                          <Text
-                            style={{
-                              color: colors.error
-                            }}
-                          >
-                            {locale.t(errors.password)}
-                          </Text>
-                        </View>
-                      )}
-                    </View>
-                  </View>
-
-                  <View style={styles.field}>
-                    <Icon
-                      source="form-textbox-password"
-                      color={
-                        errors.passwordConfirm && touched.passwordConfirm
-                          ? colors.error
-                          : colors.primary
-                      }
-                      size={40}
-                    />
-                    <View style={styles.screen}>
-                      <View style={styles.screen}>
-                        <TextInput
-                          placeholder={locale.t(
-                            "signUp.labels.confirmPassword"
+                        <View>
+                          <TextInput
+                            placeholder={locale.t("signUp.labels.lastName")}
+                            placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                            keyboardType="name-phone-pad"
+                            value={values.lastName}
+                            onBlur={handleBlur("lastName")}
+                            onChangeText={handleChange("lastName")}
+                            style={styles.textInput}
+                            dense
+                            underlineColor="rgba(0,0,0,0.5)"
+                            autoComplete="name-family"
+                            error={!!errors.lastName && !!touched.lastName}
+                          />
+                          {errors.lastName && touched.lastName && (
+                            <View>
+                              <Text
+                                style={{
+                                  color: colors.error
+                                }}
+                              >
+                                {locale.t(errors.lastName)}
+                              </Text>
+                            </View>
                           )}
-                          placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                          keyboardType="visible-password"
-                          value={values.passwordConfirm}
-                          onBlur={handleBlur("passwordConfirm")}
-                          onChangeText={handleChange("passwordConfirm")}
-                          style={styles.textInput}
-                          autoComplete="password"
-                          dense
-                          underlineColor="rgba(0,0,0,0.5)"
-                          secureTextEntry
-                          error={
-                            !!errors.passwordConfirm && touched.passwordConfirm
-                          }
-                          right={
-                            <PasswordIcon
-                              showEye={isPasswordHidden}
-                              toggleEye={setIsPasswordHidden}
-                            />
-                          }
-                        />
+                        </View>
                       </View>
+                    </View>
 
-                      {errors.passwordConfirm && touched.passwordConfirm && (
-                        <View style={styles.errorContainer}>
-                          <Text
-                            style={{
-                              color: colors.error
-                            }}
-                          >
-                            {locale.t(errors.passwordConfirm)}
-                          </Text>
+                    <View style={styles.field}>
+                      <Icon
+                        source="at"
+                        color={
+                          errors.email && touched.email
+                            ? colors.error
+                            : colors.primary
+                        }
+                        size={40}
+                      />
+                      <View style={styles.screen}>
+                        <View>
+                          <TextInput
+                            placeholder={locale.t("signUp.labels.email")}
+                            placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                            keyboardType="email-address"
+                            value={values.email}
+                            onBlur={handleBlur("email")}
+                            dense
+                            underlineColor="rgba(0,0,0,0.5)"
+                            onChangeText={handleChange("email")}
+                            style={styles.textInput}
+                            autoComplete="email"
+                            error={!!errors.email && touched.email}
+                          />
+                        </View>
+                        {errors.email && touched.email && (
+                          <View>
+                            <Text
+                              style={{
+                                color: colors.error
+                              }}
+                            >
+                              {locale.t(errors.email)}
+                            </Text>
+                          </View>
+                        )}
+                      </View>
+                    </View>
+
+                    <PhoneInput
+                      autoFormat
+                      offset={20}
+                      initialCountry="cm"
+                      flagStyle={styles.flagStyle}
+                      allowZeroAfterCountryCode={false}
+                      onChangePhoneNumber={(value, iso) => {
+                        handleChange("phoneNumber")(`${value},${iso}`)
+                      }}
+                      confirmText={locale.t("signUp.pickerConfirm")}
+                      cancelText={locale.t("signUp.pickerCancel")}
+                      textStyle={
+                        errors.phoneNumber && touched.phoneNumber
+                          ? styles.phoneInputErrorState
+                          : styles.phoneInputTextStyle
+                      }
+                      confirmTextStyle={styles.phoneInputConfirmTextStyle}
+                      cancelTextStyle={styles.phoneInputCancelTextStyle}
+                      renderFlag={({ imageSource }) => (
+                        <View>
+                          <Image
+                            source={require("../../assets/images/icons/chevron-down.png")}
+                            style={styles.flagChevronDown}
+                          />
+                          <Image
+                            source={imageSource}
+                            style={[
+                              styles.flag,
+                              errors.phoneNumber && touched.phoneNumber
+                                ? styles.flagError
+                                : undefined
+                            ]}
+                          />
                         </View>
                       )}
+                      textComponent={CustomPhoneInput}
+                      ref={phoneInputRef}
+                    />
+
+                    <View style={styles.field}>
+                      <Icon
+                        source="form-textbox-password"
+                        color={
+                          errors.password && touched.password
+                            ? colors.error
+                            : colors.primary
+                        }
+                        size={40}
+                      />
+                      <View style={styles.screen}>
+                        <View>
+                          <TextInput
+                            placeholder={locale.t("login.labels.password")}
+                            placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                            keyboardType="visible-password"
+                            value={values.password}
+                            onBlur={handleBlur("password")}
+                            onChangeText={handleChange("password")}
+                            style={styles.textInput}
+                            dense
+                            underlineColor="rgba(0,0,0,0.5)"
+                            autoComplete="password"
+                            secureTextEntry
+                            error={!!errors.password && touched.password}
+                            right={
+                              <PasswordIcon
+                                showEye={isPasswordHidden}
+                                toggleEye={setIsPasswordHidden}
+                              />
+                            }
+                          />
+                        </View>
+                        {errors.password && touched.password && (
+                          <View>
+                            <Text
+                              style={{
+                                color: colors.error
+                              }}
+                            >
+                              {locale.t(errors.password)}
+                            </Text>
+                          </View>
+                        )}
+                      </View>
+                    </View>
+
+                    <View style={styles.field}>
+                      <Icon
+                        source="form-textbox-password"
+                        color={
+                          errors.passwordConfirm && touched.passwordConfirm
+                            ? colors.error
+                            : colors.primary
+                        }
+                        size={40}
+                      />
+                      <View style={styles.screen}>
+                        <View>
+                          <TextInput
+                            placeholder={locale.t(
+                              "signUp.labels.confirmPassword"
+                            )}
+                            placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                            keyboardType="visible-password"
+                            value={values.passwordConfirm}
+                            onBlur={handleBlur("passwordConfirm")}
+                            onChangeText={handleChange("passwordConfirm")}
+                            style={styles.textInput}
+                            autoComplete="password"
+                            dense
+                            underlineColor="rgba(0,0,0,0.5)"
+                            secureTextEntry
+                            error={
+                              !!errors.passwordConfirm &&
+                              touched.passwordConfirm
+                            }
+                            right={
+                              <PasswordIcon
+                                showEye={isPasswordHidden}
+                                toggleEye={setIsPasswordHidden}
+                              />
+                            }
+                          />
+                        </View>
+
+                        {errors.passwordConfirm && touched.passwordConfirm && (
+                          <View>
+                            <Text
+                              style={{
+                                color: colors.error
+                              }}
+                            >
+                              {locale.t(errors.passwordConfirm)}
+                            </Text>
+                          </View>
+                        )}
+                      </View>
+                    </View>
+
+                    <View>
+                      <Button
+                        mode="contained"
+                        textColor={colors.surface}
+                        onPress={() => {
+                          handleSubmit()
+                        }}
+                        contentStyle={styles.signUpButton}
+                        loading={isOtpSending}
+                        icon={() => (
+                          <Icon
+                            source="chevron-right"
+                            size={32}
+                            color={colors.secondary}
+                          />
+                        )}
+                      >
+                        {locale.t("signUp.signUp")}
+                      </Button>
                     </View>
                   </View>
+                </ScrollView>
+              </View>
+            )}
+          </Formik>
 
-                  <View style={styles.screen}>
-                    <Button
-                      mode="contained"
-                      textColor={colors.surface}
-                      onPress={() => {
-                        handleSubmit()
-                      }}
-                      contentStyle={styles.signUpButton}
-                      loading={isOtpSending}
-                      icon={() => (
-                        <Icon
-                          source="chevron-right"
-                          size={32}
-                          color={colors.secondary}
-                        />
-                      )}
-                    >
-                      {locale.t("signUp.signUp")}
-                    </Button>
-                  </View>
-                </View>
-              )}
-            </Formik>
-
-            <View style={styles.loginContainer}>
-              <Text>{locale.t("signUp.existingAccount")}</Text>
-              <Button
-                mode="text"
-                textColor={colors.tertiary}
-                labelStyle={{ fontSize: 14 }}
-                onPress={() => router.replace("login")}
-              >
-                {locale.t("signUp.connect")}
-              </Button>
-            </View>
-          </ScrollView>
+          <View style={styles.loginContainer}>
+            <Text>{locale.t("signUp.existingAccount")}</Text>
+            <Button
+              mode="text"
+              textColor={colors.tertiary}
+              labelStyle={{ fontSize: 14 }}
+              onPress={() => router.replace("login")}
+            >
+              {locale.t("signUp.connect")}
+            </Button>
+          </View>
         </View>
       </ImageBackground>
     </KeyboardAvoidingView>
@@ -524,9 +525,8 @@ const styles = StyleSheet.create({
     rowGap: 24,
     flex: 3
   },
-  fieldContainer: {
-    backgroundColor: "transparent",
-    rowGap: 12
+  fieldsContainer: {
+    flex: 1
   },
   field: {
     flexDirection: "row",
@@ -558,6 +558,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginLeft: 8
   },
+  flagError: {
+    borderWidth: 1,
+    borderColor: "red"
+  },
   phoneInputTextStyle: {
     height: 40,
     fontSize: 16,
@@ -588,8 +592,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     flexDirection: "row",
     alignItems: "center"
-  },
-  errorContainer: {
-    top: 24
   }
 })

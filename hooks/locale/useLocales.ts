@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable import/no-extraneous-dependencies */
 import { useEffect, useState } from "react"
 import locales from "@locales/index"
 import { I18n } from "i18n-js"

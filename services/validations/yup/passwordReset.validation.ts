@@ -12,11 +12,7 @@ const passwordResetValidationSchema = yup.object().shape({
     .required("passwordReset.errors.password.required"),
   passwordConfirm: yup
     .string()
-    .oneOf([yup.ref("newPassword")], "signUp.errors.password.match")
-    .min(
-      field.passwordLength.min,
-      () => "passwordReset.errors.passwordConfirm.min"
-    )
+    .oneOf([yup.ref("newPassword")], "passwordReset.errors.password.match")
     .required("passwordReset.errors.passwordConfirm.required")
 })
 
