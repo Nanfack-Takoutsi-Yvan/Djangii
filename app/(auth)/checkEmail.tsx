@@ -2,29 +2,28 @@
 import {
   StyleSheet,
   ImageBackground,
-  StatusBar,
   KeyboardAvoidingView,
-  View
+  View,
+  Platform
 } from "react-native"
+
+import { useContext, useState } from "react"
+import { StatusBar } from "expo-status-bar"
+import { useRouter } from "expo-router"
 
 import { Text, TextInput, Button, useTheme } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
-
 import { Formik } from "formik"
-import { useContext, useState } from "react"
-import { useRouter, useLocalSearchParams } from "expo-router"
 
 import AppStateContext from "@services/context/context"
 import User from "@services/models/user"
-import { NewUserData, userFormInputs } from "@services/types/auth"
 import LoadingModal from "@components/ui/LoadingModal"
 
 import validations from "@services/validations"
 
 export default function CheckEmail() {
-  const [loading, setLoading] = useState<boolean>(false)
-
-  const { locale, setUser } = useContext(AppStateContext)
+  const { locale, setUser, setActionModalProps, setLoading } =
+    useContext(AppStateContext)
   const { colors } = useTheme()
 
   const router = useRouter()
@@ -41,6 +40,17 @@ export default function CheckEmail() {
           })
         }
       })
+      .catch(() => {
+        setLoading(false)
+
+        setActionModalProps({
+          icon: true,
+          state: "error",
+          shouldDisplay: true,
+          title: locale.t("commonErrors.title"),
+          description: locale.t("commonErrors.description")
+        })
+      })
       .finally(() => setLoading(false))
   }
 
@@ -54,8 +64,7 @@ export default function CheckEmail() {
         style={styles.screen}
         source={require("../../assets/images/screens/background.png")}
       >
-        <StatusBar barStyle="light-content" />
-        <LoadingModal displayModal={loading} />
+        <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
         <View style={styles.titleContainer}>
           <Text variant="headlineMedium" style={{ color: colors.surface }}>
             {locale.t("checkEmail.title")}
@@ -134,7 +143,6 @@ export default function CheckEmail() {
                     textColor={colors.surface}
                     onPress={() => handleSubmit()}
                     contentStyle={styles.signUpButton}
-                    loading={loading}
                     icon={() => (
                       <Icon
                         source="chevron-right"

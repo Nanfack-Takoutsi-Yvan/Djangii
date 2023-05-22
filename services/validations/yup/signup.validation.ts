@@ -1,5 +1,8 @@
+/* eslint-disable no-console */
+import StatusesHttp from "@constants/Statuses.http"
 import field from "@constants/validation/limits"
 import User from "@services/models/user"
+import { isAxiosError } from "axios"
 import * as yup from "yup"
 
 const signUpValidationSchema = yup.object().shape({
@@ -11,8 +14,12 @@ const signUpValidationSchema = yup.object().shape({
         await User.isUsernameUsed(value)
 
         return false
-      } catch {
-        return false
+      } catch (err) {
+        if (isAxiosError(err) && err.status === StatusesHttp.notFound) {
+          return false
+        }
+
+        return true
       }
     }),
   firstName: yup.string().required("signUp.errors.firstName"),
@@ -31,7 +38,11 @@ const signUpValidationSchema = yup.object().shape({
           await User.isPhoneNumberUsed(phoneNumber)
         }
         return false
-      } catch {
+      } catch (err) {
+        if (isAxiosError(err) && err.status === StatusesHttp.notFound) {
+          return false
+        }
+
         return true
       }
     }),
@@ -44,7 +55,11 @@ const signUpValidationSchema = yup.object().shape({
         await User.isEmailUsed(value)
 
         return false
-      } catch {
+      } catch (err) {
+        if (isAxiosError(err) && err.status === StatusesHttp.notFound) {
+          return false
+        }
+
         return true
       }
     }),

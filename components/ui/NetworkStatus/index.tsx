@@ -63,11 +63,11 @@ const styles = StyleSheet.create({
     columnGap: 12,
     alignItems: "center",
     paddingBottom: 12,
-    marginLeft: Platform.OS === "ios" ? -20 : 0
+    marginLeft: Platform.OS === "ios" ? -20 : undefined
   },
   textAndIcon: { alignItems: "center", columnGap: 12, flexDirection: "row" },
   textContainer: {
-    paddingHorizontal: Platform.OS === "ios" ? 30 : 0
+    paddingHorizontal: Platform.OS === "ios" ? 30 : undefined
   },
   description: { color: "#fff", width: "80%" },
   title: { color: "#fff" }

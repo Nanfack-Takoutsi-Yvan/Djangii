@@ -1,36 +1,36 @@
 /* eslint-disable no-console */
 import {
+  View,
+  Platform,
   StyleSheet,
   ImageBackground,
-  StatusBar,
-  KeyboardAvoidingView,
-  View
+  KeyboardAvoidingView
 } from "react-native"
 
-import { Text, TextInput, Button, useTheme } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
+import { Text, TextInput, Button, useTheme } from "react-native-paper"
 
 import { Formik } from "formik"
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { useRouter, useLocalSearchParams } from "expo-router"
 
-import AppStateContext from "@services/context/context"
 import User from "@services/models/user"
+import AppStateContext from "@services/context/context"
 import { NewUserData, userFormInputs } from "@services/types/auth"
-import LoadingModal from "@components/ui/LoadingModal"
 
+import { StatusBar } from "expo-status-bar"
 import validations from "@services/validations"
+import StatusesHttp from "@constants/Statuses.http"
 
 export default function CheckOTP() {
-  const [loading, setLoading] = useState<boolean>(false)
-
-  const { locale, setUser } = useContext(AppStateContext)
   const { colors } = useTheme()
+  const { locale, setUser, setLoading, setActionModalProps } =
+    useContext(AppStateContext)
 
   type Params = { values: string }
 
   const params = useLocalSearchParams() as Params
-  const router = useRouter()
+  // const router = useRouter()
 
   const userInfos = JSON.parse(
     decodeURIComponent(params.values)
@@ -63,8 +63,16 @@ export default function CheckOTP() {
             .then(user => {
               setUser(user)
             })
-            .catch(err => {
-              console.log("error occurred when saving user", err)
+            .catch(() => {
+              setLoading(false)
+
+              setActionModalProps({
+                icon: true,
+                state: "error",
+                shouldDisplay: true,
+                title: locale.t("commonErrors.title"),
+                description: locale.t("commonErrors.description")
+              })
             })
             .finally(() => {
               setLoading(false)
@@ -73,6 +81,20 @@ export default function CheckOTP() {
       })
       .catch(err => {
         console.log("error occurred when validating the otp", err)
+        const error = JSON.parse(err.message)
+        const error400 = error.error.status === StatusesHttp.badRequest
+
+        setLoading(false)
+
+        setActionModalProps({
+          icon: true,
+          state: "error",
+          shouldDisplay: true,
+          title: locale.t(
+            error400 ? "commonErrors.badOtp" : "commonErrors.title"
+          ),
+          description: error400 ? "" : locale.t("commonErrors.description")
+        })
       })
       .finally(() => {
         setLoading(false)
@@ -103,8 +125,7 @@ export default function CheckOTP() {
         style={styles.screen}
         source={require("../../assets/images/screens/background.png")}
       >
-        <StatusBar barStyle="light-content" />
-        <LoadingModal displayModal={loading} />
+        <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
         <View style={styles.titleContainer}>
           <Text variant="headlineMedium" style={{ color: colors.surface }}>
             {locale.t("checkOTP.title")}
@@ -119,8 +140,8 @@ export default function CheckOTP() {
           >
             {({
               handleChange,
-              handleBlur,
               handleSubmit,
+              handleBlur,
               values,
               errors,
               touched
@@ -131,7 +152,7 @@ export default function CheckOTP() {
                     {locale.t("checkOTP.indication")}{" "}
                     <Text
                       variant="titleMedium"
-                      style={{ color: colors.secondary }}
+                      style={{ color: colors.primary }}
                     >
                       {userInfos?.email}
                     </Text>
@@ -187,9 +208,11 @@ export default function CheckOTP() {
                   <Button
                     mode="contained"
                     textColor={colors.surface}
-                    onPress={() => handleSubmit()}
+                    onPress={() => {
+                      handleSubmit()
+                      console.log("helloworld")
+                    }}
                     contentStyle={styles.signUpButton}
-                    loading={loading}
                     icon={() => (
                       <Icon
                         source="chevron-right"

@@ -1,8 +1,9 @@
 {
   "commonErrors": {
     "title": "An error occurred",
-    "description": "Check your internet connection and try again",
-    "tooManyAttempts": "Too many attempts, try again later"
+    "badOtp": "The otp received is invalid",
+    "tooManyAttempts": "Too many attempts, try again later",
+    "description": "Check your internet connection and try again"
   },
   "onboarding": {
     "title": {
