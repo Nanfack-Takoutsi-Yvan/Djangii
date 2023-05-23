@@ -1,15 +1,17 @@
 import {
+  View,
+  ScrollView,
   StyleSheet,
   ImageBackground,
-  StatusBar,
-  KeyboardAvoidingView,
-  View
+  KeyboardAvoidingView
 } from "react-native"
 
 import { Text, TextInput, Button, useTheme } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
 
 import { Formik } from "formik"
+import * as Haptics from "expo-haptics"
+import { StatusBar } from "expo-status-bar"
 import { useContext, useState } from "react"
 import { useRouter, useLocalSearchParams } from "expo-router"
 
@@ -42,7 +44,15 @@ export default function PasswordReset() {
     newPassword: string
   }) => {
     setIsUserLoading(true)
-    User.resetPassword(otp, newPassword, decodeURIComponent(params.email))
+    User.resetPassword(
+      otp,
+      newPassword,
+      decodeURIComponent(params?.email?.toLocaleLowerCase())
+    )
+      .then(() => {
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+        router.replace("login")
+      })
       .catch(() => {
         setLoading(false)
 
@@ -69,7 +79,8 @@ export default function PasswordReset() {
         style={styles.screen}
         source={require("../../assets/images/screens/background.png")}
       >
-        <StatusBar barStyle="light-content" />
+        {/* eslint-disable-next-line react/style-prop-object */}
+        <StatusBar style="light" />
         <LoadingModal displayModal={isUserLoading} />
         <View style={styles.titleContainer}>
           <Text variant="headlineMedium" style={{ color: colors.surface }}>
@@ -91,176 +102,190 @@ export default function PasswordReset() {
               errors,
               touched
             }) => (
-              <View style={styles.form}>
-                <View>
-                  <Text variant="titleMedium">
-                    {locale.t("checkOTP.indication")}{" "}
-                    <Text
-                      variant="titleMedium"
-                      style={{ color: colors.primary }}
-                    >
-                      {params?.email}
-                    </Text>
-                  </Text>
-                </View>
-                <View style={styles.fieldsContainer}>
-                  <View style={styles.field}>
-                    <Icon
-                      source="phone-outline"
-                      color={
-                        errors.otp && touched.otp
-                          ? colors.error
-                          : colors.primary
-                      }
-                      size={40}
-                    />
-                    <View style={styles.screen}>
-                      <View style={styles.screen}>
-                        <TextInput
-                          placeholder={locale.t("passwordReset.labels.otp")}
-                          placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                          keyboardType="name-phone-pad"
-                          value={values.otp}
-                          onBlur={handleBlur("otp")}
-                          onChangeText={handleChange("otp")}
-                          style={styles.textInput}
-                          dense
-                          underlineColor="rgba(0,0,0,0.5)"
-                          autoComplete="sms-otp"
-                          error={!!errors.otp && touched.otp}
-                        />
-                      </View>
-                      {errors.otp && touched.otp && (
-                        <View style={styles.errorContainer}>
-                          <Text
-                            style={{
-                              color: colors.error
-                            }}
-                          >
-                            {locale.t(errors.otp)}
-                          </Text>
-                        </View>
-                      )}
-                    </View>
-                  </View>
-
-                  <View style={styles.field}>
-                    <Icon
-                      source="form-textbox-password"
-                      color={
-                        errors.newPassword && touched.newPassword
-                          ? colors.error
-                          : colors.primary
-                      }
-                      size={40}
-                    />
-                    <View style={styles.screen}>
-                      <View style={styles.screen}>
-                        <TextInput
-                          placeholder={locale.t(
-                            "passwordReset.labels.newPassword"
-                          )}
-                          placeholderTextColor="rgba(0, 0, 0, 0.30)"
-                          keyboardType="visible-password"
-                          value={values.newPassword}
-                          onBlur={handleBlur("newPassword")}
-                          onChangeText={handleChange("newPassword")}
-                          style={styles.textInput}
-                          autoComplete="password"
-                          dense
-                          underlineColor="rgba(0,0,0,0.5)"
-                          secureTextEntry
-                          error={!!errors.newPassword && touched.newPassword}
-                          right={
-                            <PasswordIcon
-                              showEye={isPasswordHidden}
-                              toggleEye={setIsPasswordHidden}
-                            />
-                          }
-                        />
-                      </View>
-                      {errors.newPassword && touched.newPassword && (
-                        <View style={styles.errorContainer}>
-                          <Text
-                            style={{
-                              color: colors.error
-                            }}
-                          >
-                            {locale.t(errors.newPassword)}
-                          </Text>
-                        </View>
-                      )}
-                    </View>
-                  </View>
-
-                  <View style={styles.field}>
-                    <Icon
-                      source="form-textbox-password"
-                      color={
-                        errors.passwordConfirm && touched.passwordConfirm
-                          ? colors.error
-                          : colors.primary
-                      }
-                      size={40}
-                    />
-                    <View style={styles.screen}>
-                      <View style={styles.screen}>
-                        <TextInput
-                          placeholder={locale.t(
-                            "passwordReset.labels.passwordConfirmation"
-                          )}
-                          placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                          keyboardType="visible-password"
-                          value={values.passwordConfirm}
-                          onBlur={handleBlur("passwordConfirm")}
-                          onChangeText={handleChange("passwordConfirm")}
-                          style={styles.textInput}
-                          autoComplete="password"
-                          dense
-                          underlineColor="rgba(0,0,0,0.5)"
-                          secureTextEntry
-                          error={
-                            !!errors.passwordConfirm && touched.passwordConfirm
-                          }
-                          right={
-                            <PasswordIcon
-                              showEye={isPasswordHidden}
-                              toggleEye={setIsPasswordHidden}
-                            />
-                          }
-                        />
-                      </View>
-                      {errors.newPassword && touched.newPassword && (
-                        <View style={styles.errorContainer}>
-                          <Text
-                            style={{
-                              color: colors.error
-                            }}
-                          >
-                            {locale.t(errors.newPassword)}
-                          </Text>
-                        </View>
-                      )}
-                    </View>
-                  </View>
-                </View>
-
-                <Button
-                  mode="contained"
-                  textColor={colors.surface}
-                  onPress={() => handleSubmit()}
-                  contentStyle={styles.signUpButton}
-                  loading={isUserLoading}
-                  icon={() => (
-                    <Icon
-                      source="chevron-right"
-                      size={32}
-                      color={colors.secondary}
-                    />
-                  )}
+              <View style={styles.screen}>
+                <ScrollView
+                  style={styles.screen}
+                  bounces={false}
+                  showsVerticalScrollIndicator={false}
                 >
-                  {locale.t("passwordReset.cta")}
-                </Button>
+                  <View style={styles.form}>
+                    <View>
+                      <Text variant="titleMedium">
+                        {locale.t("checkOTP.indication")}{" "}
+                        <Text
+                          variant="titleMedium"
+                          style={{ color: colors.primary }}
+                        >
+                          {params?.email.toLocaleLowerCase()}
+                        </Text>
+                      </Text>
+                    </View>
+
+                    <View style={styles.fieldsContainer}>
+                      <View style={styles.field}>
+                        <Icon
+                          source="email-check-outline"
+                          color={
+                            errors.otp && touched.otp
+                              ? colors.error
+                              : colors.primary
+                          }
+                          size={40}
+                        />
+                        <View style={styles.screen}>
+                          <View>
+                            <TextInput
+                              placeholder={locale.t("passwordReset.labels.otp")}
+                              placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                              keyboardType="numeric"
+                              value={values.otp}
+                              onBlur={handleBlur("otp")}
+                              onChangeText={handleChange("otp")}
+                              style={styles.textInput}
+                              dense
+                              underlineColor="rgba(0,0,0,0.5)"
+                              autoComplete="sms-otp"
+                              error={!!errors.otp && touched.otp}
+                            />
+                          </View>
+                          {errors.otp && touched.otp && (
+                            <View>
+                              <Text
+                                style={{
+                                  color: colors.error
+                                }}
+                              >
+                                {locale.t(errors.otp)}
+                              </Text>
+                            </View>
+                          )}
+                        </View>
+                      </View>
+
+                      <View style={styles.field}>
+                        <Icon
+                          source="form-textbox-password"
+                          color={
+                            errors.newPassword && touched.newPassword
+                              ? colors.error
+                              : colors.primary
+                          }
+                          size={40}
+                        />
+                        <View style={styles.screen}>
+                          <View>
+                            <TextInput
+                              placeholder={locale.t(
+                                "passwordReset.labels.newPassword"
+                              )}
+                              placeholderTextColor="rgba(0, 0, 0, 0.30)"
+                              keyboardType="visible-password"
+                              value={values.newPassword}
+                              onBlur={handleBlur("newPassword")}
+                              onChangeText={handleChange("newPassword")}
+                              style={styles.textInput}
+                              autoComplete="password"
+                              dense
+                              underlineColor="rgba(0,0,0,0.5)"
+                              secureTextEntry
+                              error={
+                                !!errors.newPassword && touched.newPassword
+                              }
+                              right={
+                                <PasswordIcon
+                                  showEye={isPasswordHidden}
+                                  toggleEye={setIsPasswordHidden}
+                                />
+                              }
+                            />
+                          </View>
+                          {errors.newPassword && touched.newPassword && (
+                            <View>
+                              <Text
+                                style={{
+                                  color: colors.error
+                                }}
+                              >
+                                {locale.t(errors.newPassword)}
+                              </Text>
+                            </View>
+                          )}
+                        </View>
+                      </View>
+
+                      <View style={styles.field}>
+                        <Icon
+                          source="form-textbox-password"
+                          color={
+                            errors.passwordConfirm && touched.passwordConfirm
+                              ? colors.error
+                              : colors.primary
+                          }
+                          size={40}
+                        />
+                        <View style={styles.screen}>
+                          <View>
+                            <TextInput
+                              placeholder={locale.t(
+                                "passwordReset.labels.passwordConfirmation"
+                              )}
+                              placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                              keyboardType="visible-password"
+                              value={values.passwordConfirm}
+                              onBlur={handleBlur("passwordConfirm")}
+                              onChangeText={handleChange("passwordConfirm")}
+                              style={styles.textInput}
+                              autoComplete="password"
+                              dense
+                              underlineColor="rgba(0,0,0,0.5)"
+                              secureTextEntry
+                              error={
+                                !!errors.passwordConfirm &&
+                                touched.passwordConfirm
+                              }
+                              right={
+                                <PasswordIcon
+                                  showEye={isPasswordHidden}
+                                  toggleEye={setIsPasswordHidden}
+                                />
+                              }
+                            />
+                          </View>
+                          {errors.newPassword && touched.newPassword && (
+                            <View>
+                              <Text
+                                style={{
+                                  color: colors.error
+                                }}
+                              >
+                                {locale.t(errors.newPassword)}
+                              </Text>
+                            </View>
+                          )}
+                        </View>
+                      </View>
+                    </View>
+
+                    <View>
+                      <Button
+                        mode="contained"
+                        textColor={colors.surface}
+                        onPress={() => handleSubmit()}
+                        contentStyle={styles.signUpButton}
+                        loading={isUserLoading}
+                        icon={() => (
+                          <Icon
+                            source="chevron-right"
+                            size={32}
+                            color={colors.secondary}
+                          />
+                        )}
+                      >
+                        {locale.t("passwordReset.cta")}
+                      </Button>
+                    </View>
+                  </View>
+                </ScrollView>
               </View>
             )}
           </Formik>
@@ -294,16 +319,15 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30
   },
   form: {
-    flex: 1,
     backgroundColor: "transparent",
     paddingHorizontal: 30,
     paddingVertical: 30,
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    rowGap: 16
   },
   fieldsContainer: {
     backgroundColor: "transparent",
-    rowGap: 24,
-    flex: 1,
+    rowGap: 16,
     marginTop: 12
   },
   field: {
@@ -316,8 +340,5 @@ const styles = StyleSheet.create({
   signUpButton: {
     flexDirection: "row-reverse",
     paddingVertical: 4
-  },
-  errorContainer: {
-    top: 24
   }
 })

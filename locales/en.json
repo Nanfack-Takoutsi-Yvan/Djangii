@@ -79,14 +79,15 @@
       "newPassword": "Enter your new password",
       "passwordConfirmation": "Confirm your password"
     },
-    "error": {
+    "errors": {
       "otp": {
         "length":"OTP must be 5 characters long",
         "required":"OPT is required"
       },
       "password": {
         "min": "Password too short",
-        "required":"Password required"
+        "required":"Password required",
+        "match": "Passwords must match"
       },
       "passwordConfirm": {
         "min": "Password too short",
@@ -119,8 +120,8 @@
     },
     "errors": {
       "emailCheck": {
-        "valid": "Enter a valid email address",
-        "required": "Email is required"
+        "valid": "Enter a valid credential",
+        "required": "This field is required"
       }
     }
   },

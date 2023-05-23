@@ -7,7 +7,7 @@ import {
   Platform
 } from "react-native"
 
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { StatusBar } from "expo-status-bar"
 import { useRouter } from "expo-router"
 
@@ -17,7 +17,6 @@ import { Formik } from "formik"
 
 import AppStateContext from "@services/context/context"
 import User from "@services/models/user"
-import LoadingModal from "@components/ui/LoadingModal"
 
 import validations from "@services/validations"
 
@@ -58,107 +57,114 @@ export default function CheckEmail() {
     <KeyboardAvoidingView
       style={styles.screen}
       contentContainerStyle={styles.screen}
-      behavior="height"
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <ImageBackground
         style={styles.screen}
         source={require("../../assets/images/screens/background.png")}
       >
-        <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
-        <View style={styles.titleContainer}>
-          <Text variant="headlineMedium" style={{ color: colors.surface }}>
-            {locale.t("checkEmail.title")}
-          </Text>
-          <Icon source="email-check-outline" size={32} color="#90F800" />
-        </View>
-        <View style={styles.formContainer}>
-          <Formik
-            initialValues={{ email: "" }}
-            validationSchema={validations.emailValidationSchema}
-            onSubmit={sendOTP}
-          >
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              errors,
-              touched
-            }) => (
-              <View style={styles.form}>
-                <View style={styles.screen}>
-                  <Text variant="titleMedium">
-                    {locale.t("checkEmail.description")}
-                  </Text>
-                </View>
+        {/* eslint-disable-next-line react/style-prop-object */}
+        <StatusBar style="light" />
+        <View style={[styles.screen, { justifyContent: "center" }]}>
+          <View>
+            <View style={styles.titleContainer}>
+              <Text variant="headlineMedium" style={{ color: colors.surface }}>
+                {locale.t("checkEmail.title")}
+              </Text>
+              <Icon source="email-check-outline" size={32} color="#90F800" />
+            </View>
 
-                <View style={styles.fieldContainer}>
-                  <Text variant="labelLarge">
-                    {locale.t("checkEmail.labels.checkEmail")}
-                  </Text>
-                  <View style={styles.field}>
-                    <Icon
-                      source="account-outline"
-                      color={
-                        errors.email && touched.email
-                          ? colors.error
-                          : colors.primary
-                      }
-                      size={40}
-                    />
-                    <View style={styles.screen}>
-                      <View style={styles.screen}>
-                        <TextInput
-                          placeholder={locale.t("checkEmail.labels.checkEmail")}
-                          placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                          keyboardType="numeric"
-                          value={values.email}
-                          onBlur={handleBlur("email")}
-                          onChangeText={handleChange("email")}
-                          style={styles.textInput}
-                          autoComplete="email"
-                          dense
-                          underlineColor="rgba(0,0,0,0.5)"
-                          error={!!errors.email && touched.email}
+            <View style={styles.formContainer}>
+              <Formik
+                initialValues={{ email: "" }}
+                validationSchema={validations.emailValidationSchema}
+                onSubmit={sendOTP}
+              >
+                {({
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                  values,
+                  errors,
+                  touched
+                }) => (
+                  <View style={styles.form}>
+                    <View>
+                      <Text variant="titleMedium">
+                        {locale.t("checkEmail.description")}
+                      </Text>
+                    </View>
+
+                    <View style={styles.fieldContainer}>
+                      <Text variant="labelLarge">
+                        {locale.t("checkEmail.labels.checkEmail")}
+                      </Text>
+                      <View style={styles.field}>
+                        <Icon
+                          source="account-outline"
+                          color={
+                            errors.email && touched.email
+                              ? colors.error
+                              : colors.primary
+                          }
+                          size={40}
                         />
-                      </View>
-                      {errors.email && touched.email && (
-                        <View style={styles.errorContainer}>
-                          <Text
-                            style={{
-                              color: colors.error
-                            }}
-                          >
-                            {locale.t(errors.email)}
-                          </Text>
+                        <View style={styles.screen}>
+                          <View>
+                            <TextInput
+                              placeholder={locale.t(
+                                "checkEmail.labels.checkEmail"
+                              )}
+                              placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                              keyboardType="email-address"
+                              value={values.email}
+                              onBlur={handleBlur("email")}
+                              onChangeText={handleChange("email")}
+                              style={styles.textInput}
+                              autoComplete="email"
+                              dense
+                              underlineColor="rgba(0,0,0,0.5)"
+                              error={!!errors.email && touched.email}
+                            />
+                          </View>
+                          {errors.email && touched.email && (
+                            <View>
+                              <Text
+                                style={{
+                                  color: colors.error
+                                }}
+                              >
+                                {locale.t(errors.email)}
+                              </Text>
+                            </View>
+                          )}
                         </View>
-                      )}
+                      </View>
+                    </View>
+
+                    <View>
+                      <Button
+                        mode="contained"
+                        textColor={colors.surface}
+                        onPress={() => handleSubmit()}
+                        contentStyle={styles.signUpButton}
+                        icon={() => (
+                          <Icon
+                            source="chevron-right"
+                            size={32}
+                            color={colors.secondary}
+                          />
+                        )}
+                      >
+                        {locale.t("checkOTP.cta")}
+                      </Button>
                     </View>
                   </View>
-                </View>
-
-                <View style={styles.buttonContainer}>
-                  <Button
-                    mode="contained"
-                    textColor={colors.surface}
-                    onPress={() => handleSubmit()}
-                    contentStyle={styles.signUpButton}
-                    icon={() => (
-                      <Icon
-                        source="chevron-right"
-                        size={32}
-                        color={colors.secondary}
-                      />
-                    )}
-                  >
-                    {locale.t("checkOTP.cta")}
-                  </Button>
-                </View>
-              </View>
-            )}
-          </Formik>
+                )}
+              </Formik>
+            </View>
+          </View>
         </View>
-        <View style={styles.screen} />
       </ImageBackground>
     </KeyboardAvoidingView>
   )
@@ -169,7 +175,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
   titleContainer: {
-    flex: 1,
     backgroundColor: "transparent",
     alignItems: "flex-end",
     flexDirection: "row",
@@ -182,18 +187,17 @@ const styles = StyleSheet.create({
     fontSize: 24
   },
   formContainer: {
-    flex: 1,
     backgroundColor: "white",
     borderRadius: 30
   },
   form: {
-    flex: 1,
     paddingHorizontal: 30,
-    paddingVertical: 30
+    paddingVertical: 30,
+    justifyContent: "center",
+    rowGap: 24
   },
   fieldContainer: {
-    rowGap: 12,
-    flex: 1
+    rowGap: 12
   },
   field: {
     flexDirection: "row",
@@ -213,12 +217,5 @@ const styles = StyleSheet.create({
     flexDirection: "row-reverse",
     paddingVertical: 4,
     marginBottom: 0
-  },
-  buttonContainer: {
-    flex: 1,
-    justifyContent: "flex-end"
-  },
-  errorContainer: {
-    top: 24
   }
 })

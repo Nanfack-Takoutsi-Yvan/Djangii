@@ -11,6 +11,7 @@ import useNetInfo from "@hooks/web/useNetInfo"
 import NetworkStatus from "@components/ui/NetworkStatus"
 import LoadingModal from "@components/ui/LoadingModal"
 import ActionModal, { ActionModalProps } from "@components/ActionModal"
+import useAuthCredentials from "@hooks/auth/useAuthCredentials"
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -19,6 +20,7 @@ export {
 
 export default function RootLayout() {
   const [loaded, error] = useSoraFonts()
+  const { loading, user } = useAuthCredentials()
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
@@ -28,13 +30,13 @@ export default function RootLayout() {
   return (
     <>
       {/* Keep the splash screen open until the assets have loaded. In the future, we should just support async font loading with a native version of font-display. */}
-      {!loaded && <SplashScreen />}
-      {loaded && <RootLayoutNav />}
+      {!loaded && !loading && <SplashScreen />}
+      {loaded && <RootLayoutNav storedUser={user} />}
     </>
   )
 }
 
-function RootLayoutNav() {
+function RootLayoutNav({ storedUser }: { storedUser: IUser | undefined }) {
   const { i18n, setLocale } = useLocales(localization.locale)
   const [appConnected, showHeader] = useNetInfo()
   const theme = useDjangiiTheme()
@@ -48,6 +50,10 @@ function RootLayoutNav() {
     description: "",
     shouldDisplay: false
   })
+
+  useEffect(() => {
+    if (storedUser) setUser(storedUser)
+  }, [storedUser])
 
   const contextValue = useMemo(
     () => ({
@@ -92,7 +98,11 @@ function RootLayoutNav() {
             headerTitle: NetworkStatus.bind(null, { connected: appConnected })
           }}
         >
-          <Stack.Screen name="(auth)" options={{ headerShown: showHeader }} />
+          <Stack.Screen
+            name="(auth)"
+            redirect={!!user}
+            options={{ headerShown: showHeader }}
+          />
           <Stack.Screen name="(tabs)" options={{ headerShown: showHeader }} />
           <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         </Stack>
