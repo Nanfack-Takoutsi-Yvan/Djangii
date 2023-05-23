@@ -22,8 +22,9 @@ import LoadingModal from "@components/ui/LoadingModal"
 import User from "@services/models/user"
 
 export default function PasswordReset() {
-  const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(false)
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState<boolean>(false)
   const [isUserLoading, setIsUserLoading] = useState<boolean>(false)
+  const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const { colors } = useTheme()
   const { locale, setActionModalProps, setLoading } =
@@ -187,16 +188,14 @@ export default function PasswordReset() {
                               autoComplete="password"
                               dense
                               underlineColor="rgba(0,0,0,0.5)"
-                              secureTextEntry
+                              secureTextEntry={!showPassword}
                               error={
                                 !!errors.newPassword && touched.newPassword
                               }
-                              right={
-                                <PasswordIcon
-                                  showEye={isPasswordHidden}
-                                  toggleEye={setIsPasswordHidden}
-                                />
-                              }
+                              right={PasswordIcon.bind(null, {
+                                onToggleVisibility: () =>
+                                  setShowPassword(oldValue => !oldValue)
+                              })()}
                             />
                           </View>
                           {errors.newPassword && touched.newPassword && (
@@ -238,17 +237,15 @@ export default function PasswordReset() {
                               autoComplete="password"
                               dense
                               underlineColor="rgba(0,0,0,0.5)"
-                              secureTextEntry
+                              secureTextEntry={!showPasswordConfirm}
                               error={
                                 !!errors.passwordConfirm &&
                                 touched.passwordConfirm
                               }
-                              right={
-                                <PasswordIcon
-                                  showEye={isPasswordHidden}
-                                  toggleEye={setIsPasswordHidden}
-                                />
-                              }
+                              right={PasswordIcon.bind(null, {
+                                onToggleVisibility: () =>
+                                  setShowPasswordConfirm(oldValue => !oldValue)
+                              })()}
                             />
                           </View>
                           {errors.newPassword && touched.newPassword && (

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import {
   View,
   StyleSheet,
@@ -10,7 +11,7 @@ import { Text, TextInput, Button, useTheme } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
 
 import { Formik } from "formik"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { useRouter } from "expo-router"
 import * as Haptics from "expo-haptics"
 import { StatusBar } from "expo-status-bar"
@@ -22,6 +23,8 @@ import { saveInSecureStore } from "@utils/methods"
 import User from "@services/models/user"
 
 export default function Login() {
+  const [showPassword, setShowPassword] = useState<boolean>(false)
+
   const { locale, setUser, setLoading, setActionModalProps } =
     useContext(AppStateContext)
   const { colors } = useTheme()
@@ -179,16 +182,13 @@ export default function Login() {
                               onChangeText={handleChange("password")}
                               style={styles.textInput}
                               autoComplete="password"
-                              secureTextEntry
+                              secureTextEntry={!showPassword}
                               underlineColor="rgba(0,0,0,0.5)"
                               error={!!errors.password && !!touched.password}
-                              right={
-                                <Icon
-                                  source="form-textbox-password"
-                                  color={colors.primary}
-                                  size={40}
-                                />
-                              }
+                              right={PasswordIcon.bind(null, {
+                                onToggleVisibility: () =>
+                                  setShowPassword(oldValue => !oldValue)
+                              })()}
                             />
                           </View>
                           {errors.password && touched.password && (

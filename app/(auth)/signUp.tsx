@@ -28,8 +28,9 @@ import { userFormInputs } from "@services/types/auth"
 import StatusesHttp from "@constants/Statuses.http"
 
 export default function SignUp() {
-  const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(false)
   const [isOtpSending, setIsOtpSending] = useState<boolean>(false)
+  const [showPassword, setShowPassword] = useState<boolean>(false)
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState<boolean>(false)
 
   const { locale, setLoading, setActionModalProps } =
     useContext(AppStateContext)
@@ -375,14 +376,12 @@ export default function SignUp() {
                             dense
                             underlineColor="rgba(0,0,0,0.5)"
                             autoComplete="password"
-                            secureTextEntry
+                            secureTextEntry={!showPassword}
                             error={!!errors.password && touched.password}
-                            right={
-                              <PasswordIcon
-                                showEye={isPasswordHidden}
-                                toggleEye={setIsPasswordHidden}
-                              />
-                            }
+                            right={PasswordIcon.bind(null, {
+                              onToggleVisibility: () =>
+                                setShowPassword(oldValue => !oldValue)
+                            })()}
                           />
                         </View>
                         {errors.password && touched.password && (
@@ -424,17 +423,15 @@ export default function SignUp() {
                             autoComplete="password"
                             dense
                             underlineColor="rgba(0,0,0,0.5)"
-                            secureTextEntry
+                            secureTextEntry={!showPasswordConfirm}
                             error={
                               !!errors.passwordConfirm &&
                               touched.passwordConfirm
                             }
-                            right={
-                              <PasswordIcon
-                                showEye={isPasswordHidden}
-                                toggleEye={setIsPasswordHidden}
-                              />
-                            }
+                            right={PasswordIcon.bind(null, {
+                              onToggleVisibility: () =>
+                                setShowPasswordConfirm(oldValue => !oldValue)
+                            })()}
                           />
                         </View>
 
