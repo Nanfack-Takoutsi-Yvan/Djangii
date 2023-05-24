@@ -1,6 +1,6 @@
-import { Portal, Modal, useTheme, Text, Button } from "react-native-paper"
+import { useTheme, Text, Button } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
-import { StyleSheet, View } from "react-native"
+import { Modal, StyleSheet, View } from "react-native"
 import * as Haptics from "expo-haptics"
 import { useEffect } from "react"
 
@@ -75,14 +75,15 @@ export default function ActionModal({
   }, [shouldDisplay, state])
 
   return (
-    <Portal>
-      <Modal
-        contentContainerStyle={styles.modal}
-        visible={shouldDisplay}
-        onDismiss={closeActionModal}
-        style={[styles.modalContainer]}
-      >
-        <View style={styles.screen}>
+    <Modal
+      visible={shouldDisplay}
+      onDismiss={closeActionModal}
+      onRequestClose={closeActionModal}
+      animationType="slide"
+      transparent
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
           {icon && (
             <View>
               <Icon size={40} source={iconLib[state].name} color={iconColor} />
@@ -112,38 +113,36 @@ export default function ActionModal({
             </Button>
           </View>
         </View>
-      </Modal>
-    </Portal>
+      </View>
+    </Modal>
   )
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    rowGap: 12,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  modalContainer: {
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 30,
-    marginHorizontal: 70,
-    marginBottom: 300,
-    marginTop: 300,
-    paddingHorizontal: 30,
-    paddingVertical: 40,
-    flex: 1
-  },
-  modal: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    width: 200,
-    height: 200
-  },
   text: {
     textAlign: "center"
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+    backgroundColor: "transparent"
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    rowGap: 12
   }
 })

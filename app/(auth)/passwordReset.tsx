@@ -1,5 +1,6 @@
 import {
   View,
+  Platform,
   ScrollView,
   StyleSheet,
   ImageBackground,
@@ -20,6 +21,7 @@ import PasswordIcon from "@components/ui/PasswordIcon"
 import validations from "@services/validations"
 import LoadingModal from "@components/ui/LoadingModal"
 import User from "@services/models/user"
+import { HttpStatusCode } from "axios"
 
 export default function PasswordReset() {
   const [showPasswordConfirm, setShowPasswordConfirm] = useState<boolean>(false)
@@ -54,15 +56,20 @@ export default function PasswordReset() {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
         router.replace("login")
       })
-      .catch(() => {
+      .catch(err => {
         setLoading(false)
+
+        const error = JSON.parse(err.message)
+        const error400 = error.error.status === HttpStatusCode.BadRequest
 
         setActionModalProps({
           icon: true,
           state: "error",
           shouldDisplay: true,
-          title: locale.t("commonErrors.title"),
-          description: locale.t("commonErrors.description")
+          title: locale.t(
+            `${error400 ? "commonErrors.badOtp" : "commonErrors.title"}`
+          ),
+          description: error400 ? "" : locale.t("commonErrors.description")
         })
       })
       .finally(() => {
@@ -74,7 +81,7 @@ export default function PasswordReset() {
     <KeyboardAvoidingView
       style={styles.screen}
       contentContainerStyle={styles.screen}
-      behavior="height"
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
       <ImageBackground
         style={styles.screen}
@@ -180,7 +187,11 @@ export default function PasswordReset() {
                                 "passwordReset.labels.newPassword"
                               )}
                               placeholderTextColor="rgba(0, 0, 0, 0.30)"
-                              keyboardType="visible-password"
+                              keyboardType={
+                                Platform.OS === "ios"
+                                  ? "visible-password"
+                                  : "default"
+                              }
                               value={values.newPassword}
                               onBlur={handleBlur("newPassword")}
                               onChangeText={handleChange("newPassword")}
@@ -229,7 +240,11 @@ export default function PasswordReset() {
                                 "passwordReset.labels.passwordConfirmation"
                               )}
                               placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                              keyboardType="visible-password"
+                              keyboardType={
+                                Platform.OS === "ios"
+                                  ? "visible-password"
+                                  : "default"
+                              }
                               value={values.passwordConfirm}
                               onBlur={handleBlur("passwordConfirm")}
                               onChangeText={handleChange("passwordConfirm")}

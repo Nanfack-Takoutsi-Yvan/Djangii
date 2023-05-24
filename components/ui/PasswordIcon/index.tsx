@@ -20,7 +20,7 @@ export default function PasswordIcon({ onToggleVisibility }: Props) {
       icon="eye-outline"
       iconColor={colors.primary}
       onPress={togglePasswordVisibility}
-      forceTextInputFocus
+      forceTextInputFocus={false}
     />
   ) : (
     <TextInput.Icon
@@ -28,7 +28,7 @@ export default function PasswordIcon({ onToggleVisibility }: Props) {
       icon="eye-off-outline"
       iconColor={colors.primary}
       onPress={togglePasswordVisibility}
-      forceTextInputFocus
+      forceTextInputFocus={false}
     />
   )
 }

@@ -21,8 +21,8 @@ import { NewUserData, userFormInputs } from "@services/types/auth"
 
 import { StatusBar } from "expo-status-bar"
 import validations from "@services/validations"
-import StatusesHttp from "@constants/Statuses.http"
 import { saveInSecureStore } from "@utils/methods"
+import { HttpStatusCode } from "axios"
 
 export default function CheckOTP() {
   const { colors } = useTheme()
@@ -91,7 +91,7 @@ export default function CheckOTP() {
       .catch(err => {
         console.log("error occurred when validating the otp", err)
         const error = JSON.parse(err.message)
-        const error400 = error.error.status === StatusesHttp.badRequest
+        const error400 = error.error.status === HttpStatusCode.BadRequest
 
         setLoading(false)
 
@@ -250,15 +250,7 @@ export default function CheckOTP() {
             </View>
           </View>
 
-          <View
-            style={{
-              flex: 1,
-              alignItems: "center",
-              justifyContent: "center",
-              paddingHorizontal: 30,
-              flexDirection: "row"
-            }}
-          >
+          <View style={styles.resendOTPContainer}>
             <Text
               variant="titleMedium"
               style={{ color: colors.surface, fontFamily: "SoraMedium" }}
@@ -326,5 +318,13 @@ const styles = StyleSheet.create({
     flexDirection: "row-reverse",
     paddingVertical: 4,
     marginBottom: 0
+  },
+  resendOTPContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 30,
+    flexDirection: "row",
+    flexWrap: "wrap"
   }
 })

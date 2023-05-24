@@ -12,6 +12,7 @@ import {
 import { Text, TextInput, Button, useTheme } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
 
+import { HttpStatusCode } from "axios"
 import { useRouter } from "expo-router"
 import { Formik, useField } from "formik"
 import { StatusBar } from "expo-status-bar"
@@ -25,7 +26,6 @@ import LoadingModal from "@components/ui/LoadingModal"
 
 import validations from "@services/validations"
 import { userFormInputs } from "@services/types/auth"
-import StatusesHttp from "@constants/Statuses.http"
 
 export default function SignUp() {
   const [isOtpSending, setIsOtpSending] = useState<boolean>(false)
@@ -83,7 +83,7 @@ export default function SignUp() {
       })
       .catch(err => {
         const error = JSON.parse(err.message)
-        const error429 = error.error.status === StatusesHttp.tooManyRequests
+        const error429 = error.error.status === HttpStatusCode.TooManyRequests
 
         setActionModalProps({
           icon: true,
@@ -110,7 +110,7 @@ export default function SignUp() {
     <KeyboardAvoidingView
       style={styles.screen}
       contentContainerStyle={styles.screen}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
       <ImageBackground
         style={styles.screen}
@@ -121,9 +121,9 @@ export default function SignUp() {
         <StatusBar style="light" />
         <View style={styles.titleContainer}>
           <Text variant="headlineMedium" style={{ color: colors.surface }}>
-            {locale.t("login.connection")}
+            {locale.t("signUp.signUp")}
           </Text>
-          <Icon source="login" size={32} color="#90F800" />
+          <Icon source="account-check-outline" size={32} color="#90F800" />
         </View>
         <View style={styles.formContainer}>
           <Formik
@@ -368,14 +368,18 @@ export default function SignUp() {
                           <TextInput
                             placeholder={locale.t("login.labels.password")}
                             placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                            keyboardType="visible-password"
+                            keyboardType={
+                              Platform.OS === "ios"
+                                ? "visible-password"
+                                : "default"
+                            }
                             value={values.password}
                             onBlur={handleBlur("password")}
                             onChangeText={handleChange("password")}
                             style={styles.textInput}
                             dense
                             underlineColor="rgba(0,0,0,0.5)"
-                            autoComplete="password"
+                            autoComplete="password-new"
                             secureTextEntry={!showPassword}
                             error={!!errors.password && touched.password}
                             right={PasswordIcon.bind(null, {
@@ -415,12 +419,16 @@ export default function SignUp() {
                               "signUp.labels.confirmPassword"
                             )}
                             placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                            keyboardType="visible-password"
+                            keyboardType={
+                              Platform.OS === "ios"
+                                ? "visible-password"
+                                : "default"
+                            }
                             value={values.passwordConfirm}
                             onBlur={handleBlur("passwordConfirm")}
                             onChangeText={handleChange("passwordConfirm")}
                             style={styles.textInput}
-                            autoComplete="password"
+                            autoComplete="password-new"
                             dense
                             underlineColor="rgba(0,0,0,0.5)"
                             secureTextEntry={!showPasswordConfirm}
@@ -588,6 +596,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 30,
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    flexWrap: "wrap"
   }
 })

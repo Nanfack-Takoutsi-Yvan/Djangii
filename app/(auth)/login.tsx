@@ -4,7 +4,8 @@ import {
   StyleSheet,
   ScrollView,
   ImageBackground,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Platform
 } from "react-native"
 
 import { Text, TextInput, Button, useTheme } from "react-native-paper"
@@ -21,6 +22,7 @@ import PasswordIcon from "@components/ui/PasswordIcon"
 import vaidationSchema from "@services/validations"
 import { saveInSecureStore } from "@utils/methods"
 import User from "@services/models/user"
+import { HttpStatusCode } from "axios"
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -52,7 +54,7 @@ export default function Login() {
         setLoading(false)
 
         const error = JSON.parse(err.message)
-        const error401 = error.error.status === 401
+        const error401 = error.error.status === HttpStatusCode.Unauthorized
 
         setActionModalProps({
           icon: true,
@@ -176,7 +178,11 @@ export default function Login() {
                               dense
                               placeholder={locale.t("login.labels.password")}
                               placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                              keyboardType="visible-password"
+                              keyboardType={
+                                Platform.OS === "ios"
+                                  ? "visible-password"
+                                  : "default"
+                              }
                               value={values.password}
                               onBlur={handleBlur("password")}
                               onChangeText={handleChange("password")}
@@ -309,6 +315,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 30,
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    flexWrap: "wrap"
   }
 })
