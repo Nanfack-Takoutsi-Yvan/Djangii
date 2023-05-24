@@ -1,21 +1,22 @@
 /* eslint-disable no-console */
-import StatusesHttp from "@constants/Statuses.http"
+import { HttpStatusCode, isAxiosError } from "axios"
+import * as yup from "yup"
+
 import field from "@constants/validation/limits"
 import User from "@services/models/user"
-import { isAxiosError } from "axios"
-import * as yup from "yup"
 
 const signUpValidationSchema = yup.object().shape({
   username: yup
     .string()
     .required("signUp.errors.username.required")
+    .matches(/^[a-zA-ZÀ-ÿ-.]*$/gi, "signUp.errors.username.whiteSpace")
     .test("username", "signUp.errors.username.taken", async value => {
       try {
         await User.isUsernameUsed(value)
 
         return false
       } catch (err) {
-        if (isAxiosError(err) && err.status === StatusesHttp.notFound) {
+        if (isAxiosError(err) && err.status === HttpStatusCode.NotFound) {
           return false
         }
 
@@ -39,7 +40,7 @@ const signUpValidationSchema = yup.object().shape({
         }
         return false
       } catch (err) {
-        if (isAxiosError(err) && err.status === StatusesHttp.notFound) {
+        if (isAxiosError(err) && err.status === HttpStatusCode.NotFound) {
           return false
         }
 
@@ -56,7 +57,7 @@ const signUpValidationSchema = yup.object().shape({
 
         return false
       } catch (err) {
-        if (isAxiosError(err) && err.status === StatusesHttp.notFound) {
+        if (isAxiosError(err) && err.status === HttpStatusCode.NotFound) {
           return false
         }
 

@@ -25,7 +25,10 @@
         "required": "Password required",
         "length": "Password too short"
       },
-      "username": "Username is required",
+      "username": {
+        "required": "Username is required",
+        "whiteSpace":"User name should not contain white spaces"
+      },
       "notFoundTitle": "User not found !",
       "notFoundDescription": "Check your username and password then try again."
     },
@@ -48,7 +51,8 @@
     "errors": {
       "username": {
         "required": "Username is required",
-        "taken": "This username is already used"
+        "taken": "This username is already used",
+        "whiteSpace": "User name should not contain white spaces"
       },
       "firstName": "First name is required",
       "lastName": "Last name is required",
@@ -94,7 +98,7 @@
         "required":"Password confirmation is required"
       }
     },
-    "cta": "Reset password"
+    "cta": "Reset"
   },
   "checkOTP": {
     "title": "Verify your email",
@@ -116,7 +120,7 @@
     "title": "Verify your email",
     "description": "An OTP will be sent to your email address",
     "labels": {
-      "checkEmail": "Enter email username, address or phoneNumber "
+      "checkEmail": "Enter email address, username or phoneNumber"
     },
     "errors": {
       "emailCheck": {
