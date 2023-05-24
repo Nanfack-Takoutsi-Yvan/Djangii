@@ -1,0 +1,77 @@
+{
+  "dashboard": {
+    "name": "dashboard",
+    "icon": "view-dashboard-outline"
+  },
+  "association": {
+    "name": "association",
+    "icon": "account-group-outline"
+  },
+  "pages": {
+    "name": "pages",
+    "icon": "card-account-details-outline"
+  },
+  "membershipRequest": {
+    "name": "membershipRequest",
+    "icon": "account-tie-outline"
+  },
+  "members": {
+    "name": "member",
+    "icon": "account-multiple-outline"
+  },
+  "identities": {
+    "name": "identity",
+    "icon": "badge-account-outline"
+  },
+  "tontines": {
+    "name": "tontines",
+    "icon": "piggy-bank-outline",
+    "subItems": ["fixedAmount", "variableAmount", "saving"]
+  },
+  "tontineTurn": {
+    "name": "tontineTurn",
+    "icon": "hand-extended-outline"
+  },
+  "sessions": {
+    "name": "sessions",
+    "icon": "timelapse"
+  },
+  "products": {
+    "name": "products",
+    "icon": "package-variant-closed",
+    "subItems": ["products", "productPayment"]
+  },
+  "assistance": {
+    "name": "assistance",
+    "icon": "alpha-i",
+    "subItems": ["assistance", "assistanceRequest"]
+  },
+  "charges": {
+    "name": "charges",
+    "icon": "cash-multiple",
+    "subItems": ["chargeLine", "Charge", "chargePayment"]
+  },
+  "penalties": {
+    "name": "penalties",
+    "icon": "cash-minus",
+    "subItems": ["penaltyType", "sanctionedMembers"]
+  },
+  "warranties": {
+    "name": "warranties",
+    "icon": "seal-variant"
+  },
+  "loans": {
+    "name": "loan",
+    "icon": "cash-refund",
+    "subItems": ["pendingLoans", "paidLoans", "canceledLoans"]
+  },
+  "sparingStates": {
+    "name": "sparingStates",
+    "icon": "cash-100"
+  },
+  "advertisement": {
+    "name": "advertisement",
+    "icon": "advertisements",
+    "subItems": ["audience", "advertisement"]
+  }
+}

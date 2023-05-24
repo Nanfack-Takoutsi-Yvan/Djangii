@@ -138,5 +138,66 @@
       "notConnected": "Veuillez verifier votre connection internet et essayez a nouveau.",
       "connected": "Vous pouvez continuer a utiliser l'application."
     }
+  },
+  "drawer": {
+    "dashboard": {
+      "name": "Tableau de board"
+    },
+    "association": {
+      "name": "Association"
+    },
+    "pages": {
+      "name": "Pages"
+    },
+    "membershipRequest": {
+      "name": "Demande d'adhesion"
+    },
+    "members": {
+      "name": "Membres"
+    },
+    "identities": {
+      "name": "Qui est Qui"
+    },
+    "tontines": {
+      "name": "Tontines",
+      "subItems": ["fixedAmount", "variableAmount", "saving"]
+    },
+    "tontineTurn": {
+      "name": "Tours de tontines"
+    },
+    "sessions": {
+      "name": "Sessions"
+    },
+    "products": {
+      "name": "Produits",
+      "subItems": ["products", "productPayment"]
+    },
+    "assistance": {
+      "name": "Assistances",
+      "subItems": ["assistance", "assistanceRequest"]
+    },
+    "charges": {
+      "name": "Charges",
+      "subItems": ["chargeLine", "Charge", "chargePayment"]
+    },
+    "penalties": {
+      "name": "Pénalté",
+      "subItems": ["penaltyType", "sanctionedMembers"]
+    },
+    "warranties": {
+      "name": "Types de Garanties",
+      "icon": "seal-variant"
+    },
+    "loans": {
+      "name": "Prèts/Crédits",
+      "subItems": ["pendingLoans", "paidLoans", "canceledLoans"]
+    },
+    "sparingStates": {
+      "name": "État des cotisations"
+    },
+    "advertisement": {
+      "name": "Advertisements",
+      "subItems": ["audience", "advertisement"]
+    }
   }
 }
