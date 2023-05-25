@@ -1,29 +1,59 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import NavigationDrawer from "@components/ui/NavigationDrawer"
+import AppStateContext from "@services/context/context"
 import { Drawer } from "expo-router/drawer"
-import { Platform } from "react-native"
+import { useContext } from "react"
+import { Platform, StyleSheet } from "react-native"
+import { Avatar, useTheme } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
 
 export default function DashboardLayout() {
+  const { user } = useContext(AppStateContext)
+  const { colors } = useTheme()
+
+  const avatar = user.userInfos?.firstName[0] + user.userInfos?.lastName[0]
+
   return (
     <Drawer
       screenOptions={{
+        headerStyle: styles.header,
+        headerTitleStyle: styles.headerLabel,
         drawerIcon: ({ size, color }) => (
           <Icon size={size} source="menu" color={color} />
         ),
-        drawerStyle: {
-          backgroundColor: "rgba(42, 17, 65, 0.9)",
-          borderTopRightRadius: Platform.OS === "ios" ? 0 : 30
-        }
+        drawerStyle: styles.drawer,
+        headerRight: () => (
+          <Avatar.Text
+            size={24}
+            label={avatar}
+            labelStyle={styles.avatarLabel}
+            style={[styles.avatar, { backgroundColor: colors.secondary }]}
+          />
+        )
       }}
       drawerContent={NavigationDrawer}
-    >
-      <Drawer.Screen
-        name="index" // This is the name of the page and must match the url from root
-        options={{
-          drawerLabel: "Home",
-          title: "overview"
-        }}
-      />
-    </Drawer>
+    />
   )
 }
+
+const styles = StyleSheet.create({
+  avatar: {
+    borderWidth: 1,
+    borderColor: "#fff",
+    borderStyle: "solid",
+    marginRight: 18
+  },
+  avatarLabel: { fontSize: 9, fontFamily: "SoraBold" },
+  drawer: {
+    backgroundColor: "rgba(42, 17, 65, 0.9)",
+    borderTopRightRadius: Platform.OS === "ios" ? 0 : 30
+  },
+  header: {
+    backgroundColor: "#532181",
+    shadowColor: "transparent"
+  },
+  headerLabel: {
+    color: "#fff",
+    fontFamily: "SoraBold"
+  }
+})

@@ -23,7 +23,7 @@ function NavigationDrawer(props: DrawerContentComponentProps) {
 
   const items = navigationDrawer as NavigationDrawerItems
   const keys = Object.keys(items)
-  const imageSize = width * 0.2
+  const imageSize = 75
 
   return (
     <>
