@@ -18,8 +18,8 @@ export default function DashboardLayout() {
       screenOptions={{
         headerStyle: styles.header,
         headerTitleStyle: styles.headerLabel,
-        drawerIcon: ({ size, color }) => (
-          <Icon size={size} source="menu" color={color} />
+        drawerIcon: ({ size }) => (
+          <Icon size={size} source="menu" color={colors.primary} />
         ),
         drawerStyle: styles.drawer,
         headerRight: () => (

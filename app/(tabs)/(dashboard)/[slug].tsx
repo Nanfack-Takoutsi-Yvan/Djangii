@@ -1,85 +1,34 @@
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import { StatusBar } from "expo-status-bar"
 import { Drawer } from "expo-router/drawer"
-import { LineChart } from "react-native-chart-kit"
-import { useTheme, ProgressBar, Text, Card } from "react-native-paper"
+import { useTheme, DataTable, Text } from "react-native-paper"
 import { StyleSheet, View, ScrollView, useWindowDimensions } from "react-native"
 
 import AppStateContext from "@services/context/context"
 import { useLocalSearchParams } from "expo-router"
 
+const optionsPerPage = [2, 3, 4]
+
 export default function TabOneScreen() {
+  const [page, setPage] = useState<number>(0)
+  const [itemsPerPage, setItemsPerPage] = useState(optionsPerPage[0])
+
   const { colors } = useTheme()
   const { locale } = useContext(AppStateContext)
   const params = useLocalSearchParams() as { slug?: string }
   const { width, height } = useWindowDimensions()
-  const cardWidth = width * 0.6
+  const cardWidth = width * 0.9
   const graphHeight = height * 0.3
+
+  useEffect(() => {
+    setPage(0)
+  }, [itemsPerPage])
 
   return (
     <View style={styles.container}>
       {/* eslint-disable-next-line react/style-prop-object */}
       <StatusBar style="light" />
       <Drawer.Screen options={{ headerTitle: params?.slug || "Dashboard" }} />
-
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center"
-        }}
-      >
-        <LineChart
-          withHorizontalLabels={false}
-          withInnerLines={false}
-          withHorizontalLines={false}
-          withVerticalLines={false}
-          withOuterLines={false}
-          data={{
-            labels: [
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100
-            ].map(el => `${el.toPrecision(2)}`),
-            datasets: [
-              {
-                data: [
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100
-                ]
-              }
-            ]
-          }}
-          width={width} // from react-native
-          height={graphHeight}
-          chartConfig={{
-            fillShadowGradientFrom: "#ffffff",
-            fillShadowGradientTo: "#ffffff00",
-            fillShadowGradientOpacity: 0.5,
-            backgroundGradientFrom: "#532181",
-            backgroundGradientTo: "#532181",
-            decimalPlaces: 2,
-            color: (opacity = 1) => `rgba(255, 255, 255, ${1})`,
-            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${1})`,
-            style: {
-              borderRadius: 16
-            },
-            propsForDots: {
-              r: "6",
-              strokeWidth: "2",
-              stroke: "#fff",
-              fill: colors.secondary
-            }
-          }}
-          bezier
-        />
-      </View>
 
       <View style={styles.reportSection}>
         <View style={styles.reportTitle}>
@@ -91,33 +40,71 @@ export default function TabOneScreen() {
           style={styles.screen}
         >
           <View style={styles.cardContainer}>
-            <Card mode="contained" style={[styles.card, { width: cardWidth }]}>
-              <Card.Content>
-                <Text variant="displaySmall">Tontine</Text>
-                <ProgressBar
-                  progress={0.5}
-                  style={{ backgroundColor: `${colors.primary}55` }}
+            <View style={{ flex: 1, paddingVertical: 12 }}>
+              <DataTable
+                style={{
+                  backgroundColor: "#fff",
+                  borderRadius: 30,
+                  // flex: 1,
+                  height: "100%",
+                  minWidth: "100%"
+                }}
+              >
+                <DataTable.Header
+                  style={{ columnGap: 72, borderBottomColor: "transparent" }}
+                >
+                  <DataTable.Title style={{ width: 72 }}>
+                    Dessert
+                  </DataTable.Title>
+                  <DataTable.Title numeric style={{ width: 72 }}>
+                    Calories
+                  </DataTable.Title>
+                  <DataTable.Title numeric style={{ width: 72 }}>
+                    Fat
+                  </DataTable.Title>
+                </DataTable.Header>
+
+                <DataTable.Row
+                  style={{ columnGap: 72, borderBottomColor: "transparent" }}
+                >
+                  <DataTable.Cell style={{ width: 72 }}>
+                    Frozen yogurt
+                  </DataTable.Cell>
+                  <DataTable.Cell numeric style={{ width: 72 }}>
+                    159
+                  </DataTable.Cell>
+                  <DataTable.Cell numeric style={{ width: 72 }}>
+                    6.0
+                  </DataTable.Cell>
+                </DataTable.Row>
+
+                <DataTable.Row
+                  style={{ columnGap: 72, borderBottomColor: "transparent" }}
+                >
+                  <DataTable.Cell style={{ width: 72 }}>
+                    Ice cream sandwich
+                  </DataTable.Cell>
+                  <DataTable.Cell numeric style={{ width: 72 }}>
+                    237
+                  </DataTable.Cell>
+                  <DataTable.Cell numeric style={{ width: 72 }}>
+                    8.0
+                  </DataTable.Cell>
+                </DataTable.Row>
+
+                <DataTable.Pagination
+                  page={page}
+                  numberOfPages={3}
+                  onPageChange={pag => setPage(pag)}
+                  // label="1-2 of 6"
+                  // optionsPerPage={optionsPerPage}
+                  // itemsPerPage={itemsPerPage}
+                  // setItemsPerPage={setItemsPerPage}
+                  // showFastPagination
+                  // optionsLabel="Rows per page"
                 />
-              </Card.Content>
-            </Card>
-            <Card mode="contained" style={[styles.card, { width: cardWidth }]}>
-              <Card.Content>
-                <Text variant="displaySmall">Tontine</Text>
-                <ProgressBar
-                  progress={0.5}
-                  style={{ backgroundColor: `${colors.primary}55` }}
-                />
-              </Card.Content>
-            </Card>
-            <Card mode="contained" style={[styles.card, { width: cardWidth }]}>
-              <Card.Content>
-                <Text variant="displaySmall">Tontine</Text>
-                <ProgressBar
-                  progress={0.5}
-                  style={{ backgroundColor: `${colors.primary}55` }}
-                />
-              </Card.Content>
-            </Card>
+              </DataTable>
+            </View>
           </View>
         </ScrollView>
       </View>
@@ -154,7 +141,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#E8E8E8",
     borderTopRightRadius: 30,
-    borderTopLeftRadius: 30
+    borderTopLeftRadius: 30,
+    marginTop: 12
   },
   reportTitle: {
     paddingTop: 24,

@@ -100,7 +100,7 @@ function RootLayoutNav({ storedUser }: { storedUser: IUser | undefined }) {
         >
           <Stack.Screen
             name="(auth)"
-            redirect={!!user}
+            // redirect={!!user}
             options={{ headerShown: showHeader }}
           />
           <Stack.Screen name="(tabs)" options={{ headerShown: showHeader }} />
