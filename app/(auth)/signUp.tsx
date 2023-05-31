@@ -597,6 +597,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     flexDirection: "row",
     alignItems: "center",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    justifyContent: "center"
   }
 })

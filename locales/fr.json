@@ -1,7 +1,7 @@
 {
   "commonErrors": {
     "title": "Une erreur s'est produite",
-    "badOtp": "L'otp reçu n'est pas valide",
+    "badOtp": "L'otp que vous avez entré n'est pas valide",
     "tooManyAttempts": "Too many attempts, try again later",
     "description": "Verifiez votre connection internet et essayer de nouveau."
   },
@@ -125,7 +125,9 @@
     "errors": {
       "emailCheck": {
         "valid": "Entrez une valide",
-        "required": "Ce champ obligatoire"
+        "required": "Ce champ obligatoire",
+        "noUserFound": "Cet utilisateur n'existe pas",
+        "userNotFoundDescription": "Verifier votre email et essayer encore"
       }
     }
   },

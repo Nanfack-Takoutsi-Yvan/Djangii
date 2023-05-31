@@ -1,7 +1,7 @@
 {
   "commonErrors": {
     "title": "An error occurred",
-    "badOtp": "The otp received is invalid",
+    "badOtp": "The otp that you entered is invalid",
     "tooManyAttempts": "Too many attempts, try again later",
     "description": "Check your internet connection and try again"
   },
@@ -125,7 +125,9 @@
     "errors": {
       "emailCheck": {
         "valid": "Enter a valid credential",
-        "required": "This field is required"
+        "required": "This field is required",
+        "noUserFound": "This user does not exist",
+        "userNotFoundDescription": "Check your credentials, then try again"
       }
     }
   },
