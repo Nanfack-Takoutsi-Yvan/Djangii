@@ -104,7 +104,10 @@ function RootLayoutNav({ storedUser }: { storedUser: IUser | undefined }) {
             options={{ headerShown: showHeader }}
           />
           <Stack.Screen name="(tabs)" options={{ headerShown: showHeader }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+          <Stack.Screen
+            name="modal"
+            options={{ presentation: "modal", headerShown: false }}
+          />
         </Stack>
       </PaperProvider>
     </AppStateContext.Provider>

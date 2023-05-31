@@ -48,7 +48,7 @@ export default function Login() {
 
         saveInSecureStore(key, JSON.stringify(user))
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
-        router.replace("(tabs)")
+        router.replace("(tabs)/(dashboard)/pant")
       })
       .catch(err => {
         setLoading(false)
@@ -316,6 +316,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     flexWrap: "wrap"
   }
 })

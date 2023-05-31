@@ -19,6 +19,7 @@ import AppStateContext from "@services/context/context"
 import User from "@services/models/user"
 
 import validations from "@services/validations"
+import { HttpStatusCode } from "axios"
 
 export default function CheckEmail() {
   const { locale, setUser, setActionModalProps, setLoading } =
@@ -39,15 +40,25 @@ export default function CheckEmail() {
           })
         }
       })
-      .catch(() => {
+      .catch(err => {
         setLoading(false)
+        const error = JSON.parse(err.message)
+        const error404 = error.error.status === HttpStatusCode.NotFound
 
         setActionModalProps({
           icon: true,
           state: "error",
           shouldDisplay: true,
-          title: locale.t("commonErrors.title"),
-          description: locale.t("commonErrors.description")
+          title: locale.t(
+            error404
+              ? "checkEmail.errors.emailCheck.noUserFound"
+              : "commonErrors.title"
+          ),
+          description: locale.t(
+            error404
+              ? "checkEmail.errors.emailCheck.userNotFoundDescription"
+              : "commonErrors.description"
+          )
         })
       })
       .finally(() => setLoading(false))

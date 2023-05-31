@@ -1,4 +1,4 @@
-import OTP_CANAL from "./miscelaneaous"
+import { OTP_CANAL } from "./miscellaneous"
 
 export interface IUser {
   id: string

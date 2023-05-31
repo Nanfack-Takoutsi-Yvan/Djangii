@@ -3,7 +3,7 @@ import { MD3Typescale } from "react-native-paper/src/types"
 const fontConfigs: MD3Typescale = {
   displaySmall: {
     fontFamily: "SoraBold",
-    fontSize: 36,
+    fontSize: 22,
     fontWeight: "normal",
     letterSpacing: 0,
     lineHeight: 44

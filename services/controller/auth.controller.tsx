@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import assert from "assert"
 import apiClient from "@services/api/api.client"
-import OTP_CANAL from "@services/types/miscelaneaous"
+import { OTP_CANAL } from "@services/types/miscellaneous"
 import { IAuthController, IUser, NewUserData } from "@services/types/auth"
 
 export default class AuthController implements IAuthController {

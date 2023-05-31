@@ -1,26 +1,18 @@
 import { StyleSheet } from "react-native"
 
-import { Text, View } from "@components/Themed"
 import EditScreenInfo from "@components/EditScreenInfo"
-import { useContext } from "react"
-import AppStateContext from "@services/context/context"
+import { Text, View } from "@components/Themed"
 
-export default function TabOneScreen() {
-  const { locale } = useContext(AppStateContext)
-
+export default function SettingsScreen() {
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, { fontFamily: "SoraBold" }]}>
-        Hi! I'm Yvan Nanfack
-      </Text>
-      <Text style={styles.title}>Tab One</Text>
-      <Text style={styles.title}>{locale.t("message")}</Text>
+      <Text style={styles.title}>Tab Two</Text>
       <View
         style={styles.separator}
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+      <EditScreenInfo path="app/(tabs)/settings.tsx" />
     </View>
   )
 }
