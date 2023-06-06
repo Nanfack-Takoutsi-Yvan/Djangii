@@ -1,96 +1,22 @@
+/* eslint-disable react/style-prop-object */
 import { useContext } from "react"
 import { StatusBar } from "expo-status-bar"
 import { Drawer } from "expo-router/drawer"
-import { LineChart } from "react-native-chart-kit"
 import { useTheme, ProgressBar, Text, Card } from "react-native-paper"
 import { StyleSheet, View, ScrollView, useWindowDimensions } from "react-native"
 import AppStateContext from "@services/context/context"
+import Chart from "@components/ui/Chart"
 
 export default function TabOneScreen() {
   const { colors } = useTheme()
-  const { locale } = useContext(AppStateContext)
-  const { width, height } = useWindowDimensions()
+  const { width } = useWindowDimensions()
   const cardWidth = width * 0.6
-  const graphHeight = height * 0.3
 
   return (
     <View style={styles.container}>
-      {/* eslint-disable-next-line react/style-prop-object */}
       <StatusBar style="light" />
-      <Drawer.Screen options={{ headerTitle: "Dashboard" }} />
 
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center"
-        }}
-      >
-        <LineChart
-          // withHorizontalLabels={false}
-          // withInnerLines={false}
-          // withHorizontalLines={false}
-          withVerticalLines={false}
-          // withOuterLines={false}
-          data={{
-            labels: [
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100
-            ].map(el => `${el.toPrecision(2)}`),
-            datasets: [
-              {
-                data: [
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100
-                ]
-              },
-              {
-                data: [
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100
-                ]
-              }
-            ]
-          }}
-          width={width} // from react-native
-          height={graphHeight}
-          chartConfig={{
-            fillShadowGradientFrom: "#ffffff",
-            fillShadowGradientTo: "#ffffff00",
-            fillShadowGradientOpacity: 0.5,
-            backgroundGradientFrom: "#532181",
-            backgroundGradientTo: "#532181",
-            decimalPlaces: 2,
-            color: (opacity = 1) => `rgba(255, 255, 255, ${1})`,
-            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${1})`,
-            style: {
-              borderRadius: 16
-            },
-            propsForDots: {
-              r: "6",
-              strokeWidth: "2",
-              stroke: "#fff",
-              fill: colors.secondary
-            },
-            propsForBackgroundLines: {},
-            propsForHorizontalLabels: { strokeWidth: 9 },
-            propsForVerticalLabels: {},
-            propsForLabels: {}
-          }}
-          bezier
-        />
-      </View>
+      <Chart />
 
       <View style={styles.reportSection}>
         <View style={styles.reportTitle}>
