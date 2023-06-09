@@ -44,11 +44,8 @@ export default function Login() {
     User.login(username, password)
       .then(user => {
         setUser(user)
-        const key = process.env.SECURE_STORE_CREDENTIALS as string
-
-        saveInSecureStore(key, JSON.stringify(user))
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
-        router.replace("(tabs)/(dashboard)/pant")
+        router.replace("(tabs)/(dashboard)")
       })
       .catch(err => {
         setLoading(false)

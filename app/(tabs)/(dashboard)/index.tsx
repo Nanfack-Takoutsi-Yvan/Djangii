@@ -1,15 +1,16 @@
 /* eslint-disable react/style-prop-object */
-import { useContext } from "react"
+// import { useContext, useEffect } from "react"
 import { StatusBar } from "expo-status-bar"
-import { Drawer } from "expo-router/drawer"
 import { useTheme, ProgressBar, Text, Card } from "react-native-paper"
 import { StyleSheet, View, ScrollView, useWindowDimensions } from "react-native"
-import AppStateContext from "@services/context/context"
+// import AppStateContext from "@services/context/context"
 import Chart from "@components/ui/Chart"
 
 export default function TabOneScreen() {
   const { colors } = useTheme()
   const { width } = useWindowDimensions()
+  // const { user } = useContext(AppStateContext)
+
   const cardWidth = width * 0.6
 
   return (

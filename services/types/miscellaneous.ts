@@ -1,9 +1,6 @@
-export enum OTP_CANAL {
-  EMAIL = "EMAIL",
-  SMS = "SMS"
-}
+type OTP_CANAL = "EMAIL" | "SMS"
 
-export type NavigationDrawerItems = {
+type NavigationDrawerItems = {
   [key: string]: {
     name: string
     icon: string

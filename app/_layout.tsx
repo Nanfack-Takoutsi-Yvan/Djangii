@@ -55,6 +55,8 @@ function RootLayoutNav({ storedUser }: { storedUser: IUser | undefined }) {
     if (storedUser) setUser(storedUser)
   }, [storedUser])
 
+  const isUserEmpty = (value: IUser) => Object.keys(value).length === 0
+
   const contextValue = useMemo(
     () => ({
       user,
@@ -100,7 +102,7 @@ function RootLayoutNav({ storedUser }: { storedUser: IUser | undefined }) {
         >
           <Stack.Screen
             name="(auth)"
-            redirect={!!user}
+            redirect={!isUserEmpty}
             options={{ headerShown: showHeader }}
           />
           <Stack.Screen name="(tabs)" options={{ headerShown: showHeader }} />
