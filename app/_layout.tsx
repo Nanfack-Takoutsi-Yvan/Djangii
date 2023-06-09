@@ -6,7 +6,6 @@ import useSoraFonts from "@hooks/font/useSoraFonts"
 import AppStateContext from "@services/context/context"
 import { Provider as PaperProvider } from "react-native-paper"
 import useDjangiiTheme from "@hooks/theme/useDjangiiTheme"
-import { IUser } from "@services/types/auth"
 import useNetInfo from "@hooks/web/useNetInfo"
 import NetworkStatus from "@components/ui/NetworkStatus"
 import LoadingModal from "@components/ui/LoadingModal"
@@ -55,7 +54,7 @@ function RootLayoutNav({ storedUser }: { storedUser: IUser | undefined }) {
     if (storedUser) setUser(storedUser)
   }, [storedUser])
 
-  const isUserEmpty = (value: IUser) => Object.keys(value).length === 0
+  const isUserNotEmpty = Object.keys(user).length !== 0
 
   const contextValue = useMemo(
     () => ({
@@ -102,7 +101,7 @@ function RootLayoutNav({ storedUser }: { storedUser: IUser | undefined }) {
         >
           <Stack.Screen
             name="(auth)"
-            redirect={!isUserEmpty}
+            redirect={isUserNotEmpty}
             options={{ headerShown: showHeader }}
           />
           <Stack.Screen name="(tabs)" options={{ headerShown: showHeader }} />

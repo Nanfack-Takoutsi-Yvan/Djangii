@@ -16,7 +16,7 @@ interface IUserInfo {
   phone: string
   countryCode: string
   socialProfil: ISocialProfile
-  datation: IDatation
+  datation: IHistory
 }
 
 interface ISocialProfile {
@@ -24,12 +24,6 @@ interface ISocialProfile {
   interestCenters: string[]
   activityAreas: string[]
   socialNetworkLinks: string[]
-}
-
-interface IDatation {
-  creationTime: string
-  lastUpdateTime: string
-  version: number
 }
 
 interface NewUserData {
@@ -70,4 +64,28 @@ interface userFormInputs {
   phoneNumber: string
   password: string
   passwordConfirm: string
+}
+
+interface IUserNotification {
+  buttonEmailClickCount: number
+  datation: IHistory
+  date: string
+  displayed: boolean
+  id: string
+  notification: INotification
+  opened: boolean
+  sendByEmail: boolean
+  userInfos: IUserInfo
+}
+
+interface IUserNotificationParamaterGroupDTO {
+  code: string
+  description: string
+  id: string
+  notificationParameters: INotificationParameter
+}
+
+interface UserNotificationStatisticDTO {
+  notificationNotDiplay: number
+  notificationNotOpen: number
 }
