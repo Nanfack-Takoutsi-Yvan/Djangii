@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { IUser } from "@services/types/auth"
-import { getValueFromSecureStoreFor } from "@utils/methods"
+import { getValueFromSecureStoreFor } from "@services/utils/methods"
 import { useEffect, useState } from "react"
 
 const useAuthCredentials = () => {

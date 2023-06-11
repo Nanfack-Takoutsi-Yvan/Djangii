@@ -1,6 +1,6 @@
 // import Colors from "@constants/Theme/Colors"
-import Colors from "@constants/Theme/Colors"
-import FontConfigs from "@constants/Theme/FontConfigs"
+import Colors from "@assets/constants/Theme/Colors"
+import FontConfigs from "@assets/constants/Theme/FontConfigs"
 import { useColorScheme } from "react-native"
 import {
   configureFonts,

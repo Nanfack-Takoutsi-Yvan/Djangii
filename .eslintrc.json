@@ -45,6 +45,13 @@
     "react/jsx-props-no-spreading": "off",
     "@typescript-eslint/no-shadow": ["error"],
     "react/no-unstable-nested-components": "off",
-    "import/no-extraneous-dependencies": "off"
+    "import/no-extraneous-dependencies": "off",
+    "react/function-component-definition": "off",
+    "no-param-reassign": ["error", {
+      "props": true,
+      "ignorePropertyModificationsFor": [
+        "state"
+      ]
+    }]
   }
 }

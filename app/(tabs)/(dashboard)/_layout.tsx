@@ -32,7 +32,9 @@ export default function DashboardLayout() {
         )
       }}
       drawerContent={NavigationDrawer}
-    />
+    >
+      <Drawer.Screen name="index" options={{ headerTitle: "Dashboard" }} />
+    </Drawer>
   )
 }
 

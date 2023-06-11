@@ -1,5 +1,5 @@
 import AuthController from "@services/controller/auth.controller"
-import { IUser, IUserInfo, NewUserData } from "@services/types/auth"
+import { saveInSecureStore } from "@services/utils/methods"
 import assert from "assert"
 
 export default class User implements IUser {
@@ -57,9 +57,15 @@ export default class User implements IUser {
 
     const controller = new AuthController()
 
-    const user = await controller.login(username, password)
+    const res = await controller.login(username, password)
 
-    return new User(user)
+    const userKey = process.env.SECURE_STORE_CREDENTIALS
+    saveInSecureStore(`${userKey}`, JSON.stringify(res.data))
+
+    const tokenKey = process.env.SECURE_STORE_TOKEN
+    saveInSecureStore(`${tokenKey}`, res.token)
+
+    return new User(res.data)
   }
 
   static register = async (userData: NewUserData, otp: string) => {

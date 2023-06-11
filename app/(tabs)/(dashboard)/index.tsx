@@ -1,136 +1,94 @@
-import { useContext } from "react"
+/* eslint-disable react/style-prop-object */
 import { StatusBar } from "expo-status-bar"
-import { Drawer } from "expo-router/drawer"
-import { LineChart } from "react-native-chart-kit"
-import { useTheme, ProgressBar, Text, Card } from "react-native-paper"
-import { StyleSheet, View, ScrollView, useWindowDimensions } from "react-native"
-import AppStateContext from "@services/context/context"
+import { useTheme, Text } from "react-native-paper"
+import { StyleSheet, View, useWindowDimensions } from "react-native"
+
+import Chart from "@components/ui/Chart"
+import { useCallback, useEffect, useState } from "react"
+import { FlatList } from "react-native-gesture-handler"
+import ReportCard from "@components/ui/reportCard"
+import { useAppDispatch } from "@services/store"
+
+import {
+  getCurvedData,
+  getTontineRoundCurve
+} from "@services/utils/functions/curves"
+import {
+  fetchUserAssociations,
+  getAssociations
+} from "@services/store/slices/associations"
+import {
+  fetchAssociationDashBoardData,
+  getDashboardData
+} from "@services/store/slices/dashboard"
 
 export default function TabOneScreen() {
-  const { colors } = useTheme()
-  const { locale } = useContext(AppStateContext)
+  const [dataId, setDataId] = useState<string>("")
+  const [curveData, setCurveData] = useState<IDashboardData>()
+
+  const dispatch = useAppDispatch()
+  const associations = getAssociations()
+  const dashboardData = getDashboardData()
+
+  const curve = useCallback(getCurvedData, [])
+  const tontineCurve = useCallback(getTontineRoundCurve, [])
   const { width, height } = useWindowDimensions()
-  const cardWidth = width * 0.6
-  const graphHeight = height * 0.3
+
+  useEffect(() => {
+    if (associations.length === 0) {
+      dispatch(fetchUserAssociations())
+    }
+  }, [associations, dispatch])
+
+  useEffect(() => {
+    if (associations.length !== 0) {
+      associations.forEach(association => {
+        dispatch(fetchAssociationDashBoardData(association.id))
+      })
+
+      setDataId(associations[0].id)
+    }
+  }, [associations, dispatch])
+
+  useEffect(() => {
+    const selectedData = dashboardData.find(
+      data => data.associationId === dataId
+    )
+
+    if (selectedData) {
+      const { associationId, ...rest } = selectedData
+      setCurveData(rest)
+    }
+  }, [dashboardData, dataId])
 
   return (
     <View style={styles.container}>
-      {/* eslint-disable-next-line react/style-prop-object */}
       <StatusBar style="light" />
-      <Drawer.Screen options={{ headerTitle: "Dashboard" }} />
 
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center"
-        }}
-      >
-        <LineChart
-          // withHorizontalLabels={false}
-          // withInnerLines={false}
-          // withHorizontalLines={false}
-          withVerticalLines={false}
-          // withOuterLines={false}
-          data={{
-            labels: [
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100
-            ].map(el => `${el.toPrecision(2)}`),
-            datasets: [
-              {
-                data: [
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100
-                ]
-              },
-              {
-                data: [
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100
-                ]
-              }
-            ]
-          }}
-          width={width} // from react-native
-          height={graphHeight}
-          chartConfig={{
-            fillShadowGradientFrom: "#ffffff",
-            fillShadowGradientTo: "#ffffff00",
-            fillShadowGradientOpacity: 0.5,
-            backgroundGradientFrom: "#532181",
-            backgroundGradientTo: "#532181",
-            decimalPlaces: 2,
-            color: (opacity = 1) => `rgba(255, 255, 255, ${1})`,
-            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${1})`,
-            style: {
-              borderRadius: 16
-            },
-            propsForDots: {
-              r: "6",
-              strokeWidth: "2",
-              stroke: "#fff",
-              fill: colors.secondary
-            },
-            propsForBackgroundLines: {},
-            propsForHorizontalLabels: { strokeWidth: 9 },
-            propsForVerticalLabels: {},
-            propsForLabels: {}
-          }}
-          bezier
-        />
-      </View>
+      {curveData ? (
+        <Chart data={curve(curveData)} width={width} height={height * 0.3} />
+      ) : null}
 
       <View style={styles.reportSection}>
         <View style={styles.reportTitle}>
           <Text variant="headlineSmall">Djangii Reports</Text>
         </View>
-        <ScrollView
-          showsHorizontalScrollIndicator={false}
+        <FlatList
           horizontal
-          style={styles.screen}
-        >
-          <View style={styles.cardContainer}>
-            <Card mode="contained" style={[styles.card, { width: cardWidth }]}>
-              <Card.Content>
-                <Text variant="displaySmall">Tontine</Text>
-                <ProgressBar
-                  progress={0.5}
-                  style={{ backgroundColor: `${colors.primary}55` }}
-                />
-              </Card.Content>
-            </Card>
-            <Card mode="contained" style={[styles.card, { width: cardWidth }]}>
-              <Card.Content>
-                <Text variant="displaySmall">Tontine</Text>
-                <ProgressBar
-                  progress={0.5}
-                  style={{ backgroundColor: `${colors.primary}55` }}
-                />
-              </Card.Content>
-            </Card>
-            <Card mode="contained" style={[styles.card, { width: cardWidth }]}>
-              <Card.Content>
-                <Text variant="displaySmall">Tontine</Text>
-                <ProgressBar
-                  progress={0.5}
-                  style={{ backgroundColor: `${colors.primary}55` }}
-                />
-              </Card.Content>
-            </Card>
-          </View>
-        </ScrollView>
+          data={associations}
+          style={[styles.screen]}
+          contentContainerStyle={styles.cardsContainer}
+          renderItem={({ item }) => (
+            <ReportCard
+              selected={item.id === dataId}
+              acronym={item.acronym}
+              name={item.name}
+              onPress={() => setDataId(item.id)}
+              curveData={tontineCurve(dashboardData, item.id)}
+            />
+          )}
+          showsHorizontalScrollIndicator={false}
+        />
       </View>
     </View>
   )
@@ -148,9 +106,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold"
   },
-  cardContainer: {
-    flex: 1,
-    flexDirection: "row",
+  cardsContainer: {
     alignItems: "center",
     paddingHorizontal: 30,
     columnGap: 16

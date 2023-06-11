@@ -20,7 +20,7 @@ import { StatusBar } from "expo-status-bar"
 import AppStateContext from "@services/context/context"
 import PasswordIcon from "@components/ui/PasswordIcon"
 import vaidationSchema from "@services/validations"
-import { saveInSecureStore } from "@utils/methods"
+import { saveInSecureStore } from "@services/utils/methods"
 import User from "@services/models/user"
 import { HttpStatusCode } from "axios"
 
@@ -44,11 +44,8 @@ export default function Login() {
     User.login(username, password)
       .then(user => {
         setUser(user)
-        const key = process.env.SECURE_STORE_CREDENTIALS as string
-
-        saveInSecureStore(key, JSON.stringify(user))
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
-        router.replace("(tabs)/(dashboard)/pant")
+        router.replace("(tabs)/(dashboard)")
       })
       .catch(err => {
         setLoading(false)

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import locales from "@locales/index"
+import locales from "@assets/locales/index"
 import { I18n } from "i18n-js"
 
 const useLocales = (deviceLocale: string) => {

@@ -1,17 +1,19 @@
+import { Provider } from "react-redux"
 import { useEffect, useMemo, useState } from "react"
 import { SplashScreen, Stack } from "expo-router"
 import * as localization from "expo-localization"
-import useLocales from "@hooks/locale/useLocales"
-import useSoraFonts from "@hooks/font/useSoraFonts"
-import AppStateContext from "@services/context/context"
 import { Provider as PaperProvider } from "react-native-paper"
-import useDjangiiTheme from "@hooks/theme/useDjangiiTheme"
-import { IUser } from "@services/types/auth"
-import useNetInfo from "@hooks/web/useNetInfo"
+
+import store from "@services/store/store"
+import useLocales from "@services/hooks/locale/useLocales"
+import useSoraFonts from "@services/hooks/font/useSoraFonts"
+import AppStateContext from "@services/context/context"
+import useDjangiiTheme from "@services/hooks/theme/useDjangiiTheme"
+import useNetInfo from "@services/hooks/web/useNetInfo"
 import NetworkStatus from "@components/ui/NetworkStatus"
 import LoadingModal from "@components/ui/LoadingModal"
 import ActionModal, { ActionModalProps } from "@components/ActionModal"
-import useAuthCredentials from "@hooks/auth/useAuthCredentials"
+import useAuthCredentials from "@services/hooks/auth/useAuthCredentials"
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -55,6 +57,8 @@ function RootLayoutNav({ storedUser }: { storedUser: IUser | undefined }) {
     if (storedUser) setUser(storedUser)
   }, [storedUser])
 
+  const isUserNotEmpty = Object.keys(user).length !== 0
+
   const contextValue = useMemo(
     () => ({
       user,
@@ -88,28 +92,30 @@ function RootLayoutNav({ storedUser }: { storedUser: IUser | undefined }) {
     })
 
   return (
-    <AppStateContext.Provider value={contextValue}>
-      <PaperProvider theme={theme}>
-        <LoadingModal displayModal={loading} />
-        <ActionModal settings={{ ...actionModalProps, closeActionModal }} />
-        <Stack
-          screenOptions={{
-            headerStyle: { backgroundColor: headerStyle },
-            headerTitle: NetworkStatus.bind(null, { connected: appConnected })
-          }}
-        >
-          <Stack.Screen
-            name="(auth)"
-            // redirect={!!user}
-            options={{ headerShown: showHeader }}
-          />
-          <Stack.Screen name="(tabs)" options={{ headerShown: showHeader }} />
-          <Stack.Screen
-            name="modal"
-            options={{ presentation: "modal", headerShown: false }}
-          />
-        </Stack>
-      </PaperProvider>
-    </AppStateContext.Provider>
+    <Provider store={store}>
+      <AppStateContext.Provider value={contextValue}>
+        <PaperProvider theme={theme}>
+          <LoadingModal displayModal={loading} />
+          <ActionModal settings={{ ...actionModalProps, closeActionModal }} />
+          <Stack
+            screenOptions={{
+              headerStyle: { backgroundColor: headerStyle },
+              headerTitle: NetworkStatus.bind(null, { connected: appConnected })
+            }}
+          >
+            <Stack.Screen
+              name="(auth)"
+              redirect={isUserNotEmpty}
+              options={{ headerShown: showHeader }}
+            />
+            <Stack.Screen name="(tabs)" options={{ headerShown: showHeader }} />
+            <Stack.Screen
+              name="modal"
+              options={{ presentation: "modal", headerShown: false }}
+            />
+          </Stack>
+        </PaperProvider>
+      </AppStateContext.Provider>
+    </Provider>
   )
 }

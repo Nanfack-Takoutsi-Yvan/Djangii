@@ -10,7 +10,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { NavigationDrawerItems } from "@services/types/miscellaneous"
-import navigationDrawer from "@constants/router/navigationDrawer.json"
+import navigationDrawer from "@assets/constants/router/navigationDrawer.json"
 import AppStateContext from "@services/context/context"
 
 function NavigationDrawer(props: DrawerContentComponentProps) {

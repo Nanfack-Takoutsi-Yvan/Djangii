@@ -2,7 +2,7 @@
 import { HttpStatusCode, isAxiosError } from "axios"
 import * as yup from "yup"
 
-import field from "@constants/validation/limits"
+import field from "@assets/constants/validation/limits"
 import User from "@services/models/user"
 
 const signUpValidationSchema = yup.object().shape({

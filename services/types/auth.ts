@@ -1,6 +1,4 @@
-import { OTP_CANAL } from "./miscellaneous"
-
-export interface IUser {
+interface IUser {
   id: string
   username: string
   accountActivate: boolean
@@ -9,7 +7,7 @@ export interface IUser {
   userInfos: IUserInfo
 }
 
-export interface IUserInfo {
+interface IUserInfo {
   id: string
   firstName: string
   lastName: string
@@ -18,23 +16,17 @@ export interface IUserInfo {
   phone: string
   countryCode: string
   socialProfil: ISocialProfile
-  datation: IDatation
+  datation: IHistory
 }
 
-export interface ISocialProfile {
+interface ISocialProfile {
   hobbies: string[]
   interestCenters: string[]
   activityAreas: string[]
   socialNetworkLinks: string[]
 }
 
-export interface IDatation {
-  creationTime: string
-  lastUpdateTime: string
-  version: number
-}
-
-export interface NewUserData {
+interface NewUserData {
   password: string
   userInfos: {
     countryCode?: string
@@ -48,8 +40,8 @@ export interface NewUserData {
   username: string
 }
 
-export interface IAuthController {
-  login: (username: string, password: string) => Promise<IUser>
+interface IAuthController {
+  login: (username: string, password: string) => Promise<AuthResponse>
   register: (userData: NewUserData, otp: string) => Promise<IUser>
   sendOTP: (email: string, lang?: string, canal?: OTP_CANAL) => Promise<boolean>
   validateOTP: (email: string, otp: string) => Promise<boolean>
@@ -64,7 +56,7 @@ export interface IAuthController {
   ) => Promise<IUser>
 }
 
-export type userFormInputs = {
+interface userFormInputs {
   username: string
   firstName: string
   lastName: string
@@ -72,4 +64,28 @@ export type userFormInputs = {
   phoneNumber: string
   password: string
   passwordConfirm: string
+}
+
+interface IUserNotification {
+  buttonEmailClickCount: number
+  datation: IHistory
+  date: string
+  displayed: boolean
+  id: string
+  notification: INotification
+  opened: boolean
+  sendByEmail: boolean
+  userInfos: IUserInfo
+}
+
+interface IUserNotificationParamaterGroupDTO {
+  code: string
+  description: string
+  id: string
+  notificationParameters: INotificationParameter
+}
+
+interface UserNotificationStatisticDTO {
+  notificationNotDiplay: number
+  notificationNotOpen: number
 }

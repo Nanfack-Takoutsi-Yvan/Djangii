@@ -1,8 +1,6 @@
 /* eslint-disable no-console */
 import assert from "assert"
 import apiClient from "@services/api/api.client"
-import { OTP_CANAL } from "@services/types/miscellaneous"
-import { IAuthController, IUser, NewUserData } from "@services/types/auth"
 
 export default class AuthController implements IAuthController {
   private resource
@@ -38,7 +36,7 @@ export default class AuthController implements IAuthController {
         throw new Error(`No profile found for the username: ${username}`)
       }
 
-      return user.data
+      return { data: user.data, token: user.headers.authorization }
     } catch (error) {
       const err = {
         message: `Error while getting user: ${error}`,
@@ -78,7 +76,7 @@ export default class AuthController implements IAuthController {
 
     try {
       const res = await apiClient.post<boolean>(
-        `${this.resource.sendOTP}/${email}?canal=${canal || OTP_CANAL.EMAIL}${
+        `${this.resource.sendOTP}/${email}?canal=${canal || "EMAIL"}${
           lang ? `&lang=${lang}` : ""
         }`
       )

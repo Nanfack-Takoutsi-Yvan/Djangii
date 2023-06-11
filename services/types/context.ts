@@ -1,7 +1,5 @@
-import { I18n } from "i18n-js/typings"
 import { ActionModalProps } from "@components/ActionModal"
-
-import { IUser } from "./auth"
+import { I18n } from "i18n-js"
 
 export default interface AppContextProps {
   user: IUser
