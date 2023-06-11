@@ -1,16 +1,16 @@
 import { useEffect, useMemo, useState } from "react"
 import { SplashScreen, Stack } from "expo-router"
 import * as localization from "expo-localization"
-import useLocales from "@hooks/locale/useLocales"
-import useSoraFonts from "@hooks/font/useSoraFonts"
+import useLocales from "@services/hooks/locale/useLocales"
+import useSoraFonts from "@services/hooks/font/useSoraFonts"
 import AppStateContext from "@services/context/context"
 import { Provider as PaperProvider } from "react-native-paper"
-import useDjangiiTheme from "@hooks/theme/useDjangiiTheme"
-import useNetInfo from "@hooks/web/useNetInfo"
+import useDjangiiTheme from "@services/hooks/theme/useDjangiiTheme"
+import useNetInfo from "@services/hooks/web/useNetInfo"
 import NetworkStatus from "@components/ui/NetworkStatus"
 import LoadingModal from "@components/ui/LoadingModal"
 import ActionModal, { ActionModalProps } from "@components/ActionModal"
-import useAuthCredentials from "@hooks/auth/useAuthCredentials"
+import useAuthCredentials from "@services/hooks/auth/useAuthCredentials"
 
 export {
   // Catch any errors thrown by the Layout component.

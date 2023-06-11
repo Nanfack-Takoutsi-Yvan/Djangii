@@ -1,5 +1,5 @@
 import { AssociationController } from "@services/controller/association.controller"
-import getTokenFromStorage from "@utils/functions/token"
+import getTokenFromStorage from "@services/utils/functions/token"
 import assert from "assert"
 
 export default class Association implements IAssociation {

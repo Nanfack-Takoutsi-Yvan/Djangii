@@ -6,14 +6,14 @@
     "paths": {
       "@src/*": ["src/*"],
       "@app/*": ["app/*"],
-      "@utils/*": ["utils/*"],
-      "@hooks/*": ["hooks/*"],
+      "@utils/*": ["services/utils/*"],
+      "@hooks/*": ["services/hooks/*"],
       "@theme/*": ["theme/*"],
       "@assets/*": ["assets/*"],
-      "@locales/*": ["locales/*"],
+      "@locales/*": ["assets/locales/*"],
       "@typings/*": ["typings/*"],
       "@services/*": ["services/*"],
-      "@constants/*": ["constants/*"],
+      "@constants/*": ["assets/constants/*"],
       "@components/*": ["components/*"]
     },
   }

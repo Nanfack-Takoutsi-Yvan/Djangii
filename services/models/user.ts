@@ -1,5 +1,5 @@
 import AuthController from "@services/controller/auth.controller"
-import { saveInSecureStore } from "@utils/methods"
+import { saveInSecureStore } from "@services/utils/methods"
 import assert from "assert"
 
 export default class User implements IUser {

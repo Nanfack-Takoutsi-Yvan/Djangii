@@ -1,4 +1,4 @@
-import field from "@constants/validation/limits"
+import field from "@assets/constants/validation/limits"
 import * as yup from "yup"
 
 const loginValidationSchema = yup.object().shape({

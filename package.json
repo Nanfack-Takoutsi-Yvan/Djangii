@@ -17,6 +17,7 @@
     "@react-native-picker/picker": "2.4.8",
     "@react-navigation/drawer": "^6.6.2",
     "@react-navigation/native": "^6.0.2",
+    "@reduxjs/toolkit": "^1.9.5",
     "@types/react-native": "^0.71.6",
     "assert": "^2.0.0",
     "axios": "^1.4.0",
@@ -53,6 +54,7 @@
     "react-native-svg": "13.4.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.10",
+    "react-redux": "^8.0.7",
     "ts-node": "^10.9.1",
     "yup": "^1.1.1"
   },

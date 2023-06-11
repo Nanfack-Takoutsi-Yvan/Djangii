@@ -21,7 +21,7 @@ import { NewUserData, userFormInputs } from "@services/types/auth"
 
 import { StatusBar } from "expo-status-bar"
 import validations from "@services/validations"
-import { saveInSecureStore } from "@utils/methods"
+import { saveInSecureStore } from "@services/utils/methods"
 import { HttpStatusCode } from "axios"
 
 export default function CheckOTP() {

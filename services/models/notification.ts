@@ -1,5 +1,5 @@
 import NotificationController from "@services/controller/notification.controller"
-import getTokenFromStorage from "@utils/functions/token"
+import getTokenFromStorage from "@services/utils/functions/token"
 import assert from "assert"
 
 export default class Notification implements INotification {

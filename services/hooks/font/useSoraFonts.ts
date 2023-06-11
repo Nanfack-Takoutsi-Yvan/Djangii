@@ -22,7 +22,7 @@ const useSoraFonts = () => {
     SoraSemibold: Sora_600SemiBold,
     SoraExtraBold: Sora_800ExtraBold,
     SoraExtraLight: Sora_200ExtraLight,
-    SpaceMono: require("../../assets/fonts/SpaceMono-Regular.ttf"),
+    SpaceMono: require("../../../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font
   })
 

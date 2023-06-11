@@ -8,7 +8,7 @@ import Association from "@services/models/association"
 import { FlatList } from "react-native-gesture-handler"
 import ReportCard from "@components/ui/reportCard"
 import Dashboard from "@services/models/dashboard"
-import { getCurvedData } from "@utils/functions/curves"
+import { getCurvedData } from "@services/utils/functions/curves"
 
 export default function TabOneScreen() {
   const [dataId, setDataId] = useState<string>("")
