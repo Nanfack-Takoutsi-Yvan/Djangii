@@ -1,11 +1,12 @@
 /* eslint-disable no-unsafe-optional-chaining */
-import NavigationDrawer from "@components/ui/NavigationDrawer"
-import AppStateContext from "@services/context/context"
-import { Drawer } from "expo-router/drawer"
 import { useContext } from "react"
+import { Drawer } from "expo-router/drawer"
 import { Platform, StyleSheet } from "react-native"
 import { Avatar, useTheme } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
+
+import NavigationDrawer from "@components/ui/NavigationDrawer"
+import AppStateContext from "@services/context/context"
 
 export default function DashboardLayout() {
   const { user } = useContext(AppStateContext)

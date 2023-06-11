@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
+import { AxiosError } from "axios"
+
 import { useAppSelector } from "@services/store"
 import Association from "@services/models/association"
-import { AxiosError } from "axios"
 
 type AssociationState = {
   userAssociations: IAssociation[]

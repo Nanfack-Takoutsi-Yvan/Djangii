@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit"
 import dashboard from "./slices/dashboard"
 import associations from "./slices/associations"
+import notifications from "./slices/notifications"
 
 const store = configureStore({
   reducer: {
     dashboard,
-    associations
+    associations,
+    notifications
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware()
 })
