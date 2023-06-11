@@ -2,56 +2,72 @@
 import { StatusBar } from "expo-status-bar"
 import { useTheme, Text } from "react-native-paper"
 import { StyleSheet, View, useWindowDimensions } from "react-native"
+
 import Chart from "@components/ui/Chart"
 import { useCallback, useEffect, useState } from "react"
-import Association from "@services/models/association"
 import { FlatList } from "react-native-gesture-handler"
 import ReportCard from "@components/ui/reportCard"
-import Dashboard from "@services/models/dashboard"
-import { getCurvedData } from "@services/utils/functions/curves"
+import { useAppDispatch } from "@services/store"
+
+import {
+  getCurvedData,
+  getTontineRoundCurve
+} from "@services/utils/functions/curves"
+import {
+  fetchUserAssociations,
+  getAssociations
+} from "@services/store/slices/associations"
+import {
+  fetchAssociationDashBoardData,
+  getDashboardData
+} from "@services/store/slices/dashboard"
 
 export default function TabOneScreen() {
   const [dataId, setDataId] = useState<string>("")
-  const [curveData, setCureveData] = useState<Dashboard>()
-  const [associations, setAssociations] = useState<Association[]>(
-    [] as Association[]
-  )
+  const [curveData, setCurveData] = useState<IDashboardData>()
 
-  const fetchAssociations = useCallback(async () => {
-    const userAssociations = await Association.getAssociations()
-    setAssociations(userAssociations)
-    const firstAssociation = userAssociations[0]
-    if (firstAssociation.id) {
-      setDataId(firstAssociation.id)
-    }
-  }, [])
+  const dispatch = useAppDispatch()
+  const associations = getAssociations()
+  const dashboardData = getDashboardData()
 
-  const fetchDashboardData = useCallback(async () => {
-    const dashboardData = await Dashboard.getData(dataId)
-    setCureveData(dashboardData)
-  }, [dataId])
-
-  const { colors } = useTheme()
   const curve = useCallback(getCurvedData, [])
+  const tontineCurve = useCallback(getTontineRoundCurve, [])
   const { width, height } = useWindowDimensions()
 
   useEffect(() => {
-    fetchAssociations()
-  }, [fetchAssociations])
+    if (associations.length === 0) {
+      dispatch(fetchUserAssociations())
+    }
+  }, [associations, dispatch])
 
   useEffect(() => {
-    if (dataId) {
-      fetchDashboardData()
+    if (associations.length !== 0) {
+      associations.forEach(association => {
+        dispatch(fetchAssociationDashBoardData(association.id))
+      })
+
+      setDataId(associations[0].id)
     }
-  }, [dataId, fetchDashboardData])
+  }, [associations, dispatch])
+
+  useEffect(() => {
+    const selectedData = dashboardData.find(
+      data => data.associationId === dataId
+    )
+
+    if (selectedData) {
+      const { associationId, ...rest } = selectedData
+      setCurveData(rest)
+    }
+  }, [dashboardData, dataId])
 
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
 
-      {/* {curveData ? (
+      {curveData ? (
         <Chart data={curve(curveData)} width={width} height={height * 0.3} />
-      ) : null} */}
+      ) : null}
 
       <View style={styles.reportSection}>
         <View style={styles.reportTitle}>
@@ -68,19 +84,7 @@ export default function TabOneScreen() {
               acronym={item.acronym}
               name={item.name}
               onPress={() => setDataId(item.id)}
-              curveData={{
-                datasets: [
-                  {
-                    data:
-                      curveData?.contributionCurve.map(el => el.total) || [],
-                    color: () => colors.primary
-                  }
-                ],
-                labels:
-                  curveData?.tontineRoundCurve.map(el =>
-                    el.month.substring(0, 3)
-                  ) || []
-              }}
+              curveData={tontineCurve(dashboardData, item.id)}
             />
           )}
           showsHorizontalScrollIndicator={false}

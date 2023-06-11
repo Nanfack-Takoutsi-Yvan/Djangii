@@ -25,7 +25,6 @@ import User from "@services/models/user"
 import LoadingModal from "@components/ui/LoadingModal"
 
 import validations from "@services/validations"
-import { userFormInputs } from "@services/types/auth"
 
 export default function SignUp() {
   const [isOtpSending, setIsOtpSending] = useState<boolean>(false)

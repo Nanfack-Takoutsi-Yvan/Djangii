@@ -45,7 +45,7 @@ const ReportCard: FC<ReportCardProps> = ({
           </Text>
         </View>
         <View>
-          {/* {curveData && cardHeight ? (
+          {curveData && cardHeight ? (
             <Chart
               data={curveData}
               width={cardWidth * 0.79}
@@ -54,7 +54,7 @@ const ReportCard: FC<ReportCardProps> = ({
               points={false}
               background={false}
             />
-          ) : null} */}
+          ) : null}
         </View>
         <View>
           <ProgressBar

@@ -23,20 +23,22 @@ export default class Association implements IAssociation {
 
   private controller = new AssociationController()
 
-  constructor(association: IAssociation) {
-    Object.assign(this, association)
+  constructor(association?: IAssociation) {
+    if (association) {
+      Object.assign(this, association)
+    }
   }
 
   static getAssociations = async () => {
     const token = await getTokenFromStorage()
     const controller = new AssociationController()
-    const associations: Association[] = []
+    const associations: IAssociation[] = []
 
     assert(token, "token is required")
 
     const rawData = await controller.getAssociations(token, "full")
 
-    rawData.content.map(data => associations.push(new Association(data)))
+    rawData.content.map(data => associations.push(data))
 
     return associations
   }

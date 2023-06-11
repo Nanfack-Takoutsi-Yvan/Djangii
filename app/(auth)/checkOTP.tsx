@@ -17,7 +17,6 @@ import * as Haptics from "expo-haptics"
 
 import User from "@services/models/user"
 import AppStateContext from "@services/context/context"
-import { NewUserData, userFormInputs } from "@services/types/auth"
 
 import { StatusBar } from "expo-status-bar"
 import validations from "@services/validations"
@@ -229,7 +228,6 @@ export default function CheckOTP() {
                           textColor={colors.surface}
                           onPress={() => {
                             handleSubmit()
-                            console.log("helloworld")
                           }}
                           contentStyle={styles.signUpButton}
                           icon={() => (

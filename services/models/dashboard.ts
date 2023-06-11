@@ -29,7 +29,7 @@ export default class Dashboard implements IDashboardData {
 
   private controller = ""
 
-  constructor(data: IDashboardData) {
+  constructor(data?: IDashboardData) {
     if (data) {
       Object.assign(this, data)
     }
@@ -45,6 +45,6 @@ export default class Dashboard implements IDashboardData {
 
     const dashboardData = await controller.getCurveData(id, token)
 
-    return new Dashboard(dashboardData)
+    return dashboardData
   }
 }
