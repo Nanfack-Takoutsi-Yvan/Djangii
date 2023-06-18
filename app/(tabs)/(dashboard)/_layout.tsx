@@ -1,18 +1,24 @@
 /* eslint-disable no-unsafe-optional-chaining */
 import { useContext } from "react"
 import { Drawer } from "expo-router/drawer"
-import { Platform, StyleSheet } from "react-native"
+import { Platform, StyleSheet, TouchableOpacity } from "react-native"
 import { Avatar, useTheme } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
 
 import NavigationDrawer from "@components/ui/NavigationDrawer"
 import AppStateContext from "@services/context/context"
+import { useRouter } from "expo-router"
+import { getAvatarLetters } from "@utils/functions/format"
 
 export default function DashboardLayout() {
   const { user } = useContext(AppStateContext)
   const { colors } = useTheme()
+  const router = useRouter()
 
-  const avatar = user.userInfos?.firstName[0] + user.userInfos?.lastName[0]
+  const avatar = getAvatarLetters(
+    user.userInfos.firstName,
+    user.userInfos.lastName
+  )
 
   return (
     <Drawer
@@ -24,12 +30,14 @@ export default function DashboardLayout() {
         ),
         drawerStyle: styles.drawer,
         headerRight: () => (
-          <Avatar.Text
-            size={24}
-            label={avatar}
-            labelStyle={styles.avatarLabel}
-            style={[styles.avatar, { backgroundColor: colors.secondary }]}
-          />
+          <TouchableOpacity onPress={() => router.push("appInfoModal")}>
+            <Avatar.Text
+              size={24}
+              label={avatar}
+              labelStyle={styles.avatarLabel}
+              style={[styles.avatar, { backgroundColor: colors.secondary }]}
+            />
+          </TouchableOpacity>
         )
       }}
       drawerContent={NavigationDrawer}

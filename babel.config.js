@@ -24,15 +24,15 @@ module.exports = function (api) {
           alias: {
             "@src": "./src",
             "@app": "./app",
-            "@utils": "./utils",
-            "@hooks": "./hooks",
             "@theme": "./theme",
             "@assets": "./assets",
-            "@locales": "./locales",
             "@typings": "./typings",
             "@services": "./services",
-            "@constants": "./constants",
-            "@components": "./components"
+            "@utils": "./services/utils",
+            "@hooks": "./services/hooks",
+            "@components": "./components",
+            "@locales": "./assets/locales",
+            "@constants": "./assets/constants"
           }
         }
       ],

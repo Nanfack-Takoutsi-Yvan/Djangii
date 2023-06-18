@@ -9,7 +9,6 @@ import {
 } from "@react-navigation/drawer"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
-import { NavigationDrawerItems } from "@services/types/miscellaneous"
 import navigationDrawer from "@assets/constants/router/navigationDrawer.json"
 import AppStateContext from "@services/context/context"
 
@@ -18,7 +17,6 @@ function NavigationDrawer(props: DrawerContentComponentProps) {
 
   const { colors } = useTheme()
   const inset = useSafeAreaInsets()
-  const { width } = useWindowDimensions()
   const { locale } = useContext(AppStateContext)
 
   const items = navigationDrawer as NavigationDrawerItems

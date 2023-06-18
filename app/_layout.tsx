@@ -113,6 +113,13 @@ function RootLayoutNav({ storedUser }: { storedUser: IUser | undefined }) {
               name="modal"
               options={{ presentation: "modal", headerShown: false }}
             />
+            <Stack.Screen
+              name="appInfoModal"
+              options={{
+                presentation: "containedTransparentModal",
+                headerShown: false
+              }}
+            />
           </Stack>
         </PaperProvider>
       </AppStateContext.Provider>
