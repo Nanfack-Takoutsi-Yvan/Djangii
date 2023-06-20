@@ -75,7 +75,7 @@
     "connect": "Login",
     "pickerCancel": "Cancel",
     "pickerConfirm": "Confirm"
-  }, 
+  },
   "passwordReset": {
     "title": "Reset your password",
     "labels": {
@@ -201,5 +201,10 @@
       "name": "Advertisements",
       "subItems": ["audience", "advertisement"]
     }
+  },
+  "dashboard": {
+    "title": "Djangii Reports",
+    "noData": "No data",
+    "noAssociation": "Create or join associations to view your reports"
   }
 }

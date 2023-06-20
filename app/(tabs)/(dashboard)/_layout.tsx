@@ -16,8 +16,8 @@ export default function DashboardLayout() {
   const router = useRouter()
 
   const avatar = getAvatarLetters(
-    user.userInfos.firstName,
-    user.userInfos.lastName
+    user?.userInfos?.firstName,
+    user?.userInfos?.lastName
   )
 
   return (

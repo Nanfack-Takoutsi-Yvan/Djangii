@@ -201,5 +201,10 @@
       "name": "Advertisements",
       "subItems": ["audience", "advertisement"]
     }
+  },
+  "dashboard": {
+    "title": "Rapports Djangii",
+    "noData": "Aucune donnée",
+    "noAssociation": "Créez une association ou rejoignez une pour appercevoir vous rapports"
   }
 }
