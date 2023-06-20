@@ -205,6 +205,12 @@
   "dashboard": {
     "title": "Djangii Reports",
     "noData": "No data",
-    "noAssociation": "Create or join associations to view your reports"
+    "noAssociation": "Create or join associations to view your reports",
+    "legends": {
+      "tontine": "Tontine",
+      "tontineRound": "Tontine rounds",
+      "members": "Members",
+      "contributionCurve": "Contribution curve"
+    }
   }
 }

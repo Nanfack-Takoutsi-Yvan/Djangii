@@ -35,6 +35,11 @@ export default function TabOneScreen() {
   const curve = useCallback(getCurvedData, [])
   const tontineCurve = useCallback(getTontineRoundCurve, [])
   const { width, height } = useWindowDimensions()
+  const curveLegend = [
+    locale.t("dashboard.legends.tontine"),
+    locale.t("dashboard.legends.tontineRound"),
+    locale.t("dashboard.legends.members")
+  ]
 
   useEffect(() => {
     if (associations.length === 0) {
@@ -68,7 +73,11 @@ export default function TabOneScreen() {
       <StatusBar style="light" />
 
       {curveData ? (
-        <Chart data={curve(curveData)} width={width} height={height * 0.3} />
+        <Chart
+          data={curve(curveData, curveLegend)}
+          width={width}
+          height={height * 0.3}
+        />
       ) : null}
 
       <View style={styles.reportSection}>
@@ -100,6 +109,7 @@ export default function TabOneScreen() {
                 selected={item.id === dataId}
                 acronym={item.acronym}
                 name={item.name}
+                currency={item.currency.code}
                 onPress={() => setDataId(item.id)}
                 curveData={tontineCurve(dashboardData, item.id)}
               />

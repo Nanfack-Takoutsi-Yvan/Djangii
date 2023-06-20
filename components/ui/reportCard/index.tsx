@@ -1,20 +1,24 @@
-import { FC, useState } from "react"
+import { FC, useContext, useState } from "react"
 import { StyleSheet, View, useWindowDimensions } from "react-native"
-import { Card, ProgressBar, Text, useTheme } from "react-native-paper"
+import { Card, Text, useTheme } from "react-native-paper"
+
+import AppStateContext from "@services/context/context"
 import { ReportCardProps } from "./types"
 import Chart from "../Chart"
 
 const ReportCard: FC<ReportCardProps> = ({
   name,
   acronym,
-  selected,
   onPress,
+  selected,
+  currency,
   curveData
 }) => {
   const [cardHeight, setCardHeight] = useState<number>()
 
   const { colors } = useTheme()
   const { width } = useWindowDimensions()
+  const { locale } = useContext(AppStateContext)
 
   const cardWidth = width * 0.6
 
@@ -46,14 +50,25 @@ const ReportCard: FC<ReportCardProps> = ({
         </View>
         <View>
           {curveData && cardHeight ? (
-            <Chart
-              data={curveData}
-              width={cardWidth * 0.79}
-              height={cardHeight * 0.5}
-              labels={false}
-              points={false}
-              background={false}
-            />
+            <>
+              <Chart
+                data={curveData}
+                width={cardWidth * 0.79}
+                height={cardHeight * 0.5}
+                points={false}
+                background={false}
+              />
+              <View style={[styles.legend, { top: cardHeight * 0.5 }]}>
+                <View>
+                  <Text>{locale.t("dashboard.legends.contributionCurve")}</Text>
+                </View>
+                <View>
+                  <Text style={{ color: colors.primary }} variant="titleMedium">
+                    {currency}
+                  </Text>
+                </View>
+              </View>
+            </>
           ) : null}
         </View>
       </Card.Content>
@@ -67,6 +82,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 30,
     padding: 10
+  },
+  legend: {
+    position: "absolute",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    alignItems: "baseline"
   }
 })
 

@@ -205,6 +205,12 @@
   "dashboard": {
     "title": "Rapports Djangii",
     "noData": "Aucune donnée",
-    "noAssociation": "Créez une association ou rejoignez une pour appercevoir vous rapports"
+    "noAssociation": "Créez une association ou rejoignez une pour appercevoir vous rapports",
+    "legends": {
+      "tontine": "Tontine",
+      "tontineRound": "Tours de Tontine",
+      "members": "Membres",
+      "contributionCurve": "Courbe de contributions"
+    }
   }
 }
