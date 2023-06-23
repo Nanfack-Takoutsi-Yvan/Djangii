@@ -6,7 +6,24 @@ export default class NotificationController implements INotificationController {
 
   constructor() {
     this.resource = {
-      userStats: "/api/djangii-notifications/stats"
+      djangii: {
+        stats: "/api/djangii-notifications/stats",
+        unreadNumber: "/api/djangii-notifications/count-unreaded",
+        markAllAsRead: "/api/djangii-notifications/mark-all-as-readed",
+        markAllAsOpen: "/api/djangii-notifications/mark-as-displayed",
+        send: "/api/protected/djangii-notifications",
+        opened: "/api/djangii-notifications/opened",
+        notOpened: "/api/djangii-notifications/not-opened",
+        notDisplayed: "/api/djangii-notifications/not-displayed",
+        markAsDisplayed: "/api/djangii-notifications/mark-as-displayed",
+        markAsRead: "/api/djangii-notifications/mark-all-as-readed",
+        createdByMe: "/api/djangii-notifications/created-by-me",
+        all: "/api/djangii-notifications"
+      },
+      association: {
+        getMine: "/api/association-notifications/me",
+        send: "/api/association-notifications"
+      }
     }
   }
 
@@ -15,7 +32,7 @@ export default class NotificationController implements INotificationController {
 
     try {
       const res = await apiClient.get<notificationStats>(
-        this.resource.userStats,
+        this.resource.djangii.stats,
         { headers: { Authorization: token } }
       )
 
@@ -29,6 +46,31 @@ export default class NotificationController implements INotificationController {
     } catch (error) {
       const err = {
         message: `An error occurred while getting user notification stats: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public getNotifications = async (token: string) => {
+    assert(token, "can not get notifications without token")
+    try {
+      const res = await apiClient.get<{ content: INotification[] }>(
+        this.resource.djangii.all,
+        {
+          headers: { Authorization: token }
+        }
+      )
+
+      if (!res) {
+        throw new Error(`An error occurred while getting user notifications`)
+      }
+
+      return res.data.content
+    } catch (error) {
+      const err = {
+        message: `An error occurred while getting user notifications: ${error}`,
         error
       }
 

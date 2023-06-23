@@ -6,15 +6,15 @@
     "paths": {
       "@src/*": ["src/*"],
       "@app/*": ["app/*"],
-      "@utils/*": ["services/utils/*"],
-      "@hooks/*": ["services/hooks/*"],
       "@theme/*": ["theme/*"],
       "@assets/*": ["assets/*"],
-      "@locales/*": ["assets/locales/*"],
       "@typings/*": ["typings/*"],
       "@services/*": ["services/*"],
-      "@constants/*": ["assets/constants/*"],
-      "@components/*": ["components/*"]
+      "@hooks/*": ["services/hooks/*"],
+      "@utils/*": ["services/utils/*"],
+      "@components/*": ["components/*"],
+      "@locales/*": ["assets/locales/*"],
+      "@constants/*": ["assets/constants/*"]
     },
   }
 }

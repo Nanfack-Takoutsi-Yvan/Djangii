@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { uniqWith, isEqual } from "lodash"
+import { AxiosError } from "axios"
+
 import { useAppSelector } from "@services/store"
 import Dashboard from "@services/models/dashboard"
-import { AxiosError } from "axios"
-import { uniqWith, isEqual } from "lodash"
 
 interface dashboard extends IDashboardData {
   associationId: string

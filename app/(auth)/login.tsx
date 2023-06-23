@@ -20,7 +20,6 @@ import { StatusBar } from "expo-status-bar"
 import AppStateContext from "@services/context/context"
 import PasswordIcon from "@components/ui/PasswordIcon"
 import vaidationSchema from "@services/validations"
-import { saveInSecureStore } from "@services/utils/methods"
 import User from "@services/models/user"
 import { HttpStatusCode } from "axios"
 

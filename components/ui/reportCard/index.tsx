@@ -56,12 +56,6 @@ const ReportCard: FC<ReportCardProps> = ({
             />
           ) : null}
         </View>
-        <View>
-          <ProgressBar
-            progress={0.5}
-            style={{ backgroundColor: `${colors.primary}55` }}
-          />
-        </View>
       </Card.Content>
     </Card>
   )

@@ -27,13 +27,25 @@ export default class Notification implements INotification {
     Object.assign(this, notification)
   }
 
-  public getUserNotificationStats = async () => {
+  static getUserNotificationStats = async () => {
     const token = await getTokenFromStorage()
+    const controller = new NotificationController()
 
     assert(token, "token is required to get user notification stats")
 
-    const stats = await this.controller.getStats(token)
+    const stats = await controller.getStats(token)
 
     return stats
+  }
+
+  static getUserNotifications = async () => {
+    const token = await getTokenFromStorage()
+    const controller = new NotificationController()
+
+    assert(token, "token is required to get user notifications")
+
+    const notifications = await controller.getNotifications(token)
+
+    return notifications
   }
 }

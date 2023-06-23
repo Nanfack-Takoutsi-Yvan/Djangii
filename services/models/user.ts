@@ -1,6 +1,9 @@
-import AuthController from "@services/controller/auth.controller"
-import { saveInSecureStore } from "@services/utils/methods"
 import assert from "assert"
+import AuthController from "@services/controller/auth.controller"
+import {
+  deleteValueFromSecureStoreFor,
+  saveInSecureStore
+} from "@services/utils/methods"
 
 export default class User implements IUser {
   id = ""
@@ -47,8 +50,8 @@ export default class User implements IUser {
     }
   }
 
-  constructor(user: IUser) {
-    Object.assign(this, user)
+  constructor(user?: IUser) {
+    if (user) Object.assign(this, user)
   }
 
   static login = async (username: string, password: string) => {
@@ -66,6 +69,14 @@ export default class User implements IUser {
     saveInSecureStore(`${tokenKey}`, res.token)
 
     return new User(res.data)
+  }
+
+  static logout = async () => {
+    const userKey = process.env.SECURE_STORE_CREDENTIALS
+    if (userKey) await deleteValueFromSecureStoreFor(userKey)
+
+    const tokenKey = process.env.SECURE_STORE_TOKEN
+    if (tokenKey) await deleteValueFromSecureStoreFor(tokenKey)
   }
 
   static register = async (userData: NewUserData, otp: string) => {
