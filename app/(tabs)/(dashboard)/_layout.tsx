@@ -16,8 +16,8 @@ export default function DashboardLayout() {
   const router = useRouter()
 
   const avatar = getAvatarLetters(
-    user?.userInfos?.firstName,
-    user?.userInfos?.lastName
+    user.userInfos?.firstName,
+    user.userInfos?.lastName
   )
 
   return (
@@ -44,11 +44,11 @@ export default function DashboardLayout() {
     >
       <Drawer.Screen
         name="index"
-        options={{ headerTitle: locale.t("drawer.dashboard.name") }}
+        options={{ headerTitle: locale.t("drawer.dashboard") }}
       />
       <Drawer.Screen
         name="association"
-        options={{ headerTitle: locale.t("drawer.association.name") }}
+        options={{ headerTitle: locale.t("drawer.association") }}
       />
     </Drawer>
   )

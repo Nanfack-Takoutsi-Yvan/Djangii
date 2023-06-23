@@ -146,65 +146,38 @@
     }
   },
   "drawer": {
-    "dashboard": {
-      "name": "Tableau de board"
-    },
-    "association": {
-      "name": "Association"
-    },
-    "pages": {
-      "name": "Pages"
-    },
-    "membershipRequest": {
-      "name": "Demande d'adhesion"
-    },
-    "members": {
-      "name": "Membres"
-    },
-    "identities": {
-      "name": "Qui est Qui"
-    },
-    "tontines": {
-      "name": "Tontines",
-      "subItems": ["fixedAmount", "variableAmount", "saving"]
-    },
-    "tontineTurn": {
-      "name": "Tours de tontines"
-    },
-    "sessions": {
-      "name": "Sessions"
-    },
-    "products": {
-      "name": "Produits",
-      "subItems": ["products", "productPayment"]
-    },
-    "assistance": {
-      "name": "Assistances",
-      "subItems": ["assistance", "assistanceRequest"]
-    },
-    "charges": {
-      "name": "Charges",
-      "subItems": ["chargeLine", "Charge", "chargePayment"]
-    },
-    "penalties": {
-      "name": "Pénalté",
-      "subItems": ["penaltyType", "sanctionedMembers"]
-    },
-    "warranties": {
-      "name": "Types de Garanties",
-      "icon": "seal-variant"
-    },
-    "loans": {
-      "name": "Prèts/Crédits",
-      "subItems": ["pendingLoans", "paidLoans", "canceledLoans"]
-    },
-    "sparingStates": {
-      "name": "État des cotisations"
-    },
-    "advertisement": {
-      "name": "Advertisements",
-      "subItems": ["audience", "advertisement"]
-    }
+    "dashboard": "Dashboard",
+    "association": "Association",
+    "pages": "Pages",
+    "membershipRequest": "Membership Request",
+    "members": "Members",
+    "identities": "Who's Who",
+    "tontines": "Tontines",
+    "tontineTurn": "Tontine Rounds",
+    "sessions": "Sessions",
+    "products": "Products",
+    "assistance": "Assistance",
+    "charges": "Charges",
+    "penalties": "Penalties",
+    "warranties": "Guarantee Types",
+    "loans": "Loans",
+    "sparingStates": "Contribution Status",
+    "advertisement": "Advertisements",
+    "fixedAmount": "Fixed amount contribution",
+    "variableAmount": "Variable amount contribution",
+    "savings": "Savings",
+    "mySubscriptions": "My subscriptions",
+    "pendingLoans": "Pending loans",
+    "paidLoans": "Paid loans",
+    "canceledLoans": "canceled loans",
+    "penaltyType": "Penalties Types",
+    "sanctionedMembers": "Sanctionned Members",
+    "productPayment": "Product Payement",
+    "chargeLine": "Charge line",
+    "chargePayment": "Charge payment",
+    "assistanceRequest": "Assistance request",
+    "audience": "Audience",
+    "advertisements": "Advertisements"
   },
   "dashboard": {
     "title": "Rapports Djangii",
