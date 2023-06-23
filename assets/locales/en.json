@@ -1,4 +1,8 @@
 {
+  "common": {
+    "true": "Yes",
+    "false": "No"
+  },
   "commonErrors": {
     "title": "An error occurred",
     "badOtp": "The otp that you entered is invalid",
@@ -212,5 +216,8 @@
       "members": "Members",
       "contributionCurve": "Contribution curve"
     }
+  },
+  "association": {
+    "button": "Export the list"
   }
 }

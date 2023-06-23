@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { Image, StyleSheet, View, useWindowDimensions } from "react-native"
+import { Image, StyleSheet, View } from "react-native"
 import { Drawer, useTheme, Divider, Text } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
 import {
@@ -8,16 +8,29 @@ import {
   DrawerItem
 } from "@react-navigation/drawer"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { useRouter } from "expo-router"
 
 import navigationDrawer from "@assets/constants/router/navigationDrawer.json"
 import AppStateContext from "@services/context/context"
 
 function NavigationDrawer(props: DrawerContentComponentProps) {
-  const [active, setActive] = useState("")
+  const [active, setActive] = useState<string>("dashboard")
 
   const { colors } = useTheme()
+  const router = useRouter()
   const inset = useSafeAreaInsets()
   const { locale } = useContext(AppStateContext)
+
+  const navigate = (key: string) => {
+    setActive(key)
+
+    if (key === "dashboard") {
+      router.push("(tabs)/(dashboard)")
+      return
+    }
+
+    router.push(key)
+  }
 
   const items = navigationDrawer as NavigationDrawerItems
   const keys = Object.keys(items)
@@ -49,9 +62,7 @@ function NavigationDrawer(props: DrawerContentComponentProps) {
               activeTintColor={colors.secondary}
               labelStyle={{ fontFamily: "SoraMedium" }}
               style={{ borderRadius: 30 }}
-              onPress={() => {
-                setActive(key)
-              }}
+              onPress={() => navigate(key)}
               icon={({ color, size }) => (
                 <Icon source={items[key].icon} size={size} color={color} />
               )}

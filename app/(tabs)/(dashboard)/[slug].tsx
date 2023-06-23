@@ -1,39 +1,33 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import { StatusBar } from "expo-status-bar"
 import { Drawer } from "expo-router/drawer"
-import { useTheme, DataTable, Text } from "react-native-paper"
-import { StyleSheet, View, ScrollView, useWindowDimensions } from "react-native"
+import { DataTable, IconButton, Text, useTheme } from "react-native-paper"
+import { StyleSheet, View, ScrollView } from "react-native"
 
 import AppStateContext from "@services/context/context"
 import { useLocalSearchParams } from "expo-router"
-
-const optionsPerPage = [2, 3, 4]
+import { getAssociations } from "@services/store/slices/associations"
 
 export default function TabOneScreen() {
   const [page, setPage] = useState<number>(0)
-  const [itemsPerPage, setItemsPerPage] = useState(optionsPerPage[0])
 
   const { colors } = useTheme()
   const { locale } = useContext(AppStateContext)
   const params = useLocalSearchParams() as { slug?: string }
-  const { width, height } = useWindowDimensions()
-  const cardWidth = width * 0.9
-  const graphHeight = height * 0.3
-
-  useEffect(() => {
-    setPage(0)
-  }, [itemsPerPage])
 
   return (
     <View style={styles.container}>
       {/* eslint-disable-next-line react/style-prop-object */}
       <StatusBar style="light" />
-      <Drawer.Screen options={{ headerTitle: params?.slug || "Dashboard" }} />
+      <Drawer.Screen
+        options={{
+          headerTitle: params?.slug
+            ? locale.t(`drawer.${params?.slug}.name`)
+            : locale.t(`drawer.dashboard.name`)
+        }}
+      />
 
       <View style={styles.reportSection}>
-        <View style={styles.reportTitle}>
-          <Text variant="headlineSmall">Djangii Reports</Text>
-        </View>
         <ScrollView
           showsHorizontalScrollIndicator={false}
           horizontal
@@ -46,62 +40,55 @@ export default function TabOneScreen() {
                   backgroundColor: "#fff",
                   borderRadius: 30,
                   // flex: 1,
-                  height: "100%",
                   minWidth: "100%"
                 }}
               >
                 <DataTable.Header
                   style={{ columnGap: 72, borderBottomColor: "transparent" }}
                 >
-                  <DataTable.Title style={{ width: 72 }}>
-                    Dessert
-                  </DataTable.Title>
-                  <DataTable.Title numeric style={{ width: 72 }}>
-                    Calories
-                  </DataTable.Title>
-                  <DataTable.Title numeric style={{ width: 72 }}>
-                    Fat
-                  </DataTable.Title>
+                  <DataTable.Title> </DataTable.Title>
+                  <DataTable.Title>Creation Date</DataTable.Title>
+                  <DataTable.Title>Acronym</DataTable.Title>
+                  <DataTable.Title>Name</DataTable.Title>
+                  <DataTable.Title>Currency</DataTable.Title>
+                  <DataTable.Title>Active</DataTable.Title>
                 </DataTable.Header>
 
                 <DataTable.Row
                   style={{ columnGap: 72, borderBottomColor: "transparent" }}
                 >
-                  <DataTable.Cell style={{ width: 72 }}>
-                    Frozen yogurt
+                  <DataTable.Cell>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between"
+                      }}
+                    >
+                      <IconButton
+                        icon="file-document-edit-outline"
+                        iconColor="white"
+                        containerColor={colors.primary}
+                        style={{ width: 36, height: 36 }}
+                      />
+                      <IconButton
+                        icon="eye"
+                        iconColor="white"
+                        containerColor={colors.secondary}
+                        style={{ width: 36, height: 36 }}
+                      />
+                    </View>
                   </DataTable.Cell>
-                  <DataTable.Cell numeric style={{ width: 72 }}>
-                    159
-                  </DataTable.Cell>
-                  <DataTable.Cell numeric style={{ width: 72 }}>
-                    6.0
-                  </DataTable.Cell>
-                </DataTable.Row>
-
-                <DataTable.Row
-                  style={{ columnGap: 72, borderBottomColor: "transparent" }}
-                >
-                  <DataTable.Cell style={{ width: 72 }}>
-                    Ice cream sandwich
-                  </DataTable.Cell>
-                  <DataTable.Cell numeric style={{ width: 72 }}>
-                    237
-                  </DataTable.Cell>
-                  <DataTable.Cell numeric style={{ width: 72 }}>
-                    8.0
-                  </DataTable.Cell>
+                  <DataTable.Cell>05/28/2023 20:23</DataTable.Cell>
+                  <DataTable.Cell>AFC</DataTable.Cell>
+                  <DataTable.Cell>Toronto FC</DataTable.Cell>
+                  <DataTable.Cell>CAD</DataTable.Cell>
+                  <DataTable.Cell>YES</DataTable.Cell>
                 </DataTable.Row>
 
                 <DataTable.Pagination
                   page={page}
                   numberOfPages={3}
                   onPageChange={pag => setPage(pag)}
-                  // label="1-2 of 6"
-                  // optionsPerPage={optionsPerPage}
-                  // itemsPerPage={itemsPerPage}
-                  // setItemsPerPage={setItemsPerPage}
-                  // showFastPagination
-                  // optionsLabel="Rows per page"
                 />
               </DataTable>
             </View>
@@ -127,7 +114,6 @@ const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
     flexDirection: "row",
-    alignItems: "center",
     paddingHorizontal: 30,
     columnGap: 16
   },
@@ -143,9 +129,5 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     marginTop: 12
-  },
-  reportTitle: {
-    paddingTop: 24,
-    paddingHorizontal: 30
   }
 })

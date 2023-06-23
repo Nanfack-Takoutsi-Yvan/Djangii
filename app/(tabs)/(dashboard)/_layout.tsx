@@ -11,7 +11,7 @@ import { useRouter } from "expo-router"
 import { getAvatarLetters } from "@utils/functions/format"
 
 export default function DashboardLayout() {
-  const { user } = useContext(AppStateContext)
+  const { user, locale } = useContext(AppStateContext)
   const { colors } = useTheme()
   const router = useRouter()
 
@@ -42,7 +42,14 @@ export default function DashboardLayout() {
       }}
       drawerContent={NavigationDrawer}
     >
-      <Drawer.Screen name="index" options={{ headerTitle: "Dashboard" }} />
+      <Drawer.Screen
+        name="index"
+        options={{ headerTitle: locale.t("drawer.dashboard.name") }}
+      />
+      <Drawer.Screen
+        name="association"
+        options={{ headerTitle: locale.t("drawer.association.name") }}
+      />
     </Drawer>
   )
 }
