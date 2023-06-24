@@ -2,7 +2,10 @@ import { DashboardState } from "@services/store/slices/dashboard"
 import { LineChartData } from "react-native-chart-kit/dist/line-chart/LineChart"
 
 /* eslint-disable import/prefer-default-export */
-export const getCurvedData = (rawData: IDashboardData): LineChartData => {
+export const getCurvedData = (
+  rawData: IDashboardData,
+  legend?: string[]
+): LineChartData => {
   const data: LineChartData = { labels: [], datasets: [] }
 
   data.labels = rawData.contributionCurve.map(el => el.month.substring(0, 3))
@@ -22,7 +25,7 @@ export const getCurvedData = (rawData: IDashboardData): LineChartData => {
     color: () => "blue"
   })
 
-  data.legend = ["Tontine", "Tontine Round", "Members"]
+  if (legend) data.legend = legend
 
   return data
 }

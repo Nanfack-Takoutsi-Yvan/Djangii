@@ -1,10 +1,10 @@
 /* eslint-disable react/style-prop-object */
 import { StatusBar } from "expo-status-bar"
 import { Text } from "react-native-paper"
-import { StyleSheet, View, useWindowDimensions } from "react-native"
+import { Image, StyleSheet, View, useWindowDimensions } from "react-native"
 
 import Chart from "@components/ui/Chart"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect, useRef, useState } from "react"
 import { FlatList } from "react-native-gesture-handler"
 import ReportCard from "@components/ui/reportCard"
 import { useAppDispatch } from "@services/store"
@@ -21,6 +21,7 @@ import {
   fetchAssociationDashBoardData,
   getDashboardData
 } from "@services/store/slices/dashboard"
+import AppStateContext from "@services/context/context"
 
 export default function TabOneScreen() {
   const [dataId, setDataId] = useState<string>("")
@@ -29,10 +30,16 @@ export default function TabOneScreen() {
   const dispatch = useAppDispatch()
   const associations = getAssociations()
   const dashboardData = getDashboardData()
+  const { locale } = useContext(AppStateContext)
 
   const curve = useCallback(getCurvedData, [])
   const tontineCurve = useCallback(getTontineRoundCurve, [])
   const { width, height } = useWindowDimensions()
+  const curveLegend = [
+    locale.t("dashboard.legends.tontine"),
+    locale.t("dashboard.legends.tontineRound"),
+    locale.t("dashboard.legends.members")
+  ]
 
   useEffect(() => {
     if (associations.length === 0) {
@@ -66,29 +73,50 @@ export default function TabOneScreen() {
       <StatusBar style="light" />
 
       {curveData ? (
-        <Chart data={curve(curveData)} width={width} height={height * 0.3} />
+        <Chart
+          data={curve(curveData, curveLegend)}
+          width={width}
+          height={height * 0.3}
+        />
       ) : null}
 
       <View style={styles.reportSection}>
         <View style={styles.reportTitle}>
-          <Text variant="headlineSmall">Djangii Reports</Text>
+          <Text variant="headlineSmall">{locale.t("dashboard.title")}</Text>
         </View>
-        <FlatList
-          horizontal
-          data={associations}
-          style={[styles.screen]}
-          contentContainerStyle={styles.cardsContainer}
-          renderItem={({ item }) => (
-            <ReportCard
-              selected={item.id === dataId}
-              acronym={item.acronym}
-              name={item.name}
-              onPress={() => setDataId(item.id)}
-              curveData={tontineCurve(dashboardData, item.id)}
+
+        {associations.length === 0 ? (
+          <View
+            style={{ justifyContent: "center", alignItems: "center", flex: 1 }}
+          >
+            <Image
+              source={require("../../../assets/images/pictures/undraw_No_data_re_kwbl.png")}
+              style={styles.image}
             />
-          )}
-          showsHorizontalScrollIndicator={false}
-        />
+            <Text variant="titleLarge">{locale.t("dashboard.title")}</Text>
+            <Text>{locale.t("dashboard.noAssociation")}</Text>
+          </View>
+        ) : null}
+
+        {associations.length !== 0 ? (
+          <FlatList
+            horizontal
+            data={associations}
+            style={[styles.screen]}
+            contentContainerStyle={styles.cardsContainer}
+            renderItem={({ item }) => (
+              <ReportCard
+                selected={item.id === dataId}
+                acronym={item.acronym}
+                name={item.name}
+                currency={item.currency.code}
+                onPress={() => setDataId(item.id)}
+                curveData={tontineCurve(dashboardData, item.id)}
+              />
+            )}
+            showsHorizontalScrollIndicator={false}
+          />
+        ) : null}
       </View>
     </View>
   )
@@ -126,5 +154,9 @@ const styles = StyleSheet.create({
   reportTitle: {
     paddingTop: 24,
     paddingHorizontal: 30
+  },
+  image: {
+    width: 200,
+    height: 200
   }
 })

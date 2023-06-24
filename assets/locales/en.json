@@ -1,4 +1,8 @@
 {
+  "common": {
+    "true": "Yes",
+    "false": "No"
+  },
   "commonErrors": {
     "title": "An error occurred",
     "badOtp": "The otp that you entered is invalid",
@@ -75,7 +79,7 @@
     "connect": "Login",
     "pickerCancel": "Cancel",
     "pickerConfirm": "Confirm"
-  }, 
+  },
   "passwordReset": {
     "title": "Reset your password",
     "labels": {
@@ -201,5 +205,19 @@
       "name": "Advertisements",
       "subItems": ["audience", "advertisement"]
     }
+  },
+  "dashboard": {
+    "title": "Djangii Reports",
+    "noData": "No data",
+    "noAssociation": "Create or join associations to view your reports",
+    "legends": {
+      "tontine": "Tontine",
+      "tontineRound": "Tontine rounds",
+      "members": "Members",
+      "contributionCurve": "Contribution curve"
+    }
+  },
+  "association": {
+    "button": "Export the list"
   }
 }

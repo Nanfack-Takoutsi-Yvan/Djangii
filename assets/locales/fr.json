@@ -1,4 +1,8 @@
 {
+  "common": {
+    "true": "Oui",
+    "false": "Non"
+  },
   "commonErrors": {
     "title": "Une erreur s'est produite",
     "badOtp": "L'otp que vous avez entré n'est pas valide",
@@ -201,5 +205,19 @@
       "name": "Advertisements",
       "subItems": ["audience", "advertisement"]
     }
+  },
+  "dashboard": {
+    "title": "Rapports Djangii",
+    "noData": "Aucune donnée",
+    "noAssociation": "Créez une association ou rejoignez une pour appercevoir vous rapports",
+    "legends": {
+      "tontine": "Tontine",
+      "tontineRound": "Tours de Tontine",
+      "members": "Membres",
+      "contributionCurve": "Courbe de contributions"
+    }
+  },
+  "association": {
+    "button": "Exporter la liste"
   }
 }

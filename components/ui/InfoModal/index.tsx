@@ -28,8 +28,8 @@ const InfoModal: FC<InfoModalProps> = ({ onLogout }) => {
   const imageSize = 75
 
   const avatar = getAvatarLetters(
-    user.userInfos.firstName,
-    user.userInfos.lastName
+    user?.userInfos?.firstName,
+    user?.userInfos?.lastName
   )
 
   const showEmail = user.username === user.userInfos.email
