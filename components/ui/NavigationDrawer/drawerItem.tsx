@@ -1,18 +1,21 @@
-import { FC, useCallback, useContext, useMemo, useState } from "react"
+import { FC, useCallback, useContext } from "react"
 import { StyleSheet } from "react-native"
 import { List } from "react-native-paper"
 
 import AppStateContext from "@services/context/context"
+import { useRouter } from "expo-router"
 
 const DrawerItems: FC<DrawerItemProps> = ({ items, activeItem }) => {
+  const router = useRouter()
   const { locale } = useContext(AppStateContext)
 
   const isItemActive = useCallback(
-    (item: string) => {
-      const isActive = item === activeItem
+    (item: string) => item === activeItem,
+    [activeItem]
+  )
 
-      return isActive
-    },
+  const isAccordionOpen = useCallback(
+    (list?: string[]) => list?.includes(activeItem),
     [activeItem]
   )
 
@@ -29,22 +32,35 @@ const DrawerItems: FC<DrawerItemProps> = ({ items, activeItem }) => {
             id={id}
             key={key}
             style={styles.accordion}
-            titleStyle={styles.title}
             title={locale.t(`drawer.${key}`)}
+            titleStyle={
+              isAccordionOpen(value?.subItems)
+                ? styles.activeText
+                : styles.title
+            }
             left={props => (
-              <List.Icon {...props} color="#fff" icon={value.icon} />
+              <List.Icon
+                {...props}
+                color={isAccordionOpen(value?.subItems) ? "#90F800" : "#fff"}
+                icon={value.icon}
+              />
             )}
             right={props => (
-              <List.Icon {...props} color="#fff" icon="chevron-down" />
+              <List.Icon
+                {...props}
+                color={isAccordionOpen(value?.subItems) ? "#90F800" : "#fff"}
+                icon="chevron-down"
+              />
             )}
           >
             {value.subItems?.map(subItem => (
               <List.Item
                 key={subItem}
+                onPress={() => router.push(subItem)}
+                title={locale.t(`drawer.${subItem}`)}
                 style={
                   isItemActive(subItem) ? styles.activeContainer : undefined
                 }
-                title={locale.t(`drawer.${subItem}`)}
                 titleStyle={
                   isItemActive(subItem) ? styles.activeText : styles.title
                 }
@@ -55,6 +71,7 @@ const DrawerItems: FC<DrawerItemProps> = ({ items, activeItem }) => {
           <List.Item
             key={key}
             title={locale.t(`drawer.${key}`)}
+            onPress={() => router.push(key)}
             titleStyle={isItemActive(key) ? styles.activeText : styles.title}
             style={isItemActive(key) ? styles.activeContainer : undefined}
             left={iconProps => (

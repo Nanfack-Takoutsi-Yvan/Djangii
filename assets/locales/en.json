@@ -1,7 +1,9 @@
 {
   "common": {
     "true": "Yes",
-    "false": "No"
+    "false": "No",
+    "noDataFound": "No data found.",
+    "noAssociation": "Create or Join association to view data."
   },
   "commonErrors": {
     "title": "An error occurred",

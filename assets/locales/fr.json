@@ -1,7 +1,9 @@
 {
   "common": {
     "true": "Oui",
-    "false": "Non"
+    "false": "Non",
+    "noDataFound": "Aucune donnée trouvée.",
+    "noAssociation": "Créer ou rejoingnez une association pour visualiser les données."
   },
   "commonErrors": {
     "title": "Une erreur s'est produite",
@@ -145,40 +147,6 @@
       "connected": "Vous pouvez continuer a utiliser l'application."
     }
   },
-  "drawer": {
-    "dashboard": "Dashboard",
-    "association": "Association",
-    "pages": "Pages",
-    "membershipRequest": "Membership Request",
-    "members": "Members",
-    "identities": "Who's Who",
-    "tontines": "Tontines",
-    "tontineTurn": "Tontine Rounds",
-    "sessions": "Sessions",
-    "products": "Products",
-    "assistance": "Assistance",
-    "charges": "Charges",
-    "penalties": "Penalties",
-    "warranties": "Guarantee Types",
-    "loans": "Loans",
-    "sparingStates": "Contribution Status",
-    "advertisement": "Advertisements",
-    "fixedAmount": "Fixed amount contribution",
-    "variableAmount": "Variable amount contribution",
-    "savings": "Savings",
-    "mySubscriptions": "My subscriptions",
-    "pendingLoans": "Pending loans",
-    "paidLoans": "Paid loans",
-    "canceledLoans": "canceled loans",
-    "penaltyType": "Penalties Types",
-    "sanctionedMembers": "Sanctionned Members",
-    "productPayment": "Product Payement",
-    "chargeLine": "Charge line",
-    "chargePayment": "Charge payment",
-    "assistanceRequest": "Assistance request",
-    "audience": "Audience",
-    "advertisements": "Advertisements"
-  },
   "dashboard": {
     "title": "Rapports Djangii",
     "noData": "Aucune donnée",
@@ -192,5 +160,39 @@
   },
   "association": {
     "button": "Exporter la liste"
+  },
+  "drawer": {
+    "dashboard": "Tableau de board",
+    "association": "Associations",
+    "pages": "Pages",
+    "membershipRequest": "Demande d'adhésion",
+    "members": "Membres",
+    "identities": "Qui est qui ?",
+    "tontines": "Tontines",
+    "tontineTurn": "Tours de tontine",
+    "sessions": "Sessions",
+    "products": "Produits",
+    "assistance": "Assistance",
+    "charges": "Charges",
+    "penalties": "Pénalités",
+    "warranties": "Type de garantie",
+    "loans": "Prêts/Crédits",
+    "sparingStates": "État des cotisations",
+    "advertisement": "Publicité",
+    "fixedAmount": "Cotisations à montant fixe",
+    "variableAmount": "Cotisation à montant variable",
+    "savings": "Épargne",
+    "mySubscriptions": "Mes abonnements",
+    "pendingLoans": "Crédit en attente",
+    "paidLoans": "Crédit payé",
+    "canceledLoans": "Crédit annulé",
+    "penaltyType": "Types de pénalité",
+    "sanctionedMembers": "Membres sanctionnés",
+    "productPayment": "Paiement des produits",
+    "chargeLine": "Ligne de charge",
+    "chargePayment": "Charges",
+    "assistanceRequest": "Demande d'assistance",
+    "audience": "Audience",
+    "advertisements": "Publicité"
   }
 }
