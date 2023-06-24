@@ -1,7 +1,7 @@
 import { useContext, useState } from "react"
 import { StatusBar } from "expo-status-bar"
-import { Drawer } from "expo-router/drawer"
 import { StyleSheet, View, ScrollView } from "react-native"
+import { TabView, SceneMap } from "react-native-tab-view"
 import {
   Button,
   DataTable,
@@ -11,13 +11,29 @@ import {
 } from "react-native-paper"
 
 import AppStateContext from "@services/context/context"
-import { useLocalSearchParams } from "expo-router"
 import { getAssociations } from "@services/store/slices/associations"
 import { getDate } from "@services/utils/functions/format"
 import Icon from "react-native-paper/src/components/Icon"
 
+const FirstRoute = () => (
+  <View style={{ flex: 1, backgroundColor: "#ff4081" }} />
+)
+
+const SecondRoute = () => (
+  <View style={{ flex: 1, backgroundColor: "#673ab7" }} />
+)
+
+const renderScene = SceneMap({
+  first: FirstRoute,
+  second: SecondRoute
+})
+
 export default function TabOneScreen() {
-  const [page, setPage] = useState<number>(0)
+  const [index, setIndex] = useState(0)
+  const [routes] = useState([
+    { key: "first", title: "First" },
+    { key: "second", title: "Second" }
+  ])
 
   const { colors } = useTheme()
   const { locale } = useContext(AppStateContext)
@@ -108,6 +124,12 @@ export default function TabOneScreen() {
             {locale.t("association.button")}
           </Button>
         </View>
+        <TabView
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          // initialLayout={{ width: layout.width }}
+        />
       </View>
     </View>
   )
