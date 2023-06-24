@@ -1,135 +1,15 @@
-import { useContext, useState } from "react"
 import { StatusBar } from "expo-status-bar"
-import { StyleSheet, View, ScrollView } from "react-native"
-import { TabView, SceneMap } from "react-native-tab-view"
-import {
-  Button,
-  DataTable,
-  IconButton,
-  Text,
-  useTheme
-} from "react-native-paper"
+import { StyleSheet, View } from "react-native"
 
-import AppStateContext from "@services/context/context"
-import { getAssociations } from "@services/store/slices/associations"
-import { getDate } from "@services/utils/functions/format"
-import Icon from "react-native-paper/src/components/Icon"
-
-const FirstRoute = () => (
-  <View style={{ flex: 1, backgroundColor: "#ff4081" }} />
-)
-
-const SecondRoute = () => (
-  <View style={{ flex: 1, backgroundColor: "#673ab7" }} />
-)
-
-const renderScene = SceneMap({
-  first: FirstRoute,
-  second: SecondRoute
-})
+import TablesTabView from "@components/ui/TablesTabView"
 
 export default function TabOneScreen() {
-  const [index, setIndex] = useState(0)
-  const [routes] = useState([
-    { key: "first", title: "First" },
-    { key: "second", title: "Second" }
-  ])
-
-  const { colors } = useTheme()
-  const { locale } = useContext(AppStateContext)
-
-  const associations = getAssociations()
-
   return (
     <View style={styles.container}>
       {/* eslint-disable-next-line react/style-prop-object */}
       <StatusBar style="light" />
-
-      <View style={styles.reportSection}>
-        <ScrollView
-          showsHorizontalScrollIndicator={false}
-          horizontal
-          style={styles.screen}
-        >
-          <View style={styles.cardContainer}>
-            <DataTable style={styles.table}>
-              <DataTable.Header>
-                <DataTable.Title> </DataTable.Title>
-                <DataTable.Title>Creation Date</DataTable.Title>
-                <DataTable.Title>Acronym</DataTable.Title>
-                <DataTable.Title>Name</DataTable.Title>
-                <DataTable.Title>Currency</DataTable.Title>
-                <DataTable.Title>Active</DataTable.Title>
-              </DataTable.Header>
-
-              {associations.map(association => (
-                <DataTable.Row key={association.id}>
-                  <DataTable.Cell>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between"
-                      }}
-                    >
-                      <IconButton
-                        icon="file-document-edit-outline"
-                        iconColor="white"
-                        containerColor={colors.primary}
-                        style={{ width: 36, height: 36 }}
-                      />
-                      <IconButton
-                        icon="eye"
-                        iconColor="white"
-                        containerColor={colors.secondary}
-                        style={{ width: 36, height: 36 }}
-                      />
-                    </View>
-                  </DataTable.Cell>
-                  <DataTable.Cell>
-                    {getDate(association.datation.creationTime)}
-                  </DataTable.Cell>
-                  <DataTable.Cell>{association.acronym}</DataTable.Cell>
-                  <DataTable.Cell>{association.name}</DataTable.Cell>
-                  <DataTable.Cell>{association.currency.code}</DataTable.Cell>
-                  <DataTable.Cell>
-                    <Text
-                      style={{
-                        color: association.activated
-                          ? colors.secondary
-                          : colors.error
-                      }}
-                    >
-                      {locale.t(`common.${association.activated}`)}
-                    </Text>
-                  </DataTable.Cell>
-                </DataTable.Row>
-              ))}
-            </DataTable>
-          </View>
-        </ScrollView>
-        <View style={{ paddingHorizontal: 24 }}>
-          <Button
-            style={styles.button}
-            icon={() => (
-              <Icon
-                source="file-download-outline"
-                color={colors.secondary}
-                size={24}
-              />
-            )}
-            textColor="white"
-            mode="contained"
-            contentStyle={styles.buttonContent}
-          >
-            {locale.t("association.button")}
-          </Button>
-        </View>
-        <TabView
-          navigationState={{ index, routes }}
-          renderScene={renderScene}
-          onIndexChange={setIndex}
-          // initialLayout={{ width: layout.width }}
-        />
+      <View style={{ flex: 1 }}>
+        <TablesTabView />
       </View>
     </View>
   )
@@ -164,7 +44,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     marginTop: 12,
-    paddingVertical: 12
+    paddingVertical: 12,
+    overflow: "hidden"
   },
   table: {
     backgroundColor: "#fff",
