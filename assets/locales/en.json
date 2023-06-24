@@ -158,6 +158,9 @@
       "contributionCurve": "Contribution curve"
     }
   },
+  "association": {
+    "button": "Export list"
+  },
   "drawer": {
     "dashboard": "Dashboard",
     "association": "Association",

@@ -3,10 +3,8 @@ import { StyleSheet } from "react-native"
 import { List } from "react-native-paper"
 
 import AppStateContext from "@services/context/context"
-import { useRouter } from "expo-router"
 
-const DrawerItems: FC<DrawerItemProps> = ({ items, activeItem }) => {
-  const router = useRouter()
+const DrawerItems: FC<DrawerItemProps> = ({ items, activeItem, navigate }) => {
   const { locale } = useContext(AppStateContext)
 
   const isItemActive = useCallback(
@@ -56,7 +54,7 @@ const DrawerItems: FC<DrawerItemProps> = ({ items, activeItem }) => {
             {value.subItems?.map(subItem => (
               <List.Item
                 key={subItem}
-                onPress={() => router.push(subItem)}
+                onPress={() => navigate(subItem)}
                 title={locale.t(`drawer.${subItem}`)}
                 style={
                   isItemActive(subItem) ? styles.activeContainer : undefined
@@ -71,7 +69,7 @@ const DrawerItems: FC<DrawerItemProps> = ({ items, activeItem }) => {
           <List.Item
             key={key}
             title={locale.t(`drawer.${key}`)}
-            onPress={() => router.push(key)}
+            onPress={() => navigate(key)}
             titleStyle={isItemActive(key) ? styles.activeText : styles.title}
             style={isItemActive(key) ? styles.activeContainer : undefined}
             left={iconProps => (

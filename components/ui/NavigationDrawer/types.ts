@@ -1,4 +1,5 @@
 type DrawerItemProps = {
-  items: NavigationDrawerItems
   activeItem: string
+  items: NavigationDrawerItems
+  navigate: (key: string) => void
 }

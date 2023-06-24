@@ -1,30 +1,34 @@
+import { useState } from "react"
+import { useRouter } from "expo-router"
 import { Image, StyleSheet, View } from "react-native"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Drawer, useTheme, Divider, Text, List } from "react-native-paper"
+
+import navigationDrawer from "@assets/constants/router/navigationDrawer.json"
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView
 } from "@react-navigation/drawer"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { useRouter } from "expo-router"
 
-import navigationDrawer from "@assets/constants/router/navigationDrawer.json"
 import DrawerItems from "./drawerItem"
 
 function NavigationDrawer(props: DrawerContentComponentProps) {
-  const { colors } = useTheme()
+  const [activeItem, setActiveItem] = useState<string>("dashboard")
+
   const router = useRouter()
+  const { colors } = useTheme()
   const inset = useSafeAreaInsets()
 
-  // const navigate = (key: string) => {
-  //   setActive(key)
+  const navigate = (key: string) => {
+    setActiveItem(key)
 
-  //   if (key === "dashboard") {
-  //     router.push("(tabs)/(dashboard)")
-  //     return
-  //   }
+    if (key === "dashboard") {
+      router.push("(tabs)/(dashboard)")
+      return
+    }
 
-  //   router.push(key)
-  // }
+    router.push(key)
+  }
 
   const items = navigationDrawer as NavigationDrawerItems
   const imageSize = 75
@@ -47,7 +51,11 @@ function NavigationDrawer(props: DrawerContentComponentProps) {
       >
         <Drawer.Section showDivider={false}>
           <List.AccordionGroup>
-            <DrawerItems items={items} activeItem="tontineTurn" />
+            <DrawerItems
+              navigate={navigate}
+              items={items}
+              activeItem={activeItem}
+            />
           </List.AccordionGroup>
         </Drawer.Section>
       </DrawerContentScrollView>
