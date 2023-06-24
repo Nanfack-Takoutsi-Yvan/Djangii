@@ -1,0 +1,3 @@
+type TableView = {
+  items?: IAssociation[]
+}
