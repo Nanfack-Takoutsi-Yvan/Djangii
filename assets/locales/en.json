@@ -1,7 +1,9 @@
 {
   "common": {
     "true": "Yes",
-    "false": "No"
+    "false": "No",
+    "noDataFound": "No data found.",
+    "noAssociation": "Create or Join association to view data."
   },
   "commonErrors": {
     "title": "An error occurred",
@@ -145,67 +147,6 @@
       "connected": "You can continue to use the app."
     }
   },
-  "drawer": {
-    "dashboard": {
-      "name": "Dashboard"
-    },
-    "association": {
-      "name": "Association"
-    },
-    "pages": {
-      "name": "Pages"
-    },
-    "membershipRequest": {
-      "name": "Membership Request"
-    },
-    "members": {
-      "name": "Members"
-    },
-    "identities": {
-      "name": "Who's Who"
-    },
-    "tontines": {
-      "name": "Tontines",
-      "subItems": ["fixedAmount", "variableAmount", "saving"]
-    },
-    "tontineTurn": {
-      "name": "Tontine Rounds"
-    },
-    "sessions": {
-      "name": "Sessions"
-    },
-    "products": {
-      "name": "Products",
-      "subItems": ["products", "productPayment"]
-    },
-    "assistance": {
-      "name": "Assistance",
-      "subItems": ["assistance", "assistanceRequest"]
-    },
-    "charges": {
-      "name": "Charges",
-      "subItems": ["chargeLine", "Charge", "chargePayment"]
-    },
-    "penalties": {
-      "name": "Penalties",
-      "subItems": ["penaltyType", "sanctionedMembers"]
-    },
-    "warranties": {
-      "name": "Guarantee Types",
-      "icon": "seal-variant"
-    },
-    "loans": {
-      "name": "Loans",
-      "subItems": ["pendingLoans", "paidLoans", "canceledLoans"]
-    },
-    "sparingStates": {
-      "name": "Contribution Status"
-    },
-    "advertisement": {
-      "name": "Advertisements",
-      "subItems": ["audience", "advertisement"]
-    }
-  },
   "dashboard": {
     "title": "Djangii Reports",
     "noData": "No data",
@@ -218,6 +159,40 @@
     }
   },
   "association": {
-    "button": "Export the list"
+    "button": "Export list"
+  },
+  "drawer": {
+    "dashboard": "Dashboard",
+    "association": "Association",
+    "pages": "Pages",
+    "membershipRequest": "Membership Request",
+    "members": "Members",
+    "identities": "Who's Who",
+    "tontines": "Tontines",
+    "tontineTurn": "Tontine Rounds",
+    "sessions": "Sessions",
+    "products": "Products",
+    "assistance": "Assistance",
+    "charges": "Charges",
+    "penalties": "Penalties",
+    "warranties": "Guarantee Types",
+    "loans": "Loans",
+    "sparingStates": "Contribution Status",
+    "advertisement": "Advertisements",
+    "fixedAmount": "Fixed amount contribution",
+    "variableAmount": "Variable amount contribution",
+    "savings": "Savings",
+    "mySubscriptions": "My subscriptions",
+    "pendingLoans": "Pending loans",
+    "paidLoans": "Paid loans",
+    "canceledLoans": "canceled loans",
+    "penaltyType": "Penalties Types",
+    "sanctionedMembers": "Sanctionned Members",
+    "productPayment": "Product Payement",
+    "chargeLine": "Charge line",
+    "chargePayment": "Charge payment",
+    "assistanceRequest": "Assistance request",
+    "audience": "Audience",
+    "advertisements": "Advertisements"
   }
 }

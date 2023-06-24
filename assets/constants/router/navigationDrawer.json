@@ -5,65 +5,52 @@
   },
   "association": {
     "name": "association",
-    "icon": "account-group-outline"
-  },
-  "pages": {
-    "name": "pages",
-    "icon": "card-account-details-outline"
-  },
-  "membershipRequest": {
-    "name": "membershipRequest",
-    "icon": "account-tie-outline"
+    "icon": "account-group-outline",
+    "subItems": ["association", "pages", "membershipRequest"]
   },
   "members": {
     "name": "member",
-    "icon": "account-multiple-outline"
-  },
-  "identities": {
-    "name": "identity",
-    "icon": "badge-account-outline"
+    "icon": "account-multiple-outline",
+    "subItems": ["members", "identities"]
   },
   "tontines": {
     "name": "tontines",
     "icon": "piggy-bank-outline",
-    "subItems": ["fixedAmount", "variableAmount", "saving"]
+    "subItems": ["fixedAmount", "variableAmount", "savings"]
   },
   "tontineTurn": {
     "name": "tontineTurn",
-    "icon": "hand-extended-outline"
+    "icon": "hand-extended-outline",
+    "subItems": ["tontineTurn", "mySubscriptions", "sessions"]
   },
-  "sessions": {
-    "name": "sessions",
-    "icon": "timelapse"
-  },
-  "products": {
-    "name": "products",
-    "icon": "package-variant-closed",
-    "subItems": ["products", "productPayment"]
-  },
-  "assistance": {
-    "name": "assistance",
-    "icon": "alpha-i",
-    "subItems": ["assistance", "assistanceRequest"]
-  },
-  "charges": {
-    "name": "charges",
-    "icon": "cash-multiple",
-    "subItems": ["chargeLine", "Charge", "chargePayment"]
+  "loans": {
+    "name": "loan",
+    "icon": "cash-refund",
+    "subItems": ["pendingLoans", "paidLoans", "canceledLoans"]
   },
   "penalties": {
     "name": "penalties",
     "icon": "cash-minus",
     "subItems": ["penaltyType", "sanctionedMembers"]
   },
+  "products": {
+    "name": "products",
+    "icon": "package-variant-closed",
+    "subItems": ["products", "productPayment"]
+  },
+  "charges": {
+    "name": "charges",
+    "icon": "cash-multiple",
+    "subItems": ["chargeLine", "charges", "chargePayment"]
+  },
+  "assistance": {
+    "name": "assistance",
+    "icon": "alpha-i",
+    "subItems": ["assistance", "assistanceRequest"]
+  },
   "warranties": {
     "name": "warranties",
     "icon": "seal-variant"
-  },
-  "loans": {
-    "name": "loan",
-    "icon": "cash-refund",
-    "subItems": ["pendingLoans", "paidLoans", "canceledLoans"]
   },
   "sparingStates": {
     "name": "sparingStates",

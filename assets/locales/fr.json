@@ -1,7 +1,9 @@
 {
   "common": {
     "true": "Oui",
-    "false": "Non"
+    "false": "Non",
+    "noDataFound": "Aucune donnée trouvée.",
+    "noAssociation": "Créer ou rejoingnez une association pour visualiser les données."
   },
   "commonErrors": {
     "title": "Une erreur s'est produite",
@@ -145,67 +147,6 @@
       "connected": "Vous pouvez continuer a utiliser l'application."
     }
   },
-  "drawer": {
-    "dashboard": {
-      "name": "Tableau de board"
-    },
-    "association": {
-      "name": "Association"
-    },
-    "pages": {
-      "name": "Pages"
-    },
-    "membershipRequest": {
-      "name": "Demande d'adhesion"
-    },
-    "members": {
-      "name": "Membres"
-    },
-    "identities": {
-      "name": "Qui est Qui"
-    },
-    "tontines": {
-      "name": "Tontines",
-      "subItems": ["fixedAmount", "variableAmount", "saving"]
-    },
-    "tontineTurn": {
-      "name": "Tours de tontines"
-    },
-    "sessions": {
-      "name": "Sessions"
-    },
-    "products": {
-      "name": "Produits",
-      "subItems": ["products", "productPayment"]
-    },
-    "assistance": {
-      "name": "Assistances",
-      "subItems": ["assistance", "assistanceRequest"]
-    },
-    "charges": {
-      "name": "Charges",
-      "subItems": ["chargeLine", "Charge", "chargePayment"]
-    },
-    "penalties": {
-      "name": "Pénalté",
-      "subItems": ["penaltyType", "sanctionedMembers"]
-    },
-    "warranties": {
-      "name": "Types de Garanties",
-      "icon": "seal-variant"
-    },
-    "loans": {
-      "name": "Prèts/Crédits",
-      "subItems": ["pendingLoans", "paidLoans", "canceledLoans"]
-    },
-    "sparingStates": {
-      "name": "État des cotisations"
-    },
-    "advertisement": {
-      "name": "Advertisements",
-      "subItems": ["audience", "advertisement"]
-    }
-  },
   "dashboard": {
     "title": "Rapports Djangii",
     "noData": "Aucune donnée",
@@ -219,5 +160,39 @@
   },
   "association": {
     "button": "Exporter la liste"
+  },
+  "drawer": {
+    "dashboard": "Tableau de board",
+    "association": "Associations",
+    "pages": "Pages",
+    "membershipRequest": "Demande d'adhésion",
+    "members": "Membres",
+    "identities": "Qui est qui ?",
+    "tontines": "Tontines",
+    "tontineTurn": "Tours de tontine",
+    "sessions": "Sessions",
+    "products": "Produits",
+    "assistance": "Assistance",
+    "charges": "Charges",
+    "penalties": "Pénalités",
+    "warranties": "Type de garantie",
+    "loans": "Prêts/Crédits",
+    "sparingStates": "État des cotisations",
+    "advertisement": "Publicité",
+    "fixedAmount": "Cotisations à montant fixe",
+    "variableAmount": "Cotisation à montant variable",
+    "savings": "Épargne",
+    "mySubscriptions": "Mes abonnements",
+    "pendingLoans": "Crédit en attente",
+    "paidLoans": "Crédit payé",
+    "canceledLoans": "Crédit annulé",
+    "penaltyType": "Types de pénalité",
+    "sanctionedMembers": "Membres sanctionnés",
+    "productPayment": "Paiement des produits",
+    "chargeLine": "Ligne de charge",
+    "chargePayment": "Charges",
+    "assistanceRequest": "Demande d'assistance",
+    "audience": "Audience",
+    "advertisements": "Publicité"
   }
 }

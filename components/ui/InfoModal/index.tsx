@@ -28,11 +28,11 @@ const InfoModal: FC<InfoModalProps> = ({ onLogout }) => {
   const imageSize = 75
 
   const avatar = getAvatarLetters(
-    user?.userInfos?.firstName,
-    user?.userInfos?.lastName
+    user.userInfos?.firstName,
+    user.userInfos?.lastName
   )
 
-  const showEmail = user.username === user.userInfos.email
+  const showEmail = user.username === user.userInfos?.email
 
   return (
     <Modal visible style={styles.screen} onDismiss={goBack}>

@@ -3,12 +3,12 @@ import { StatusBar } from "expo-status-bar"
 import { Text } from "react-native-paper"
 import { Image, StyleSheet, View, useWindowDimensions } from "react-native"
 
-import Chart from "@components/ui/Chart"
-import { useCallback, useContext, useEffect, useRef, useState } from "react"
+import { useCallback, useContext, useEffect, useState } from "react"
 import { FlatList } from "react-native-gesture-handler"
+
 import ReportCard from "@components/ui/reportCard"
 import { useAppDispatch } from "@services/store"
-
+import Chart from "@components/ui/Chart"
 import {
   getCurvedData,
   getTontineRoundCurve
