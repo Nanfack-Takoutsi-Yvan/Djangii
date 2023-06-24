@@ -1,15 +1,23 @@
+import { useRef } from "react"
 import { StatusBar } from "expo-status-bar"
 import { StyleSheet, View } from "react-native"
 
 import TablesTabView from "@components/ui/TablesTabView"
+import TableViewerBottomSheet from "@components/ui/TableViewerBottomSheet"
+import BottomSheet from "@gorhom/bottom-sheet"
+import BottomSheetForm from "@components/BottomSheetForm"
 
 export default function TabOneScreen() {
+  const bottomSheetRef = useRef<BottomSheet>(null)
+
   return (
     <View style={styles.container}>
       {/* eslint-disable-next-line react/style-prop-object */}
       <StatusBar style="light" />
       <View style={{ flex: 1 }}>
         <TablesTabView />
+        <TableViewerBottomSheet ref={bottomSheetRef} />
+        <BottomSheetForm />
       </View>
     </View>
   )
