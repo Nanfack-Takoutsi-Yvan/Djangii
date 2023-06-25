@@ -5,7 +5,7 @@ import { StyleSheet, View } from "react-native"
 import TablesTabView from "@components/ui/TablesTabView"
 import TableViewerBottomSheet from "@components/ui/TableViewerBottomSheet"
 import BottomSheet from "@gorhom/bottom-sheet"
-import BottomSheetForm from "@components/BottomSheetForm"
+import BottomSheetForm from "@components/ui/BottomSheetForm"
 
 export default function TabOneScreen() {
   const bottomSheetRef = useRef<BottomSheet>(null)

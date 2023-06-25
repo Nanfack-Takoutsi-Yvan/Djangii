@@ -40,7 +40,7 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
     return (
       <BottomSheet
         ref={ref}
-        index={1}
+        index={-1}
         snapPoints={snapPoints}
         keyboardBehavior="fillParent"
         onChange={handleSheetChanges}
