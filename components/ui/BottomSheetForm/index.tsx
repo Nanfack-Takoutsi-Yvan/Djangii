@@ -9,6 +9,8 @@ import Icon from "react-native-paper/src/components/Icon"
 import { Dropdown } from "react-native-element-dropdown"
 
 import AppStateContext from "@services/context/context"
+import { getEditState } from "@services/store/slices/bottomSheet"
+
 import { BottomSheetProps, BottomSheetRef } from "./types"
 
 const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
@@ -17,6 +19,8 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
 
     const { colors } = useTheme()
     const { locale } = useContext(AppStateContext)
+
+    const { position } = getEditState()
 
     // variables
     const snapPoints = useMemo(() => ["50%", "100%"], [])
@@ -40,7 +44,7 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
     return (
       <BottomSheet
         ref={ref}
-        index={-1}
+        index={position}
         snapPoints={snapPoints}
         keyboardBehavior="fillParent"
         onChange={handleSheetChanges}

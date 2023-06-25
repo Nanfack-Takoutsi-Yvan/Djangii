@@ -1,6 +1,8 @@
 const actions = {
   edit: () => null,
-  view: () => null
+  view: (association?: IAssociation, callback?: () => void) => {
+    if (callback) callback()
+  }
 }
 
 export default actions

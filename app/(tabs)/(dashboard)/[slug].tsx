@@ -2,9 +2,7 @@
 import { useContext, useRef, useState } from "react"
 import { StatusBar } from "expo-status-bar"
 import { Drawer } from "expo-router/drawer"
-import { useTheme } from "react-native-paper"
 import { StyleSheet, View } from "react-native"
-import BottomSheet from "@gorhom/bottom-sheet"
 import { useLocalSearchParams, useRouter } from "expo-router"
 
 import AppStateContext from "@services/context/context"
@@ -14,12 +12,8 @@ import BottomSheetForm from "@components/ui/BottomSheetForm"
 import pages from "@components/Pages"
 
 export default function TabOneScreen() {
-  const [page, setPage] = useState<number>(0)
-
   const router = useRouter()
-  const { colors } = useTheme()
   const { locale } = useContext(AppStateContext)
-  const bottomSheetRef = useRef<BottomSheet>(null)
   const params = useLocalSearchParams() as DashboardSlugParam
 
   const pageName = params.slug
@@ -46,7 +40,7 @@ export default function TabOneScreen() {
       />
       <View style={styles.screen}>
         <TablesTabView data={data} tables={tables} />
-        <TableViewerBottomSheet ref={bottomSheetRef} />
+        <TableViewerBottomSheet />
         <BottomSheetForm />
       </View>
     </View>

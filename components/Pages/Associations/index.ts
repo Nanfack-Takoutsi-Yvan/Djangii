@@ -3,17 +3,18 @@ import {
   getAssociations
 } from "@services/store/slices/associations"
 
-import config from "./config"
+import { joinedAssociation, manageableAssociation } from "./config"
 
 const associationConfig: configs = {
   tables: [
     {
       name: "manageableAssociation",
-      table: config
+      table: manageableAssociation,
+      actions: ["edit", "view"]
     },
     {
       name: "associationJoined",
-      table: config
+      table: joinedAssociation
     }
   ],
   getData: getAssociations,

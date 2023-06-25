@@ -1,5 +1,5 @@
 type TableActionButton = {
-  onEdit?: () => null
-  onView?: () => null
-  onDelete?: () => null
+  onEdit?: () => void
+  onView?: () => void
+  onDelete?: () => void
 }

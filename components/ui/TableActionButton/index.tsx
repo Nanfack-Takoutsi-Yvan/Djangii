@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { Alert, StyleSheet, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import { useTheme, IconButton } from "react-native-paper"
 
 const TableActionButton: FC<TableActionButton> = ({

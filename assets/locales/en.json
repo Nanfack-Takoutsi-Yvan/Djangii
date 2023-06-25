@@ -198,5 +198,11 @@
   "tabs": {
     "manageableAssociation": "Manageable Associations ({{number}})",
     "associationJoined": "Associations joined ({{number}})"
+  },
+  "tables": {
+    "creationDate": "Creation Date",
+    "acronym": "Acronym",
+    "name": "Name",
+    "active": "Active"
   }
 }

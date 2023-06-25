@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 
 import TableView from "@components/ui/TableView"
 
-const usePages = (rawTabs: tableData[], locale: I18n) => {
+const usePages = (rawTabs: tableData[], data: any[], locale: I18n) => {
   const [routes, setRoutes] = useState<TabRoute[]>([])
   const [tabs, setTabs] = useState<Dict>({})
 
@@ -13,17 +13,24 @@ const usePages = (rawTabs: tableData[], locale: I18n) => {
       const tempsTabs: Dict = {}
 
       rawTabs.forEach(rawTab => {
-        tempsTabs[rawTab.name] = TableView.bind(this, {})
+        tempsTabs[rawTab.name] = TableView.bind(this, {
+          data,
+          table: rawTab.table,
+          actions: rawTab.actions
+        })
+
         tempRoute.push({
           key: rawTab.name,
-          title: locale.t(`tabs.${rawTab.name}`, { number: 0 })
+          title: locale.t(`tabs.${rawTab.name}`, {
+            number: rawTab.table.tableData(data).length
+          })
         })
       })
 
       setRoutes(tempRoute)
       setTabs(tempsTabs)
     }
-  }, [locale, rawTabs])
+  }, [data, locale, rawTabs])
 
   return { routes, tabs }
 }

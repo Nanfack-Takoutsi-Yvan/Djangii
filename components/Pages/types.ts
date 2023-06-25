@@ -2,9 +2,18 @@ type Pages = {
   [key in DashboardPages]?: configs
 }
 
+type Actions = "edit" | "view" | "delete"
+
 type tableData = {
   name: string
-  table: any
+  table: TableConfigs
+  actions?: Actions[]
+}
+
+type TableConfigs = {
+  tableHead: string[]
+  tableData: (data: any, filter?: string) => any[][]
+  widthArr: number[]
 }
 
 type configs = {

@@ -1,34 +1,58 @@
-import { useCallback, useMemo, forwardRef } from "react"
+import { useCallback, useMemo, forwardRef, useEffect } from "react"
 import { StyleSheet, View } from "react-native"
-import { useTheme } from "react-native-paper"
+import { Text, useTheme } from "react-native-paper"
 
 import BottomSheet from "@gorhom/bottom-sheet"
+import { useAppDispatch } from "@services/store"
+import {
+  changeViewPosition,
+  getViewState
+} from "@services/store/slices/bottomSheet"
+
 import { BottomSheetProps, BottomSheetRef } from "./types"
 import TableView from "../TableView"
 
 const TableViewerBottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
   ({ name }, ref) => {
     const { colors } = useTheme()
+    const dispatch = useAppDispatch()
+    const { position, data } = getViewState()
 
     // variables
     const snapPoints = useMemo(() => ["50%", "100%"], [])
 
     // callbacks
-    const handleSheetChanges = useCallback((index: number) => {
-      console.log("handleSheetChanges", index)
-    }, [])
+    const handleSheetChanges = useCallback(
+      (index: number) => {
+        dispatch(changeViewPosition(index))
+      },
+      [dispatch]
+    )
+
+    useEffect(() => {
+      console.log({ position, data })
+    }, [data, position])
 
     return (
       <BottomSheet
         ref={ref}
-        index={-1}
+        index={position}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
         enablePanDownToClose
         handleIndicatorStyle={{ backgroundColor: colors.primary }}
       >
         <View style={styles.contentContainer}>
-          <TableView />
+          {/* {data ? (
+            <TableView
+              table={{
+                tableData: data.data,
+                tableHead: data.headers,
+                widthArr: data.cellSize
+              }}
+            />
+          ) : null} */}
+          <Text>Hello world 🎉</Text>
         </View>
       </BottomSheet>
     )

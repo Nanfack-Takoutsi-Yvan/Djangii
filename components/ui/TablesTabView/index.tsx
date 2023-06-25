@@ -11,7 +11,7 @@ const TablesTabView: FC<TablesTabViewProps> = ({ data, tables }) => {
   const [index, setIndex] = useState(0)
 
   const { locale } = useContext(AppStateContext)
-  const { routes, tabs } = usePages(tables, locale)
+  const { routes, tabs } = usePages(tables, data, locale)
 
   const renderScene = SceneMap(tabs)
 

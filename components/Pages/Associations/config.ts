@@ -1,9 +1,16 @@
-import { formatDataTable } from "./methods"
+import {
+  joinedAssociationsDataTable,
+  manageableAssociationsDataTable
+} from "./methods"
 
-const data = {
+export const manageableAssociation: TableConfigs = {
   tableHead: ["", "creationDate", "acronym", "name", "active"],
-  tableData: formatDataTable,
-  widthArr: [150, 150, 150, 150, 150]
+  tableData: manageableAssociationsDataTable,
+  widthArr: [100, 150, 150, 150, 150]
 }
 
-export default data
+export const joinedAssociation = {
+  tableHead: ["creationDate", "acronym", "name", "active"],
+  tableData: joinedAssociationsDataTable,
+  widthArr: [150, 150, 150, 150]
+}

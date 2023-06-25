@@ -1,14 +1,24 @@
-/* eslint-disable import/prefer-default-export */
-import TableActionButton from "@components/ui/TableActionButton"
 import { getDate } from "@services/utils/functions/format"
-import actions from "./actions"
 
-export const formatDataTable = (associations: IAssociation[]) =>
+export const manageableAssociationsDataTable = (
+  associations: IAssociation[],
+  filter?: string
+) =>
+  associations
+    .filter(association => {
+      if (!filter) return true
+
+      return association.creator.id === filter
+    })
+    .map(association => [
+      getDate(association.datation.creationTime),
+      association.acronym,
+      association.name,
+      `${association.activated}`
+    ])
+
+export const joinedAssociationsDataTable = (associations: IAssociation[]) =>
   associations.map(association => [
-    TableActionButton.bind(null, {
-      onEdit: actions.edit,
-      onView: actions.view
-    }),
     getDate(association.datation.creationTime),
     association.acronym,
     association.name,
