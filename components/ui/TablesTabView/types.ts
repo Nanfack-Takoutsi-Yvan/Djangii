@@ -1,1 +1,4 @@
-const a = "a"
+type TablesTabViewProps = {
+  data: any[]
+  tables: tableData[]
+}

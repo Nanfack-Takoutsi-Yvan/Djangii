@@ -194,5 +194,9 @@
     "assistanceRequest": "Demande d'assistance",
     "audience": "Audience",
     "advertisements": "Publicité"
+  },
+  "tabs": {
+    "manageableAssociation": "Mes Associations ({{number}})",
+    "associationJoined": "Associations adherées ({{number}})"
   }
 }

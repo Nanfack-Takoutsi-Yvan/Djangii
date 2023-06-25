@@ -1,14 +1,8 @@
 /* eslint-disable react/no-array-index-key */
 import { FC, useContext } from "react"
-import {
-  Alert,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View
-} from "react-native"
+import { ScrollView, StyleSheet, View } from "react-native"
 import Icon from "react-native-paper/src/components/Icon"
-import { Button, IconButton, Text, useTheme } from "react-native-paper"
+import { Button, useTheme } from "react-native-paper"
 import { Table, Row } from "react-native-reanimated-table"
 
 import AppStateContext from "@services/context/context"
@@ -20,15 +14,7 @@ const TableView: FC<TableView> = () => {
   const { colors } = useTheme()
   const { locale } = useContext(AppStateContext)
 
-  const associations = getAssociations()
-
-  const element = (index: number) => (
-    <TouchableOpacity onPress={() => alertIndex(index)}>
-      <View style={styles.btn}>
-        <Text style={styles.btnText}>button</Text>
-      </View>
-    </TouchableOpacity>
-  )
+  const associations = getAssociations().data
 
   const getTableData = () =>
     associations.map(association => [
@@ -43,10 +29,6 @@ const TableView: FC<TableView> = () => {
     tableHead: ["", "Creation Date", "Acronym", "Name", "Active"],
     tableData: getTableData(),
     widthArr: [150, 150, 150, 150, 150]
-  }
-
-  function alertIndex(index: number) {
-    Alert.alert(`This is row ${index + 1}`)
   }
 
   return (
@@ -75,6 +57,39 @@ const TableView: FC<TableView> = () => {
           </Table>
         </View>
       </ScrollView>
+
+      <View style={{ paddingHorizontal: 24, rowGap: 12 }}>
+        <Button
+          textColor="white"
+          mode="contained"
+          style={styles.button}
+          contentStyle={styles.buttonContent}
+          icon={() => (
+            <Icon
+              source="plus-box-outline"
+              color={colors.secondary}
+              size={24}
+            />
+          )}
+        >
+          Créer une association
+        </Button>
+        <Button
+          textColor="white"
+          mode="contained"
+          style={styles.button}
+          contentStyle={styles.buttonContent}
+          icon={() => (
+            <Icon
+              source="file-download-outline"
+              color={colors.secondary}
+              size={24}
+            />
+          )}
+        >
+          {locale.t("association.button")}
+        </Button>
+      </View>
     </View>
   )
 }

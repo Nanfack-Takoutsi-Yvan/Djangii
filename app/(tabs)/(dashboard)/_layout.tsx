@@ -46,10 +46,6 @@ export default function DashboardLayout() {
         name="index"
         options={{ headerTitle: locale.t("drawer.dashboard") }}
       />
-      <Drawer.Screen
-        name="association"
-        options={{ headerTitle: locale.t("drawer.association") }}
-      />
     </Drawer>
   )
 }
