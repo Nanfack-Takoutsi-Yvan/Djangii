@@ -9,7 +9,7 @@ import Icon from "react-native-paper/src/components/Icon"
 import { Dropdown } from "react-native-element-dropdown"
 
 import AppStateContext from "@services/context/context"
-import { getEditState } from "@services/store/slices/bottomSheet"
+import { getEditState } from "@services/store/slices/bottomSheetTables"
 
 import { BottomSheetProps, BottomSheetRef } from "./types"
 

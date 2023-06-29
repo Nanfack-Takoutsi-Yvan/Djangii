@@ -7,11 +7,15 @@ import AppStateContext from "@services/context/context"
 
 import TabBar from "./tabBar"
 
-const TablesTabView: FC<TablesTabViewProps> = ({ data, tables }) => {
+const TablesTabView: FC<TablesTabViewProps> = ({
+  data,
+  tables,
+  createData
+}) => {
   const [index, setIndex] = useState(0)
 
   const { locale } = useContext(AppStateContext)
-  const { routes, tabs } = usePages(tables, data, locale)
+  const { routes, tabs } = usePages(tables, data, locale, createData)
 
   const renderScene = SceneMap(tabs)
 

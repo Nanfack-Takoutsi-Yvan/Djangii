@@ -8,7 +8,12 @@ import { Table, Row } from "react-native-reanimated-table"
 import AppStateContext from "@services/context/context"
 import useTableData from "@services/hooks/tables/useTableData"
 
-const TableView: FC<TableViewProps> = ({ data, table, actions }) => {
+const TableView: FC<TableViewProps> = ({
+  data,
+  table,
+  actions,
+  createData
+}) => {
   const { colors } = useTheme()
   const { locale } = useContext(AppStateContext)
   const { tableHeadings, tableData, cellsSize } = useTableData(
@@ -46,21 +51,23 @@ const TableView: FC<TableViewProps> = ({ data, table, actions }) => {
       </ScrollView>
 
       <View style={{ paddingHorizontal: 24, rowGap: 12 }}>
-        <Button
-          textColor="white"
-          mode="contained"
-          style={styles.button}
-          contentStyle={styles.buttonContent}
-          icon={() => (
-            <Icon
-              source="plus-box-outline"
-              color={colors.secondary}
-              size={24}
-            />
-          )}
-        >
-          Créer une association
-        </Button>
+        {createData && (
+          <Button
+            textColor="white"
+            mode="contained"
+            style={styles.button}
+            contentStyle={styles.buttonContent}
+            icon={() => (
+              <Icon
+                source="plus-box-outline"
+                color={colors.secondary}
+                size={24}
+              />
+            )}
+          >
+            {locale.t(`pages.${createData.buttonTitle}`)}
+          </Button>
+        )}
         <Button
           textColor="white"
           mode="contained"
@@ -74,7 +81,7 @@ const TableView: FC<TableViewProps> = ({ data, table, actions }) => {
             />
           )}
         >
-          {locale.t("association.button")}
+          {locale.t("pages.exportButton")}
         </Button>
       </View>
     </View>

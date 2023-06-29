@@ -6,7 +6,7 @@ import { useAppDispatch } from "@services/store"
 import {
   changeViewPosition,
   updateViewData
-} from "@services/store/slices/bottomSheet"
+} from "@services/store/slices/bottomSheetTables"
 
 const useTableData = (
   table: TableConfigs,

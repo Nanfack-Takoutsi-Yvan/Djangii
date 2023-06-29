@@ -158,8 +158,9 @@
       "contributionCurve": "Contribution curve"
     }
   },
-  "association": {
-    "button": "Export list"
+  "pages": {
+    "exportButton": "Export list",
+    "createAssociationButton": "Create an association"
   },
   "drawer": {
     "dashboard": "Dashboard",

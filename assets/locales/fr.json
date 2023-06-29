@@ -158,8 +158,9 @@
       "contributionCurve": "Courbe de contributions"
     }
   },
-  "association": {
-    "button": "Exporter la liste"
+  "pages": {
+    "exportButton": "Exporter la liste",
+    "createAssociationButton": "Créer une association"
   },
   "drawer": {
     "dashboard": "Tableau de board",

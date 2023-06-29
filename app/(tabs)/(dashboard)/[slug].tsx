@@ -26,7 +26,7 @@ export default function TabOneScreen() {
   }
 
   const { data } = pageData.getData() as Data
-  const { tables } = pageData
+  const { tables, createData } = pageData
 
   return (
     <View style={styles.container}>
@@ -39,7 +39,7 @@ export default function TabOneScreen() {
         }}
       />
       <View style={styles.screen}>
-        <TablesTabView data={data} tables={tables} />
+        <TablesTabView data={data} tables={tables} createData={createData} />
         <TableViewerBottomSheet />
         <BottomSheetForm />
       </View>

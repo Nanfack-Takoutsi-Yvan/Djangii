@@ -29,8 +29,8 @@ const initialState: bottomSheetState = {
   }
 }
 
-const bottomSheetSlice = createSlice({
-  name: "bottomSheet",
+const bottomSheetTablesSlice = createSlice({
+  name: "bottomSheetTables",
   initialState,
   reducers: {
     changeEditPosition: (state, action: PayloadAction<number>) => {
@@ -48,16 +48,16 @@ const bottomSheetSlice = createSlice({
   }
 })
 
-export default bottomSheetSlice.reducer
+export default bottomSheetTablesSlice.reducer
 
 export const {
   changeEditPosition,
   changeViewPosition,
   updateEditData,
   updateViewData
-} = bottomSheetSlice.actions
+} = bottomSheetTablesSlice.actions
 
 export const getEditState = () =>
-  useAppSelector(state => state.bottomSheet.edit)
+  useAppSelector(state => state.bottomSheetTables.edit)
 export const getViewState = () =>
-  useAppSelector(state => state.bottomSheet.view)
+  useAppSelector(state => state.bottomSheetTables.view)

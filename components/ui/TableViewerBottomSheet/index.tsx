@@ -7,7 +7,7 @@ import { useAppDispatch } from "@services/store"
 import {
   changeViewPosition,
   getViewState
-} from "@services/store/slices/bottomSheet"
+} from "@services/store/slices/bottomSheetTables"
 
 import { BottomSheetProps, BottomSheetRef } from "./types"
 import TableView from "../TableView"

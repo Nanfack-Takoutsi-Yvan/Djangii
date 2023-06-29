@@ -18,7 +18,10 @@ const associationConfig: configs = {
     }
   ],
   getData: getAssociations,
-  fetchData: fetchUserAssociations
+  fetchData: fetchUserAssociations,
+  createData: {
+    buttonTitle: "createAssociationButton"
+  }
 }
 
 export default associationConfig

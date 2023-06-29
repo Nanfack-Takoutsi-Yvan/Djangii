@@ -16,8 +16,13 @@ type TableConfigs = {
   widthArr: number[]
 }
 
+type CreateData = {
+  buttonTitle: string
+}
+
 type configs = {
   tables: tableData[]
   getData: () => any
   fetchData: () => any
+  createData: CreateData
 }
