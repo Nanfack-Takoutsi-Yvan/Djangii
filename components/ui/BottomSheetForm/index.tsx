@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useContext, useMemo, useState } from "react"
+import { forwardRef, useCallback, useContext, useState } from "react"
 
 import { Formik } from "formik"
 import { Text, TextInput } from "react-native-paper"
@@ -8,8 +8,13 @@ import { useTheme } from "react-native-paper/src/core/theming"
 import Icon from "react-native-paper/src/components/Icon"
 import { Dropdown } from "react-native-element-dropdown"
 
+import { useAppDispatch } from "@services/store"
 import AppStateContext from "@services/context/context"
-import { getEditState } from "@services/store/slices/bottomSheetTables"
+import {
+  changeBottomSheetFormPosition,
+  getBottomSheetForm
+} from "@services/store/slices/bottomSheetForm"
+import { snapPoints } from "@assets/constants/dashboard/bottomSheet"
 
 import { BottomSheetProps, BottomSheetRef } from "./types"
 
@@ -18,17 +23,17 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
     const [value, setValue] = useState<string>()
 
     const { colors } = useTheme()
+    const dispatch = useAppDispatch()
     const { locale } = useContext(AppStateContext)
 
-    const { position } = getEditState()
+    const { position, title } = getBottomSheetForm()
 
-    // variables
-    const snapPoints = useMemo(() => ["50%", "100%"], [])
-
-    // callbacks
-    const handleSheetChanges = useCallback((index: number) => {
-      console.log("handleSheetChanges", index)
-    }, [])
+    const handleSheetChanges = useCallback(
+      (index: number) => {
+        dispatch(changeBottomSheetFormPosition(index))
+      },
+      [dispatch]
+    )
 
     const data = [
       { label: "Item 1", value: "1" },
@@ -45,6 +50,7 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
       <BottomSheet
         ref={ref}
         index={position}
+        enablePanDownToClose
         snapPoints={snapPoints}
         keyboardBehavior="fillParent"
         onChange={handleSheetChanges}
@@ -54,12 +60,8 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
-            <Text variant="titleLarge">Nouvelle Association</Text>
-            <Icon
-              source="plus-box-outline"
-              size={32}
-              color={colors.secondary}
-            />
+            <Text variant="titleLarge">{locale.t(`pages.${title.label}`)}</Text>
+            <Icon source={title.icon} size={32} color={colors.secondary} />
           </View>
 
           <Formik
@@ -81,7 +83,7 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
                     color={
                       errors.otp && touched.otp ? colors.error : colors.primary
                     }
-                    size={40}
+                    size={32}
                   />
                   <View style={styles.screen}>
                     <View>
@@ -119,7 +121,7 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
                     color={
                       errors.otp && touched.otp ? colors.error : colors.primary
                     }
-                    size={40}
+                    size={32}
                   />
                   <View style={styles.screen}>
                     <View>
@@ -223,7 +225,8 @@ const styles = StyleSheet.create({
   },
   field: {
     flexDirection: "row",
-    columnGap: 12
+    columnGap: 12,
+    alignItems: "baseline"
   },
   textInput: {
     paddingHorizontal: 0

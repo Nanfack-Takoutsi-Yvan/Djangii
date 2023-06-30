@@ -1,12 +1,17 @@
 /* eslint-disable react/no-array-index-key */
-import { FC, useContext } from "react"
+import { FC, useCallback, useContext } from "react"
 import { ScrollView, StyleSheet, View } from "react-native"
 import Icon from "react-native-paper/src/components/Icon"
 import { Button, useTheme } from "react-native-paper"
 import { Table, Row } from "react-native-reanimated-table"
 
+import {
+  changeBottomSheetFormPosition,
+  updateBottomSheetFormState
+} from "@services/store/slices/bottomSheetForm"
 import AppStateContext from "@services/context/context"
 import useTableData from "@services/hooks/tables/useTableData"
+import { useAppDispatch } from "@services/store"
 
 const TableView: FC<TableViewProps> = ({
   data,
@@ -15,6 +20,7 @@ const TableView: FC<TableViewProps> = ({
   createData
 }) => {
   const { colors } = useTheme()
+  const dispatch = useAppDispatch()
   const { locale } = useContext(AppStateContext)
   const { tableHeadings, tableData, cellsSize } = useTableData(
     table,
@@ -22,6 +28,24 @@ const TableView: FC<TableViewProps> = ({
     data,
     actions
   )
+
+  const openBottomSheet = useCallback(() => {
+    dispatch(changeBottomSheetFormPosition(0))
+    if (createData) {
+      const { formIcon, formTitle } = createData
+      dispatch(
+        updateBottomSheetFormState({
+          title: {
+            label: formTitle,
+            icon: formIcon
+          },
+          model: undefined,
+          validation: undefined,
+          form: []
+        })
+      )
+    }
+  }, [createData, dispatch])
 
   return (
     <View style={[styles.screen, { paddingVertical: 8 }]}>
@@ -57,6 +81,7 @@ const TableView: FC<TableViewProps> = ({
             mode="contained"
             style={styles.button}
             contentStyle={styles.buttonContent}
+            onPress={openBottomSheet}
             icon={() => (
               <Icon
                 source="plus-box-outline"
@@ -68,6 +93,7 @@ const TableView: FC<TableViewProps> = ({
             {locale.t(`pages.${createData.buttonTitle}`)}
           </Button>
         )}
+
         <Button
           textColor="white"
           mode="contained"

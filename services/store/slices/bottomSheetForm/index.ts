@@ -8,18 +8,28 @@ type FormField = {
   object: []
 }
 
+type FormTitle = {
+  label: string
+  icon: string
+}
+
 type BottomSheetFormState = {
-  position: number
-  form: FormField[]
   model: any
   validation: any
+  position: number
+  form: FormField[]
+  title: FormTitle
 }
 
 const initialState: BottomSheetFormState = {
   position: -1,
   form: [],
   model: {},
-  validation: {}
+  validation: {},
+  title: {
+    label: "",
+    icon: ""
+  }
 }
 
 const bottomSheetFormSlice = createSlice({
@@ -28,18 +38,23 @@ const bottomSheetFormSlice = createSlice({
   reducers: {
     updateBottomSheetFormState: (
       state,
-      action: PayloadAction<BottomSheetFormState>
+      action: PayloadAction<Omit<BottomSheetFormState, "position">>
     ) => {
-      const { form, model, validation } = action.payload
+      const { form, model, validation, title } = action.payload
       state.form = form
-      state.validation = validation
       state.model = model
+      state.title = title
+      state.validation = validation
     },
     clearBottomSheetFormState: state => {
       state.form = []
       state.model = {}
       state.position = -1
       state.validation = {}
+      state.title = {
+        label: "",
+        icon: ""
+      }
     },
     changeBottomSheetFormPosition: (state, action: PayloadAction<number>) => {
       state.position = action.payload

@@ -20,7 +20,9 @@ const associationConfig: configs = {
   getData: getAssociations,
   fetchData: fetchUserAssociations,
   createData: {
-    buttonTitle: "createAssociationButton"
+    buttonTitle: "createAssociationButton",
+    formTitle: "newAssociation",
+    formIcon: "plus-box-outline"
   }
 }
 

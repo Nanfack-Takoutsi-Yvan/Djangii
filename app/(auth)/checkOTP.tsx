@@ -112,9 +112,6 @@ export default function CheckOTP() {
   const resentOTP = async () => {
     setLoading(true)
     User.sendOTP(userInfos?.email, locale.locale)
-      .then(res => {
-        console.log(res)
-      })
       .catch(err => {
         console.log("An error occurred white sending otp: ", err)
       })

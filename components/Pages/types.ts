@@ -18,6 +18,8 @@ type TableConfigs = {
 
 type CreateData = {
   buttonTitle: string
+  formTitle: string
+  formIcon: string
 }
 
 type configs = {

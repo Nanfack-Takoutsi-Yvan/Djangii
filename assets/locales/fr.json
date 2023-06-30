@@ -160,7 +160,8 @@
   },
   "pages": {
     "exportButton": "Exporter la liste",
-    "createAssociationButton": "Créer une association"
+    "createAssociationButton": "Créer une association",
+    "newAssociation": "Nouvelle association"
   },
   "drawer": {
     "dashboard": "Tableau de board",

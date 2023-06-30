@@ -10,13 +10,12 @@ import {
 } from "@services/store/slices/bottomSheetTables"
 
 import { BottomSheetProps, BottomSheetRef } from "./types"
-import TableView from "../TableView"
 
 const TableViewerBottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
   ({ name }, ref) => {
     const { colors } = useTheme()
     const dispatch = useAppDispatch()
-    const { position, data } = getViewState()
+    const { position } = getViewState()
 
     // variables
     const snapPoints = useMemo(() => ["50%", "100%"], [])
@@ -28,10 +27,6 @@ const TableViewerBottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
       },
       [dispatch]
     )
-
-    useEffect(() => {
-      console.log({ position, data })
-    }, [data, position])
 
     return (
       <BottomSheet
