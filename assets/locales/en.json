@@ -158,8 +158,11 @@
       "contributionCurve": "Contribution curve"
     }
   },
-  "association": {
-    "button": "Export list"
+  "pages": {
+    "exportButton": "Export list",
+    "createAssociationButton": "Create an association",
+    "newAssociation": "New association",
+    "search": "Search..."
   },
   "drawer": {
     "dashboard": "Dashboard",
@@ -194,5 +197,15 @@
     "assistanceRequest": "Assistance request",
     "audience": "Audience",
     "advertisements": "Advertisements"
+  },
+  "tabs": {
+    "manageableAssociation": "Manageable Associations ({{number}})",
+    "associationJoined": "Associations joined ({{number}})"
+  },
+  "tables": {
+    "creationDate": "Creation Date",
+    "acronym": "Acronym",
+    "name": "Name",
+    "active": "Active"
   }
 }

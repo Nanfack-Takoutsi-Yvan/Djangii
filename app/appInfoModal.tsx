@@ -12,7 +12,7 @@ const AppInfoModal = () => {
     <InfoModal
       onLogout={() => {
         router.back()
-        router.replace({ pathname: "(auth)" })
+        router.push("./(auth)")
         setUser(new User())
       }}
     />

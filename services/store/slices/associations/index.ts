@@ -6,12 +6,14 @@ import { useAppSelector } from "@services/store"
 import Association from "@services/models/association"
 
 type AssociationState = {
-  userAssociations: IAssociation[]
+  data: IAssociation[]
+  loading: boolean
   error?: AxiosError
 }
 
 const initialState: AssociationState = {
-  userAssociations: []
+  data: [],
+  loading: false
 }
 
 export const fetchUserAssociations = createAsyncThunk<
@@ -25,19 +27,23 @@ const associationSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: builder => {
+    builder.addCase(fetchUserAssociations.pending, state => {
+      state.loading = true
+    })
     builder.addCase(
       fetchUserAssociations.fulfilled,
       (state, action: PayloadAction<IAssociation[]>) => {
-        state.userAssociations = action.payload
+        state.data = action.payload
+        state.loading = false
       }
     )
     builder.addCase(fetchUserAssociations.rejected, (state, action) => {
       state.error = action.payload
+      state.loading = false
     })
   }
 })
 
 export default associationSlice.reducer
 export const associationActions = associationSlice.actions
-export const getAssociations = () =>
-  useAppSelector(state => state.associations.userAssociations)
+export const getAssociations = () => useAppSelector(state => state.associations)

@@ -2,12 +2,12 @@ import {
   StyleSheet,
   Dimensions,
   ImageBackground,
-  StatusBar
+  StatusBar,
+  View
 } from "react-native"
 
 import { useContext } from "react"
 import { useRouter } from "expo-router"
-import { View } from "@components/Themed"
 import { Text, Button, useTheme } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
 import AppStateContext from "@services/context/context"

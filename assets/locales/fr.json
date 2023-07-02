@@ -158,8 +158,11 @@
       "contributionCurve": "Courbe de contributions"
     }
   },
-  "association": {
-    "button": "Exporter la liste"
+  "pages": {
+    "exportButton": "Exporter la liste",
+    "createAssociationButton": "Créer une association",
+    "newAssociation": "Nouvelle association",
+    "search": "Rechercher..."
   },
   "drawer": {
     "dashboard": "Tableau de board",
@@ -194,5 +197,15 @@
     "assistanceRequest": "Demande d'assistance",
     "audience": "Audience",
     "advertisements": "Publicité"
+  },
+  "tabs": {
+    "manageableAssociation": "Mes Associations ({{number}})",
+    "associationJoined": "Associations adherées ({{number}})"
+  },
+  "tables": {
+    "creationDate": "Date de creation",
+    "acronym": "Acronym",
+    "name": "Nom",
+    "active": "Actif"
   }
 }

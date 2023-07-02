@@ -28,7 +28,7 @@ export default function TabOneScreen() {
   const [curveData, setCurveData] = useState<IDashboardData>()
 
   const dispatch = useAppDispatch()
-  const associations = getAssociations()
+  const associations = getAssociations().data
   const dashboardData = getDashboardData()
   const { locale } = useContext(AppStateContext)
 
