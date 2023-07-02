@@ -3,7 +3,7 @@ import {
   getAssociations
 } from "@services/store/slices/associations"
 
-import { joinedAssociation, manageableAssociation } from "./config"
+import { createData, joinedAssociation, manageableAssociation } from "./config"
 
 const associationConfig: configs = {
   tables: [
@@ -19,11 +19,7 @@ const associationConfig: configs = {
   ],
   getData: getAssociations,
   fetchData: fetchUserAssociations,
-  createData: {
-    buttonTitle: "createAssociationButton",
-    formTitle: "newAssociation",
-    formIcon: "plus-box-outline"
-  }
+  createData
 }
 
 export default associationConfig

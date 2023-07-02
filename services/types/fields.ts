@@ -1,0 +1,1 @@
+type FieldNames = "textField" | "selectField"

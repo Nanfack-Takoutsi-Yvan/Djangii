@@ -5,14 +5,18 @@ exports[`renders correctly 1`] = `
   style={
     [
       {
-        "color": undefined,
+        "textAlign": "left",
       },
-      [
-        undefined,
-        {
-          "fontFamily": "SpaceMono",
-        },
-      ],
+      {
+        "color": "rgba(28, 27, 31, 1)",
+        "fontFamily": "System",
+        "fontWeight": "400",
+        "letterSpacing": 0,
+      },
+      {
+        "writingDirection": "ltr",
+      },
+      undefined,
     ]
   }
 >

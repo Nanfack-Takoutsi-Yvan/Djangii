@@ -161,7 +161,8 @@
   "pages": {
     "exportButton": "Exporter la liste",
     "createAssociationButton": "Créer une association",
-    "newAssociation": "Nouvelle association"
+    "newAssociation": "Nouvelle association",
+    "search": "Rechercher..."
   },
   "drawer": {
     "dashboard": "Tableau de board",

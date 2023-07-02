@@ -1,3 +1,6 @@
+import Association from "@services/models/association"
+import fieldNames from "@components/ui/Form/__form.utils"
+
 import {
   joinedAssociationsDataTable,
   manageableAssociationsDataTable
@@ -13,4 +16,29 @@ export const joinedAssociation = {
   tableHead: ["creationDate", "acronym", "name", "active"],
   tableData: joinedAssociationsDataTable,
   widthArr: [150, 150, 150, 150]
+}
+
+export const createData: CreateData = {
+  buttonTitle: "createAssociationButton",
+  formTitle: "newAssociation",
+  formIcon: "plus-box-outline",
+  model: new Association(),
+  validation: {},
+  fields: [
+    {
+      name: fieldNames.textField,
+      placeholder: "name",
+      icon: ""
+    },
+    {
+      name: fieldNames.textField,
+      placeholder: "name",
+      icon: ""
+    },
+    {
+      name: fieldNames.selectField,
+      placeholder: "name",
+      icon: ""
+    }
+  ]
 }

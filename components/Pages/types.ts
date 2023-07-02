@@ -20,6 +20,15 @@ type CreateData = {
   buttonTitle: string
   formTitle: string
   formIcon: string
+  model: IAssociation
+  validation: any
+  fields: Field[]
+}
+
+type Field = {
+  name: FieldNames
+  placeholder: string
+  icon: string
 }
 
 type configs = {

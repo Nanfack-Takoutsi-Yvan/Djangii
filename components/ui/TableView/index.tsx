@@ -48,7 +48,15 @@ const TableView: FC<TableViewProps> = ({
   }, [createData, dispatch])
 
   return (
-    <View style={[styles.screen, { paddingVertical: 8 }]}>
+    <View
+      style={[
+        styles.screen,
+        {
+          paddingVertical: 8,
+          alignItems: "center"
+        }
+      ]}
+    >
       <ScrollView horizontal>
         <View style={styles.container}>
           <Table style={styles.table}>
@@ -74,7 +82,7 @@ const TableView: FC<TableViewProps> = ({
         </View>
       </ScrollView>
 
-      <View style={{ paddingHorizontal: 24, rowGap: 12 }}>
+      <View style={styles.buttonsContainer}>
         {createData && (
           <Button
             textColor="white"
@@ -128,7 +136,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    paddingTop: 30
+    paddingTop: 30,
+    width: "100%"
   },
   table: {
     backgroundColor: "#fff",
@@ -150,7 +159,8 @@ const styles = StyleSheet.create({
     fontFamily: "SoraMedium",
     color: "#777",
     fontSize: 16
-  }
+  },
+  buttonsContainer: { paddingHorizontal: 24, rowGap: 12, width: "100%" }
 })
 
 export default TableView

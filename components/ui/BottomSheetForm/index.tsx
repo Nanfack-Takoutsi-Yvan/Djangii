@@ -1,7 +1,7 @@
 import { forwardRef, useCallback, useContext, useState } from "react"
 
 import { Formik } from "formik"
-import { Text, TextInput } from "react-native-paper"
+import { Button, Text, TextInput } from "react-native-paper"
 import { StyleSheet, View } from "react-native"
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet"
 import { useTheme } from "react-native-paper/src/core/theming"
@@ -36,14 +36,14 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
     )
 
     const data = [
-      { label: "Item 1", value: "1" },
-      { label: "Item 2", value: "2" },
-      { label: "Item 3", value: "3" },
-      { label: "Item 4", value: "4" },
-      { label: "Item 5", value: "5" },
-      { label: "Item 6", value: "6" },
-      { label: "Item 7", value: "7" },
-      { label: "Item 8", value: "8" }
+      { label: "Item 1", value: "hello" },
+      { label: "Item 2", value: "hello2" },
+      { label: "Item 3", value: "hello3" },
+      { label: "Item 4", value: "hello4" },
+      { label: "Item 5", value: "hello5" },
+      { label: "Item 6", value: "hello6" },
+      { label: "Item 7", value: "hello7" },
+      { label: "Item 8", value: "hello8" }
     ]
 
     return (
@@ -77,116 +77,46 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
               touched
             }) => (
               <View style={styles.fieldsContainer}>
-                <View style={styles.field}>
-                  <Icon
-                    source="account-group-outline"
-                    color={
-                      errors.otp && touched.otp ? colors.error : colors.primary
-                    }
-                    size={32}
-                  />
-                  <View style={styles.screen}>
-                    <View>
-                      <TextInput
-                        placeholder="name"
-                        placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                        keyboardType="numeric"
-                        value={values.otp}
-                        onBlur={handleBlur("otp")}
-                        onChangeText={handleChange("otp")}
-                        style={styles.textInput}
-                        dense
-                        underlineColor="rgba(0,0,0,0.5)"
-                        autoComplete="name"
-                        error={!!errors.otp && touched.otp}
-                      />
-                    </View>
-                    {errors.otp && touched.otp && (
-                      <View>
-                        <Text
-                          style={{
-                            color: colors.error
-                          }}
-                        >
-                          {locale.t(errors.otp)}
-                        </Text>
-                      </View>
+                <View>
+                  <Dropdown
+                    style={styles.dropdown}
+                    selectedTextStyle={styles.soraFont}
+                    inputSearchStyle={[
+                      styles.inputSearchStyle,
+                      styles.soraFont
+                    ]}
+                    itemTextStyle={styles.soraFont}
+                    placeholderStyle={[styles.soraFont, styles.placeHolder]}
+                    containerStyle={styles.searchContainer}
+                    data={data}
+                    mode="modal"
+                    search
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Select item"
+                    searchPlaceholder={locale.t("pages.search")}
+                    value={value}
+                    onChange={item => {
+                      console.log(item)
+                      setValue(item.value)
+                    }}
+                    renderLeftIcon={() => (
+                      <Icon color={colors.primary} source="cash" size={40} />
                     )}
-                  </View>
-                </View>
-
-                <View style={styles.field}>
-                  <Icon
-                    source="form-textbox"
-                    color={
-                      errors.otp && touched.otp ? colors.error : colors.primary
-                    }
-                    size={32}
                   />
-                  <View style={styles.screen}>
-                    <View>
-                      <TextInput
-                        placeholder="Acronyme"
-                        placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                        keyboardType="numeric"
-                        value={values.otp}
-                        onBlur={handleBlur("otp")}
-                        onChangeText={handleChange("otp")}
-                        style={styles.textInput}
-                        dense
-                        underlineColor="rgba(0,0,0,0.5)"
-                        autoComplete="name"
-                        error={!!errors.otp && touched.otp}
-                      />
-                    </View>
-                    {errors.otp && touched.otp && (
-                      <View>
-                        <Text
-                          style={{
-                            color: colors.error
-                          }}
-                        >
-                          {locale.t(errors.otp)}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
                 </View>
-
-                <Dropdown
-                  style={styles.dropdown}
-                  selectedTextStyle={styles.selectedTextStyle}
-                  inputSearchStyle={styles.inputSearchStyle}
-                  data={data}
-                  search
-                  maxHeight={300}
-                  labelField="label"
-                  valueField="value"
-                  placeholder="Select item"
-                  searchPlaceholder="Search..."
-                  value={value}
-                  renderInputSearch={props => (
-                    <TextInput
-                      placeholder="Acronyme"
-                      placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                      keyboardType="numeric"
-                      value={values.otp}
-                      onBlur={handleBlur("otp")}
-                      onChangeText={handleChange("otp")}
-                      style={styles.textInput}
-                      dense
-                      underlineColor="rgba(0,0,0,0.5)"
-                      autoComplete="name"
-                      error={!!errors.otp && touched.otp}
-                    />
-                  )}
-                  onChange={item => {
-                    setValue(item.value)
-                  }}
-                  renderLeftIcon={() => (
-                    <Icon color={colors.primary} source="cash" size={40} />
-                  )}
-                />
+                <View style={styles.buttonContainer}>
+                  <Button
+                    mode="contained"
+                    labelStyle={styles.labelColors}
+                    style={{ backgroundColor: colors.error }}
+                  >
+                    Annuler
+                  </Button>
+                  <Button mode="contained" labelStyle={styles.labelColors}>
+                    Confirmer
+                  </Button>
+                </View>
               </View>
             )}
           </Formik>
@@ -220,8 +150,10 @@ const styles = StyleSheet.create({
   },
   fieldsContainer: {
     backgroundColor: "transparent",
+    justifyContent: "space-between",
     rowGap: 16,
-    marginTop: 12
+    marginTop: 12,
+    flex: 1
   },
   field: {
     flexDirection: "row",
@@ -232,18 +164,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0
   },
   dropdown: {
-    margin: 16,
     height: 50,
     borderBottomColor: "gray",
-    borderBottomWidth: 0.5
+    alignItems: "baseline"
   },
   icon: {
     marginRight: 5
   },
   placeholderStyle: {
-    fontSize: 16
-  },
-  selectedTextStyle: {
     fontSize: 16
   },
   iconStyle: {
@@ -252,7 +180,26 @@ const styles = StyleSheet.create({
   },
   inputSearchStyle: {
     height: 40,
+    borderRadius: 30
+  },
+  soraFont: {
+    fontFamily: "Sora",
     fontSize: 16
+  },
+  searchContainer: {
+    borderRadius: 30,
+    paddingTop: 10
+  },
+  placeHolder: {
+    marginLeft: 8
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    flex: 1,
+    justifyContent: "space-evenly"
+  },
+  labelColors: {
+    color: "#fff"
   }
 })
 
