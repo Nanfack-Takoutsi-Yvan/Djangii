@@ -20,11 +20,13 @@ import User from "@services/models/user"
 
 import validations from "@services/validations"
 import { HttpStatusCode } from "axios"
+import { useAuth } from "@services/context/auth"
 
 export default function CheckEmail() {
-  const { locale, setUser, setActionModalProps, setLoading } =
+  const { locale, setActionModalProps, setLoading } =
     useContext(AppStateContext)
   const { colors } = useTheme()
+  const { signIn } = useAuth()
 
   const router = useRouter()
 
@@ -33,7 +35,7 @@ export default function CheckEmail() {
     User.getPasswordChangeOTP(email)
       .then(user => {
         if (user) {
-          setUser(user)
+          signIn(user)
           router.replace({
             pathname: "passwordReset",
             params: { email: encodeURIComponent(email) }

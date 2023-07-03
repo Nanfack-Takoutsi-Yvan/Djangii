@@ -1,4 +1,4 @@
-import { Provider } from "react-redux"
+import { Provider as StoreProvider } from "react-redux"
 import { useEffect, useMemo, useState } from "react"
 import { SplashScreen, Stack } from "expo-router"
 import * as localization from "expo-localization"
@@ -14,6 +14,7 @@ import NetworkStatus from "@components/ui/NetworkStatus"
 import LoadingModal from "@components/ui/LoadingModal"
 import ActionModal, { ActionModalProps } from "@components/ActionModal"
 import useAuthCredentials from "@services/hooks/auth/useAuthCredentials"
+import { Provider as AuthProvider, useAuth } from "@services/context/auth"
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -33,18 +34,17 @@ export default function RootLayout() {
     <>
       {/* Keep the splash screen open until the assets have loaded. In the future, we should just support async font loading with a native version of font-display. */}
       {!loaded && !loading && <SplashScreen />}
-      {loaded && <RootLayoutNav storedUser={user} />}
+      {loaded && (
+        <AuthProvider>
+          <RootLayoutNav storedUser={user} />
+        </AuthProvider>
+      )}
     </>
   )
 }
 
 function RootLayoutNav({ storedUser }: { storedUser: IUser | undefined }) {
-  const { i18n, setLocale } = useLocales(localization.locale)
-  const [appConnected, showHeader] = useNetInfo()
-  const theme = useDjangiiTheme()
-
   const [loading, setLoading] = useState<boolean>(false)
-  const [user, setUser] = useState<IUser>({} as IUser)
   const [actionModalProps, setActionModalProps] = useState<ActionModalProps>({
     title: "",
     icon: false,
@@ -53,31 +53,24 @@ function RootLayoutNav({ storedUser }: { storedUser: IUser | undefined }) {
     shouldDisplay: false
   })
 
-  useEffect(() => {
-    if (storedUser) setUser(storedUser)
-  }, [storedUser])
+  const { i18n, setLocale } = useLocales(localization.locale)
+  const [appConnected, showHeader] = useNetInfo()
+  const theme = useDjangiiTheme()
+  const { signIn } = useAuth()
 
-  const isUserNotEmpty = Object.keys(user).length !== 0
+  useEffect(() => {
+    if (storedUser) signIn(storedUser)
+  }, [signIn, storedUser])
 
   const contextValue = useMemo(
     () => ({
-      user,
-      setUser,
       setLocale,
       setLoading,
       locale: i18n,
       setActionModalProps,
       isAppConnected: appConnected
     }),
-    [
-      i18n,
-      user,
-      setLocale,
-      setUser,
-      setLoading,
-      appConnected,
-      setActionModalProps
-    ]
+    [i18n, setLocale, setLoading, appConnected, setActionModalProps]
   )
 
   const headerStyle = appConnected ? theme.colors.secondary : theme.colors.error
@@ -92,37 +85,29 @@ function RootLayoutNav({ storedUser }: { storedUser: IUser | undefined }) {
     })
 
   return (
-    <Provider store={store}>
+    <StoreProvider store={store}>
       <AppStateContext.Provider value={contextValue}>
         <PaperProvider theme={theme}>
           <LoadingModal displayModal={loading} />
           <ActionModal settings={{ ...actionModalProps, closeActionModal }} />
           <Stack
             screenOptions={{
+              headerShown: showHeader,
               headerStyle: { backgroundColor: headerStyle },
-              headerTitle: NetworkStatus.bind(null, { connected: appConnected })
+              headerTitle: () => <NetworkStatus connected={appConnected} />
             }}
           >
-            <Stack.Screen
-              name="(auth)"
-              redirect={isUserNotEmpty}
-              options={{ headerShown: showHeader }}
-            />
-            <Stack.Screen name="(tabs)" options={{ headerShown: showHeader }} />
-            <Stack.Screen
-              name="modal"
-              options={{ presentation: "modal", headerShown: false }}
-            />
+            <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="modal" options={{ presentation: "modal" }} />
             <Stack.Screen
               name="appInfoModal"
               options={{
-                presentation: "containedTransparentModal",
-                headerShown: false
+                presentation: "containedTransparentModal"
               }}
             />
           </Stack>
         </PaperProvider>
       </AppStateContext.Provider>
-    </Provider>
+    </StoreProvider>
   )
 }

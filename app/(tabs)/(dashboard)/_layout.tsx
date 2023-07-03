@@ -9,15 +9,17 @@ import NavigationDrawer from "@components/ui/NavigationDrawer"
 import AppStateContext from "@services/context/context"
 import { useRouter } from "expo-router"
 import { getAvatarLetters } from "@utils/functions/format"
+import { useAuth } from "@services/context/auth"
 
 export default function DashboardLayout() {
-  const { user, locale } = useContext(AppStateContext)
+  const { locale } = useContext(AppStateContext)
   const { colors } = useTheme()
   const router = useRouter()
+  const { user } = useAuth()
 
   const avatar = getAvatarLetters(
-    user.userInfos?.firstName,
-    user.userInfos?.lastName
+    user?.userInfos?.firstName,
+    user?.userInfos?.lastName
   )
 
   return (

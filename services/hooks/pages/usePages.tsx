@@ -18,12 +18,14 @@ const usePages = (
       const tempsTabs: Dict = {}
 
       rawTabs.forEach(rawTab => {
-        tempsTabs[rawTab.name] = TableView.bind(this, {
-          data,
-          table: rawTab.table,
-          actions: rawTab.actions,
-          createData
-        })
+        tempsTabs[rawTab.name] = () => (
+          <TableView
+            data={data}
+            table={rawTab.table}
+            actions={rawTab.actions}
+            createData={createData}
+          />
+        )
 
         tempRoute.push({
           key: rawTab.name,

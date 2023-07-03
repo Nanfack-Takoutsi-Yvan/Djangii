@@ -22,10 +22,12 @@ import { StatusBar } from "expo-status-bar"
 import validations from "@services/validations"
 import { saveInSecureStore } from "@services/utils/methods"
 import { HttpStatusCode } from "axios"
+import { useAuth } from "@services/context/auth"
 
 export default function CheckOTP() {
+  const { signIn } = useAuth()
   const { colors } = useTheme()
-  const { locale, setUser, setLoading, setActionModalProps } =
+  const { locale, setLoading, setActionModalProps } =
     useContext(AppStateContext)
 
   type Params = { values: string }
@@ -62,7 +64,7 @@ export default function CheckOTP() {
         if (isOTPValid) {
           User.register(newUser, otp)
             .then(user => {
-              setUser(user)
+              signIn(user)
               const key = process.env.SECURE_STORE_CREDENTIALS as string
 
               saveInSecureStore(key, JSON.stringify(newUser))
