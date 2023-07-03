@@ -1,10 +1,10 @@
-import AppStateContext from "@services/context/context"
-import User from "@services/models/user"
+import React, { FC } from "react"
+import { useRouter } from "expo-router"
+import { Image, StyleSheet, View } from "react-native"
+
+import { useAuth } from "@services/context/auth"
 import logout from "@services/utils/functions/logout"
 import { getAvatarLetters } from "@utils/functions/format"
-import { useRouter } from "expo-router"
-import React, { FC, useContext } from "react"
-import { Image, StyleSheet, View } from "react-native"
 import {
   IconButton,
   Divider,
@@ -20,19 +20,19 @@ type InfoModalProps = {
 }
 
 const InfoModal: FC<InfoModalProps> = ({ onLogout }) => {
-  const { user } = useContext(AppStateContext)
   const { colors } = useTheme()
   const router = useRouter()
+  const { user } = useAuth()
 
   const goBack = () => router.back()
   const imageSize = 75
 
   const avatar = getAvatarLetters(
-    user.userInfos?.firstName,
-    user.userInfos?.lastName
+    user?.userInfos?.firstName,
+    user?.userInfos?.lastName
   )
 
-  const showEmail = user.username === user.userInfos?.email
+  const showEmail = user?.username === user?.userInfos?.email
 
   return (
     <Modal visible style={styles.screen} onDismiss={goBack}>
@@ -78,29 +78,29 @@ const InfoModal: FC<InfoModalProps> = ({ onLogout }) => {
             <View style={{ rowGap: 12 }}>
               <View>
                 <Text variant="titleLarge" style={styles.label}>
-                  <Text>{user.userInfos.firstName}</Text>
+                  <Text>{user?.userInfos.firstName}</Text>
                   <Text> </Text>
-                  <Text>{user.userInfos.lastName}</Text>
+                  <Text>{user?.userInfos.lastName}</Text>
                 </Text>
                 <Text variant="titleSmall" style={styles.userName}>
-                  {user.username}
+                  {user?.username}
                 </Text>
               </View>
               {showEmail ? (
                 <View>
                   <Text variant="titleMedium" style={styles.label}>
-                    {user.userInfos.email}
+                    {user?.userInfos.email}
                   </Text>
                 </View>
               ) : null}
               <View>
                 <Text variant="titleMedium" style={styles.label}>
-                  +{user.userInfos.phone}
+                  +{user?.userInfos.phone}
                 </Text>
               </View>
               <View>
                 <Text variant="titleMedium" style={styles.label}>
-                  {user.userInfos.countryCode}
+                  {user?.userInfos.countryCode}
                 </Text>
               </View>
             </View>

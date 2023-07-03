@@ -22,13 +22,15 @@ import PasswordIcon from "@components/ui/PasswordIcon"
 import vaidationSchema from "@services/validations"
 import User from "@services/models/user"
 import { HttpStatusCode } from "axios"
+import { useAuth } from "@services/context/auth"
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
-  const { locale, setUser, setLoading, setActionModalProps } =
+  const { locale, setLoading, setActionModalProps } =
     useContext(AppStateContext)
   const { colors } = useTheme()
+  const { signIn } = useAuth()
 
   const router = useRouter()
 
@@ -42,7 +44,7 @@ export default function Login() {
     setLoading(true)
     User.login(username, password)
       .then(user => {
-        setUser(user)
+        signIn(user)
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
         router.replace("(tabs)/(dashboard)")
       })
