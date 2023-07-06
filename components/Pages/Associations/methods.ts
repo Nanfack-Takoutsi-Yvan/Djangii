@@ -1,26 +1,37 @@
 import { getDate } from "@services/utils/functions/format"
+import { getAssociations } from "@services/store/slices/associations"
+
+import { manageableAssociationRoles } from "./utils"
 
 export const manageableAssociationsDataTable = (
-  associations: IAssociation[],
-  filter?: string
+  userAssociations: IUserAssociation[]
 ) =>
-  associations
-    .filter(association => {
-      if (!filter) return true
-
-      return association.creator.id === filter
-    })
-    .map(association => [
-      getDate(association.datation.creationTime),
-      association.acronym,
-      association.name,
-      `${association.activated}`
+  userAssociations
+    .filter(userAssociation =>
+      manageableAssociationRoles.has(userAssociation.role)
+    )
+    .map(userAssociation => [
+      getDate(userAssociation.association.datation.creationTime),
+      userAssociation.association.acronym,
+      userAssociation.association.name,
+      `${userAssociation.association.activated}`
     ])
 
-export const joinedAssociationsDataTable = (associations: IAssociation[]) =>
-  associations.map(association => [
-    getDate(association.datation.creationTime),
-    association.acronym,
-    association.name,
-    `${association.activated}`
+export const joinedAssociationsDataTable = (
+  userAssociations: IUserAssociation[]
+) =>
+  userAssociations.map(userAssociation => [
+    getDate(userAssociation.datation.creationTime),
+    userAssociation.association.acronym,
+    userAssociation.association.name,
+    `${userAssociation.association.activated}`
   ])
+
+export const getUserAssociationState = () => {
+  const { data, ...rest } = getAssociations()
+
+  return {
+    ...rest,
+    data: data.userAssociations
+  }
+}

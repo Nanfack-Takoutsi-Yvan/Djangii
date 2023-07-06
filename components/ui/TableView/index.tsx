@@ -48,37 +48,31 @@ const TableView: FC<TableViewProps> = ({
   }, [createData, dispatch])
 
   return (
-    <View
-      style={[
-        styles.screen,
-        {
-          paddingVertical: 8,
-          alignItems: "center"
-        }
-      ]}
-    >
+    <View style={[styles.screen, styles.container]}>
       <ScrollView horizontal>
-        <View style={styles.container}>
-          <Table style={styles.table}>
-            <Row
-              data={tableHeadings}
-              widthArr={cellsSize}
-              style={styles.head}
-              textStyle={styles.headerText}
-            />
-            {tableData.map((row, index) => (
+        <View style={styles.tableContainer}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Table style={styles.table}>
               <Row
-                key={`row-${index}`}
-                data={row}
+                data={tableHeadings}
                 widthArr={cellsSize}
-                style={[
-                  styles.row,
-                  index % 2 ? null : { backgroundColor: "#efefef" }
-                ]}
-                textStyle={styles.text}
+                style={styles.head}
+                textStyle={styles.headerText}
               />
-            ))}
-          </Table>
+              {tableData.map((row, index) => (
+                <Row
+                  key={`row-${index}`}
+                  data={row}
+                  widthArr={cellsSize}
+                  style={[
+                    styles.row,
+                    index % 2 ? null : { backgroundColor: "#efefef" }
+                  ]}
+                  textStyle={styles.text}
+                />
+              ))}
+            </Table>
+          </ScrollView>
         </View>
       </ScrollView>
 
@@ -126,6 +120,10 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1
   },
+  container: {
+    paddingVertical: 8,
+    alignItems: "center"
+  },
   button: {
     borderRadius: 10
   },
@@ -133,7 +131,7 @@ const styles = StyleSheet.create({
     flexDirection: "row-reverse",
     justifyContent: "space-between"
   },
-  container: {
+  tableContainer: {
     flex: 1,
     padding: 16,
     paddingTop: 30,

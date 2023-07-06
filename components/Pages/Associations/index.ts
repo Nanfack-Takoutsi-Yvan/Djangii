@@ -1,9 +1,7 @@
-import {
-  fetchUserAssociations,
-  getAssociations
-} from "@services/store/slices/associations"
+import { fetchUserAssociations } from "@services/store/slices/associations"
 
 import { createData, joinedAssociation, manageableAssociation } from "./config"
+import { getUserAssociationState } from "./methods"
 
 const associationConfig: configs = {
   tables: [
@@ -17,7 +15,7 @@ const associationConfig: configs = {
       table: joinedAssociation
     }
   ],
-  getData: getAssociations,
+  getData: getUserAssociationState,
   fetchData: fetchUserAssociations,
   createData
 }

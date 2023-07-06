@@ -13,6 +13,8 @@ type associationsData = {
 type AssociationState = {
   data: associationsData
   loading: boolean
+  // Called should be used only when in slug
+  called: boolean
   error?: AxiosError
 }
 
@@ -21,7 +23,8 @@ const initialState: AssociationState = {
     userAssociations: [],
     createdAssociation: []
   },
-  loading: false
+  loading: false,
+  called: false
 }
 
 export const fetchUserAssociations = createAsyncThunk<
@@ -48,6 +51,10 @@ const associationSlice = createSlice({
     // Fetch user associations
     builder.addCase(fetchUserAssociations.pending, state => {
       state.loading = true
+
+      if (!state.called) {
+        state.called = true
+      }
     })
     builder.addCase(fetchUserAssociations.fulfilled, (state, action) => {
       state.data.userAssociations = action.payload

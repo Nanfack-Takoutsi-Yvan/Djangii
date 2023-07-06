@@ -1,5 +1,5 @@
 /* eslint-disable react/style-prop-object */
-import { useContext, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { StatusBar } from "expo-status-bar"
 import { Drawer } from "expo-router/drawer"
 import { StyleSheet, View } from "react-native"
@@ -10,23 +10,29 @@ import TablesTabView from "@components/ui/TablesTabView"
 import TableViewerBottomSheet from "@components/ui/TableViewerBottomSheet"
 import BottomSheetForm from "@components/ui/BottomSheetForm"
 import pages from "@components/Pages"
+import { useDispatch } from "react-redux"
 
 export default function TabOneScreen() {
   const router = useRouter()
   const { locale } = useContext(AppStateContext)
   const params = useLocalSearchParams() as DashboardSlugParam
+  const dispatch = useDispatch()
 
   const pageName = params.slug
   const pageData = pages[pageName]
 
-  if (!pageData) {
-    router.push("(dashboard)")
+  const dataState = pageData?.getData()
 
+  useEffect(() => {
+    if (dataState && !dataState.called) {
+      dispatch(pageData?.fetchData())
+    }
+  }, [dataState, dispatch, pageData])
+
+  if (!pageData || !dataState) {
+    router.push("(dashboard)")
     return null
   }
-
-  const { data } = pageData.getData() as Data
-  const { tables, createData } = pageData
 
   return (
     <View style={styles.container}>
@@ -39,7 +45,11 @@ export default function TabOneScreen() {
         }}
       />
       <View style={styles.screen}>
-        <TablesTabView data={data} tables={tables} createData={createData} />
+        <TablesTabView
+          data={dataState.data}
+          tables={pageData.tables}
+          createData={pageData?.createData}
+        />
         <TableViewerBottomSheet />
         <BottomSheetForm />
       </View>

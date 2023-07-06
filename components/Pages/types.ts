@@ -33,7 +33,7 @@ type Field = {
 
 type configs = {
   tables: tableData[]
-  getData: () => any
+  getData: () => Data
   fetchData: () => any
   createData: CreateData
 }

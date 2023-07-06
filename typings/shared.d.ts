@@ -18,8 +18,9 @@ type DashboardSlugParam = {
 
 type Data = {
   data: any[]
-  error: any
+  error?: any
   loading: boolean
+  called: boolean
 }
 
 type DashboardPages =
