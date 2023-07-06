@@ -46,7 +46,6 @@ export default function Login() {
       .then(user => {
         signIn(user)
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
-        router.replace("(tabs)/(dashboard)")
       })
       .catch(err => {
         setLoading(false)

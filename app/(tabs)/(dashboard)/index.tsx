@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar"
 import { Text } from "react-native-paper"
 import { Image, StyleSheet, View, useWindowDimensions } from "react-native"
 
-import { useCallback, useContext, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect, useRef, useState } from "react"
 import { FlatList } from "react-native-gesture-handler"
 
 import ReportCard from "@components/ui/reportCard"
@@ -31,6 +31,7 @@ export default function TabOneScreen() {
   const associations = getAssociations().data
   const dashboardData = getDashboardData()
   const { locale } = useContext(AppStateContext)
+  const triggerFetchAssociation = useRef<boolean>(true)
 
   const curve = useCallback(getCurvedData, [])
   const tontineCurve = useCallback(getTontineRoundCurve, [])
@@ -42,8 +43,9 @@ export default function TabOneScreen() {
   ]
 
   useEffect(() => {
-    if (associations.length === 0) {
+    if (triggerFetchAssociation.current) {
       dispatch(fetchUserAssociations())
+      triggerFetchAssociation.current = false
     }
   }, [associations, dispatch])
 

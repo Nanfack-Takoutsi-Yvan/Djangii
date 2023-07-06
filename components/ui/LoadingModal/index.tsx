@@ -1,4 +1,3 @@
-import AppStateContext from "@services/context/context"
 import {
   StyleSheet,
   useWindowDimensions,

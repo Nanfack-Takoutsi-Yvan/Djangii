@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import { getValueFromSecureStoreFor } from "@services/utils/methods"
+import { getFromAsyncStorage } from "@services/utils/storage"
 import { useEffect, useState } from "react"
 
 const useAuthCredentials = () => {
@@ -9,7 +8,7 @@ const useAuthCredentials = () => {
   const fetchUserData = async () => {
     setLoading(true)
     const key = process.env.SECURE_STORE_CREDENTIALS as string
-    const credentials = await getValueFromSecureStoreFor(key)
+    const credentials = await getFromAsyncStorage(key)
 
     if (credentials) {
       const currentUser = JSON.parse(credentials) as IUser

@@ -20,7 +20,7 @@ import AppStateContext from "@services/context/context"
 
 import { StatusBar } from "expo-status-bar"
 import validations from "@services/validations"
-import { saveInSecureStore } from "@services/utils/methods"
+import { saveInSecureStore } from "@services/utils/storage"
 import { HttpStatusCode } from "axios"
 import { useAuth } from "@services/context/auth"
 
