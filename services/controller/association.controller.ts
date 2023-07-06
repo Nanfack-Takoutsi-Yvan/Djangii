@@ -8,7 +8,8 @@ export class AssociationController implements IAssociationController {
 
   constructor() {
     this.resource = {
-      me: "api/associations/me"
+      created: "api/associations/me",
+      userAssociation: "api/associations/members/me"
     }
   }
 
@@ -16,10 +17,41 @@ export class AssociationController implements IAssociationController {
     assert(token, "token is required")
 
     try {
-      const res = await apiClient.get<IAssociationData>(this.resource.me, {
-        headers: { Authorization: token },
+      const res = await apiClient.get<IUserAssociation[]>(
+        this.resource.userAssociation,
+        {
+          headers: { Authorization: token },
+          params: {
+            return: expect
+          }
+        }
+      )
+
+      if (!res) {
+        throw new Error(`No association found using the token`)
+      }
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `Error while getting associations: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public getCreatedAssociations = async (token: string, expect?: string) => {
+    assert(token, "token is required")
+
+    try {
+      const res = await apiClient.get<IAssociationData>(this.resource.created, {
         params: {
           return: expect
+        },
+        headers: {
+          Authorization: token
         }
       })
 

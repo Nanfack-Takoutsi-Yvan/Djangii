@@ -14,7 +14,7 @@ import {
   getTontineRoundCurve
 } from "@services/utils/functions/curves"
 import {
-  fetchUserAssociations,
+  fetchCreatedAssociation,
   getAssociations
 } from "@services/store/slices/associations"
 import {
@@ -28,10 +28,13 @@ export default function TabOneScreen() {
   const [curveData, setCurveData] = useState<IDashboardData>()
 
   const dispatch = useAppDispatch()
-  const associations = getAssociations().data
   const dashboardData = getDashboardData()
   const { locale } = useContext(AppStateContext)
   const triggerFetchAssociation = useRef<boolean>(true)
+
+  const {
+    data: { createdAssociation: associations }
+  } = getAssociations()
 
   const curve = useCallback(getCurvedData, [])
   const tontineCurve = useCallback(getTontineRoundCurve, [])
@@ -44,10 +47,10 @@ export default function TabOneScreen() {
 
   useEffect(() => {
     if (triggerFetchAssociation.current) {
-      dispatch(fetchUserAssociations())
+      dispatch(fetchCreatedAssociation())
       triggerFetchAssociation.current = false
     }
-  }, [associations, dispatch])
+  }, [dispatch])
 
   useEffect(() => {
     if (associations.length !== 0) {

@@ -1,3 +1,17 @@
+interface IUserAssociation {
+  id: string
+  firstName: string
+  lastName: string
+  numero: number
+  userInfo: IUserInfo
+  role: IUserRole
+  type: string
+  dateJoinAssociation: string
+  association: IAssociation
+  author: IUserInfo
+  datation: IHistory
+}
+
 interface IAssociation {
   acronym: string
   activated: boolean
@@ -9,7 +23,6 @@ interface IAssociation {
   longitude: number
   name: string
 }
-
 interface IAssociationNotificationRequestBody {
   associationId: string
   description: string
@@ -99,7 +112,14 @@ interface IAssociationPenaltyRequestBody {
 }
 
 interface IAssociationController {
-  getAssociations: (token: string, expect: string) => Promise<IAssociationData>
+  getAssociations: (
+    token: string,
+    expect: string
+  ) => Promise<IUserAssociation[]>
+  getCreatedAssociations: (
+    token: string,
+    expect: string
+  ) => Promise<IAssociationData>
 }
 
 interface IAssociationData {

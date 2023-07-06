@@ -16,6 +16,7 @@ interface IUserInfo {
   phone: string
   countryCode: string
   socialProfil: ISocialProfile
+  defaultAssociationId: string
   datation: IHistory
 }
 
