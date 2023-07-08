@@ -26,19 +26,20 @@ export const createData: CreateData = {
   validation: {},
   fields: [
     {
-      name: fieldNames.textField,
-      placeholder: "name",
-      icon: ""
-    },
-    {
-      name: fieldNames.textField,
-      placeholder: "name",
-      icon: ""
-    },
-    {
       name: fieldNames.selectField,
-      placeholder: "name",
-      icon: ""
+      placeholder: "pages.selectCurrency",
+      searchPlaceholder: "pages.search",
+      icon: "cash",
+      options: [
+        { label: "Item 1", value: "hello" },
+        { label: "Item 2", value: "hello2" },
+        { label: "Item 3", value: "hello3" },
+        { label: "Item 4", value: "hello4" },
+        { label: "Item 5", value: "hello5" },
+        { label: "Item 6", value: "hello6" },
+        { label: "Item 7", value: "hello7" },
+        { label: "Item 8", value: "hello8" }
+      ]
     }
   ]
 }

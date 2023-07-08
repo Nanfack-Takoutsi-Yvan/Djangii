@@ -3,11 +3,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 import { useAppSelector } from "@services/store"
 
-type FormField = {
-  name: string[]
-  object: []
-}
-
 type FormTitle = {
   label: string
   icon: string
@@ -17,8 +12,9 @@ type BottomSheetFormState = {
   model: any
   validation: any
   position: number
-  form: FormField[]
+  form: CreateData["fields"]
   title: FormTitle
+  buttonTitle: string
 }
 
 const initialState: BottomSheetFormState = {
@@ -26,6 +22,7 @@ const initialState: BottomSheetFormState = {
   form: [],
   model: {},
   validation: {},
+  buttonTitle: "",
   title: {
     label: "",
     icon: ""

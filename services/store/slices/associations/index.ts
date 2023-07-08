@@ -64,6 +64,7 @@ const associationSlice = createSlice({
       state.error = action.payload
       state.loading = false
     })
+
     // Fetch Created associations
     builder.addCase(fetchCreatedAssociation.pending, state => {
       state.loading = true

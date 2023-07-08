@@ -19,9 +19,13 @@ import {
 } from "@services/store/slices/associations"
 import {
   fetchAssociationDashBoardData,
-  getDashboardData
+  getDashboardData,
+  isDashBoardLoading,
+  updateDashboardLoading
 } from "@services/store/slices/dashboard"
 import AppStateContext from "@services/context/context"
+import DashboardSkeletonLoader from "@components/ui/skeletonLoader/dashboard"
+import ChartSkeleton from "@components/ui/skeletonLoader/dashboard/chartSkeleton"
 
 export default function TabOneScreen() {
   const [dataId, setDataId] = useState<string>("")
@@ -31,6 +35,7 @@ export default function TabOneScreen() {
   const dashboardData = getDashboardData()
   const { locale } = useContext(AppStateContext)
   const triggerFetchAssociation = useRef<boolean>(true)
+  const dashBoardLoading = isDashBoardLoading()
 
   const {
     data: { createdAssociation: associations }
@@ -48,14 +53,20 @@ export default function TabOneScreen() {
   useEffect(() => {
     if (triggerFetchAssociation.current) {
       dispatch(fetchCreatedAssociation())
+      dispatch(updateDashboardLoading(true))
+
       triggerFetchAssociation.current = false
     }
   }, [dispatch])
 
   useEffect(() => {
     if (associations.length !== 0) {
-      associations.forEach(association => {
+      associations.forEach((association, index) => {
         dispatch(fetchAssociationDashBoardData(association.id))
+
+        if (index === associations.length - 1) {
+          dispatch(updateDashboardLoading(false))
+        }
       })
 
       setDataId(associations[0].id)
@@ -77,7 +88,7 @@ export default function TabOneScreen() {
     <View style={styles.container}>
       <StatusBar style="light" />
 
-      {curveData ? (
+      {/* {curveData ? (
         <Chart
           data={curve(curveData, curveLegend)}
           width={width}
@@ -85,12 +96,15 @@ export default function TabOneScreen() {
         />
       ) : null}
 
+      {!curveData && dashBoardLoading ? <ChartSkeleton /> : null} */}
+      <ChartSkeleton />
+
       <View style={styles.reportSection}>
         <View style={styles.reportTitle}>
           <Text variant="headlineSmall">{locale.t("dashboard.title")}</Text>
         </View>
 
-        {associations.length === 0 ? (
+        {/* {associations.length === 0 && !dashBoardLoading ? (
           <View
             style={{ justifyContent: "center", alignItems: "center", flex: 1 }}
           >
@@ -103,7 +117,7 @@ export default function TabOneScreen() {
           </View>
         ) : null}
 
-        {associations.length !== 0 ? (
+        {associations.length !== 0 && !dashBoardLoading ? (
           <FlatList
             horizontal
             data={associations}
@@ -121,7 +135,9 @@ export default function TabOneScreen() {
             )}
             showsHorizontalScrollIndicator={false}
           />
-        ) : null}
+        ) : null} */}
+
+        <DashboardSkeletonLoader />
       </View>
     </View>
   )

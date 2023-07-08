@@ -12,7 +12,7 @@ const SelectField: FC<SelectFieldProps> = ({
   icon,
   placeholder,
   onChange,
-  data
+  options
 }) => {
   const { colors } = useTheme()
   const { locale } = useContext(AppStateContext)
@@ -25,7 +25,7 @@ const SelectField: FC<SelectFieldProps> = ({
       itemTextStyle={styles.soraFont}
       placeholderStyle={[styles.soraFont, styles.placeHolder]}
       containerStyle={styles.searchContainer}
-      data={data}
+      data={options!}
       mode="modal"
       search
       labelField="label"

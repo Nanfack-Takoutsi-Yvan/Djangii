@@ -1,12 +1,11 @@
 import { forwardRef, useCallback, useContext, useState } from "react"
 
 import { Formik } from "formik"
-import { Button, Text, TextInput } from "react-native-paper"
+import { Button, Text } from "react-native-paper"
 import { StyleSheet, View } from "react-native"
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet"
 import { useTheme } from "react-native-paper/src/core/theming"
 import Icon from "react-native-paper/src/components/Icon"
-import { Dropdown } from "react-native-element-dropdown"
 
 import { useAppDispatch } from "@services/store"
 import AppStateContext from "@services/context/context"
@@ -26,7 +25,7 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
     const dispatch = useAppDispatch()
     const { locale } = useContext(AppStateContext)
 
-    const { position, title } = getBottomSheetForm()
+    const { position, title, form } = getBottomSheetForm()
 
     const handleSheetChanges = useCallback(
       (index: number) => {
@@ -35,16 +34,9 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
       [dispatch]
     )
 
-    const data = [
-      { label: "Item 1", value: "hello" },
-      { label: "Item 2", value: "hello2" },
-      { label: "Item 3", value: "hello3" },
-      { label: "Item 4", value: "hello4" },
-      { label: "Item 5", value: "hello5" },
-      { label: "Item 6", value: "hello6" },
-      { label: "Item 7", value: "hello7" },
-      { label: "Item 8", value: "hello8" }
-    ]
+    if (form.length === 0) {
+      return null
+    }
 
     return (
       <BottomSheet
@@ -77,34 +69,6 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
               touched
             }) => (
               <View style={styles.fieldsContainer}>
-                <View>
-                  <Dropdown
-                    style={styles.dropdown}
-                    selectedTextStyle={styles.soraFont}
-                    inputSearchStyle={[
-                      styles.inputSearchStyle,
-                      styles.soraFont
-                    ]}
-                    itemTextStyle={styles.soraFont}
-                    placeholderStyle={[styles.soraFont, styles.placeHolder]}
-                    containerStyle={styles.searchContainer}
-                    data={data}
-                    mode="modal"
-                    search
-                    labelField="label"
-                    valueField="value"
-                    placeholder="Select item"
-                    searchPlaceholder={locale.t("pages.search")}
-                    value={value}
-                    onChange={item => {
-                      console.log(item)
-                      setValue(item.value)
-                    }}
-                    renderLeftIcon={() => (
-                      <Icon color={colors.primary} source="cash" size={40} />
-                    )}
-                  />
-                </View>
                 <View style={styles.buttonContainer}>
                   <Button
                     mode="contained"

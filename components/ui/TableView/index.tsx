@@ -32,7 +32,7 @@ const TableView: FC<TableViewProps> = ({
   const openBottomSheet = useCallback(() => {
     dispatch(changeBottomSheetFormPosition(0))
     if (createData) {
-      const { formIcon, formTitle } = createData
+      const { formIcon, formTitle, fields } = createData
       dispatch(
         updateBottomSheetFormState({
           title: {
@@ -41,7 +41,8 @@ const TableView: FC<TableViewProps> = ({
           },
           model: undefined,
           validation: undefined,
-          form: []
+          form: fields,
+          buttonTitle: ""
         })
       )
     }

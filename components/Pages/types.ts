@@ -29,6 +29,13 @@ type Field = {
   name: FieldNames
   placeholder: string
   icon: string
+  searchPlaceholder?: string
+  options?: SearchFieldOptions[]
+}
+
+type SearchFieldOptions = {
+  label: string
+  value: string
 }
 
 type configs = {

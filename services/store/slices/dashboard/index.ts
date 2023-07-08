@@ -13,10 +13,12 @@ interface dashboard extends IDashboardData {
 export type DashboardState = {
   data: dashboard[]
   error?: AxiosError
+  loading: boolean
 }
 
 const initialState: DashboardState = {
-  data: []
+  data: [],
+  loading: false
 }
 
 export const fetchAssociationDashBoardData = createAsyncThunk<
@@ -34,10 +36,14 @@ export const fetchAssociationDashBoardData = createAsyncThunk<
   })
 )
 
-const associationSlice = createSlice({
+const dashboardSlice = createSlice({
   name: "dashboard",
   initialState,
-  reducers: {},
+  reducers: {
+    updateDashboardLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload
+    }
+  },
   extraReducers: builder => {
     builder.addCase(
       fetchAssociationDashBoardData.fulfilled,
@@ -53,6 +59,10 @@ const associationSlice = createSlice({
   }
 })
 
-export default associationSlice.reducer
+export default dashboardSlice.reducer
+
+export const { updateDashboardLoading } = dashboardSlice.actions
 export const getDashboardData = () =>
   useAppSelector(({ dashboard }) => dashboard.data)
+export const isDashBoardLoading = () =>
+  useAppSelector(state => state.dashboard.loading)
