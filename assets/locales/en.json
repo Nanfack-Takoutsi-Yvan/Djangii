@@ -161,8 +161,17 @@
   "pages": {
     "exportButton": "Export list",
     "createAssociationButton": "Create an association",
+    "createAssociationPageButton": "Create new page",
     "newAssociation": "New association",
-    "search": "Search..."
+    "search": "Search...",
+    "addMemberPageButton": "Invite new members",
+    "newMember": "New Member",
+    "newFixedAmountTontine": "New Tontine Contribution",
+    "createFixedAmountTontine": "Add new Tontine Contribution",
+    "newSavingTontine": "New Saving Tontine",
+    "createSavingTontine": "Create Saving Tontine",
+    "newVariableAmountTontine": "New Variable Amount Tontine",
+    "createVariableAmountTontine": "Create Variable Amount Tontine"
   },
   "drawer": {
     "dashboard": "Dashboard",
@@ -199,13 +208,50 @@
     "advertisements": "Advertisements"
   },
   "tabs": {
+    "page": "Pages ({{number}}",
+    "members": "Members ({{number}})",
     "manageableAssociation": "Manageable Associations ({{number}})",
-    "associationJoined": "Associations joined ({{number}})"
+    "associationJoined": "Associations joined ({{number}})",
+    "acceptedMembershipRequests": "Accepted Membership Requests ({{number}})",
+    "pendingMembershipRequests": "Pending Membership Requests ({{number}})",
+    "rejectedMembershipRequests": "Rejected Membership Requests ({{number}})",
+    "fixedAmount": "Fixed amount contribution ({{number}})",
+    "savings": "Savings ({{number}})",
+    "variableAmount": "Variable amount contribution ({{number}})",
+    "tontineEndedRound": "Ended Round ({{number}})",
+    "tontineOpenedRound": "Closed Round ({{number}})",
+    "tontineClosedRound": "Closed Round ({{number}})"
   },
   "tables": {
     "creationDate": "Creation Date",
     "acronym": "Acronym",
     "name": "Name",
-    "active": "Active"
+    "active": "Active",
+    "association": "Association",
+    "pageName": "Page Name",
+    "page": "Pages",
+    "hiddenPage": "Hidden Page",
+    "description": "Description",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "alias": "Alias",
+    "associationPageName": "Association Page Name",
+    "associationName": "Association Name",
+    "motivation": "Motivation",
+    "associationSubscriptionDate": "Association Subscription Date",
+    "invitedBy": "Invited by",
+    "role": "Role",
+    "status": "Status",
+    "minAmount": "Min amount",
+    "frequency": "Frequency",
+    "associationInterestRate": "Association interest rate (%)",
+    "saleInterestRate": "Sale interest rate (%)",
+    "defaultInterestRate": "Default interest rate (%)",
+    "maximumLoanPerMember": "Maximum loans per member",
+    "paymentDeadlineFrequency": "Payment deadline frequency",
+    "startingDate": "Starting date",
+    "tontineName": "Tontine name",
+    "amount": "Amount",
+    "contributionFailure": "Contribution failure"
   }
 }

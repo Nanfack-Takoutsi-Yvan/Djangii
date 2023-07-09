@@ -1,7 +1,6 @@
 import { getDate } from "@services/utils/functions/format"
-import { getAssociations } from "@services/store/slices/associations"
-
-import { manageableAssociationRoles } from "./utils"
+import { associationSelector } from "@store/slices/associations"
+import { manageableAssociationRoles } from "../utils"
 
 export const manageableAssociationsDataTable = (
   userAssociations: IUserAssociation[]
@@ -28,7 +27,7 @@ export const joinedAssociationsDataTable = (
   ])
 
 export const getUserAssociationState = () => {
-  const { data, ...rest } = getAssociations()
+  const { data, ...rest } = associationSelector.getAssociations()
 
   return {
     ...rest,

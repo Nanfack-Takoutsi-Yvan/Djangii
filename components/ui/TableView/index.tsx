@@ -78,7 +78,7 @@ const TableView: FC<TableViewProps> = ({
       </ScrollView>
 
       <View style={styles.buttonsContainer}>
-        {createData && (
+        {createData ? (
           <Button
             textColor="white"
             mode="contained"
@@ -95,7 +95,7 @@ const TableView: FC<TableViewProps> = ({
           >
             {locale.t(`pages.${createData.buttonTitle}`)}
           </Button>
-        )}
+        ) : null}
 
         <Button
           textColor="white"

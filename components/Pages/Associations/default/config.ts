@@ -1,4 +1,4 @@
-import Association from "@services/models/association"
+import Association from "@services/models/associations/association"
 import fieldNames from "@components/ui/Form/__form.utils"
 
 import {
@@ -20,7 +20,7 @@ export const joinedAssociation = {
 
 export const createData: CreateData = {
   buttonTitle: "createAssociationButton",
-  formTitle: "newAssociation",
+  formTitle: "newAssociationPage",
   formIcon: "plus-box-outline",
   model: new Association(),
   validation: {},

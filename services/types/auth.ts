@@ -90,3 +90,20 @@ interface UserNotificationStatisticDTO {
   notificationNotDiplay: number
   notificationNotOpen: number
 }
+
+interface ITransmitter {
+  id: string
+  firstName: string
+  lastName: string
+  email: string
+  lang: string
+  phone: string
+  defaultAssociationId: string
+  country: ICountry
+  socialProfil: ISocialProfile
+  judge: IUserInfo
+  datation: IHistory
+  accepted: boolean
+  rejected: boolean
+  pending: boolean
+}

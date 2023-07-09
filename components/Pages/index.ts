@@ -1,15 +1,17 @@
-import associationsConfigs from "./Associations"
+import associationConfigs from "./Associations"
+import associationMembersConfigs from "./Members"
+import tontineConfigs from "./Tontine"
 
 const pages: Pages = {
-  association: associationsConfigs,
-  pages: undefined,
-  membershipRequest: undefined,
-  members: undefined,
+  association: associationConfigs.association,
+  pages: associationConfigs.associationsPages,
+  membershipRequest: associationConfigs.membershipRequest,
+  members: associationMembersConfigs.members,
   identities: undefined,
-  fixedAmount: undefined,
-  variableAmount: undefined,
-  savings: undefined,
-  tontineTurn: undefined,
+  fixedAmount: tontineConfigs.fixedAmount,
+  variableAmount: tontineConfigs.variableAmount,
+  savings: tontineConfigs.savings,
+  tontineTurn: tontineConfigs.rounds,
   mySubscriptions: undefined,
   sessions: undefined,
   pendingLoans: undefined,

@@ -5,6 +5,8 @@ import {
 } from "@reduxjs/toolkit"
 
 import authSlice from "./slices/auth"
+import members from "./slices/members"
+import tontines from "./slices/tontines"
 import dashboard from "./slices/dashboard"
 import associations from "./slices/associations"
 import notifications from "./slices/notifications"
@@ -14,10 +16,12 @@ import bottomSheetTables from "./slices/bottomSheetTables"
 const combinedReducer = combineReducers({
   dashboard,
   authSlice,
-  associations,
   notifications,
   bottomSheetForm,
-  bottomSheetTables
+  bottomSheetTables,
+  ...members,
+  ...tontines,
+  ...associations
 })
 
 const rootReducer = (state: any, action: PayloadAction<any>) => {

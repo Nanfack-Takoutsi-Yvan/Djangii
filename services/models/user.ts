@@ -49,7 +49,8 @@ export default class User implements IUser {
       lastUpdateTime: "",
 
       version: 0
-    }
+    },
+    defaultAssociationId: ""
   }
 
   constructor(user?: IUser) {

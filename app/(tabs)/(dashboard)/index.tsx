@@ -14,15 +14,15 @@ import {
   getTontineRoundCurve
 } from "@services/utils/functions/curves"
 import {
-  fetchCreatedAssociation,
-  getAssociations
-} from "@services/store/slices/associations"
-import {
   fetchAssociationDashBoardData,
   getDashboardData,
   isDashBoardLoading,
   updateDashboardLoading
 } from "@services/store/slices/dashboard"
+import {
+  associationSelector,
+  associationActions
+} from "@store/slices/associations"
 import AppStateContext from "@services/context/context"
 import DashboardSkeletonLoader from "@components/ui/skeletonLoader/dashboard"
 import ChartSkeleton from "@components/ui/skeletonLoader/dashboard/chartSkeleton"
@@ -39,7 +39,7 @@ export default function TabOneScreen() {
 
   const {
     data: { createdAssociation: associations }
-  } = getAssociations()
+  } = associationSelector.getAssociations()
 
   const curve = useCallback(getCurvedData, [])
   const tontineCurve = useCallback(getTontineRoundCurve, [])
@@ -52,7 +52,7 @@ export default function TabOneScreen() {
 
   useEffect(() => {
     if (triggerFetchAssociation.current) {
-      dispatch(fetchCreatedAssociation())
+      dispatch(associationActions.fetchCreatedAssociation())
       dispatch(updateDashboardLoading(true))
 
       triggerFetchAssociation.current = false

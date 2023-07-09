@@ -56,3 +56,9 @@ type Sort = {
   unsorted: boolean
   empty: boolean
 }
+
+interface ICountry {
+  code: string
+  name: string
+  datation: IHistory
+}

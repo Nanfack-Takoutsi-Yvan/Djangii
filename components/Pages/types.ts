@@ -20,7 +20,7 @@ type CreateData = {
   buttonTitle: string
   formTitle: string
   formIcon: string
-  model: IAssociation
+  model: IAssociation | IUserAssociation
   validation: any
   fields: Field[]
 }
@@ -41,6 +41,6 @@ type SearchFieldOptions = {
 type configs = {
   tables: tableData[]
   getData: () => Data
-  fetchData: () => any
-  createData: CreateData
+  fetchData: (id: string) => any
+  createData?: CreateData
 }

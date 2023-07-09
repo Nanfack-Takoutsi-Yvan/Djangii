@@ -161,8 +161,17 @@
   "pages": {
     "exportButton": "Exporter la liste",
     "createAssociationButton": "Créer une association",
+    "createAssociationPageButton": "Créer une nouvelle page",
     "newAssociation": "Nouvelle association",
-    "search": "Rechercher..."
+    "search": "Rechercher...",
+    "addMemberPageButton": "Inviter un nouveau membre",
+    "newMember": "Nouveau Membre",
+    "newFixedAmountTontine": "Nouvelle Contribution",
+    "createFixedAmountTontine": "Créer une tontine a contribution fixe",
+    "newSavingTontine": "Nouvelle tontine d'éparge",
+    "createSavingTontine": "Créer une tontine d'éparge",
+    "newVariableAmountTontine": "Nouvelle tontine à contributions variable",
+    "createVariableAmountTontine": "Créer une tontine à contributions variable"
   },
   "drawer": {
     "dashboard": "Tableau de board",
@@ -199,13 +208,50 @@
     "advertisements": "Publicité"
   },
   "tabs": {
+    "page": "Pages",
+    "members": "Membres",
     "manageableAssociation": "Mes Associations ({{number}})",
-    "associationJoined": "Associations adherées ({{number}})"
+    "associationJoined": "Associations adherées ({{number}})",
+    "acceptedMembershipRequests": "Demande d'adhésion acceptées ({{number}})",
+    "pendingMembershipRequests": "Demande d'adhésion en attente ({{number}})",
+    "rejectedMembershipRequests": "Demande d'adhésion rejetées ({{number}})",
+    "fixedAmount": "Contribution Fixe ({{number}})",
+    "savings": "Épargne ({{number}})",
+    "variableAmount": "Contribution Variable ({{number}})",
+    "tontineEndedRound": "Tours terminés ({{number}})",
+    "tontineOpenedRound": "Tours ouverts ({{number}})",
+    "tontineClosedRound": "Tours fermés ({{number}})"
   },
   "tables": {
     "creationDate": "Date de creation",
     "acronym": "Acronym",
     "name": "Nom",
-    "active": "Actif"
+    "active": "Actif",
+    "association": "Association",
+    "pageName": "Nom de la page",
+    "page": "Pages",
+    "hiddenPage": "Page masquée",
+    "description": "Description",
+    "firstName": "Prénoms",
+    "lastName": "Nome",
+    "alias": "Alias",
+    "associationPageName": "Page de l'association",
+    "associationName": "Nome de l'association",
+    "motivation": "Motivation",
+    "associationSubscriptionDate": "Date de souscription à l'association",
+    "invitedBy": "Invité par",
+    "role": "Role",
+    "status": "Statut",
+    "minAmount": "Montant minimal",
+    "frequency": "Frequence",
+    "associationInterestRate": "Taux d'interet de l'association (%)",
+    "saleInterestRate": "Taux d'interet de vente (%)",
+    "defaultInterestRate": "Taux d'interet non remboursement (%)",
+    "maximumLoanPerMember": "Montant maximum du prêt par membre",
+    "paymentDeadlineFrequency": "Frequence de payment",
+    "startingDate": "Date de debut",
+    "tontineName": "Nom de la tontine",
+    "amount": "Montant",
+    "contributionFailure": "Défaillance de contribution"
   }
 }

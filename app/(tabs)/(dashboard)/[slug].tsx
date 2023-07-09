@@ -1,9 +1,9 @@
 /* eslint-disable react/style-prop-object */
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { StatusBar } from "expo-status-bar"
 import { Drawer } from "expo-router/drawer"
 import { StyleSheet, View } from "react-native"
-import { useLocalSearchParams, useRouter } from "expo-router"
+import { useLocalSearchParams } from "expo-router"
 
 import AppStateContext from "@services/context/context"
 import TablesTabView from "@components/ui/TablesTabView"
@@ -12,12 +12,18 @@ import BottomSheetForm from "@components/ui/BottomSheetForm"
 import pages from "@components/Pages"
 import { useDispatch } from "react-redux"
 import SlugSkeletonLoader from "@components/ui/skeletonLoader/slug"
+import { Text } from "react-native-paper"
+import { useAuth } from "@services/context/auth"
 
 export default function TabOneScreen() {
-  const router = useRouter()
-  const { locale } = useContext(AppStateContext)
+  const [fetchData, setFetData] = useState<boolean>(false)
+  const [data, setData] = useState<any[]>([])
+  const [tables, setTables] = useState<tableData[]>([])
+
   const params = useLocalSearchParams() as DashboardSlugParam
+  const { locale } = useContext(AppStateContext)
   const dispatch = useDispatch()
+  const { user } = useAuth()
 
   const pageName = params.slug
   const pageData = pages[pageName]
@@ -25,14 +31,38 @@ export default function TabOneScreen() {
   const dataState = pageData?.getData()
 
   useEffect(() => {
-    if (dataState && !dataState.called) {
-      dispatch(pageData?.fetchData())
+    setFetData(true)
+  }, [pageName])
+
+  useEffect(() => {
+    if (!dataState?.data && fetchData) {
+      const id = user?.userInfos.defaultAssociationId || ""
+
+      dispatch(pageData?.fetchData(id))
+      setFetData(false)
     }
-  }, [dataState, dispatch, pageData])
+  }, [
+    dataState,
+    dispatch,
+    fetchData,
+    pageData,
+    user?.userInfos.defaultAssociationId
+  ])
+
+  useEffect(() => {
+    if (dataState?.data) {
+      setData(dataState.data)
+    }
+  }, [dataState?.data])
+
+  useEffect(() => {
+    if (pageData?.tables) {
+      setTables(pageData.tables)
+    }
+  }, [pageData?.tables])
 
   if (!pageData || !dataState) {
-    router.push("(dashboard)")
-    return null
+    return <Text>{pageName}</Text>
   }
 
   if (dataState.loading) {
@@ -51,8 +81,8 @@ export default function TabOneScreen() {
       />
       <View style={styles.screen}>
         <TablesTabView
-          data={dataState.data}
-          tables={pageData.tables}
+          data={data}
+          tables={tables}
           createData={pageData?.createData}
         />
         <TableViewerBottomSheet />

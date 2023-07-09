@@ -1,37 +1,10 @@
-/* eslint-disable max-classes-per-file */
+import assert from "assert"
 import { AssociationController } from "@services/controller/association.controller"
 import getTokenFromStorage from "@services/utils/functions/token"
-import assert from "assert"
 
-export default class Association implements IAssociation {
-  id = ""
+import Association from "./association"
 
-  acronym = ""
-
-  activated = false
-
-  creator = {} as IUserInfo
-
-  currency = {} as ICurrency
-
-  datation = {} as IHistory
-
-  latitude = 0
-
-  longitude = 0
-
-  name = ""
-
-  private controller = new AssociationController()
-
-  constructor(association?: IAssociation) {
-    if (association) {
-      Object.assign(this, association)
-    }
-  }
-}
-
-export class UserAssociation implements IUserAssociation {
+export default class UserAssociation implements IUserAssociation {
   id = ""
 
   firstName = ""
@@ -88,5 +61,16 @@ export class UserAssociation implements IUserAssociation {
     rawData.content.map(data => associations.push(data))
 
     return associations
+  }
+
+  static getAllAssociationMembers = async (id: string) => {
+    const token = await getTokenFromStorage()
+    const controller = new AssociationController()
+
+    assert(token, "token is required")
+
+    const rawData = await controller.getAllAssociationMembers(token, id)
+
+    return rawData.content
   }
 }
