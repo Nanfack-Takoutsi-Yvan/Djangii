@@ -88,7 +88,7 @@ export default function TabOneScreen() {
     <View style={styles.container}>
       <StatusBar style="light" />
 
-      {/* {curveData ? (
+      {curveData ? (
         <Chart
           data={curve(curveData, curveLegend)}
           width={width}
@@ -96,15 +96,14 @@ export default function TabOneScreen() {
         />
       ) : null}
 
-      {!curveData && dashBoardLoading ? <ChartSkeleton /> : null} */}
-      <ChartSkeleton />
+      {!curveData && dashBoardLoading ? <ChartSkeleton /> : null}
 
       <View style={styles.reportSection}>
         <View style={styles.reportTitle}>
           <Text variant="headlineSmall">{locale.t("dashboard.title")}</Text>
         </View>
 
-        {/* {associations.length === 0 && !dashBoardLoading ? (
+        {associations.length === 0 && !dashBoardLoading ? (
           <View
             style={{ justifyContent: "center", alignItems: "center", flex: 1 }}
           >
@@ -135,9 +134,9 @@ export default function TabOneScreen() {
             )}
             showsHorizontalScrollIndicator={false}
           />
-        ) : null} */}
+        ) : null}
 
-        <DashboardSkeletonLoader />
+        {dashBoardLoading ? <DashboardSkeletonLoader /> : null}
       </View>
     </View>
   )

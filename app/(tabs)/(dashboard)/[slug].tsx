@@ -1,5 +1,5 @@
 /* eslint-disable react/style-prop-object */
-import { useContext, useEffect, useRef, useState } from "react"
+import { useContext, useEffect } from "react"
 import { StatusBar } from "expo-status-bar"
 import { Drawer } from "expo-router/drawer"
 import { StyleSheet, View } from "react-native"
@@ -11,6 +11,7 @@ import TableViewerBottomSheet from "@components/ui/TableViewerBottomSheet"
 import BottomSheetForm from "@components/ui/BottomSheetForm"
 import pages from "@components/Pages"
 import { useDispatch } from "react-redux"
+import SlugSkeletonLoader from "@components/ui/skeletonLoader/slug"
 
 export default function TabOneScreen() {
   const router = useRouter()
@@ -32,6 +33,10 @@ export default function TabOneScreen() {
   if (!pageData || !dataState) {
     router.push("(dashboard)")
     return null
+  }
+
+  if (dataState.loading) {
+    return <SlugSkeletonLoader />
   }
 
   return (
