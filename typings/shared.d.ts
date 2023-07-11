@@ -17,8 +17,8 @@ type DashboardSlugParam = {
 }
 
 type Data = {
-  data: any[]
-  error: any
+  data?: any[]
+  error?: any
   loading: boolean
 }
 
@@ -50,3 +50,16 @@ type DashboardPages =
   | "sparingStates"
   | "advertisement"
   | "audience"
+
+type PageableData = {
+  pageable: Pageable
+  sort: Sort
+  last: boolean
+  totalPages: number
+  totalElements: number
+  first: boolean
+  numberOfElements: number
+  size: number
+  number: number
+  empty: boolean
+}

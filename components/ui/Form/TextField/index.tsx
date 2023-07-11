@@ -1,7 +1,7 @@
 import { FC, useContext } from "react"
 import { StyleSheet, View } from "react-native"
+import Icon from "react-native-paper/src/components/Icon"
 import { Text, TextInput, useTheme } from "react-native-paper"
-import Icon from "react-native-paper/lib/typescript/src/components/Icon"
 
 import AppStateContext from "@services/context/context"
 import { TextFieldProps } from "./type"

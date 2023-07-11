@@ -1,25 +1,9 @@
-import {
-  fetchUserAssociations,
-  getAssociations
-} from "@services/store/slices/associations"
+import associationConfigs from "./default"
+import membershipRequestsConfigs from "./memberShipRequest"
+import associationsPagesConfigs from "./pages"
 
-import { createData, joinedAssociation, manageableAssociation } from "./config"
-
-const associationConfig: configs = {
-  tables: [
-    {
-      name: "manageableAssociation",
-      table: manageableAssociation,
-      actions: ["edit", "view"]
-    },
-    {
-      name: "associationJoined",
-      table: joinedAssociation
-    }
-  ],
-  getData: getAssociations,
-  fetchData: fetchUserAssociations,
-  createData
+export default {
+  association: associationConfigs,
+  associationsPages: associationsPagesConfigs,
+  membershipRequest: membershipRequestsConfigs
 }
-
-export default associationConfig

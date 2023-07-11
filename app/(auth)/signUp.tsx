@@ -168,7 +168,7 @@ export default function SignUp() {
                           <TextInput
                             placeholder={locale.t("signUp.labels.username")}
                             placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                            keyboardType="name-phone-pad"
+                            keyboardType="default"
                             value={values.username}
                             onBlur={handleBlur("username")}
                             onChangeText={handleChange("username")}

@@ -3,7 +3,7 @@ type SelectFieldProps = {
   icon: string
   placeholder: string
   onChange: (value: string) => void
-  data: SelectData[]
+  options?: SelectData[]
 }
 
 type SelectData = {

@@ -1,3 +1,18 @@
+interface IUserAssociation {
+  id: string
+  alias?: string
+  firstName: string
+  lastName: string
+  numero: number
+  userInfo?: IUserInfo
+  role: IUserRole
+  type: string
+  dateJoinAssociation: string
+  association: IAssociation
+  author: IUserInfo
+  datation: IHistory
+}
+
 interface IAssociation {
   acronym: string
   activated: boolean
@@ -9,7 +24,6 @@ interface IAssociation {
   longitude: number
   name: string
 }
-
 interface IAssociationNotificationRequestBody {
   associationId: string
   description: string
@@ -98,20 +112,37 @@ interface IAssociationPenaltyRequestBody {
   majoration: number
 }
 
-interface IAssociationController {
-  getAssociations: (token: string, expect: string) => Promise<IAssociationData>
+interface IMembershipRequest {
+  id?: string
+  firstName: string
+  lastName: string
+  status: string
+  alias: string
+  requestMotivation: string
+  associationPage: IAssociationPage
+  transmitter: ITransmitter
+  datation: IHistory
+  accepted: boolean
+  rejected: boolean
+  pending: boolean
 }
 
-interface IAssociationData {
-  content: IAssociation[]
-  pageable: Pageable
-  sort: Sort
-  last: boolean
-  totalPages: number
-  totalElements: number
-  first: boolean
-  numberOfElements: number
-  size: number
-  number: number
-  empty: boolean
+interface IAssociationController {
+  getAssociations: (
+    token: string,
+    expect: string
+  ) => Promise<IUserAssociation[]>
+  getCreatedAssociations: (
+    token: string,
+    expect: string
+  ) => Promise<IAssociationDataContent>
+  getAllMembershipRequest: (
+    token: string,
+    status: string
+  ) => Promise<IMembershipRequestContent>
+  getAllAssociationMembers: (
+    token: string,
+    id: string
+  ) => Promise<IAssociationMemberContent>
+  getAllAssociationPages: (token: string) => Promise<IAssociationPagesContent>
 }

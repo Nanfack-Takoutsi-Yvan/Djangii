@@ -1,6 +1,5 @@
+/* eslint-disable max-classes-per-file */
 import { AssociationController } from "@services/controller/association.controller"
-import getTokenFromStorage from "@services/utils/functions/token"
-import assert from "assert"
 
 export default class Association implements IAssociation {
   id = ""
@@ -27,19 +26,5 @@ export default class Association implements IAssociation {
     if (association) {
       Object.assign(this, association)
     }
-  }
-
-  static getAssociations = async () => {
-    const token = await getTokenFromStorage()
-    const controller = new AssociationController()
-    const associations: IAssociation[] = []
-
-    assert(token, "token is required")
-
-    const rawData = await controller.getAssociations(token, "full")
-
-    rawData.content.map(data => associations.push(data))
-
-    return associations
   }
 }

@@ -1,9 +1,11 @@
 import assert from "assert"
 import AuthController from "@services/controller/auth.controller"
+
 import {
   deleteValueFromSecureStoreFor,
+  saveInAsyncStorage,
   saveInSecureStore
-} from "@services/utils/methods"
+} from "@services/utils/storage"
 
 export default class User implements IUser {
   id = ""
@@ -47,7 +49,8 @@ export default class User implements IUser {
       lastUpdateTime: "",
 
       version: 0
-    }
+    },
+    defaultAssociationId: ""
   }
 
   constructor(user?: IUser) {
@@ -63,7 +66,7 @@ export default class User implements IUser {
     const res = await controller.login(username, password)
 
     const userKey = process.env.SECURE_STORE_CREDENTIALS
-    saveInSecureStore(`${userKey}`, JSON.stringify(res.data))
+    saveInAsyncStorage(`${userKey}`, JSON.stringify(res.data))
 
     const tokenKey = process.env.SECURE_STORE_TOKEN
     saveInSecureStore(`${tokenKey}`, res.token)

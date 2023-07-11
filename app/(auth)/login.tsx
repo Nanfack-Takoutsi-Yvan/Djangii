@@ -46,7 +46,6 @@ export default function Login() {
       .then(user => {
         signIn(user)
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
-        router.replace("(tabs)/(dashboard)")
       })
       .catch(err => {
         setLoading(false)
@@ -130,7 +129,7 @@ export default function Login() {
                               dense
                               placeholder={locale.t("login.labels.username")}
                               placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                              keyboardType="name-phone-pad"
+                              keyboardType="default"
                               value={values.username}
                               onBlur={handleBlur("username")}
                               onChangeText={handleChange("username")}
