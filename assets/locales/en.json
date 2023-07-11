@@ -224,7 +224,10 @@
     "sessionsOpened": "Sessions Opened ({{number}})",
     "sessionsScheduled": "Sessions Scheduled ({{number}})",
     "SessionsClosed": "Sessions Closed ({{number}})",
-    "tontineSubscription": "My Subscriptions ({{number}})"
+    "tontineSubscription": "My Subscriptions ({{number}})",
+    "canceledLoans": "Canceled loans ({{number}})",
+    "paidLoans": "Paid loans ({{number}})",
+    "pendingLoans": "Pending loans ({{number}})"
   },
   "tables": {
     "creationDate": "Creation Date",
@@ -264,6 +267,11 @@
     "subscriptionDate": "Subscription date",
     "Cycle": "Cycle",
     "Association": "Association",
-    "hands": "Hands"
+    "hands": "Hands",
+    "dueDate": "Due date",
+    "beneficiary": "Beneficiary",
+    "interest": "Interest",
+    "paymentDate": "Payment date",
+    "loanDate": "Loan date"
   }
 }

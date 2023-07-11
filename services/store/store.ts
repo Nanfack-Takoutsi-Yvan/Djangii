@@ -12,8 +12,10 @@ import associations from "./slices/associations"
 import notifications from "./slices/notifications"
 import bottomSheetForm from "./slices/bottomSheetForm"
 import bottomSheetTables from "./slices/bottomSheetTables"
+import loan from "./slices/loan"
 
 const combinedReducer = combineReducers({
+  loan,
   dashboard,
   authSlice,
   notifications,

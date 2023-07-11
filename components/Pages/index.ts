@@ -1,6 +1,7 @@
 import associationConfigs from "./Associations"
 import associationMembersConfigs from "./Members"
 import tontineConfigs from "./Tontine"
+import loanConfigs from "./Loan"
 
 const pages: Pages = {
   association: associationConfigs.association,
@@ -14,9 +15,9 @@ const pages: Pages = {
   tontineTurn: tontineConfigs.rounds,
   mySubscriptions: tontineConfigs.subscriptions,
   sessions: tontineConfigs.sessions,
-  pendingLoans: undefined,
-  paidLoans: undefined,
-  canceledLoans: undefined,
+  pendingLoans: loanConfigs.pending,
+  paidLoans: loanConfigs.paid,
+  canceledLoans: loanConfigs.cancel,
   penaltyType: undefined,
   sanctionedMembers: undefined,
   products: undefined,
