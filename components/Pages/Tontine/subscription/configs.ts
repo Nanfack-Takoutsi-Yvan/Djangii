@@ -1,40 +1,23 @@
-import UserAssociation from "@services/models/associations/userAssociations"
-import fieldNames from "@components/ui/Form/__form.utils"
+/* eslint-disable import/prefer-default-export */
+import { subscriptionContributionData } from "./methods"
 
-import { variableContributionsTableData } from "./methods"
-
-export const createData: CreateData = {
-  buttonTitle: "newVariableAmountTontine",
-  formTitle: "createVariableAmountTontine",
-  formIcon: "plus-box-outline",
-  model: new UserAssociation(),
-  validation: {},
-  fields: [
-    {
-      name: fieldNames.selectField,
-      placeholder: "pages.selectCurrency",
-      searchPlaceholder: "pages.search",
-      icon: "cash",
-      options: [
-        { label: "Item 1", value: "hello" },
-        { label: "Item 2", value: "hello2" },
-        { label: "Item 3", value: "hello3" },
-        { label: "Item 4", value: "hello4" },
-        { label: "Item 5", value: "hello5" },
-        { label: "Item 6", value: "hello6" },
-        { label: "Item 7", value: "hello7" },
-        { label: "Item 8", value: "hello8" }
-      ]
-    }
-  ]
-}
-
-const tableHead = ["creationDate", "name", "minAmount", "frequency"]
+const tableHead = [
+  "subscriptionDate",
+  "Cycle",
+  "Association",
+  "tontineName",
+  "amount",
+  "maximumLoanPerMember",
+  "frequency",
+  "hands",
+  "status"
+]
 
 const widthArr = Array(tableHead.length).fill(150)
+widthArr[1] = 300
 
 export const variableContributionTable = {
   widthArr,
   tableHead,
-  tableData: variableContributionsTableData
+  tableData: subscriptionContributionData
 }

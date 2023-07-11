@@ -220,7 +220,11 @@
     "variableAmount": "Variable amount contribution ({{number}})",
     "tontineEndedRound": "Ended Round ({{number}})",
     "tontineOpenedRound": "Closed Round ({{number}})",
-    "tontineClosedRound": "Closed Round ({{number}})"
+    "tontineClosedRound": "Closed Round ({{number}})",
+    "sessionsOpened": "Sessions Opened ({{number}})",
+    "sessionsScheduled": "Sessions Scheduled ({{number}})",
+    "SessionsClosed": "Sessions Closed ({{number}})",
+    "tontineSubscription": "My Subscriptions ({{number}})"
   },
   "tables": {
     "creationDate": "Creation Date",
@@ -252,6 +256,14 @@
     "startingDate": "Starting date",
     "tontineName": "Tontine name",
     "amount": "Amount",
-    "contributionFailure": "Contribution failure"
+    "contributionFailure": "Contribution failure",
+    "date": "Date",
+    "jackpot": "Jackpot",
+    "roundReserve": "Round reserve",
+    "type": "Type",
+    "subscriptionDate": "Subscription date",
+    "Cycle": "Cycle",
+    "Association": "Association",
+    "hands": "Hands"
   }
 }

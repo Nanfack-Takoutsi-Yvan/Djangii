@@ -1,17 +1,28 @@
 import { tontinesActions } from "@services/store/slices/tontines"
-import { getVariableContributionsData } from "./methods"
-import { variableContributionTable, createData } from "./configs"
+import { getSessionsContributionsData } from "./methods"
+import {
+  sessionsClosedContributionTable,
+  sessionsOpenedContributionTable,
+  sessionsProgrammedContributionTable
+} from "./configs"
 
-const variableAmountTontineConfigs: configs = {
+const sessionsTontineConfigs: configs = {
   tables: [
     {
-      name: "variableAmount",
-      table: variableContributionTable
+      name: "sessionsOpened",
+      table: sessionsOpenedContributionTable
+    },
+    {
+      name: "sessionsScheduled",
+      table: sessionsProgrammedContributionTable
+    },
+    {
+      name: "SessionsClosed",
+      table: sessionsClosedContributionTable
     }
   ],
-  getData: getVariableContributionsData,
-  fetchData: tontinesActions.fetchTontineList,
-  createData
+  getData: getSessionsContributionsData,
+  fetchData: tontinesActions.fetchTontineSessionList
 }
 
-export default variableAmountTontineConfigs
+export default sessionsTontineConfigs

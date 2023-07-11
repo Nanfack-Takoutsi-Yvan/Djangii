@@ -220,7 +220,11 @@
     "variableAmount": "Contribution Variable ({{number}})",
     "tontineEndedRound": "Tours terminés ({{number}})",
     "tontineOpenedRound": "Tours ouverts ({{number}})",
-    "tontineClosedRound": "Tours fermés ({{number}})"
+    "tontineClosedRound": "Tours fermés ({{number}})",
+    "sessionsOpened": "Sessions ouvertes ({{number}})",
+    "sessionsScheduled": "Sessions programmées ({{number}})",
+    "SessionsClosed": "Sessions fermées ({{number}})",
+    "tontineSubscription": "Mes souscriptions ({{number}})"
   },
   "tables": {
     "creationDate": "Date de creation",
@@ -252,6 +256,14 @@
     "startingDate": "Date de debut",
     "tontineName": "Nom de la tontine",
     "amount": "Montant",
-    "contributionFailure": "Défaillance de contribution"
+    "contributionFailure": "Défaillance de contribution",
+    "date": "Date",
+    "jackpot": "Jackpot",
+    "roundReserve": "Tour reserve",
+    "type": "Type",
+    "subscriptionDate": "Date de souscriptions",
+    "Cycle": "Cycle",
+    "Association": "Association",
+    "hands": "Parts"
   }
 }

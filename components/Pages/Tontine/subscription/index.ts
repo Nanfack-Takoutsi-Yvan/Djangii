@@ -1,17 +1,16 @@
 import { tontinesActions } from "@services/store/slices/tontines"
-import { getVariableContributionsData } from "./methods"
-import { variableContributionTable, createData } from "./configs"
+import { getTontineSubscriptionData } from "./methods"
+import { variableContributionTable } from "./configs"
 
-const variableAmountTontineConfigs: configs = {
+const tontineSubscriptionConfigs: configs = {
   tables: [
     {
-      name: "variableAmount",
+      name: "tontineSubscription",
       table: variableContributionTable
     }
   ],
-  getData: getVariableContributionsData,
-  fetchData: tontinesActions.fetchTontineList,
-  createData
+  getData: getTontineSubscriptionData,
+  fetchData: tontinesActions.fetchTontineSubscriptionList
 }
 
-export default variableAmountTontineConfigs
+export default tontineSubscriptionConfigs
