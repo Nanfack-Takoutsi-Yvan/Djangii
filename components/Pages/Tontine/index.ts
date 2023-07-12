@@ -4,6 +4,7 @@ import savingsTontineConfigs from "./savings"
 import tontineRoundConfigs from "./round"
 import tontineSessionsConfigs from "./session"
 import tontineSubscriptionConfigs from "./subscription"
+import tontineContributionConfigs from "./contribution"
 
 export default {
   fixedAmount: fixedAmountTontineConfigs,
@@ -11,5 +12,6 @@ export default {
   savings: savingsTontineConfigs,
   rounds: tontineRoundConfigs,
   sessions: tontineSessionsConfigs,
-  subscriptions: tontineSubscriptionConfigs
+  subscriptions: tontineSubscriptionConfigs,
+  contribution: tontineContributionConfigs
 }

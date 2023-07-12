@@ -11,7 +11,7 @@
   "members": {
     "name": "member",
     "icon": "account-multiple-outline",
-    "subItems": ["members", "identities"]
+    "subItems": ["members"]
   },
   "tontines": {
     "name": "tontines",
@@ -28,37 +28,22 @@
     "icon": "cash-refund",
     "subItems": ["pendingLoans", "paidLoans", "canceledLoans"]
   },
-  "penalties": {
-    "name": "penalties",
+  "payments": {
+    "name": "payments",
     "icon": "cash-minus",
-    "subItems": ["penaltyType", "sanctionedMembers"]
-  },
-  "products": {
-    "name": "products",
-    "icon": "package-variant-closed",
-    "subItems": ["products", "productPayment"]
-  },
-  "charges": {
-    "name": "charges",
-    "icon": "cash-multiple",
-    "subItems": ["chargeLine", "charges", "chargePayment"]
-  },
-  "assistance": {
-    "name": "assistance",
-    "icon": "alpha-i",
-    "subItems": ["assistance", "assistanceRequest"]
-  },
-  "warranties": {
-    "name": "warranties",
-    "icon": "seal-variant"
+    "subItems": ["penalties", "productPayment", "chargePayment", "assistanceRequest"]
   },
   "sparingStates": {
     "name": "sparingStates",
     "icon": "cash-100"
   },
-  "advertisement": {
-    "name": "advertisement",
-    "icon": "advertisements",
-    "subItems": ["audience", "advertisement"]
+  "configurations": {
+    "name": "configurations",
+    "icon": "cogs",
+    "subItems": ["penaltyType", "productType", "chargeLine", "chargesType", "assistanceType"]
+  },
+  "warranties": {
+    "name": "warranties",
+    "icon": "seal-variant"
   }
 }

@@ -1,6 +1,9 @@
 import associationConfigs from "./Associations"
 import associationMembersConfigs from "./Members"
 import tontineConfigs from "./Tontine"
+import loanConfigs from "./Loan"
+import paymentConfigs from "./Payment"
+import configurationsConfigs from "./Configurations"
 
 const pages: Pages = {
   association: associationConfigs.association,
@@ -14,20 +17,24 @@ const pages: Pages = {
   tontineTurn: tontineConfigs.rounds,
   mySubscriptions: tontineConfigs.subscriptions,
   sessions: tontineConfigs.sessions,
-  pendingLoans: undefined,
-  paidLoans: undefined,
-  canceledLoans: undefined,
-  penaltyType: undefined,
+  pendingLoans: loanConfigs.pending,
+  paidLoans: loanConfigs.paid,
+  canceledLoans: loanConfigs.cancel,
+  penalties: paymentConfigs.penalty,
+  penaltyType: configurationsConfigs.penalty,
+  chargesType: configurationsConfigs.chargeType,
+  assistanceType: configurationsConfigs.assistance,
+  productType: configurationsConfigs.product,
   sanctionedMembers: undefined,
-  products: undefined,
-  productPayment: undefined,
-  chargeLine: undefined,
-  charges: undefined,
-  chargePayment: undefined,
-  assistance: undefined,
-  assistanceRequest: undefined,
-  warranties: undefined,
-  sparingStates: undefined,
+  products: configurationsConfigs.product,
+  productPayment: paymentConfigs.product,
+  chargeLine: configurationsConfigs.chargeLine,
+  charges: configurationsConfigs.chargeType,
+  chargePayment: paymentConfigs.charges,
+  assistance: configurationsConfigs.assistance,
+  assistanceRequest: paymentConfigs.assistanceRequest,
+  warranties: configurationsConfigs.guarantee,
+  sparingStates: tontineConfigs.contribution,
   advertisement: undefined,
   audience: undefined
 }
