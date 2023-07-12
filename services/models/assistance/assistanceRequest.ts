@@ -11,7 +11,7 @@ export default class AssistanceRequest implements IAssistanceRequest {
 
   amount = 0
 
-  assistanceLines = {} as IAssistanceLine
+  assistanceLines = []
 
   comments = ""
 

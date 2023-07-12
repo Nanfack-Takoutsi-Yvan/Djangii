@@ -1,6 +1,6 @@
 interface ICharge {
   amount: number
-  chargeLines: ChargeLine
+  chargeLines: ChargeLine[]
   datation: IHistory
   description: string
   designation: string

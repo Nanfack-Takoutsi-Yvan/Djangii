@@ -31,12 +31,12 @@ interface IGuarantors {
 interface IGuarantee {
   id: string
   observation: string
-  status: GaranteeStatus
+  status: GuaranteeStatus
   type: IGuaranteeType
   value: number
 }
 
-type GaranteeStatus = "SEIZED" | "RETURNED" | "SAVED"
+type GuaranteeStatus = "SEIZED" | "RETURNED" | "SAVED"
 
 interface IGuaranteeType {
   association: IAssociation

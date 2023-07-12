@@ -5,6 +5,7 @@ import {
   PayloadAction
 } from "@reduxjs/toolkit"
 
+import loan from "./slices/loan"
 import authSlice from "./slices/auth"
 import payment from "./slices/payment"
 import members from "./slices/members"
@@ -12,9 +13,9 @@ import tontines from "./slices/tontines"
 import dashboard from "./slices/dashboard"
 import associations from "./slices/associations"
 import notifications from "./slices/notifications"
+import configurations from "./slices/configurations"
 import bottomSheetForm from "./slices/bottomSheetForm"
 import bottomSheetTables from "./slices/bottomSheetTables"
-import loan from "./slices/loan"
 
 const combinedReducer = combineReducers({
   loan,
@@ -26,7 +27,8 @@ const combinedReducer = combineReducers({
   ...payment,
   ...members,
   ...tontines,
-  ...associations
+  ...associations,
+  ...configurations
 })
 
 const rootReducer = (state: any, action: PayloadAction<any>) => {
