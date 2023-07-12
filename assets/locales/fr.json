@@ -171,7 +171,15 @@
     "newSavingTontine": "Nouvelle tontine d'éparge",
     "createSavingTontine": "Créer une tontine d'éparge",
     "newVariableAmountTontine": "Nouvelle tontine à contributions variable",
-    "createVariableAmountTontine": "Créer une tontine à contributions variable"
+    "createVariableAmountTontine": "Créer une tontine à contributions variable",
+    "newAssistanceRequest": "Nouvelle demande d'assistance",
+    "createAssistanceRequest": "Créer une demande d'assistance",
+    "newChargePayment": "Nouveau paiement de charges",
+    "createChargePayment": "Créer un paiment de charges",
+    "newPenaltyPayment": "Nouveau paiment de penalités",
+    "createPenaltyPayment": "Créer un paiment de penalités",
+    "newProductPayment": "Nouveau paiment de produits",
+    "createProductPayment": "Créer un paiment de produits"
   },
   "drawer": {
     "dashboard": "Tableau de board",
@@ -189,6 +197,8 @@
     "penalties": "Pénalités",
     "warranties": "Type de garantie",
     "loans": "Prêts/Crédits",
+    "payments": "Paiements",
+    "configurations": "Configurations",
     "sparingStates": "État des cotisations",
     "advertisement": "Publicité",
     "fixedAmount": "Cotisations à montant fixe",
@@ -199,11 +209,14 @@
     "paidLoans": "Crédit payé",
     "canceledLoans": "Crédit annulé",
     "penaltyType": "Types de pénalité",
+    "productType": "Types de produits",
     "sanctionedMembers": "Membres sanctionnés",
     "productPayment": "Paiement des produits",
     "chargeLine": "Ligne de charge",
+    "chargesType": "Types de charge",
     "chargePayment": "Charges",
     "assistanceRequest": "Demande d'assistance",
+    "assistanceType": "Type d'assistance",
     "audience": "Audience",
     "advertisements": "Publicité"
   },
@@ -227,7 +240,10 @@
     "tontineSubscription": "Mes souscriptions ({{number}})",
     "canceledLoans": "Crédits annulés ({{number}})",
     "paidLoans": "Crédits payés ({{number}})",
-    "pendingLoans": "Crédits en attente ({{number}})"
+    "pendingLoans": "Crédits en attente ({{number}})",
+    "assistanceRequest": "Demande d'assistance ({{number}})",
+    "chargePayment": "Paiement des harges ({{number}})",
+    "penaltyPayment": "Paiment des penalités ({{number}})"
   },
   "tables": {
     "creationDate": "Date de creation",
@@ -272,6 +288,14 @@
     "beneficiary": "Béneficiare",
     "interest": "Interet",
     "paymentDate": "Date de payment",
-    "loanDate": "Date du prêt"
+    "loanDate": "Date du prêt",
+    "assistanceDate": "Date d'assistance",
+    "assistedMember": "Membre assisté",
+    "comments": "Commentaires",
+    "designation": "Designation",
+    "majoration": "Majoration",
+    "charge": "Charges",
+    "assistance": "Assistance",
+    "payment": "Paiement"
   }
 }

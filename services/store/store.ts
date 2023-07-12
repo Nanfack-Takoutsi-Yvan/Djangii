@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import {
   configureStore,
   combineReducers,
@@ -5,6 +6,7 @@ import {
 } from "@reduxjs/toolkit"
 
 import authSlice from "./slices/auth"
+import payment from "./slices/payment"
 import members from "./slices/members"
 import tontines from "./slices/tontines"
 import dashboard from "./slices/dashboard"
@@ -21,6 +23,7 @@ const combinedReducer = combineReducers({
   notifications,
   bottomSheetForm,
   bottomSheetTables,
+  ...payment,
   ...members,
   ...tontines,
   ...associations
@@ -28,7 +31,6 @@ const combinedReducer = combineReducers({
 
 const rootReducer = (state: any, action: PayloadAction<any>) => {
   if (action.type === "auth/logout") {
-    // eslint-disable-next-line no-param-reassign
     state = undefined
   }
   return combinedReducer(state, action)

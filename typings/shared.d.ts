@@ -43,6 +43,8 @@ type DashboardPages =
   | "productPayment"
   | "chargeLine"
   | "charges"
+  | "chargesType"
+  | "assistanceType"
   | "chargePayment"
   | "assistance"
   | "assistanceRequest"
@@ -50,6 +52,8 @@ type DashboardPages =
   | "sparingStates"
   | "advertisement"
   | "audience"
+  | "penalties"
+  | "productType"
 
 type PageableData = {
   pageable: Pageable

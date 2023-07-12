@@ -40,3 +40,22 @@ interface ProductPaymentRequestBody {
   userInfosId: string
   userInfosIds: string[]
 }
+
+interface IPaymentController {
+  getPenaltiesList: (
+    token: string,
+    associationID: string
+  ) => Promise<IPenaltyListContent>
+  getProductPaymentList: (
+    token: string,
+    associationId: string
+  ) => Promise<IProductPaymentListContent>
+  getChargePaymentList: (
+    token: string,
+    associationId: string
+  ) => Promise<IChargePaymentContent>
+  getAssistanceRequestList: (
+    token: string,
+    associationId: string
+  ) => Promise<IAssistanceRequestContent>
+}

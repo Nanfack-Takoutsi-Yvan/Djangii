@@ -171,7 +171,15 @@
     "newSavingTontine": "New Saving Tontine",
     "createSavingTontine": "Create Saving Tontine",
     "newVariableAmountTontine": "New Variable Amount Tontine",
-    "createVariableAmountTontine": "Create Variable Amount Tontine"
+    "createVariableAmountTontine": "Create Variable Amount Tontine",
+    "newAssistanceRequest": "New Assistance Request",
+    "createAssistanceRequest": "Create Assistance Request",
+    "newChargePayment": "New Charge Payment",
+    "createChargePayment": "Create Charge Payment",
+    "newPenaltyPayment": "New Penalty Payment",
+    "createPenaltyPayment": "Create Penalty Payment",
+    "newProductPayment": "New Product Payment",
+    "createProductPayment": "Create Product Payment"
   },
   "drawer": {
     "dashboard": "Dashboard",
@@ -189,6 +197,8 @@
     "penalties": "Penalties",
     "warranties": "Guarantee Types",
     "loans": "Loans",
+    "payments": "Payments",
+    "configurations": "Configurations",
     "sparingStates": "Contribution Status",
     "advertisement": "Advertisements",
     "fixedAmount": "Fixed amount contribution",
@@ -199,11 +209,14 @@
     "paidLoans": "Paid loans",
     "canceledLoans": "canceled loans",
     "penaltyType": "Penalties Types",
+    "productType": "Product Type",
     "sanctionedMembers": "Sanctionned Members",
     "productPayment": "Product Payement",
     "chargeLine": "Charge line",
     "chargePayment": "Charge payment",
+    "chargesType": "Charges Type",
     "assistanceRequest": "Assistance request",
+    "assistanceType": "Assistance type",
     "audience": "Audience",
     "advertisements": "Advertisements"
   },
@@ -227,7 +240,11 @@
     "tontineSubscription": "My Subscriptions ({{number}})",
     "canceledLoans": "Canceled loans ({{number}})",
     "paidLoans": "Paid loans ({{number}})",
-    "pendingLoans": "Pending loans ({{number}})"
+    "pendingLoans": "Pending loans ({{number}})",
+    "assistanceRequest": "Assistance request ({{number}})",
+    "chargePayment": "Charge payment ({{number}})",
+    "penaltyPayment": "Penalty payment ({{number}})",
+    "productPayment": "Product Payment ({{number}})"
   },
   "tables": {
     "creationDate": "Creation Date",
@@ -272,6 +289,19 @@
     "beneficiary": "Beneficiary",
     "interest": "Interest",
     "paymentDate": "Payment date",
-    "loanDate": "Loan date"
+    "loanDate": "Loan date",
+    "assistanceDate": "Assistance date",
+    "assistedMember": "Assisted member",
+    "designation": "Designation",
+    "majoration": "Majoration",
+    "comments": "Comments",
+    "product": "Product",
+    "reference": "Reference",
+    "reason": "Reason",
+    "members": "Members",
+    "paymentSavedBy": "Paiement enregistré par",
+    "charge": "Charges",
+    "assistance": "Assistance",
+    "payment": "Payment"
   }
 }

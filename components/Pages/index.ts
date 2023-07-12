@@ -2,6 +2,7 @@ import associationConfigs from "./Associations"
 import associationMembersConfigs from "./Members"
 import tontineConfigs from "./Tontine"
 import loanConfigs from "./Loan"
+import paymentConfigs from "./Payment"
 
 const pages: Pages = {
   association: associationConfigs.association,
@@ -18,15 +19,19 @@ const pages: Pages = {
   pendingLoans: loanConfigs.pending,
   paidLoans: loanConfigs.paid,
   canceledLoans: loanConfigs.cancel,
+  penalties: paymentConfigs.penalty,
   penaltyType: undefined,
+  chargesType: undefined,
+  assistanceType: undefined,
+  productType: undefined,
   sanctionedMembers: undefined,
   products: undefined,
-  productPayment: undefined,
+  productPayment: paymentConfigs.product,
   chargeLine: undefined,
   charges: undefined,
-  chargePayment: undefined,
+  chargePayment: paymentConfigs.charges,
   assistance: undefined,
-  assistanceRequest: undefined,
+  assistanceRequest: paymentConfigs.assistanceRequest,
   warranties: undefined,
   sparingStates: undefined,
   advertisement: undefined,
