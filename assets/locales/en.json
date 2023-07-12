@@ -179,7 +179,19 @@
     "newPenaltyPayment": "New Penalty Payment",
     "createPenaltyPayment": "Create Penalty Payment",
     "newProductPayment": "New Product Payment",
-    "createProductPayment": "Create Product Payment"
+    "createProductPayment": "Create Product Payment",
+    "newAssistance": "New Assistance",
+    "createNewAssistance": "Create New Assistance",
+    "newChargeType": "New Charge Type",
+    "createChargeType": "Create Charge Type",
+    "newChargeLine": "New Charge Line",
+    "createChargeLine": "Create Charge Line",
+    "newGuarantee": "New Guarantee",
+    "createGuarantee": "Create Guarantee",
+    "newPenaltyType": "New Penalty Type",
+    "createPenaltyType": "Create Penalty Type",
+    "newProductType": "New Product Type",
+    "createProductType": "Create Product Type"
   },
   "drawer": {
     "dashboard": "Dashboard",
@@ -245,7 +257,13 @@
     "chargePayment": "Charge payment ({{number}})",
     "penaltyPayment": "Penalty payment ({{number}})",
     "productPayment": "Product Payment ({{number}})",
-    "tontineContribution": "Contributions status ({{number}})"
+    "tontineContribution": "Contributions status ({{number}})",
+    "assistance": "Assistance ({{number}})",
+    "chargeTypes": "Charge Types ({{number}})",
+    "chargeLine": "Charge line ({{number}})",
+    "guarantees": "Guarantees ({{number}})",
+    "penaltiesTypes": "Penalties Types ({{number}})",
+    "productsTypes": "Products Types ({{number}})"
   },
   "tables": {
     "creationDate": "Creation Date",
@@ -300,9 +318,13 @@
     "reference": "Reference",
     "reason": "Reason",
     "members": "Members",
-    "paymentSavedBy": "Paiement enregistré par",
+    "paymentSavedBy": "Payment saved by",
     "charge": "Charges",
     "assistance": "Assistance",
-    "payment": "Payment"
+    "payment": "Payment",
+    "condition": "Condition",
+    "memo": "Memo",
+    "productIsRequired": "Product is required",
+    "charges": "Charges"
   }
 }

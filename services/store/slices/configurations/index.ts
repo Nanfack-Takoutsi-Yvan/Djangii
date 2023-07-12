@@ -11,7 +11,7 @@ import productTypes, {
   getAllProductsTypes
 } from "./productTypes"
 
-export const membersActions = {
+export const configurationsActions = {
   fetchAssistance,
   fetchChargeLines,
   fetchChargeTypes,
@@ -20,7 +20,7 @@ export const membersActions = {
   fetchProductsTypes
 }
 
-export const membersSelector = {
+export const configurationsSelector = {
   getAllPenaltiesTypes,
   getAllProductsTypes,
   getAllGuarantees,

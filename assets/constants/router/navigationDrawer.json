@@ -11,7 +11,7 @@
   "members": {
     "name": "member",
     "icon": "account-multiple-outline",
-    "subItems": ["members", "identities"]
+    "subItems": ["members"]
   },
   "tontines": {
     "name": "tontines",
@@ -45,10 +45,5 @@
   "warranties": {
     "name": "warranties",
     "icon": "seal-variant"
-  },
-  "advertisement": {
-    "name": "advertisement",
-    "icon": "advertisements",
-    "subItems": ["audience", "advertisement"]
   }
 }

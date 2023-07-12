@@ -5,7 +5,7 @@ import assert from "assert"
 export default class ChargeType implements ICharge {
   amount = 0
 
-  chargeLines = []
+  chargeLines = [] as ChargeLine[]
 
   datation = {} as IHistory
 

@@ -179,7 +179,19 @@
     "newPenaltyPayment": "Nouveau paiment de penalités",
     "createPenaltyPayment": "Créer un paiment de penalités",
     "newProductPayment": "Nouveau paiment de produits",
-    "createProductPayment": "Créer un paiment de produits"
+    "createProductPayment": "Créer un paiment de produits",
+    "newAssistance": "Nouvelle asssistance",
+    "createNewAssistance": "Créer une assistance",
+    "newChargeType": "Nouveau type de charge",
+    "createChargeType": "Créer une Charge Type",
+    "newChargeLine": "Nouvelle ligne de charge",
+    "createChargeLine": "Créer une ligne de charge",
+    "newGuarantee": "Nouvelle garantie",
+    "createGuarantee": "Créer une garantie",
+    "newPenaltyType": "Nouveau type de pénalité",
+    "createPenaltyType": "Créer un type de penalité",
+    "newProductType": "Nouveau type de produit",
+    "createProductType": "Créer un type de produit"
   },
   "drawer": {
     "dashboard": "Tableau de board",
@@ -244,7 +256,13 @@
     "assistanceRequest": "Demande d'assistance ({{number}})",
     "chargePayment": "Paiement des harges ({{number}})",
     "penaltyPayment": "Paiment des penalités ({{number}})",
-    "tontineContribution": "Statut des contributions ({{number}})"
+    "tontineContribution": "Statut des contributions ({{number}})",
+    "assistance": "Assistance ({{number}})",
+    "chargeTypes": "Types de charges ({{number}})",
+    "chargeLine": "Ligne de charge ({{number}})",
+    "guarantees": "Garaties ({{number}})",
+    "penaltiesTypes": "Types de penalités ({{number}})",
+    "productsTypes": "Types de produits ({{number}})"
   },
   "tables": {
     "creationDate": "Date de creation",
@@ -297,6 +315,10 @@
     "majoration": "Majoration",
     "charge": "Charges",
     "assistance": "Assistance",
-    "payment": "Paiement"
+    "payment": "Paiement",
+    "condition": "Condition",
+    "memo": "Memo",
+    "productIsRequired": "Produit requis ",
+    "charges": "Charges"
   }
 }

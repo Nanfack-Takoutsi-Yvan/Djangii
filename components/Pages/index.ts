@@ -3,6 +3,7 @@ import associationMembersConfigs from "./Members"
 import tontineConfigs from "./Tontine"
 import loanConfigs from "./Loan"
 import paymentConfigs from "./Payment"
+import configurationsConfigs from "./Configurations"
 
 const pages: Pages = {
   association: associationConfigs.association,
@@ -20,19 +21,19 @@ const pages: Pages = {
   paidLoans: loanConfigs.paid,
   canceledLoans: loanConfigs.cancel,
   penalties: paymentConfigs.penalty,
-  penaltyType: undefined,
-  chargesType: undefined,
-  assistanceType: undefined,
-  productType: undefined,
+  penaltyType: configurationsConfigs.penalty,
+  chargesType: configurationsConfigs.chargeType,
+  assistanceType: configurationsConfigs.assistance,
+  productType: configurationsConfigs.product,
   sanctionedMembers: undefined,
-  products: undefined,
+  products: configurationsConfigs.product,
   productPayment: paymentConfigs.product,
-  chargeLine: undefined,
-  charges: undefined,
+  chargeLine: configurationsConfigs.chargeLine,
+  charges: configurationsConfigs.chargeType,
   chargePayment: paymentConfigs.charges,
-  assistance: undefined,
+  assistance: configurationsConfigs.assistance,
   assistanceRequest: paymentConfigs.assistanceRequest,
-  warranties: undefined,
+  warranties: configurationsConfigs.guarantee,
   sparingStates: tontineConfigs.contribution,
   advertisement: undefined,
   audience: undefined
