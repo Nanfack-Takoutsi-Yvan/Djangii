@@ -244,7 +244,8 @@
     "assistanceRequest": "Assistance request ({{number}})",
     "chargePayment": "Charge payment ({{number}})",
     "penaltyPayment": "Penalty payment ({{number}})",
-    "productPayment": "Product Payment ({{number}})"
+    "productPayment": "Product Payment ({{number}})",
+    "tontineContribution": "Contributions status ({{number}})"
   },
   "tables": {
     "creationDate": "Creation Date",

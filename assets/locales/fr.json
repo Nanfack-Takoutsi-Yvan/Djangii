@@ -243,7 +243,8 @@
     "pendingLoans": "Crédits en attente ({{number}})",
     "assistanceRequest": "Demande d'assistance ({{number}})",
     "chargePayment": "Paiement des harges ({{number}})",
-    "penaltyPayment": "Paiment des penalités ({{number}})"
+    "penaltyPayment": "Paiment des penalités ({{number}})",
+    "tontineContribution": "Statut des contributions ({{number}})"
   },
   "tables": {
     "creationDate": "Date de creation",

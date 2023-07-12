@@ -33,7 +33,7 @@ const pages: Pages = {
   assistance: undefined,
   assistanceRequest: paymentConfigs.assistanceRequest,
   warranties: undefined,
-  sparingStates: undefined,
+  sparingStates: tontineConfigs.contribution,
   advertisement: undefined,
   audience: undefined
 }

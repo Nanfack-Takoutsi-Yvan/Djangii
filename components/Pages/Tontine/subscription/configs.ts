@@ -16,7 +16,7 @@ const tableHead = [
 const widthArr = Array(tableHead.length).fill(150)
 widthArr[1] = 300
 
-export const variableContributionTable = {
+export const subscriptionContributionDataTable = {
   widthArr,
   tableHead,
   tableData: subscriptionContributionData
