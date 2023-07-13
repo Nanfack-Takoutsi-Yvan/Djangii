@@ -13,6 +13,8 @@ type IChargeLineContent = PageableData & { content: ChargeLine[] }
 type IChargeTypesContent = PageableData & { content: ICharge[] }
 type IAssistanceTypesContent = PageableData & { content: IAssistanceLine[] }
 type IGuaranteeTypesContent = PageableData & { content: IGuarantee[] }
+type IAdvertisingContent = PageableData & { content: IAdvertising[] }
+type IAudienceContent = PageableData & { content: IAdvertisingAudience[] }
 type IProductTypesListContent = PageableData & {
   content: IProduct[]
 }

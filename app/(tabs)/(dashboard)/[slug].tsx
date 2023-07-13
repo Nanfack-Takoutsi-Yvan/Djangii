@@ -61,11 +61,11 @@ export default function TabOneScreen() {
     }
   }, [pageData?.tables])
 
-  if (!pageData) {
+  if (!pageData || !dataState) {
     return <Text>{pageName}</Text>
   }
 
-  if (dataState?.loading) {
+  if (dataState.loading) {
     return <SlugSkeletonLoader />
   }
 

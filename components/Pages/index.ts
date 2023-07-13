@@ -4,6 +4,7 @@ import tontineConfigs from "./Tontine"
 import loanConfigs from "./Loan"
 import paymentConfigs from "./Payment"
 import configurationsConfigs from "./Configurations"
+import advertisingConfigs from "./Advertising"
 
 const pages: Pages = {
   association: associationConfigs.association,
@@ -35,8 +36,8 @@ const pages: Pages = {
   assistanceRequest: paymentConfigs.assistanceRequest,
   warranties: configurationsConfigs.guarantee,
   sparingStates: tontineConfigs.contribution,
-  advertisement: undefined,
-  audience: undefined
+  advertisement: advertisingConfigs.advertising,
+  audience: advertisingConfigs.audience
 }
 
 export default pages

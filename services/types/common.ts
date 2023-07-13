@@ -26,6 +26,11 @@ interface IDjangiiFile {
   url: string
 }
 
+interface IDjangiiFileRequestBody {
+  encodedFile: string
+  encodedFileExtension: string
+}
+
 type IUserRole =
   | "ADMINISTRATOR"
   | "PRESIDENT"

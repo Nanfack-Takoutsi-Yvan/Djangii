@@ -191,7 +191,11 @@
     "newPenaltyType": "New Penalty Type",
     "createPenaltyType": "Create Penalty Type",
     "newProductType": "New Product Type",
-    "createProductType": "Create Product Type"
+    "createProductType": "Create Product Type",
+    "newAdvertising": "New Advertising",
+    "createNewAdvertising": "Create New Advertising",
+    "createNewAudience": "Create New Audience",
+    "newAudience": "New Audience"
   },
   "drawer": {
     "dashboard": "Dashboard",
@@ -263,7 +267,11 @@
     "chargeLine": "Charge line ({{number}})",
     "guarantees": "Guarantees ({{number}})",
     "penaltiesTypes": "Penalties Types ({{number}})",
-    "productsTypes": "Products Types ({{number}})"
+    "productsTypes": "Products Types ({{number}})",
+    "advertisingApproved": "Ad Approved / Broadcasted ({{number}})",
+    "advertisingAwaited": "Ad Created and Awaiting Validation ({{number}})",
+    "advertisingRejected": "Ad Rejected / Blocked ({{number}})",
+    "audience": "Audience ({{number}})"
   },
   "tables": {
     "creationDate": "Creation Date",
@@ -325,6 +333,16 @@
     "condition": "Condition",
     "memo": "Memo",
     "productIsRequired": "Product is required",
-    "charges": "Charges"
+    "charges": "Charges",
+    "broadcastDateStart": "Broadcast start date",
+    "broadcastDateEnd": "Broadcast end date",
+    "titre": "Title",
+    "url": "Url",
+    "minimumAge": "Minimum age",
+    "maximumAge": "Maximum age",
+    "gender": "Gender",
+    "activityArea": "Activity area",
+    "hobby": "Hobby",
+    "interestCenters": "Interest center"
   }
 }
