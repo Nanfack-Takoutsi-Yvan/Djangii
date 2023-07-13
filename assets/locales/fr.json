@@ -191,7 +191,11 @@
     "newPenaltyType": "Nouveau type de pénalité",
     "createPenaltyType": "Créer un type de penalité",
     "newProductType": "Nouveau type de produit",
-    "createProductType": "Créer un type de produit"
+    "createProductType": "Créer un type de produit",
+    "newAdvertising": "Nouvelle publicité",
+    "createNewAdvertising": "Créer une nouvelle publicité",
+    "createNewAudience": "Créer une nouvelle audience",
+    "newAudience": "Nouvelle audience"
   },
   "drawer": {
     "dashboard": "Tableau de board",
@@ -262,7 +266,11 @@
     "chargeLine": "Ligne de charge ({{number}})",
     "guarantees": "Garaties ({{number}})",
     "penaltiesTypes": "Types de penalités ({{number}})",
-    "productsTypes": "Types de produits ({{number}})"
+    "productsTypes": "Types de produits ({{number}})",
+    "advertisingApproved": "Pub approuvée / diffusée ({{number}})",
+    "advertisingAwaited": "Pub crée et en attente de validation ({{number}})",
+    "advertisingRejected": "Pub rejetée / bloquée ({{number}})",
+    "audience": "Audience ({{number}})"
   },
   "tables": {
     "creationDate": "Date de creation",
@@ -319,6 +327,16 @@
     "condition": "Condition",
     "memo": "Memo",
     "productIsRequired": "Produit requis ",
-    "charges": "Charges"
+    "charges": "Charges",
+    "broadcastDateStart": "Date de debut de diffusion",
+    "broadcastDateEnd": "Date de fin de diffusion",
+    "titre": "Titre",
+    "url": "Url",
+    "minimumAge": "Âge minimal",
+    "maximumAge": "Âge maximal",
+    "gender": "Genre",
+    "activityArea": "Activité",
+    "hobby": "Hobby",
+    "interestCenters": "Centre d'intéret"
   }
 }
