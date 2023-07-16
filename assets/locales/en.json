@@ -237,7 +237,7 @@
     "advertisements": "Advertisements"
   },
   "tabs": {
-    "page": "Pages ({{number}}",
+    "page": "Pages ({{number}})",
     "members": "Members ({{number}})",
     "manageableAssociation": "Manageable Associations ({{number}})",
     "associationJoined": "Associations joined ({{number}})",

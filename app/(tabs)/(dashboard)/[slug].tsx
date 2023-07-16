@@ -69,14 +69,16 @@ export default function TabOneScreen() {
     return <SlugSkeletonLoader />
   }
 
+  const pageTitle = params?.slug
+    ? locale.t(`drawer.${params?.slug}`)
+    : locale.t(`drawer.dashboard`)
+
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
       <Drawer.Screen
         options={{
-          headerTitle: params?.slug
-            ? locale.t(`drawer.${params?.slug}`)
-            : locale.t(`drawer.dashboard`)
+          headerTitle: pageTitle
         }}
       />
       <View style={styles.screen}>
@@ -84,6 +86,7 @@ export default function TabOneScreen() {
           data={data}
           tables={tables}
           createData={pageData?.createData}
+          pageName={pageTitle}
         />
         <TableViewerBottomSheet />
         <BottomSheetForm />

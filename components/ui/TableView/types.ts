@@ -3,4 +3,5 @@ type TableViewProps = {
   table: TableConfigs
   actions?: Actions[]
   createData?: CreateData
+  pageName: string
 }

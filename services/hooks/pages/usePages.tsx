@@ -7,6 +7,7 @@ const usePages = (
   rawTabs: tableData[],
   data: any[],
   locale: I18n,
+  pageName: string,
   createData?: CreateData
 ) => {
   const [routes, setRoutes] = useState<TabRoute[]>([])
@@ -24,6 +25,7 @@ const usePages = (
             table={rawTab.table}
             actions={rawTab.actions}
             createData={createData}
+            pageName={pageName}
           />
         )
 
@@ -38,7 +40,7 @@ const usePages = (
       setRoutes(tempRoute)
       setTabs(tempsTabs)
     }
-  }, [createData, data, locale, rawTabs])
+  }, [createData, data, locale, pageName, rawTabs])
 
   return { routes, tabs }
 }

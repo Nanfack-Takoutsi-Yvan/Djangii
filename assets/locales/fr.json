@@ -237,8 +237,8 @@
     "advertisements": "Publicité"
   },
   "tabs": {
-    "page": "Pages",
-    "members": "Membres",
+    "page": "Pages ({{number}})",
+    "members": "Membres ({{number}})",
     "manageableAssociation": "Mes Associations ({{number}})",
     "associationJoined": "Associations adherées ({{number}})",
     "acceptedMembershipRequests": "Demande d'adhésion acceptées ({{number}})",

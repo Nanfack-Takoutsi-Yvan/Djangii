@@ -12,13 +12,18 @@ import {
 import AppStateContext from "@services/context/context"
 import useTableData from "@services/hooks/tables/useTableData"
 import { useAppDispatch } from "@services/store"
+import { shareExcel } from "@services/utils/functions/exel"
+import { useAuth } from "@services/context/auth"
+import { userFullName } from "@services/utils/functions/format"
 
 const TableView: FC<TableViewProps> = ({
   data,
   table,
   actions,
+  pageName,
   createData
 }) => {
+  const { user } = useAuth()
   const { colors } = useTheme()
   const dispatch = useAppDispatch()
   const { locale } = useContext(AppStateContext)
@@ -28,6 +33,8 @@ const TableView: FC<TableViewProps> = ({
     data,
     actions
   )
+
+  const getAppUserName = useCallback(userFullName, [])
 
   const openBottomSheet = useCallback(() => {
     dispatch(changeBottomSheetFormPosition(0))
@@ -102,6 +109,18 @@ const TableView: FC<TableViewProps> = ({
           mode="contained"
           style={styles.button}
           contentStyle={styles.buttonContent}
+          onPress={() =>
+            shareExcel(
+              pageName,
+              getAppUserName(
+                user?.userInfos.firstName,
+                user?.userInfos.lastName
+              ),
+              tableHeadings,
+              cellsSize,
+              tableData
+            )
+          }
           icon={() => (
             <Icon
               source="file-download-outline"

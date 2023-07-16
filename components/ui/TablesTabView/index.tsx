@@ -10,12 +10,13 @@ import TabBar from "./tabBar"
 const TablesTabView: FC<TablesTabViewProps> = ({
   data,
   tables,
+  pageName,
   createData
 }) => {
   const [index, setIndex] = useState(0)
 
   const { locale } = useContext(AppStateContext)
-  const { routes, tabs } = usePages(tables, data, locale, createData)
+  const { routes, tabs } = usePages(tables, data, locale, pageName, createData)
 
   const renderScene = SceneMap(tabs)
 
