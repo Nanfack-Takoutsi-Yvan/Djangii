@@ -344,5 +344,9 @@
     "activityArea": "Activity area",
     "hobby": "Hobby",
     "interestCenters": "Interest center"
+  },
+  "file": {
+    "canNotShareTheFile": "We can't share the file, try again later",
+    "shareFile": "Share the file: {{fileName}}"
   }
 }

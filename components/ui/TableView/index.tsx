@@ -12,9 +12,9 @@ import {
 import AppStateContext from "@services/context/context"
 import useTableData from "@services/hooks/tables/useTableData"
 import { useAppDispatch } from "@services/store"
-import { shareExcel } from "@services/utils/functions/exel"
 import { useAuth } from "@services/context/auth"
 import { userFullName } from "@services/utils/functions/format"
+import { shareExcel } from "@services/utils/functions/exel"
 
 const TableView: FC<TableViewProps> = ({
   data,
@@ -109,7 +109,7 @@ const TableView: FC<TableViewProps> = ({
           mode="contained"
           style={styles.button}
           contentStyle={styles.buttonContent}
-          onPress={() =>
+          onPress={() => {
             shareExcel(
               pageName,
               getAppUserName(
@@ -117,10 +117,10 @@ const TableView: FC<TableViewProps> = ({
                 user?.userInfos.lastName
               ),
               tableHeadings,
-              cellsSize,
-              tableData
+              tableData,
+              locale
             )
-          }
+          }}
           icon={() => (
             <Icon
               source="file-download-outline"

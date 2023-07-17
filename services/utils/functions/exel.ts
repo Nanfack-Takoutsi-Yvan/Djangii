@@ -1,103 +1,115 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-plusplus */
 import * as FileSystem from "expo-file-system"
 import * as Sharing from "expo-sharing"
-import ExcelJS from "exceljs"
-import { Buffer as NodeBuffer } from "buffer"
+import { I18n } from "i18n-js/typings/I18n"
+import { Alert } from "react-native"
+import * as XLSX from "xlsx"
+
+const findLongestChainLength = (
+  table: Record<string, string | number | boolean>[]
+) => {
+  let longestChain = ""
+
+  table.forEach(obj => {
+    Object.values(obj).forEach(value => {
+      if (value?.toString().length > longestChain.length)
+        longestChain = value?.toString()
+    })
+  })
+
+  return longestChain?.length
+}
 
 export const generateShareableExcel = async (
   fileName: string,
   userName: string,
   headers: string[],
-  widthArr: number[],
   data: string[][]
-): Promise<string> => {
+) => {
   const now = new Date()
   const fileUri = `${FileSystem.cacheDirectory}${fileName}.xlsx`
-  return new Promise<string>(resolve => {
-    const workbook = new ExcelJS.Workbook()
-    workbook.creator = userName
-    workbook.created = now
-    workbook.modified = now
-    // Add a sheet to work on
-    const worksheet = workbook.addWorksheet(fileName, {})
-    // Just some columns as used on ExcelJS Readme
-    worksheet.columns = headers.map((header, index) => ({
-      header,
-      width: widthArr[index] || 150,
-      key: `${header
-        .replace(" ", "")
-        .split("")
-        .map(letter => letter.toLocaleLowerCase)
-        .join("")}-${index}`
-    }))
 
-    // Add data
-    data.forEach(row => {
-      const tempData: Record<string, string> = {}
-      headers.forEach((header, headerIndex) => {
-        tempData[header] = row[headerIndex]
-      })
-      worksheet.addRow(tempData)
+  const rows = JSON.parse(JSON.stringify(data)) as any[][]
+  if (!headers[0]) {
+    headers.shift()
+    rows.forEach(row => row.shift())
+  }
+
+  const jsonData: Record<string, string>[] = []
+
+  rows.forEach(row => {
+    const tempData: Record<string, string> = {}
+
+    row.forEach((rowData, index) => {
+      tempData[headers[index]] = rowData
     })
 
-    // Style first row
-    worksheet.getRow(1).font = {
-      name: "SoraBold",
-      family: 4,
-      size: 16,
-      underline: "double",
-      bold: true
-    }
-    // Style second column
-    worksheet.eachRow(row => {
-      // eslint-disable-next-line no-param-reassign
-      row.getCell(2).font = {
-        name: "Sora",
-        color: { argb: "FF00FF00" },
-        family: 2,
-        size: 14,
-        bold: true
-      }
-    })
-
-    // Write to file
-    workbook.xlsx.writeBuffer().then((buffer: ExcelJS.Buffer) => {
-      // Do this to use base64 encoding
-      const nodeBuffer = NodeBuffer.from(buffer)
-      const bufferStr = nodeBuffer.toString("base64")
-      FileSystem.writeAsStringAsync(fileUri, bufferStr, {
-        encoding: FileSystem.EncodingType.Base64
-      }).then(() => {
-        resolve(fileUri)
-      })
-    })
+    jsonData.push(tempData)
   })
+
+  // Set column widths
+  const max_width = findLongestChainLength(jsonData)
+
+  const workbook = XLSX.utils.book_new()
+  const worksheet = XLSX.utils.json_to_sheet(jsonData, { cellStyles: true })
+  worksheet["!cols"] = Array(headers.length).fill({ wch: max_width })
+
+  // Style first row
+  headers.forEach((heading, index) => {
+    const cell = worksheet[`${String.fromCharCode(64 + index + 1)}1`]
+    if (cell) {
+      cell.w = { font: { bold: true } }
+    }
+  })
+
+  // Add worksheet to the workbook
+  XLSX.utils.book_append_sheet(workbook, worksheet, fileName, true)
+
+  // Set workbook properties
+  workbook.Props = {
+    Title: fileName,
+    Author: userName,
+    CreatedDate: now,
+    ModifiedDate: now
+  }
+
+  // Write to file
+  const base64 = XLSX.write(workbook, { type: "base64" })
+  await FileSystem.writeAsStringAsync(fileUri, base64, {
+    encoding: FileSystem.EncodingType.Base64
+  })
+
+  return fileUri
 }
 
 export const shareExcel = async (
   fileName: string,
   userName: string,
   headers: string[],
-  widthArr: number[],
-  data: string[][]
+  data: string[][],
+  locale: I18n
 ) => {
-  const shareableExcelUri: string = await generateShareableExcel(
-    fileName,
-    userName,
-    headers,
-    widthArr,
-    data
-  )
+  try {
+    const shareableExcelUri = await generateShareableExcel(
+      fileName.replace(" ", "_"),
+      userName,
+      headers,
+      data
+    )
 
-  Sharing.shareAsync(shareableExcelUri, {
-    mimeType:
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // Android
-    dialogTitle: "Your dialog title here", // Android and Web
-    UTI: "com.microsoft.excel.xlsx" // iOS
-  })
-    .catch(error => {
+    Sharing.shareAsync(shareableExcelUri, {
+      mimeType:
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // Android
+      dialogTitle: `${locale.t("file.shareFile", {
+        fileName: `${fileName}.xlsx`
+      })}`, // Android and Web
+      UTI: "com.microsoft.excel.xlsx" // iOS
+    }).catch(error => {
       console.error("Error", error)
     })
-    .then(() => {
-      console.log("Return from sharing dialog")
-    })
+  } catch (err) {
+    console.log({ err })
+    Alert.alert(locale.t("file.canNotShareTheFile"))
+  }
 }
