@@ -1,6 +1,9 @@
 import { useRouter, useSegments } from "expo-router"
 import React, { FC, useCallback, useMemo } from "react"
 
+import { setSegmentRoute } from "@services/utils/functions/route"
+import { deleteFromAsyncStorage } from "@services/utils/storage"
+
 type AuthContextType = {
   user: IUser | null
   signIn: (user: IUser) => void
@@ -31,7 +34,7 @@ function useProtectedRoute(user: IUser | null) {
       !user
     ) {
       // Redirect to the sign-in page.
-      router.replace("/login")
+      router.replace(`(auth)/${setSegmentRoute(segments[1])}`)
     } else if (user && inAuthGroup) {
       // Redirect away from the sign-in page.
       router.replace("(tabs)")
@@ -49,7 +52,12 @@ export const Provider: FC<AuthProviderProps> = ({ children }) => {
 
   useProtectedRoute(user)
   const signIn = useCallback((newUser: IUser) => setAuth(newUser), [])
-  const signOut = useCallback(() => setAuth(null), [])
+  const signOut = useCallback(() => {
+    setAuth(null)
+
+    const key = process.env.SECURE_STORE_CREDENTIALS as string
+    deleteFromAsyncStorage(key)
+  }, [])
 
   const value = useMemo(
     () => ({
