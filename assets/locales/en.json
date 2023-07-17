@@ -237,7 +237,7 @@
     "advertisements": "Advertisements"
   },
   "tabs": {
-    "page": "Pages ({{number}}",
+    "page": "Pages ({{number}})",
     "members": "Members ({{number}})",
     "manageableAssociation": "Manageable Associations ({{number}})",
     "associationJoined": "Associations joined ({{number}})",
@@ -271,7 +271,8 @@
     "advertisingApproved": "Ad Approved / Broadcasted ({{number}})",
     "advertisingAwaited": "Ad Created and Awaiting Validation ({{number}})",
     "advertisingRejected": "Ad Rejected / Blocked ({{number}})",
-    "audience": "Audience ({{number}})"
+    "audience": "Audience ({{number}})",
+    "whoIsWho": "Who is who ({{number}})"
   },
   "tables": {
     "creationDate": "Creation Date",
@@ -344,5 +345,9 @@
     "activityArea": "Activity area",
     "hobby": "Hobby",
     "interestCenters": "Interest center"
+  },
+  "file": {
+    "canNotShareTheFile": "We can't share the file, try again later",
+    "shareFile": "Share the file: {{fileName}}"
   }
 }

@@ -1,5 +1,5 @@
 /* eslint-disable react/style-prop-object */
-import { useContext, useEffect, useState } from "react"
+import { FC, useContext, useEffect, useState } from "react"
 import { StatusBar } from "expo-status-bar"
 import { Drawer } from "expo-router/drawer"
 import { StyleSheet, View } from "react-native"
@@ -14,6 +14,11 @@ import { useDispatch } from "react-redux"
 import SlugSkeletonLoader from "@components/ui/skeletonLoader/slug"
 import { Text } from "react-native-paper"
 import { useAuth } from "@services/context/auth"
+import WhoIsWho from "@components/ui/WhoIsWho"
+
+const specialRequestDict: Record<CustomPages, FC<CustomPagesProps>> = {
+  whoIsWho: WhoIsWho
+}
 
 export default function TabOneScreen() {
   const [fetchData, setFetData] = useState<boolean>(false)
@@ -69,14 +74,31 @@ export default function TabOneScreen() {
     return <SlugSkeletonLoader />
   }
 
+  const pageTitle = params?.slug
+    ? locale.t(`drawer.${params?.slug}`)
+    : locale.t(`drawer.dashboard`)
+
+  if (pageData.customPage) {
+    const CustomComponent = specialRequestDict[pageData.customPage]
+
+    return (
+      <>
+        <Drawer.Screen
+          options={{
+            headerTitle: pageTitle
+          }}
+        />
+        <CustomComponent data={data} tables={tables} />
+      </>
+    )
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
       <Drawer.Screen
         options={{
-          headerTitle: params?.slug
-            ? locale.t(`drawer.${params?.slug}`)
-            : locale.t(`drawer.dashboard`)
+          headerTitle: pageTitle
         }}
       />
       <View style={styles.screen}>
@@ -84,6 +106,7 @@ export default function TabOneScreen() {
           data={data}
           tables={tables}
           createData={pageData?.createData}
+          pageName={pageTitle}
         />
         <TableViewerBottomSheet />
         <BottomSheetForm />

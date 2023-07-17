@@ -67,3 +67,9 @@ interface ICountry {
   name: string
   datation: IHistory
 }
+
+type Avatar = {
+  datation: IHistory
+  id: string
+  url: string
+}

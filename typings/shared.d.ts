@@ -67,3 +67,10 @@ type PageableData = {
   number: number
   empty: boolean
 }
+
+type CustomPages = "whoIsWho"
+
+type CustomPagesProps = {
+  tables: tableData[]
+  data: IUserAssociation[]
+}
