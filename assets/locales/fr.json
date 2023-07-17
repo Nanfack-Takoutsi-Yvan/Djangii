@@ -270,7 +270,8 @@
     "advertisingApproved": "Pub approuvée / diffusée ({{number}})",
     "advertisingAwaited": "Pub crée et en attente de validation ({{number}})",
     "advertisingRejected": "Pub rejetée / bloquée ({{number}})",
-    "audience": "Audience ({{number}})"
+    "audience": "Audience ({{number}})",
+    "whoIsWho": "Qui est qui ({{number}})"
   },
   "tables": {
     "creationDate": "Date de creation",

@@ -4,7 +4,7 @@ interface IUserAssociation {
   firstName: string
   lastName: string
   numero: number
-  userInfo?: IUserInfo
+  userInfos?: IUserInfo
   role: IUserRole
   type: string
   dateJoinAssociation: string

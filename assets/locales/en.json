@@ -271,7 +271,8 @@
     "advertisingApproved": "Ad Approved / Broadcasted ({{number}})",
     "advertisingAwaited": "Ad Created and Awaiting Validation ({{number}})",
     "advertisingRejected": "Ad Rejected / Blocked ({{number}})",
-    "audience": "Audience ({{number}})"
+    "audience": "Audience ({{number}})",
+    "whoIsWho": "Who is who ({{number}})"
   },
   "tables": {
     "creationDate": "Creation Date",

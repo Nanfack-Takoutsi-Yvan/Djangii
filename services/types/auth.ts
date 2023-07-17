@@ -21,11 +21,33 @@ interface IUserInfo {
 }
 
 interface ISocialProfile {
-  hobbies: string[]
+  hobbies: Hobby[]
   interestCenters: string[]
-  activityAreas: string[]
-  socialNetworkLinks: string[]
+  activityAreas: ActivityArea[]
+  socialNetworkLinks: SocialNetworkLinks[]
+  avatar?: Avatar
+  coverPicture: IDjangiiFile
+  city: City
+  biography: string
+  dateBirth: string
+  gender: string
 }
+
+type ActivityArea = {
+  code: string
+  datation: IHistory
+  description: string
+  id: string
+}
+
+type SocialNetworkLinks = {
+  datation: IHistory
+  url: string
+  type: SocialNetworks
+  id: string
+}
+
+type SocialNetworks = "WHATSAPP" | "LINKEDIN" | "FACEBOOK"
 
 interface NewUserData {
   password: string

@@ -43,4 +43,5 @@ type configs = {
   getData: () => Data
   fetchData: (id: string) => any
   createData?: CreateData
+  customPage?: CustomPages
 }
