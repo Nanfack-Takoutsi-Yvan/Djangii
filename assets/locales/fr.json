@@ -339,5 +339,8 @@
     "activityArea": "Activité",
     "hobby": "Hobby",
     "interestCenters": "Centre d'intéret"
+  },
+  "notifications": {
+    "title": "Notifications"
   }
 }

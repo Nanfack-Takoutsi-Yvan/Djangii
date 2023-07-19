@@ -1,10 +1,9 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome"
 import { Tabs } from "expo-router"
 
 import { useTheme } from "react-native-paper/src/core/theming"
 import Icon from "react-native-paper/src/components/Icon"
 import { useAppDispatch } from "@services/store"
-import { useEffect } from "react"
+import { useContext, useEffect } from "react"
 import {
   fetchNotificationsStats,
   fetchAllNotifications
@@ -12,11 +11,14 @@ import {
 import { getNotificationsStats } from "@services/store/slices/notifications"
 import { StyleSheet, View } from "react-native"
 import { Badge } from "react-native-paper"
+import AppStateContext from "@services/context/context"
 
 export default function TabLayout() {
   const { colors } = useTheme()
+  const { locale } = useContext(AppStateContext)
   const dispatch = useAppDispatch()
-  const { notificationNotDiplay } = getNotificationsStats()
+  const { notificationNotDiplay: notificationNotDisplayed } =
+    getNotificationsStats()
 
   useEffect(() => {
     dispatch(fetchNotificationsStats())
@@ -52,18 +54,18 @@ export default function TabLayout() {
       <Tabs.Screen
         name="notifications"
         options={{
-          title: "Notifications",
+          title: locale.t("notifications.title"),
           tabBarIcon: ({ color }) => (
             <View>
               <Icon source="bell-outline" size={24} color={color} />
-              {notificationNotDiplay ? (
+              {notificationNotDisplayed ? (
                 <Badge size={16} style={styles.notificationBadge}>
-                  {notificationNotDiplay}
+                  {notificationNotDisplayed}
                 </Badge>
               ) : null}
             </View>
           ),
-          headerShown: false
+          headerShown: true
         }}
       />
       <Tabs.Screen

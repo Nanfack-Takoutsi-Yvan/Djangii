@@ -32,21 +32,28 @@ const NotificationSlice = createSlice({
     builder.addCase(fetchNotificationsStats.rejected, (state, action) => {
       state.error = action.payload
     })
+    // Fetch notifications
     builder.addCase(fetchAllNotifications.pending, state => {
       state.loading = true
     })
     builder.addCase(fetchAllNotifications.fulfilled, (state, action) => {
       state.notification = action.payload
+      state.loading = false
     })
     builder.addCase(fetchAllNotifications.rejected, (state, action) => {
       state.error = action.payload
+      state.loading = false
     })
   }
 })
 
-export const getNotifications = () =>
-  useAppSelector(({ notifications }) => notifications.notification)
 export const getNotificationsStats = () =>
   useAppSelector(({ notifications }) => notifications.stats)
+export const getNotifications = () =>
+  useAppSelector(({ notifications }) => ({
+    notifications: notifications.notification,
+    loading: notifications.loading,
+    error: notifications.error
+  }))
 
 export default NotificationSlice.reducer

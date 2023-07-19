@@ -1,0 +1,3 @@
+type NotificationCardProps = {
+  notification: INotification
+}
