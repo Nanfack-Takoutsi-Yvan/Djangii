@@ -77,11 +77,11 @@ export default function TabLayout() {
       <Tabs.Screen
         name="(settings)"
         options={{
+          headerShown: false,
           title: locale.t("settings.title"),
           tabBarIcon: ({ color }) => (
             <Icon source="cog-outline" size={24} color={color} />
-          ),
-          headerShown: false
+          )
         }}
       />
     </Tabs>

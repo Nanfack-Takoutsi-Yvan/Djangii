@@ -348,6 +348,32 @@
     "message": "Message"
   },
   "settings": {
-    "title": "Configurations"
+    "title": "Configurations",
+    "account": "Compte d'utilisateur",
+    "language": "Langue",
+    "notifications": "Notifications",
+    "Djangii": "Djangii",
+    "lexicon": "Lexicon",
+    "contactUs": "Contactez nous",
+    "accountSettingsDescription": "nom d'utilisateur, email, mot de passe",
+    "languageSettingsDescription": "langue de l'application de",
+    "notificationSettingsDescription": "parametres de notifications, langue de notifications",
+    "lexiconSettingsDescription": "lexicon",
+    "contactUsSettingsDescription": "Trouver de l'aide en ligne",
+    "djangiiDescription": "Plate-forme de réseau social perfectionnée avec un système automatisé intelligent pour une gestion optimale de votre organisation",
+    "djangiiAppDescription": "Plate-forme de réseau social intégrant un système de gestion automatisée et intelligente d’une tontine.",
+    "djangiiApp": "Djangii App",
+    "internetUser": "Usager internet/Internaute",
+    "internetUserDescription": "Toute personne ayant accès à Internet et possédant un courriel valide.",
+    "djangiiUser": "Utilisateur Djangii",
+    "djangiiUserDescription": "Usager internet ou une personne qui ouvre un compte Djangii, soit par elle-même, soit en répondant favorablement à une invitation Djangii.",
+    "djangiiInviteDescription": "Message d’invite à rejoindre une association Djangii, envoyé par un utilisateur Djangii à un usager internet ou à un autre utilisateur Djangii.",
+    "djangiiInvite": "Invitation Djangii",
+    "djangiiAssociation": "Association Djangii",
+    "djangiiAssociationDescription": "Regroupement de personnes participant activement à une tontine sur Djangii.com.",
+    "djangiiAdministrator": "Administrateur Djangii",
+    "djangiiAdministratorDescription": "Usager internet ayant créé une association Djangii ou utilisateur Djangii jouant le rôle d’administrateur ou de membre de bureau d’une association Djangii.",
+    "djangiiAccount": "Compte Djangii",
+    "djangiiAccountDescription": "Tout profil d’utilisateur généré par Djangii.com à partir d’un nom d’utilisateur et d’un mot de passe valides."
   }
 }
