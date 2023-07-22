@@ -35,6 +35,13 @@ export default function TabLayout() {
         tabBarStyle: {
           shadowColor: "transparent",
           borderTopColor: "transparent"
+        },
+        headerShown: true,
+        headerStyle: {
+          backgroundColor: colors.primary
+        },
+        headerTitleStyle: {
+          color: "white"
         }
       }}
     >
@@ -52,7 +59,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="notifications"
+        name="(notifications)"
         options={{
           title: locale.t("notifications.title"),
           tabBarIcon: ({ color }) => (
@@ -64,14 +71,13 @@ export default function TabLayout() {
                 </Badge>
               ) : null}
             </View>
-          ),
-          headerShown: true
+          )
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="(settings)"
         options={{
-          title: "Settings",
+          title: locale.t("settings.title"),
           tabBarIcon: ({ color }) => (
             <Icon source="cog-outline" size={24} color={color} />
           ),

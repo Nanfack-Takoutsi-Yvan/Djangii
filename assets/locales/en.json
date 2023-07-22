@@ -352,6 +352,13 @@
     "shareFile": "Share the file: {{fileName}}"
   },
   "notifications": {
-    "title": "Notifications"
+    "title": "Notifications",
+    "modalHeader": "Message from: {{sender}}",
+    "messageTitle": "Title",
+    "association": "Association",
+    "message": "Message"
+  },
+  "settings": {
+    "title": "Settings"
   }
 }

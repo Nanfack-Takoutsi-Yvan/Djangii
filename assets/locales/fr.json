@@ -341,6 +341,13 @@
     "interestCenters": "Centre d'intéret"
   },
   "notifications": {
-    "title": "Notifications"
+    "title": "Notifications",
+    "modalHeader": "Message de: {{sender}}",
+    "messageTitle": "Titre",
+    "association": "Association",
+    "message": "Message"
+  },
+  "settings": {
+    "title": "Configurations"
   }
 }

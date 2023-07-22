@@ -1,6 +1,6 @@
-import AppStateContext from "@services/context/context"
-import { FC, useContext } from "react"
-import { StyleSheet, View } from "react-native"
+import { FC } from "react"
+import { useRouter } from "expo-router"
+import { StyleSheet, TouchableOpacity, View } from "react-native"
 import { Avatar, Text } from "react-native-paper"
 
 import { getAvatarLetters, getDate } from "@services/utils/functions/format"
@@ -10,7 +10,7 @@ import AppAvatar from "../AppAvatar"
 const NotificationCard: FC<NotificationCardProps> = ({
   notification: { notification }
 }) => {
-  const { locale } = useContext(AppStateContext)
+  const router = useRouter()
 
   const userName = notification.author
     ? getAvatarLetters(
@@ -32,9 +32,20 @@ const NotificationCard: FC<NotificationCardProps> = ({
   }
 
   const date = getDate(notification.datation.creationTime)
+  const openModal = () => {
+    router.push({
+      pathname: "notificationModal",
+      params: {
+        sender: userName,
+        association: notification?.association?.name,
+        description: notification?.description,
+        title: notification.title
+      }
+    })
+  }
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={openModal}>
       <View style={styles.userInfo}>
         <View>{getAvatar()}</View>
         <View style={styles.user}>
@@ -44,12 +55,14 @@ const NotificationCard: FC<NotificationCardProps> = ({
       </View>
       <View style={styles.description}>
         <Text variant="labelLarge">{notification.title}</Text>
-        <Text>{notification.description}</Text>
+        <Text numberOfLines={2} lineBreakMode="tail">
+          {notification.description}
+        </Text>
       </View>
       <View style={styles.dateContainer}>
         <Text style={styles.date}>{date}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
