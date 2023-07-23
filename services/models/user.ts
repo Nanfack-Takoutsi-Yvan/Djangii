@@ -40,7 +40,24 @@ export default class User implements IUser {
 
       activityAreas: [],
 
-      socialNetworkLinks: []
+      socialNetworkLinks: [],
+
+      coverPicture: {} as IDjangiiFile,
+
+      city: {
+        country: {} as ICountry,
+
+        datation: {} as IHistory,
+
+        longitude: 0,
+
+        latitude: 0,
+
+        name: ""
+      },
+      biography: "",
+      dateBirth: "",
+      gender: ""
     },
 
     datation: {

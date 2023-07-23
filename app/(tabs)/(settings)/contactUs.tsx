@@ -2,18 +2,46 @@ import { FC, useContext } from "react"
 import { Button, Text, TextInput, useTheme } from "react-native-paper"
 import { ScrollView, StyleSheet, View } from "react-native"
 import Icon from "react-native-paper/src/components/Icon"
-import { Formik } from "formik"
+import { Formik, FormikHelpers } from "formik"
 
 import AppStateContext from "@services/context/context"
 import validationSchema from "@services/validations"
-import { useRouter } from "expo-router"
+import ContactUs from "@services/models/contactUs"
 
 const ContactUsSettings: FC = () => {
-  const router = useRouter()
   const { colors } = useTheme()
-  const { locale, setLoading } = useContext(AppStateContext)
+  const { locale, setLoading, setActionModalProps } =
+    useContext(AppStateContext)
 
-  const onSubmit = console.log
+  const onSubmit = async (obj: ContactUs, evt: FormikHelpers<ContactUs>) => {
+    setLoading(true)
+    const data = new ContactUs(obj.message)
+
+    data
+      .sendMessage()
+      .then(() => {
+        setLoading(false)
+        setActionModalProps({
+          icon: true,
+          state: "success",
+          shouldDisplay: true,
+          title: locale.t("settings.messageSentSuccessfully")
+        })
+      })
+      .catch(() => {
+        setLoading(false)
+        setActionModalProps({
+          icon: true,
+          state: "error",
+          shouldDisplay: true,
+          title: locale.t("settings.messageNotSentTitle"),
+          description: locale.t("settings.messageNotSentDescription")
+        })
+      })
+      .finally(() => {
+        evt.resetForm()
+      })
+  }
 
   return (
     <ScrollView style={styles.screen}>
@@ -24,10 +52,10 @@ const ContactUsSettings: FC = () => {
         </View>
         <View>
           <Formik
-            initialValues={{ message: "" }}
+            initialValues={new ContactUs()}
             validationSchema={validationSchema.messageValidationSchema}
             validateOnChange
-            onSubmit={(obj, event) => onSubmit()}
+            onSubmit={onSubmit}
           >
             {({
               handleChange,

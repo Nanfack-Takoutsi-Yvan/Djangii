@@ -389,6 +389,9 @@
     "djangiiAccountDescription": "Any user profile created by Djangii.com from a valid username and password combination.",
     "message": "Message",
     "sendMessage": "Send message",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "messageSentSuccessfully": "Message Sent Successfully",
+    "messageNotSentTitle": "Message not sent",
+    "messageNotSentDescription": "An error occurred while sending the message, please try again"
   }
 }
