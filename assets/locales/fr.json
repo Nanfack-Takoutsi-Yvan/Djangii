@@ -374,6 +374,13 @@
     "djangiiAdministrator": "Administrateur Djangii",
     "djangiiAdministratorDescription": "Usager internet ayant créé une association Djangii ou utilisateur Djangii jouant le rôle d’administrateur ou de membre de bureau d’une association Djangii.",
     "djangiiAccount": "Compte Djangii",
-    "djangiiAccountDescription": "Tout profil d’utilisateur généré par Djangii.com à partir d’un nom d’utilisateur et d’un mot de passe valides."
+    "djangiiAccountDescription": "Tout profil d’utilisateur généré par Djangii.com à partir d’un nom d’utilisateur et d’un mot de passe valides.",
+    "message": "Message",
+    "sendMessage": "Envoyer le message",
+    "cancel": "Annuler",
+    "messageSentSuccessfully": "Message envoyé avec success",
+    "messageNotSentTitle": "Echec d'envoie du message",
+    "messageNotSentDescription": "Une erreur s'est produite lors de l'envoie du message, veuillez reessayez",
+    "changeLanguage": "Selectionner une langue"
   }
 }

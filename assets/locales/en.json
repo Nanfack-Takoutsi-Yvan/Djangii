@@ -392,6 +392,22 @@
     "cancel": "Cancel",
     "messageSentSuccessfully": "Message Sent Successfully",
     "messageNotSentTitle": "Message not sent",
-    "messageNotSentDescription": "An error occurred while sending the message, please try again"
+    "messageNotSentDescription": "An error occurred while sending the message, please try again",
+    "changeLanguage": "Select language",
+    "userDetails": "User details",
+    "password": "Password",
+    "updateProfileInfo": "Update profile",
+    "updatePassword": "Update password",
+    "firstName": "First Name",
+    "lastName": "Last name",
+    "description": "Description",
+    "gender": "Gender",
+    "currentPassword": "Current password",
+    "newPassword":"Enter your new password",
+    "passwordConfirm": "Confirm new Password"
+  },
+  "languages": {
+    "en": "English",
+    "fr": "Francais"
   }
 }

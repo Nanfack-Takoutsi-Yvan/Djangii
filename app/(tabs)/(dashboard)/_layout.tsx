@@ -2,7 +2,7 @@
 import { useContext } from "react"
 import { Drawer } from "expo-router/drawer"
 import { Platform, StyleSheet, TouchableOpacity } from "react-native"
-import { Avatar, useTheme } from "react-native-paper"
+import { useTheme } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
 
 import NavigationDrawer from "@components/ui/NavigationDrawer"
@@ -10,17 +10,13 @@ import AppStateContext from "@services/context/context"
 import { useRouter } from "expo-router"
 import { getAvatarLetters } from "@utils/functions/format"
 import { useAuth } from "@services/context/auth"
+import AppAvatar from "@components/ui/AppAvatar"
 
 export default function DashboardLayout() {
   const { locale } = useContext(AppStateContext)
   const { colors } = useTheme()
   const router = useRouter()
   const { user } = useAuth()
-
-  const avatar = getAvatarLetters(
-    user?.userInfos?.firstName,
-    user?.userInfos?.lastName
-  )
 
   return (
     <Drawer
@@ -33,12 +29,7 @@ export default function DashboardLayout() {
         drawerStyle: styles.drawer,
         headerRight: () => (
           <TouchableOpacity onPress={() => router.push("appInfoModal")}>
-            <Avatar.Text
-              size={24}
-              label={avatar}
-              labelStyle={styles.avatarLabel}
-              style={[styles.avatar, { backgroundColor: colors.secondary }]}
-            />
+            {user ? <AppAvatar size={24} user={user.userInfos} /> : null}
           </TouchableOpacity>
         )
       }}
