@@ -33,13 +33,17 @@ const NotificationCard: FC<NotificationCardProps> = ({
 
   const date = getDate(notification.datation.creationTime)
   const openModal = () => {
+    const params = {
+      sender: userName,
+      association: notification?.association?.name,
+      description: notification?.description,
+      title: notification?.title
+    }
+
     router.push({
       pathname: "notificationModal",
       params: {
-        sender: userName,
-        association: notification?.association?.name,
-        description: notification?.description,
-        title: notification.title
+        data: JSON.stringify(params)
       }
     })
   }

@@ -1,15 +1,18 @@
 import { FC, useContext } from "react"
 import AppStateContext from "@services/context/context"
-import { Text } from "react-native-paper"
+import { Text, useTheme } from "react-native-paper"
 import { Stack, useLocalSearchParams, useRouter } from "expo-router"
 import { ScrollView, StyleSheet, View } from "react-native"
 
 const NotificationModal: FC = () => {
+  const { colors } = useTheme()
   const { locale } = useContext(AppStateContext)
   const router = useRouter()
-  const param = useLocalSearchParams() as NotificationParams
+  const param = useLocalSearchParams() as { data: string }
 
-  if (!param) {
+  const notification = JSON.parse(param.data)
+
+  if (!notification) {
     router.back()
     return null
   }
@@ -18,34 +21,38 @@ const NotificationModal: FC = () => {
     <View style={styles.screen}>
       <Stack.Screen
         options={{
-          title: locale.t("notifications.modalHeader", { sender: param.sender })
+          title: locale.t("notifications.modalHeader", {
+            sender: notification.sender
+          }),
+          headerStyle: { backgroundColor: colors.primary },
+          headerTitleStyle: { color: "#fff" }
         }}
       />
       <ScrollView style={styles.screen} contentContainerStyle={styles.screen}>
         <View style={styles.container}>
-          <View>
-            <Text variant="labelLarge">
-              <Text variant="labelLarge">
+          <View style={styles.section}>
+            <View style={styles.text}>
+              <Text variant="labelMedium">
                 {locale.t("notifications.messageTitle")}:{" "}
               </Text>
-              <Text variant="labelLarge">{param.title}</Text>
-            </Text>
-          </View>
-          {param.association ? (
-            <View>
-              <Text>
-                <Text>{locale.t("notifications.association")}: </Text>
-                <Text>{param.association}</Text>
-              </Text>
+              <Text variant="labelLarge">{notification.title}</Text>
             </View>
-          ) : null}
-          <View>
-            <Text>
-              <Text variant="labelLarge">
+
+            {notification.association ? (
+              <View style={styles.text}>
+                <Text variant="labelMedium">
+                  {locale.t("notifications.association")}:{" "}
+                </Text>
+                <Text>{notification.association}</Text>
+              </View>
+            ) : null}
+
+            <View style={styles.text}>
+              <Text variant="labelMedium">
                 {locale.t("notifications.message")}:
               </Text>
-              <Text>{param.description}</Text>
-            </Text>
+              <Text>{notification.description}</Text>
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -55,13 +62,20 @@ const NotificationModal: FC = () => {
 
 const styles = StyleSheet.create({
   screen: {
-    flex: 1,
-    backgroundColor: "white"
+    flex: 1
   },
   container: {
     flex: 1,
+    padding: 24
+  },
+  text: {
+    rowGap: 8
+  },
+  section: {
     padding: 24,
-    rowGap: 12
+    backgroundColor: "#fff",
+    borderRadius: 24,
+    rowGap: 24
   }
 })
 

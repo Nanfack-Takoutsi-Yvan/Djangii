@@ -381,6 +381,27 @@
     "messageSentSuccessfully": "Message envoyé avec success",
     "messageNotSentTitle": "Echec d'envoie du message",
     "messageNotSentDescription": "Une erreur s'est produite lors de l'envoie du message, veuillez reessayez",
-    "changeLanguage": "Selectionner une langue"
+    "changeLanguage": "Selectionner une langue",
+    "userDetails": "Donnée d'utilisateur",
+    "password": "Mot de passe",
+    "updateProfileInfo": "Mettre les données à jour",
+    "updatePassword": "Mettre à jour le mod de passe",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "description": "Description",
+    "gender": "Genre",
+    "currentPassword": "Mot de passe actuel",
+    "newPassword":"Entrer le nouveau mot de passe",
+    "passwordConfirm": "Confirmer le mot de passe",
+    "emailNotificationLanguage": "Langue des notifications par email",
+    "emailNotificationLanguageDescription": "Définissez votre langue par défaut pour les notifications par email",
+    "G001": "Groupe d'associations",
+    "G002": "Membre des groupes",
+    "G003": "Tontines des groupes",
+    "G004": "Groupes des rondes de Tontines",
+    "G005": "Groupes de sessions",
+    "G006": "Groupes de prêts",
+    "G007": "Les groupes de Cash Box",
+    "G008": "Groupes des bulletins d'information"
   }
 }

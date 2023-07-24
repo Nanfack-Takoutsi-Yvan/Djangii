@@ -357,7 +357,11 @@
     "modalHeader": "Message from: {{sender}}",
     "messageTitle": "Title",
     "association": "Association",
-    "message": "Message"
+    "message": "Message",
+    "newNotificationTitleLabel": "Title*",
+    "newNotificationDescriptionLabel": "Description*",
+    "cancel": "Cancel",
+    "sendNotification": "Send notification"
   },
   "settings": {
     "title": "Settings",
@@ -404,7 +408,18 @@
     "gender": "Gender",
     "currentPassword": "Current password",
     "newPassword":"Enter your new password",
-    "passwordConfirm": "Confirm new Password"
+    "passwordConfirm": "Confirm new Password",
+    "emailNotificationLanguage": "Email Notification language",
+    "emailNotificationLanguageDescription": "Set your default language for email notifications",
+    "G001": "Association's Group",
+    "G002": "Member's Group",
+    "G003": "Tontine's Group",
+    "G004": "Tontine round's Group",
+    "G005": "Sessions' Group",
+    "G006": "Loan's Group",
+    "G007": "Cash Box's Group",
+    "G008": "Newsletters' Group",
+    "newNotification": "New Notification"
   },
   "languages": {
     "en": "English",
