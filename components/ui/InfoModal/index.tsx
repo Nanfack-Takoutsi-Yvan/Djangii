@@ -14,6 +14,7 @@ import {
   Avatar,
   Button
 } from "react-native-paper"
+import AppAvatar from "../AppAvatar"
 
 type InfoModalProps = {
   onLogout: () => void
@@ -26,11 +27,6 @@ const InfoModal: FC<InfoModalProps> = ({ onLogout }) => {
 
   const goBack = () => router.back()
   const imageSize = 75
-
-  const avatar = getAvatarLetters(
-    user?.userInfos?.firstName,
-    user?.userInfos?.lastName
-  )
 
   const showEmail = user?.username === user?.userInfos?.email
 
@@ -68,12 +64,9 @@ const InfoModal: FC<InfoModalProps> = ({ onLogout }) => {
         >
           <View style={{ flexDirection: "row" }}>
             <View>
-              <Avatar.Text
-                size={48}
-                label={avatar}
-                labelStyle={styles.avatarLabel}
-                style={[styles.avatar, { backgroundColor: colors.secondary }]}
-              />
+              {user ? (
+                <AppAvatar size={imageSize} user={user.userInfos} />
+              ) : null}
             </View>
             <View style={{ rowGap: 12 }}>
               <View>

@@ -73,3 +73,10 @@ type Avatar = {
   id: string
   url: string
 }
+
+type NotificationParams = {
+  sender: string
+  association?: string | null
+  description: string
+  title: string
+}

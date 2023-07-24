@@ -19,7 +19,7 @@ import { StatusBar } from "expo-status-bar"
 
 import AppStateContext from "@services/context/context"
 import PasswordIcon from "@components/ui/PasswordIcon"
-import vaidationSchema from "@services/validations"
+import validationSchema from "@services/validations"
 import User from "@services/models/user"
 import { HttpStatusCode } from "axios"
 import { useAuth } from "@services/context/auth"
@@ -91,7 +91,7 @@ export default function Login() {
         <View style={styles.formContainer}>
           <Formik
             initialValues={{ username: "", password: "" }}
-            validationSchema={vaidationSchema.loginValidationSchema}
+            validationSchema={validationSchema.loginValidationSchema}
             onSubmit={handleLogin}
           >
             {({

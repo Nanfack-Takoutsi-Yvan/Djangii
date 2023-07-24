@@ -17,6 +17,7 @@ import notifications from "./slices/notifications"
 import configurations from "./slices/configurations"
 import bottomSheetForm from "./slices/bottomSheetForm"
 import bottomSheetTables from "./slices/bottomSheetTables"
+import NotificationParams from "./slices/notificationSettings"
 
 const combinedReducer = combineReducers({
   loan,
@@ -25,6 +26,7 @@ const combinedReducer = combineReducers({
   notifications,
   bottomSheetForm,
   bottomSheetTables,
+  NotificationParams,
   ...payment,
   ...members,
   ...tontines,

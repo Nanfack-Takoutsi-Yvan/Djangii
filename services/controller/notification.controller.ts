@@ -18,7 +18,8 @@ export default class NotificationController implements INotificationController {
         markAsDisplayed: "/api/djangii-notifications/mark-as-displayed",
         markAsRead: "/api/djangii-notifications/mark-all-as-readed",
         createdByMe: "/api/djangii-notifications/created-by-me",
-        all: "/api/djangii-notifications"
+        all: "/api/djangii-notifications",
+        settings: "api/notification-parameters/group"
       },
       association: {
         getMine: "/api/association-notifications/me",
@@ -71,6 +72,33 @@ export default class NotificationController implements INotificationController {
     } catch (error) {
       const err = {
         message: `An error occurred while getting user notifications: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public getNotificationParams = async (token: string) => {
+    assert(token, "can not get notifications params without token")
+    try {
+      const res = await apiClient.get<INotificationParams[]>(
+        this.resource.djangii.settings,
+        {
+          headers: { Authorization: token }
+        }
+      )
+
+      if (!res) {
+        throw new Error(
+          `An error occurred while getting user notifications params`
+        )
+      }
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `An error occurred while getting user notifications params: ${error}`,
         error
       }
 

@@ -9,7 +9,8 @@
     "title": "An error occurred",
     "badOtp": "The otp that you entered is invalid",
     "tooManyAttempts": "Too many attempts, try again later",
-    "description": "Check your internet connection and try again"
+    "description": "Check your internet connection and try again",
+    "emptyField": "This field is required"
   },
   "onboarding": {
     "title": {
@@ -195,7 +196,8 @@
     "newAdvertising": "New Advertising",
     "createNewAdvertising": "Create New Advertising",
     "createNewAudience": "Create New Audience",
-    "newAudience": "New Audience"
+    "newAudience": "New Audience",
+    "newNotification": "New Notification"
   },
   "drawer": {
     "dashboard": "Dashboard",
@@ -349,5 +351,78 @@
   "file": {
     "canNotShareTheFile": "We can't share the file, try again later",
     "shareFile": "Share the file: {{fileName}}"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "modalHeader": "Message from: {{sender}}",
+    "messageTitle": "Title",
+    "association": "Association",
+    "message": "Message",
+    "newNotificationTitleLabel": "Title*",
+    "newNotificationDescriptionLabel": "Description*",
+    "cancel": "Cancel",
+    "sendNotification": "Send notification"
+  },
+  "settings": {
+    "title": "Settings",
+    "account": "User account",
+    "language": "Language",
+    "notifications": "Notifications",
+    "Djangii": "Djangii",
+    "lexicon": "Lexicon",
+    "contactUs": "Contact Us",
+    "accountSettingsDescription": "Username, email, password",
+    "languageSettingsDescription": "App language settings",
+    "notificationSettingsDescription": "Notifications settings, notification languages",
+    "lexiconSettingsDescription": "App lexicon",
+    "contactUsSettingsDescription": "Get help online",
+    "djangiiDescription": "The perfected social network platform featuring a smart automated system for an optimal management of your organization",
+    "djangiiAppDescription": "A social network platform featuring a smart automated system for tontine management.",
+    "djangiiApp": "Djangii App",
+    "internetUser": "Internet User",
+    "internetUserDescription": "Any individual with an Internet access and a valid email account.",
+    "djangiiUser": "Djangii User",
+    "djangiiUserDescription": "An Internet user who signs up for a Djangii account, either on their own or through accepting a Djangii invite.",
+    "djangiiInviteDescription": "Message sent by a Djangii user to an internet user inviting them to join a Djangii association.",
+    "djangiiInvite": "Djangii Invite",
+    "djangiiAssociation": "Djangii Association",
+    "djangiiAssociationDescription": "Group of people actively participating in a tontine or sharing ideas and thoughts through Djangii platform.",
+    "djangiiAdministrator": "Djangii Administrator",
+    "djangiiAdministratorDescription": "Djangii user with Administrator or Board Member Privileges in a Djangii association.",
+    "djangiiAccount": "Djangii Account",
+    "djangiiAccountDescription": "Any user profile created by Djangii.com from a valid username and password combination.",
+    "message": "Message",
+    "sendMessage": "Send message",
+    "cancel": "Cancel",
+    "messageSentSuccessfully": "Message Sent Successfully",
+    "messageNotSentTitle": "Message not sent",
+    "messageNotSentDescription": "An error occurred while sending the message, please try again",
+    "changeLanguage": "Select language",
+    "userDetails": "User details",
+    "password": "Password",
+    "updateProfileInfo": "Update profile",
+    "updatePassword": "Update password",
+    "firstName": "First Name",
+    "lastName": "Last name",
+    "description": "Description",
+    "gender": "Gender",
+    "currentPassword": "Current password",
+    "newPassword":"Enter your new password",
+    "passwordConfirm": "Confirm new Password",
+    "emailNotificationLanguage": "Email Notification language",
+    "emailNotificationLanguageDescription": "Set your default language for email notifications",
+    "G001": "Association's Group",
+    "G002": "Member's Group",
+    "G003": "Tontine's Group",
+    "G004": "Tontine round's Group",
+    "G005": "Sessions' Group",
+    "G006": "Loan's Group",
+    "G007": "Cash Box's Group",
+    "G008": "Newsletters' Group",
+    "newNotification": "New Notification"
+  },
+  "languages": {
+    "en": "English",
+    "fr": "Francais"
   }
 }

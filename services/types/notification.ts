@@ -60,6 +60,7 @@ interface INotificationParameterRequestBody {
   notificationCategory: INotificationCategory
   notifyByEmail: boolean
   notifyInPlatform: boolean
+  userInfos: IUserInfo
 }
 
 interface INotificationRequestBody {
@@ -77,3 +78,20 @@ type notificationStats = {
 interface INotificationController {
   getStats: (token: string) => Promise<notificationStats>
 }
+
+interface INotificationParams {
+  code: NotificationParamsCode
+  description: string
+  id: string
+  notificationParameters: INotificationParameterRequestBody[]
+}
+
+type NotificationParamsCode =
+  | "G001"
+  | "G002"
+  | "G003"
+  | "G004"
+  | "G005"
+  | "G006"
+  | "G007"
+  | "G008"

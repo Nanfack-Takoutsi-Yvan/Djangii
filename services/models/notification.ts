@@ -48,4 +48,15 @@ export default class Notification implements INotification {
 
     return notifications
   }
+
+  static getUserNotificationParams = async () => {
+    const token = await getTokenFromStorage()
+    const controller = new NotificationController()
+
+    assert(token, "token is required to get user notifications parameters")
+
+    const params = await controller.getNotificationParams(token)
+
+    return params
+  }
 }

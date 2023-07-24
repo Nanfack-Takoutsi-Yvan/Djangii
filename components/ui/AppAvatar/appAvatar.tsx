@@ -17,7 +17,10 @@ const AppAvatar: FC<Props> = ({ user, size }) => {
     return (
       <Avatar.Image
         size={size}
-        style={styles.avatar}
+        style={[
+          styles.avatar,
+          { borderColor: colors.secondary, borderWidth: 2 }
+        ]}
         source={{ uri: user?.socialProfil.avatar?.url }}
       />
     )
@@ -28,7 +31,14 @@ const AppAvatar: FC<Props> = ({ user, size }) => {
       size={size}
       label={avatar}
       labelStyle={[styles.avatarLabel, { fontSize: size * 0.35 }]}
-      style={[styles.avatar, { backgroundColor: colors.secondary }]}
+      style={[
+        styles.avatar,
+        {
+          backgroundColor: colors.secondary,
+          borderColor: colors.secondary,
+          borderWidth: 2
+        }
+      ]}
     />
   )
 }
