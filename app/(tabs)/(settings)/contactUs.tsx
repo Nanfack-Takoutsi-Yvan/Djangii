@@ -64,12 +64,13 @@ const ContactUsSettings: FC = () => {
               values,
               errors,
               touched,
-              setFieldValue
+              setFieldValue,
+              isValid
             }) => (
               <View style={styles.form}>
                 <View style={styles.fieldContainer}>
                   <View style={styles.field}>
-                    <View style={styles.screen}>
+                    <View style={{ flex: 1 }}>
                       <View>
                         <TextInput
                           placeholder={locale.t("settings.message")}
@@ -115,11 +116,9 @@ const ContactUsSettings: FC = () => {
                     textColor="#fff"
                     icon="send"
                     contentStyle={{ flexDirection: "row-reverse" }}
-                    disabled={!values.message}
+                    disabled={!isValid}
                     onPress={() => {
-                      if (values.message) {
-                        handleSubmit()
-                      }
+                      handleSubmit()
                     }}
                   >
                     {locale.t("settings.sendMessage")}
@@ -136,14 +135,15 @@ const ContactUsSettings: FC = () => {
 
 const styles = StyleSheet.create({
   screen: {
-    flex: 1
+    flex: 1,
+    padding: 24
   },
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    rowGap: 24
+    padding: 24,
+    rowGap: 24,
+    borderRadius: 30
   },
   title: {
     flexDirection: "row",
@@ -162,8 +162,8 @@ const styles = StyleSheet.create({
     columnGap: 12
   },
   buttonContainer: {
-    flexDirection: "row",
-    columnGap: 12
+    flexDirection: "column-reverse",
+    rowGap: 12
   },
   form: {
     rowGap: 24

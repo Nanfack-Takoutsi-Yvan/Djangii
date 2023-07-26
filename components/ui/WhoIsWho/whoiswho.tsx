@@ -67,7 +67,6 @@ const WhoIsWho: FC<CustomPagesProps> = ({ data }) => {
 
 const styles = StyleSheet.create({
   screen: {
-    padding: 24,
     flex: 1
   },
   list: {
@@ -75,7 +74,8 @@ const styles = StyleSheet.create({
   },
   listContent: {
     rowGap: 12,
-    paddingBottom: 8
+    paddingBottom: 8,
+    padding: 24
   },
   card: {
     backgroundColor: "#fff",

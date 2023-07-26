@@ -10,7 +10,7 @@ const LexiconSettings: FC = () => {
   const { locale } = useContext(AppStateContext)
 
   return (
-    <ScrollView contentContainerStyle={styles.screen} style={styles.screen}>
+    <ScrollView style={styles.screen}>
       <View style={styles.container}>
         {lexicon.map(lexic => (
           <View key={lexic.title} style={styles.content}>
@@ -27,13 +27,16 @@ const LexiconSettings: FC = () => {
 
 const styles = StyleSheet.create({
   screen: {
-    flex: 1
+    flex: 1,
+    padding: 24
   },
   container: {
     flex: 1,
     backgroundColor: "#fff",
     padding: 24,
-    rowGap: 24
+    rowGap: 24,
+    borderRadius: 30,
+    marginBottom: 50
   },
   content: {
     rowGap: 8

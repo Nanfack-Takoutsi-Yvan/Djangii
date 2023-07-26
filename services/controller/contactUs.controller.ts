@@ -14,12 +14,12 @@ export default class ContactUsController implements IContactUsController {
   public async sendMessage(token: string, message: string) {
     try {
       assert(token, "token is send to message")
-      await apiClient.post(this.resource.sendMessage, {
-        params: {
-          message
-        },
+      await apiClient.post(this.resource.sendMessage, null, {
         headers: {
           Authorization: token
+        },
+        params: {
+          message
         }
       })
     } catch (error) {

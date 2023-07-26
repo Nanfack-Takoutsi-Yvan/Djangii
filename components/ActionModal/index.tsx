@@ -71,7 +71,8 @@ export default function ActionModal({
   const iconColor = colors[color]
 
   useEffect(() => {
-    if (shouldDisplay) Haptics.notificationAsync(hapticType[state])
+    if (shouldDisplay && Haptics?.notificationAsync)
+      Haptics.notificationAsync(hapticType[state])
   }, [shouldDisplay, state])
 
   return (

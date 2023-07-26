@@ -402,6 +402,9 @@
     "G005": "Groupes de sessions",
     "G006": "Groupes de prêts",
     "G007": "Les groupes de Cash Box",
-    "G008": "Groupes des bulletins d'information"
+    "G008": "Groupes des bulletins d'information",
+    "contactUsMinLength": "Vous devez écrire un minimum de 25 caractères pour pouvoir envoyer le message !",
+    "newNotification": "Nouvelle notification",
+    "emptyMessage": "Ne peut envoyer un message vide"
   }
 }

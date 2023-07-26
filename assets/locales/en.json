@@ -419,7 +419,9 @@
     "G006": "Loan's Group",
     "G007": "Cash Box's Group",
     "G008": "Newsletters' Group",
-    "newNotification": "New Notification"
+    "newNotification": "New Notification",
+    "contactUsMinLength": "You should write a minimum of 25 characters to be able to send the message!",
+    "emptyMessage": "Can not send empty message"
   },
   "languages": {
     "en": "English",
