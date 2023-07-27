@@ -55,14 +55,6 @@ interface INotificationParameter {
   userInfos: IUserInfo
 }
 
-interface INotificationParameterRequestBody {
-  id: string
-  notificationCategory: INotificationCategory
-  notifyByEmail: boolean
-  notifyInPlatform: boolean
-  userInfos: IUserInfo
-}
-
 interface INotificationRequestBody {
   description: string
   sendType: "SEND_TO_USER" | "SEND_TO_ADMIN_USERS" | "SEND_TO_ALL_USERS"
@@ -83,7 +75,7 @@ interface INotificationParams {
   code: NotificationParamsCode
   description: string
   id: string
-  notificationParameters: INotificationParameterRequestBody[]
+  notificationParameters: INotificationParameter[]
 }
 
 type NotificationParamsCode =

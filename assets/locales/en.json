@@ -421,7 +421,22 @@
     "G008": "Newsletters' Group",
     "newNotification": "New Notification",
     "contactUsMinLength": "You should write a minimum of 25 characters to be able to send the message!",
-    "emptyMessage": "Can not send empty message"
+    "emptyMessage": "Can not send empty message",
+    "C001": "Association creation",
+    "C002": "Member adhesion",
+    "C003": "Tontine creation",
+    "C004": "Tontine round opening",
+    "C005": "Tontine round closing",
+    "C006": "Tontine round terminated",
+    "C007": "Tontine session programmation",
+    "C008": "Tontine session opening",
+    "C009": "Tontine session closing",
+    "C010": "Tontine session one day remind before closing",
+    "C011": "Loan saved, majorate, refunded",
+    "C012": "Loan one day remind before refund limit",
+    "C013": "Cash Box transaction",
+    "C014": "Djangii notification",
+    "C015": "Association message"
   },
   "languages": {
     "en": "English",

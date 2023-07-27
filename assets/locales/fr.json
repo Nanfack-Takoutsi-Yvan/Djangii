@@ -405,6 +405,21 @@
     "G008": "Groupes des bulletins d'information",
     "contactUsMinLength": "Vous devez écrire un minimum de 25 caractères pour pouvoir envoyer le message !",
     "newNotification": "Nouvelle notification",
-    "emptyMessage": "Ne peut envoyer un message vide"
+    "emptyMessage": "Ne peut envoyer un message vide",
+    "C001": "Création d'association",
+    "C002": "Adhésion de membre",
+    "C003": "Création d'une tontine",
+    "C004": "Overture d'un tour de tontine",
+    "C005": "Fermeture d'un tour de tontine",
+    "C006": "Fin d'un tour de tontine",
+    "C007": "Programmation d'une session de tontine",
+    "C008": "Ouverture d'une session de tontine",
+    "C009": "Fermeture d'une session de tontine",
+    "C010": "Un jour avant la fermeture d'une session de tontine",
+    "C011": "Prêt sauvegardé, majoré, remboursé",
+    "C012": "Un jour avant l'écheance d'un prêt",
+    "C013": "Transation Cash box",
+    "C014": "Notification Djangii",
+    "C015": "Message d'une assosiation"
   }
 }

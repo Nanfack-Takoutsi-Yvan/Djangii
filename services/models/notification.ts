@@ -59,4 +59,29 @@ export default class Notification implements INotification {
 
     return params
   }
+
+  static updateNotificationLanguage = async (lang: string) => {
+    const token = await getTokenFromStorage()
+    const controller = new NotificationController()
+
+    assert(
+      token,
+      "token is required to update user notifications email language"
+    )
+
+    const userInfo = await controller.updateNotificationLanguage(token, lang)
+
+    return userInfo
+  }
+
+  static upDateGroupParam = async (params: INotificationParameter[]) => {
+    const token = await getTokenFromStorage()
+    const controller = new NotificationController()
+
+    assert(token, "token is required to set user notifications parameters")
+
+    const newParams = await controller.upDateGroupParam(token, params)
+
+    return newParams
+  }
 }

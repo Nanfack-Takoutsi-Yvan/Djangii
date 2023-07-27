@@ -8,12 +8,14 @@ type AuthContextType = {
   user: IUser | null
   signIn: (user: IUser) => void
   signOut: () => void
+  setAuth: React.Dispatch<React.SetStateAction<IUser | null>>
 }
 
 const AuthContext = React.createContext<AuthContextType>({
   user: null,
   signIn: () => null,
-  signOut: () => null
+  signOut: () => null,
+  setAuth: () => null
 })
 
 // This hook can be used to access the user info.
@@ -63,7 +65,8 @@ export const Provider: FC<AuthProviderProps> = ({ children }) => {
     () => ({
       signIn,
       signOut,
-      user
+      user,
+      setAuth
     }),
     [signIn, signOut, user]
   )
