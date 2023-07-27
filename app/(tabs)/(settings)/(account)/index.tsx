@@ -1,5 +1,5 @@
 import { Formik } from "formik"
-import { FC, useContext, useState } from "react"
+import { FC, useCallback, useContext, useState } from "react"
 import {
   KeyboardAvoidingView,
   Platform,
@@ -14,6 +14,7 @@ import { useAuth } from "@services/context/auth"
 import AppStateContext from "@services/context/context"
 import validations from "@services/validations"
 import PasswordIcon from "@components/ui/PasswordIcon"
+import User from "@services/models/user"
 
 const AccountSettings: FC = () => {
   const [currentPasswordVisibility, setCurrentPasswordVisibility] =
@@ -23,9 +24,41 @@ const AccountSettings: FC = () => {
   const [passwordConfirmationVisibility, setPasswordConfirmationVisibility] =
     useState<boolean>(true)
 
-  const { locale } = useContext(AppStateContext)
-  const { colors } = useTheme()
   const { user } = useAuth()
+  const { colors } = useTheme()
+  const { locale, setLoading, setActionModalProps } =
+    useContext(AppStateContext)
+
+  type PasswordForm = { confirmPassword: string } & PasswordPayload
+
+  const submitNewPassword = useCallback(
+    ({ confirmPassword, ...rest }: PasswordForm) => {
+      setLoading(true)
+      User.updatePassword(rest)
+        .then(() => {
+          setActionModalProps({
+            icon: true,
+            state: "success",
+            shouldDisplay: true,
+            title: locale.t("settings.passwordsUpdated"),
+            description: locale.t("settings.passwordDescription")
+          })
+        })
+        .catch(() => {
+          setActionModalProps({
+            icon: true,
+            state: "error",
+            shouldDisplay: true,
+            title: locale.t("commonErrors.title"),
+            description: locale.t("commonErrors.description")
+          })
+        })
+        .finally(() => {
+          setLoading(false)
+        })
+    },
+    [locale, setActionModalProps, setLoading]
+  )
 
   return (
     <KeyboardAvoidingView
@@ -495,5 +528,3 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 })
-
-export default AccountSettings

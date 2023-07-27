@@ -10,36 +10,27 @@ export default function SettingsStack() {
   return (
     <Stack
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
         headerStyle: {
           backgroundColor: colors.primary
         },
         headerTitleStyle: {
           color: "white"
-        },
-        headerBackTitle: locale.t("settings.title"),
-        headerBackTitleStyle: { fontFamily: "Sora" }
+        }
       }}
     >
       <Stack.Screen
         name="index"
         options={{
-          title: locale.t("settings.title")
+          title: locale.t("settings.account")
         }}
       />
       <Stack.Screen
-        name="(account)"
-        options={{ title: locale.t("settings.account") }}
-      />
-      <Stack.Screen name="language" />
-      <Stack.Screen name="notification" />
-      <Stack.Screen
-        name="contactUs"
-        options={{ title: locale.t("settings.contactUs") }}
-      />
-      <Stack.Screen
-        name="lexicon"
-        options={{ title: locale.t("settings.lexicon") }}
+        name="updateAccount"
+        options={{
+          title: locale.t("settings.updateAccountDetails"),
+          presentation: "modal"
+        }}
       />
     </Stack>
   )

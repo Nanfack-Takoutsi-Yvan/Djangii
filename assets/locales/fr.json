@@ -420,6 +420,7 @@
     "C012": "Un jour avant l'écheance d'un prêt",
     "C013": "Transation Cash box",
     "C014": "Notification Djangii",
-    "C015": "Message d'une assosiation"
+    "C015": "Message d'une assosiation",
+    "updateAccountDetails": "Mettre à jour les détails du compte"
   }
 }

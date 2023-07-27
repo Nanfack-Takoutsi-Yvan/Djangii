@@ -15,6 +15,7 @@ export default class AuthController implements IAuthController {
       verifyUsername: "api/public/users/username-used",
       verifyPhoneNumber: "api/public/users/phone-used",
       verifyEmail: "api/public/users/email-used",
+      changePassword: "api/users/me/change-password",
       resetPasswordOTP: {
         start: "api/public/users/",
         end: "/reset-password-request"
@@ -219,6 +220,25 @@ export default class AuthController implements IAuthController {
       const res = await apiClient.get(`${this.resource.verifyEmail}/${email}`)
 
       return res.data
+    } catch (error) {
+      const err = {
+        message: "An error occurred while verifying the email address",
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public changePassword = async (token: string, payload: PasswordPayload) => {
+    assert(token, "token is required to update password")
+
+    try {
+      await apiClient.put(this.resource.changePassword, payload, {
+        headers: {
+          Authorization: token
+        }
+      })
     } catch (error) {
       const err = {
         message: "An error occurred while verifying the email address",

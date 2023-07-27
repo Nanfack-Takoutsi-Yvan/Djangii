@@ -6,6 +6,7 @@ import {
   saveInAsyncStorage,
   saveInSecureStore
 } from "@services/utils/storage"
+import getTokenFromStorage from "@services/utils/functions/token"
 
 export default class User implements IUser {
   id = ""
@@ -185,5 +186,16 @@ export default class User implements IUser {
     const res = await controller.verifyEmail(email)
 
     return res
+  }
+
+  static updatePassword = async (payload: PasswordPayload) => {
+    const token = await getTokenFromStorage()
+
+    assert(payload, "Payload cannot be empty")
+    assert(token, "User needs to be authenticated change password")
+
+    const controller = new AuthController()
+
+    await controller.changePassword(token, payload)
   }
 }

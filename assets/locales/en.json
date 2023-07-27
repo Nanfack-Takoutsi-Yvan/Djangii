@@ -436,7 +436,10 @@
     "C012": "Loan one day remind before refund limit",
     "C013": "Cash Box transaction",
     "C014": "Djangii notification",
-    "C015": "Association message"
+    "C015": "Association message",
+    "updateAccountDetails": "Update user account details",
+    "passwordsUpdated": "Password Changed",
+    "passwordDescription": "Password updated Successfully"
   },
   "languages": {
     "en": "English",

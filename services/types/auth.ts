@@ -129,3 +129,8 @@ interface ITransmitter {
   rejected: boolean
   pending: boolean
 }
+
+type PasswordPayload = {
+  newPassword: string
+  oldPassword: string
+}

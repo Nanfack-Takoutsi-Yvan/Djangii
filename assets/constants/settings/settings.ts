@@ -6,7 +6,7 @@ const settingsConfigs = [
         name: "account",
         description: "accountSettingsDescription",
         icon: "badge-account",
-        route: "account"
+        route: "(account)"
       }
     ]
   },
