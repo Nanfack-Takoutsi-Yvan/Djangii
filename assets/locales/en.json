@@ -3,7 +3,14 @@
     "true": "Yes",
     "false": "No",
     "noDataFound": "No data found.",
-    "noAssociation": "Create or Join association to view data."
+    "noAssociation": "Create or Join association to view data.",
+    "email": "Email",
+    "country": "Country",
+    "phoneNumber": "Phone Number",
+    "gender": "Gender",
+    "dateOfBirth": "Date of Birth",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
   },
   "commonErrors": {
     "title": "An error occurred",
@@ -439,7 +446,12 @@
     "C015": "Association message",
     "updateAccountDetails": "Update user account details",
     "passwordsUpdated": "Password Changed",
-    "passwordDescription": "Password updated Successfully"
+    "passwordDescription": "Password updated Successfully",
+    "fullName": "Full Name",
+    "MALE": "Male",
+    "FEMALE": "Female",
+    "OTHER": "Other",
+    "biography": "Biography"
   },
   "languages": {
     "en": "English",

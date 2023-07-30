@@ -66,6 +66,16 @@ interface ICountry {
   code: string
   name: string
   datation: IHistory
+  id: string
+}
+
+interface ICity {
+  country: ICountry
+  datation: IHistory
+  id: string
+  latitude: number
+  longitude: number
+  name: string
 }
 
 type Avatar = {

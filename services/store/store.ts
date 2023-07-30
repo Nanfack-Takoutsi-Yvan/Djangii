@@ -11,6 +11,7 @@ import payment from "./slices/payment"
 import members from "./slices/members"
 import tontines from "./slices/tontines"
 import dashboard from "./slices/dashboard"
+import djangiiData from "./slices/djangiiData"
 import advertising from "./slices/advertising"
 import associations from "./slices/associations"
 import notifications from "./slices/notifications"
@@ -30,6 +31,7 @@ const combinedReducer = combineReducers({
   ...payment,
   ...members,
   ...tontines,
+  ...djangiiData,
   ...advertising,
   ...associations,
   ...configurations

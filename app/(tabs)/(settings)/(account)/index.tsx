@@ -9,12 +9,15 @@ import {
 } from "react-native"
 import { Button, Text, TextInput, useTheme } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
+import { htmlToText } from "html-to-text"
 
-import { useAuth } from "@services/context/auth"
 import AppStateContext from "@services/context/context"
 import validations from "@services/validations"
 import PasswordIcon from "@components/ui/PasswordIcon"
 import User from "@services/models/user"
+import { useRouter } from "expo-router"
+import { getDate, getFullName } from "@services/utils/functions/format"
+import { useAuth } from "@services/context/auth"
 
 const AccountSettings: FC = () => {
   const [currentPasswordVisibility, setCurrentPasswordVisibility] =
@@ -24,6 +27,7 @@ const AccountSettings: FC = () => {
   const [passwordConfirmationVisibility, setPasswordConfirmationVisibility] =
     useState<boolean>(true)
 
+  const router = useRouter()
   const { user } = useAuth()
   const { colors } = useTheme()
   const { locale, setLoading, setActionModalProps } =
@@ -59,6 +63,11 @@ const AccountSettings: FC = () => {
     },
     [locale, setActionModalProps, setLoading]
   )
+  const fullName = getFullName(
+    user?.userInfos.firstName ?? "",
+    user?.userInfos.lastName ?? ""
+  )
+  const description = htmlToText(user?.userInfos.socialProfil.biography ?? "")
 
   return (
     <KeyboardAvoidingView
@@ -71,197 +80,106 @@ const AccountSettings: FC = () => {
         contentContainerStyle={{ paddingBottom: 54 }}
       >
         <View style={styles.container}>
+          <Text variant="labelLarge">{locale.t("settings.userDetails")}</Text>
           <View style={styles.section}>
-            <Text variant="labelLarge">{locale.t("settings.userDetails")}</Text>
-            <View style={styles.form}>
-              <Formik
-                initialValues={{
-                  description: user?.userInfos.socialProfil.biography,
-                  firstName: user?.userInfos.firstName,
-                  lastName: user?.userInfos.lastName
-                }}
-                onSubmit={console.log}
-                validationSchema={validations.userDetailsValidationSchema}
-              >
-                {({
-                  handleChange,
-                  handleBlur,
-                  handleSubmit,
-                  values,
-                  errors,
-                  touched,
-                  resetForm
-                }) => (
-                  <View style={styles.sectionForm}>
-                    <View style={styles.formCard}>
-                      <View style={styles.field}>
-                        <View style={styles.label}>
-                          <Icon
-                            source="account-outline"
-                            color={
-                              errors.firstName && touched.firstName
-                                ? colors.error
-                                : colors.primary
-                            }
-                            size={24}
-                          />
-                          <Text>{locale.t("settings.firstName")}</Text>
-                        </View>
-                        <View style={styles.field}>
-                          <View>
-                            <TextInput
-                              placeholder={locale.t("signUp.labels.firstName")}
-                              placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                              keyboardType="name-phone-pad"
-                              value={values.firstName}
-                              onBlur={handleBlur("firstName")}
-                              onChangeText={handleChange("firstName")}
-                              style={styles.textInput}
-                              dense
-                              underlineColor="rgba(0,0,0,0.5)"
-                              autoComplete="name-given"
-                              error={!!errors.firstName && !!touched.firstName}
-                            />
-                          </View>
-                          {errors.firstName && touched.firstName && (
-                            <View>
-                              <Text
-                                style={{
-                                  color: colors.error
-                                }}
-                              >
-                                {locale.t(errors.firstName)}
-                              </Text>
-                            </View>
-                          )}
-                        </View>
-                      </View>
+            <View style={[styles.form, { rowGap: 16 }]}>
+              {fullName ? (
+                <View style={styles.detailsLine}>
+                  <Text variant="labelMedium">
+                    {locale.t("settings.fullName")}
+                  </Text>
+                  <Text>{fullName}</Text>
+                </View>
+              ) : null}
 
-                      <View style={styles.field}>
-                        <View style={styles.label}>
-                          <Icon
-                            source="account-outline"
-                            color={
-                              errors.lastName && touched.lastName
-                                ? colors.error
-                                : colors.primary
-                            }
-                            size={24}
-                          />
-                          <Text>{locale.t("settings.lastName")}</Text>
-                        </View>
-                        <View style={styles.field}>
-                          <View>
-                            <TextInput
-                              placeholder={locale.t("settings.firstName")}
-                              placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                              keyboardType="name-phone-pad"
-                              value={values.lastName}
-                              onBlur={handleBlur("lastName")}
-                              onChangeText={handleChange("lastName")}
-                              style={styles.textInput}
-                              dense
-                              underlineColor="rgba(0,0,0,0.5)"
-                              autoComplete="name-given"
-                              error={!!errors.lastName && !!touched.lastName}
-                            />
-                          </View>
-                          {errors.lastName && touched.lastName && (
-                            <View>
-                              <Text
-                                style={{
-                                  color: colors.error
-                                }}
-                              >
-                                {locale.t(errors.lastName)}
-                              </Text>
-                            </View>
-                          )}
-                        </View>
-                      </View>
+              {user?.userInfos.email ? (
+                <View style={styles.detailsLine}>
+                  <Text variant="labelMedium">{locale.t("common.email")}</Text>
+                  <Text>{user?.userInfos.email}</Text>
+                </View>
+              ) : null}
 
-                      <View style={styles.field}>
-                        <View style={styles.label}>
-                          <Icon
-                            source="card-account-details-outline"
-                            color={
-                              errors.description && touched.description
-                                ? colors.error
-                                : colors.primary
-                            }
-                            size={24}
-                          />
-                          <Text>{locale.t("settings.description")}</Text>
-                        </View>
-                        <View style={styles.field}>
-                          <View>
-                            <TextInput
-                              placeholder={locale.t("settings.description")}
-                              placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                              value={values.description}
-                              onBlur={handleBlur("description")}
-                              onChangeText={handleChange("description")}
-                              style={styles.textInput}
-                              multiline
-                              underlineColor="rgba(0,0,0,0.5)"
-                              error={
-                                !!errors.description && !!touched.description
-                              }
-                            />
-                          </View>
-                          {errors.description && touched.description && (
-                            <View>
-                              <Text
-                                style={{
-                                  color: colors.error
-                                }}
-                              >
-                                {locale.t(errors.description)}
-                              </Text>
-                            </View>
-                          )}
-                        </View>
-                      </View>
-                    </View>
-                    <View style={styles.buttonContainer}>
-                      <Button
-                        mode="contained"
-                        buttonColor="#ccc"
-                        icon="close"
-                        contentStyle={{ flexDirection: "row-reverse" }}
-                        onPress={() => resetForm()}
-                      >
-                        {locale.t("settings.cancel")}
-                      </Button>
-                      <Button
-                        mode="contained"
-                        textColor="#fff"
-                        icon="badge-account-outline"
-                        contentStyle={{ flexDirection: "row-reverse" }}
-                        onPress={() => {
-                          if (values) {
-                            handleSubmit()
-                          }
-                        }}
-                      >
-                        {locale.t("settings.updateProfileInfo")}
-                      </Button>
-                    </View>
+              <View style={styles.detailsRow}>
+                {user?.userInfos.countryCode ? (
+                  <View style={styles.detailsLine}>
+                    <Text variant="labelMedium">
+                      {locale.t("common.country")}
+                    </Text>
+                    <Text>{user?.userInfos.countryCode}</Text>
                   </View>
-                )}
-              </Formik>
+                ) : null}
+
+                {user?.userInfos.phone ? (
+                  <View style={styles.detailsLine}>
+                    <Text variant="labelMedium">
+                      {locale.t("common.phoneNumber")}
+                    </Text>
+                    <Text>{user?.userInfos.phone}</Text>
+                  </View>
+                ) : null}
+              </View>
+
+              <View style={styles.detailsRow}>
+                {user?.userInfos.socialProfil.gender ? (
+                  <View style={styles.detailsLine}>
+                    <Text variant="labelMedium">
+                      {locale.t("common.gender")}
+                    </Text>
+                    <Text>
+                      {locale.t(
+                        `settings.${user?.userInfos.socialProfil.gender}`
+                      )}
+                    </Text>
+                  </View>
+                ) : null}
+
+                {user?.userInfos.socialProfil.dateBirth ? (
+                  <View style={styles.detailsLine}>
+                    <Text variant="labelMedium">
+                      {locale.t("common.dateOfBirth")}
+                    </Text>
+                    <Text>
+                      {getDate(user?.userInfos.socialProfil.dateBirth ?? "")}
+                    </Text>
+                  </View>
+                ) : null}
+              </View>
+
+              {description ? (
+                <View style={styles.detailsLine}>
+                  <Text variant="labelMedium">
+                    {locale.t("settings.biography")}
+                  </Text>
+                  <Text>{description}</Text>
+                </View>
+              ) : null}
+
+              <View>
+                <Button
+                  mode="contained"
+                  textColor="#fff"
+                  icon="badge-account-outline"
+                  contentStyle={{ flexDirection: "row-reverse" }}
+                  onPress={() => {
+                    router.push("updateAccount")
+                  }}
+                >
+                  {locale.t("settings.updateProfileInfo")}
+                </Button>
+              </View>
             </View>
           </View>
+
           <View style={styles.section}>
             <Text variant="labelLarge">{locale.t("settings.password")}</Text>
             <View style={styles.form}>
               <Formik
                 initialValues={{
-                  currentPassword: "",
+                  oldPassword: "",
                   newPassword: "",
-                  passwordConfirm: ""
+                  confirmPassword: ""
                 }}
-                onSubmit={console.log}
+                onSubmit={submitNewPassword}
                 validationSchema={validations.passwordChangeValidationSchema}
               >
                 {({
@@ -271,7 +189,8 @@ const AccountSettings: FC = () => {
                   values,
                   errors,
                   touched,
-                  resetForm
+                  resetForm,
+                  isValid
                 }) => (
                   <View style={styles.sectionForm}>
                     <View style={styles.formCard}>
@@ -280,7 +199,7 @@ const AccountSettings: FC = () => {
                           <Icon
                             source="lock-outline"
                             color={
-                              errors.currentPassword && touched.currentPassword
+                              errors.oldPassword && touched.oldPassword
                                 ? colors.error
                                 : colors.primary
                             }
@@ -293,9 +212,9 @@ const AccountSettings: FC = () => {
                             <TextInput
                               placeholder={locale.t("settings.currentPassword")}
                               placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                              value={values.currentPassword}
-                              onBlur={handleBlur("currentPassword")}
-                              onChangeText={handleChange("currentPassword")}
+                              value={values.oldPassword}
+                              onBlur={handleBlur("oldPassword")}
+                              onChangeText={handleChange("oldPassword")}
                               style={styles.textInput}
                               secureTextEntry={currentPasswordVisibility}
                               dense
@@ -313,23 +232,21 @@ const AccountSettings: FC = () => {
                                   : "default"
                               }
                               error={
-                                !!errors.currentPassword &&
-                                !!touched.currentPassword
+                                !!errors.oldPassword && !!touched.oldPassword
                               }
                             />
                           </View>
-                          {errors.currentPassword &&
-                            touched.currentPassword && (
-                              <View>
-                                <Text
-                                  style={{
-                                    color: colors.error
-                                  }}
-                                >
-                                  {locale.t(errors.currentPassword)}
-                                </Text>
-                              </View>
-                            )}
+                          {errors.oldPassword && touched.oldPassword && (
+                            <View>
+                              <Text
+                                style={{
+                                  color: colors.error
+                                }}
+                              >
+                                {locale.t(errors.oldPassword)}
+                              </Text>
+                            </View>
+                          )}
                         </View>
                       </View>
 
@@ -394,7 +311,7 @@ const AccountSettings: FC = () => {
                           <Icon
                             source="lock-check-outline"
                             color={
-                              errors.passwordConfirm && touched.passwordConfirm
+                              errors.confirmPassword && touched.confirmPassword
                                 ? colors.error
                                 : colors.primary
                             }
@@ -407,9 +324,9 @@ const AccountSettings: FC = () => {
                             <TextInput
                               placeholder={locale.t("settings.passwordConfirm")}
                               placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                              value={values.passwordConfirm}
-                              onBlur={handleBlur("passwordConfirm")}
-                              onChangeText={handleChange("passwordConfirm")}
+                              value={values.confirmPassword}
+                              onBlur={handleBlur("confirmPassword")}
+                              onChangeText={handleChange("confirmPassword")}
                               style={styles.textInput}
                               dense
                               underlineColor="rgba(0,0,0,0.5)"
@@ -426,20 +343,20 @@ const AccountSettings: FC = () => {
                                   : "default"
                               }
                               error={
-                                !!errors.passwordConfirm &&
-                                !!touched.passwordConfirm
+                                !!errors.confirmPassword &&
+                                !!touched.confirmPassword
                               }
                             />
                           </View>
-                          {errors.passwordConfirm &&
-                            touched.passwordConfirm && (
+                          {errors.confirmPassword &&
+                            touched.confirmPassword && (
                               <View>
                                 <Text
                                   style={{
                                     color: colors.error
                                   }}
                                 >
-                                  {locale.t(errors.passwordConfirm)}
+                                  {locale.t(errors.confirmPassword)}
                                 </Text>
                               </View>
                             )}
@@ -461,8 +378,9 @@ const AccountSettings: FC = () => {
                         textColor="#fff"
                         icon="lock-reset"
                         contentStyle={{ flexDirection: "row-reverse" }}
+                        disabled={!isValid}
                         onPress={() => {
-                          if (values) {
+                          if (isValid) {
                             handleSubmit()
                           }
                         }}
@@ -526,5 +444,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     columnGap: 8,
     alignItems: "center"
+  },
+  detailsRow: {
+    flexDirection: "row",
+    columnGap: 12
+  },
+  detailsLine: {
+    rowGap: 8
   }
 })
+
+export default AccountSettings

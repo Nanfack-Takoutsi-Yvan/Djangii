@@ -28,6 +28,7 @@ export default function SettingsStack() {
       <Stack.Screen
         name="updateAccount"
         options={{
+          headerShown: true,
           title: locale.t("settings.updateAccountDetails"),
           presentation: "modal"
         }}
