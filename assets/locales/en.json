@@ -14,7 +14,14 @@
     "female": "Female",
     "male": "Male",
     "other": "Other",
-    "city": "City"
+    "city": "City",
+    "interestCenters": "Interest Centers",
+    "activityAreas":"Activity areas",
+    "hobbies": "Hobbies",
+    "linkedInAccount": "LinkedIn Account",
+    "facebookAccount": "Facebook Account",
+    "twitterAccount": "Twitter Account",
+    "youtubeAccount": "YouTube Account"
   },
   "commonErrors": {
     "title": "An error occurred",
