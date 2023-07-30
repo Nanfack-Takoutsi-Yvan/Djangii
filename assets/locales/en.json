@@ -10,7 +10,11 @@
     "gender": "Gender",
     "dateOfBirth": "Date of Birth",
     "confirm": "Confirm",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "female": "Female",
+    "male": "Male",
+    "other": "Other",
+    "city": "City"
   },
   "commonErrors": {
     "title": "An error occurred",

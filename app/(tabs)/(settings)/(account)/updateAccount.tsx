@@ -28,10 +28,12 @@ import {
 } from "@services/store/slices/djangiiData"
 import { useAppDispatch } from "@services/store"
 import FormSkeletonLoader from "@components/ui/skeletonLoader/formSkeletonLoader"
+import genders from "@assets/constants/settings/gender"
 
 const UpdateAccount: FC = () => {
   const [dateToggler, setDateToggler] = useState<Date>()
   const [showPicker, setShowPicker] = useState<boolean>(false)
+  const [hobbies, setHobbies] = useState<any>()
 
   const { user } = useAuth()
   const router = useRouter()
@@ -97,7 +99,12 @@ const UpdateAccount: FC = () => {
                   lastName: user?.userInfos.lastName,
                   dateOfBirth: new Date(
                     user?.userInfos.socialProfil.dateBirth ?? ""
-                  ).toUTCString()
+                  ).toUTCString(),
+                  gender: user?.userInfos.socialProfil.gender,
+                  countryCode: djangiiData.data.countries.find(
+                    country => country.code === user?.userInfos.countryCode
+                  )?.code,
+                  city: user?.userInfos.socialProfil.city.name
                 }}
                 onSubmit={console.log}
                 validationSchema={validations.userDetailsValidationSchema}
@@ -242,7 +249,7 @@ const UpdateAccount: FC = () => {
                         </View>
                       </View>
 
-                      {!showPicker ? (
+                      {!showPicker && Platform.OS === "ios" ? (
                         <TouchableOpacity
                           style={styles.field}
                           onPress={toggleDatePicker}
@@ -333,6 +340,222 @@ const UpdateAccount: FC = () => {
                           ) : null}
                         </View>
                       ) : null}
+
+                      <View style={styles.field}>
+                        <View style={styles.label}>
+                          <Icon
+                            source="gender-male-female"
+                            color={
+                              errors.description && touched.description
+                                ? colors.error
+                                : colors.primary
+                            }
+                            size={24}
+                          />
+                          <Text>{locale.t("settings.gender")}</Text>
+                        </View>
+                        <View style={styles.field}>
+                          <View>
+                            <SelectDropdown
+                              data={genders.map(gender =>
+                                locale.t(gender.label)
+                              )}
+                              buttonStyle={styles.uniqueDropdown}
+                              buttonTextStyle={styles.dropdownTextStyles}
+                              rowTextStyle={styles.dropdownTextStyles}
+                              dropdownStyle={{ borderRadius: 12 }}
+                              onSelect={(selectedItem, index) => {
+                                console.log(selectedItem, index)
+                              }}
+                              buttonTextAfterSelection={(selectedItem, index) =>
+                                // text represented after item is selected
+                                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                                selectedItem
+                              }
+                              rowTextForSelection={(item, index) =>
+                                // text represented for each item in dropdown
+                                // if data array is an array of objects then return item.property to represent item in dropdown
+                                item
+                              }
+                            />
+                          </View>
+                          {errors.gender && touched.gender && (
+                            <View>
+                              <Text
+                                style={{
+                                  color: colors.error
+                                }}
+                              >
+                                {locale.t(errors.gender)}
+                              </Text>
+                            </View>
+                          )}
+                        </View>
+                      </View>
+
+                      <View style={styles.field}>
+                        <View style={styles.label}>
+                          <Icon
+                            source="earth"
+                            color={
+                              errors.description && touched.description
+                                ? colors.error
+                                : colors.primary
+                            }
+                            size={24}
+                          />
+                          <Text>{locale.t("common.country")}</Text>
+                        </View>
+                        <View style={styles.field}>
+                          <View>
+                            <SelectDropdown
+                              data={djangiiData.data.countries.map(
+                                country => country.name
+                              )}
+                              defaultButtonText={values.countryCode}
+                              buttonStyle={styles.uniqueDropdown}
+                              buttonTextStyle={styles.dropdownTextStyles}
+                              rowTextStyle={styles.dropdownTextStyles}
+                              dropdownStyle={{ borderRadius: 12 }}
+                              onSelect={(selectedItem, index) => {
+                                console.log(selectedItem, index)
+                              }}
+                              search
+                              searchInputTxtStyle={{ fontFamily: "Sora" }}
+                              buttonTextAfterSelection={(selectedItem, index) =>
+                                // text represented after item is selected
+                                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                                selectedItem
+                              }
+                              rowTextForSelection={(item, index) =>
+                                // text represented for each item in dropdown
+                                // if data array is an array of objects then return item.property to represent item in dropdown
+                                item
+                              }
+                            />
+                          </View>
+                          {errors.countryCode && touched.countryCode && (
+                            <View>
+                              <Text
+                                style={{
+                                  color: colors.error
+                                }}
+                              >
+                                {locale.t(errors.countryCode)}
+                              </Text>
+                            </View>
+                          )}
+                        </View>
+                      </View>
+
+                      <View style={styles.field}>
+                        <View style={styles.label}>
+                          <Icon
+                            source="earth"
+                            color={
+                              errors.description && touched.description
+                                ? colors.error
+                                : colors.primary
+                            }
+                            size={24}
+                          />
+                          <Text>{locale.t("common.city")}</Text>
+                        </View>
+                        <View style={styles.field}>
+                          <View>
+                            <SelectDropdown
+                              data={cities.data.map(city => city.name)}
+                              defaultButtonText={values.city}
+                              buttonStyle={styles.uniqueDropdown}
+                              buttonTextStyle={styles.dropdownTextStyles}
+                              rowTextStyle={styles.dropdownTextStyles}
+                              dropdownStyle={{ borderRadius: 12 }}
+                              onSelect={(selectedItem, index) => {
+                                console.log(selectedItem, index)
+                              }}
+                              search
+                              searchInputTxtStyle={{ fontFamily: "Sora" }}
+                              buttonTextAfterSelection={(selectedItem, index) =>
+                                // text represented after item is selected
+                                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                                selectedItem
+                              }
+                              rowTextForSelection={(item, index) =>
+                                // text represented for each item in dropdown
+                                // if data array is an array of objects then return item.property to represent item in dropdown
+                                item
+                              }
+                            />
+                          </View>
+                          {errors.countryCode && touched.countryCode && (
+                            <View>
+                              <Text
+                                style={{
+                                  color: colors.error
+                                }}
+                              >
+                                {locale.t(errors.countryCode)}
+                              </Text>
+                            </View>
+                          )}
+                        </View>
+                      </View>
+
+                      <View style={styles.field}>
+                        <View style={styles.label}>
+                          <Icon
+                            source="earth"
+                            color={
+                              errors.description && touched.description
+                                ? colors.error
+                                : colors.primary
+                            }
+                            size={24}
+                          />
+                          <Text>{locale.t("common.city")}</Text>
+                        </View>
+                        <View style={styles.field}>
+                          <View style={{ flex: 1 }}>
+                            <MultiSelect
+                              hideTags
+                              items={djangiiData.data.activitiesAreas.map(
+                                activity => ({
+                                  id: activity.id,
+                                  name: activity.description
+                                })
+                              )}
+                              uniqueKey="id"
+                              onSelectedItemsChange={setHobbies}
+                              selectedItems={hobbies}
+                              selectText="Pick Items"
+                              searchInputPlaceholderText="Search Items..."
+                              onChangeInput={text => console.log(text)}
+                              altFontFamily="ProximaNova-Light"
+                              tagRemoveIconColor="#CCC"
+                              tagBorderColor="#CCC"
+                              tagTextColor="#CCC"
+                              selectedItemTextColor="#CCC"
+                              selectedItemIconColor="#CCC"
+                              itemTextColor="#000"
+                              displayKey="name"
+                              searchInputStyle={{ color: "#CCC" }}
+                              submitButtonColor="#CCC"
+                              submitButtonText="Submit"
+                            />
+                          </View>
+                          {errors.countryCode && touched.countryCode && (
+                            <View>
+                              <Text
+                                style={{
+                                  color: colors.error
+                                }}
+                              >
+                                {locale.t(errors.countryCode)}
+                              </Text>
+                            </View>
+                          )}
+                        </View>
+                      </View>
                     </View>
                     <View style={styles.buttonContainer}>
                       <Button
@@ -421,6 +644,17 @@ const styles = StyleSheet.create({
   dateTimeButton: {
     justifyContent: "space-around",
     flexDirection: "row"
+  },
+  uniqueDropdown: {
+    height: 48,
+    width: "100%",
+    backgroundColor: "#fff",
+    borderBottomColor: "rgba(0,0,0,0.2)",
+    borderBottomWidth: 1
+  },
+  dropdownTextStyles: {
+    fontFamily: "Sora",
+    fontSize: 16
   }
 })
 
