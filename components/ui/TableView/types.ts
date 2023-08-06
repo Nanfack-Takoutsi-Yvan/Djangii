@@ -1,7 +1,7 @@
 type TableViewProps = {
   data?: any[]
   table: TableConfigs
-  actions?: Actions[]
+  actions?: TableData["actions"]
   createData?: CreateData
   pageName: string
 }

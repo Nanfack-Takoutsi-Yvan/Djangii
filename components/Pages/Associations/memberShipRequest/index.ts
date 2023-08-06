@@ -15,7 +15,17 @@ const membershipRequestsConfigs: configs = {
     },
     {
       name: "pendingMembershipRequests",
-      table: pendingMembershipRequestTable
+      table: pendingMembershipRequestTable,
+      actions: [
+        {
+          name: "validate",
+          method: (data: IUserAssociation[]) => null
+        },
+        {
+          name: "discard",
+          method: (data: IUserAssociation[]) => null
+        }
+      ]
     },
     {
       name: "rejectedMembershipRequests",

@@ -7,8 +7,8 @@ export const associationsPagesData = (associationsPages: IAssociationPage[]) =>
     associationPage.association.name,
     associationPage.name,
     `${associationPage.isPublic ? "public" : "private"}`,
-    `${associationPage.visible ? "yes" : "no"}`,
-    associationPage.description
+    associationPage.description,
+    associationPage.id
   ])
 
 export const getAssociationsPages = () =>

@@ -11,8 +11,8 @@ import {
 const useTableData = (
   table: TableConfigs,
   locale: I18n,
-  data?: any[],
-  actions?: Actions[]
+  data: any[],
+  actions?: TableData["actions"]
 ) => {
   const [tableHeadings, setTableHeadings] = useState<string[]>([])
   const [tableData, setTableData] = useState<any[]>([])
@@ -37,36 +37,42 @@ const useTableData = (
 
       tempTableData.forEach(row => {
         if (actions && actions.length) {
-          let edit: undefined | (() => void)
-          let view: undefined | (() => void)
-          let onDelete: undefined | (() => void)
+          const onEdit = actions.find(action => action.name === "edit")?.method
+          const onView = actions.find(action => action.name === "view")?.method
+          const onCopy = actions.find(action => action.name === "copy")?.method
+          const onDelete = actions.find(
+            action => action.name === "delete"
+          )?.method
+          const onValidate = actions.find(
+            action => action.name === "validate"
+          )?.method
+          const onDiscard = actions.find(
+            action => action.name === "discard"
+          )?.method
 
-          if (actions.includes("delete")) {
-            onDelete = () => undefined
-          }
-
-          if (actions.includes("view")) {
-            view = () => {
-              dispatch(changeViewPosition(1))
-              dispatch(
-                updateViewData({
-                  tableHead: headings,
-                  tableData: JSON.parse(JSON.stringify(row)),
-                  widthArr: table.widthArr
-                })
-              )
-            }
-          }
-
-          if (actions.includes("edit")) {
-            edit = () => undefined
-          }
+          // if (actions.includes("view")) {
+          //   view = () => {
+          //     dispatch(changeViewPosition(1))
+          //     dispatch(
+          //       updateViewData({
+          //         tableHead: headings,
+          //         tableData: JSON.parse(JSON.stringify(row)),
+          //         widthArr: table.widthArr
+          //       })
+          //     )
+          //   }
+          // }
 
           const actionComponent = (
             <TableActionButton
               onDelete={onDelete}
-              onView={view}
-              onEdit={edit}
+              onView={onView}
+              onEdit={onEdit}
+              onCopy={onCopy}
+              onDiscard={onDiscard}
+              onValidate={onValidate}
+              rowId={row.pop()}
+              data={data}
             />
           )
 

@@ -1,13 +1,32 @@
-import { FC } from "react"
-import { StyleSheet, View } from "react-native"
+import { FC, useContext } from "react"
+import { Alert, StyleSheet, View } from "react-native"
 import { useTheme, IconButton } from "react-native-paper"
+import * as Clipboard from "expo-clipboard"
+import AppStateContext from "@services/context/context"
 
 const TableActionButton: FC<TableActionButton> = ({
   onEdit,
   onDelete,
-  onView
+  onView,
+  onCopy,
+  onDiscard,
+  onValidate,
+  data,
+  rowId
 }) => {
   const { colors } = useTheme()
+  const { locale } = useContext(AppStateContext)
+
+  const copyData = (value: string) => {
+    if (value) {
+      Clipboard.setStringAsync(value)
+        .then(() => Alert.alert(locale.t("pages.savedClipboard")))
+        .catch(() => Alert.alert(locale.t("pages.clipboardFailed")))
+    } else {
+      Alert.alert(locale.t("pages.clipboardFailed"))
+    }
+  }
+
   return (
     <View style={styles.container}>
       {onEdit ? (
@@ -16,7 +35,7 @@ const TableActionButton: FC<TableActionButton> = ({
           size={16}
           iconColor="white"
           style={{ backgroundColor: colors.primary }}
-          onPress={onEdit}
+          onPress={() => onEdit(data, rowId)}
         />
       ) : null}
 
@@ -26,7 +45,20 @@ const TableActionButton: FC<TableActionButton> = ({
           size={16}
           iconColor="white"
           style={{ backgroundColor: colors.secondary }}
-          onPress={onView}
+          onPress={() => onView(data, rowId)}
+        />
+      ) : null}
+
+      {onCopy ? (
+        <IconButton
+          icon="content-copy"
+          size={16}
+          iconColor="white"
+          style={{ backgroundColor: colors.backdrop }}
+          onPress={() => {
+            const value = onCopy(data, rowId)
+            copyData(value)
+          }}
         />
       ) : null}
 
@@ -36,7 +68,27 @@ const TableActionButton: FC<TableActionButton> = ({
           size={16}
           iconColor="white"
           style={{ backgroundColor: colors.error }}
-          onPress={onDelete}
+          onPress={() => onDelete(data, rowId)}
+        />
+      ) : null}
+
+      {onValidate ? (
+        <IconButton
+          icon="check"
+          size={16}
+          iconColor="white"
+          style={{ backgroundColor: colors.secondary }}
+          onPress={() => onValidate(data, rowId)}
+        />
+      ) : null}
+
+      {onDiscard ? (
+        <IconButton
+          icon="close"
+          size={16}
+          iconColor="white"
+          style={{ backgroundColor: colors.error }}
+          onPress={() => onDiscard(data, rowId)}
         />
       ) : null}
     </View>

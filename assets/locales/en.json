@@ -215,7 +215,9 @@
     "createNewAdvertising": "Create New Advertising",
     "createNewAudience": "Create New Audience",
     "newAudience": "New Audience",
-    "newNotification": "New Notification"
+    "newNotification": "New Notification",
+    "savedClipboard": "Saved to clipboard",
+    "clipboardFailed": "Data not saved to clipboard"
   },
   "drawer": {
     "dashboard": "Dashboard",

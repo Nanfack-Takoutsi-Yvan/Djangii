@@ -14,7 +14,9 @@ const tableHead = [
   "motivation"
 ]
 
-const widthArr = Array(tableHead.length).fill(250)
+const widthArr = Array(tableHead.length).fill(200)
+
+const pendingTableHead = ["", ...tableHead]
 
 export const acceptedMembershipRequestTable = {
   widthArr,
@@ -24,7 +26,7 @@ export const acceptedMembershipRequestTable = {
 
 export const pendingMembershipRequestTable = {
   widthArr,
-  tableHead,
+  tableHead: pendingTableHead,
   tableData: pendingMembershipRequestData
 }
 
