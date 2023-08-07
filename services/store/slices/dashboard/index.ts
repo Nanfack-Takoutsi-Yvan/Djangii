@@ -11,6 +11,7 @@ interface dashboard extends IDashboardData {
 }
 
 export type DashboardState = {
+  defaultAssociationId?: string
   data: dashboard[]
   error?: AxiosError
   loading: boolean
@@ -42,6 +43,9 @@ const dashboardSlice = createSlice({
   reducers: {
     updateDashboardLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload
+    },
+    updateDefaultAssociationId: (state, action: PayloadAction<string>) => {
+      state.defaultAssociationId = action.payload
     }
   },
   extraReducers: builder => {
@@ -61,8 +65,11 @@ const dashboardSlice = createSlice({
 
 export default dashboardSlice.reducer
 
-export const { updateDashboardLoading } = dashboardSlice.actions
+export const { updateDashboardLoading, updateDefaultAssociationId } =
+  dashboardSlice.actions
 export const getDashboardData = () =>
   useAppSelector(({ dashboard }) => dashboard.data)
 export const isDashBoardLoading = () =>
   useAppSelector(state => state.dashboard.loading)
+export const getDefaultAssociationId = () =>
+  useAppSelector(state => state.dashboard.defaultAssociationId)

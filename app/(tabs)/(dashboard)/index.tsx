@@ -6,6 +6,10 @@ import { Image, StyleSheet, View, useWindowDimensions } from "react-native"
 import { useCallback, useContext, useEffect, useRef, useState } from "react"
 import { FlatList } from "react-native-gesture-handler"
 
+import AppStateContext from "@services/context/context"
+import DashboardSkeletonLoader from "@components/ui/skeletonLoader/dashboard"
+import ChartSkeleton from "@components/ui/skeletonLoader/dashboard/chartSkeleton"
+import { useAuth } from "@services/context/auth"
 import ReportCard from "@components/ui/reportCard"
 import { useAppDispatch } from "@services/store"
 import Chart from "@components/ui/Chart"
@@ -16,26 +20,26 @@ import {
 import {
   fetchAssociationDashBoardData,
   getDashboardData,
+  getDefaultAssociationId,
   isDashBoardLoading,
-  updateDashboardLoading
+  updateDashboardLoading,
+  updateDefaultAssociationId
 } from "@services/store/slices/dashboard"
 import {
   associationSelector,
   associationActions
 } from "@store/slices/associations"
-import AppStateContext from "@services/context/context"
-import DashboardSkeletonLoader from "@components/ui/skeletonLoader/dashboard"
-import ChartSkeleton from "@components/ui/skeletonLoader/dashboard/chartSkeleton"
 
 export default function TabOneScreen() {
-  const [dataId, setDataId] = useState<string>("")
   const [curveData, setCurveData] = useState<IDashboardData>()
 
+  const { user } = useAuth()
   const dispatch = useAppDispatch()
   const dashboardData = getDashboardData()
+  const dashBoardLoading = isDashBoardLoading()
   const { locale } = useContext(AppStateContext)
   const triggerFetchAssociation = useRef<boolean>(true)
-  const dashBoardLoading = isDashBoardLoading()
+  const defaultAssociationId = getDefaultAssociationId()
 
   const {
     data: { createdAssociation: associations }
@@ -49,6 +53,12 @@ export default function TabOneScreen() {
     locale.t("dashboard.legends.tontineRound"),
     locale.t("dashboard.legends.members")
   ]
+
+  useEffect(() => {
+    if (user) {
+      dispatch(updateDefaultAssociationId(user?.userInfos.defaultAssociationId))
+    }
+  }, [dispatch, user])
 
   useEffect(() => {
     if (triggerFetchAssociation.current) {
@@ -68,21 +78,21 @@ export default function TabOneScreen() {
           dispatch(updateDashboardLoading(false))
         }
       })
-
-      setDataId(associations[0].id)
     }
   }, [associations, dispatch])
 
   useEffect(() => {
     const selectedData = dashboardData.find(
-      data => data.associationId === dataId
+      data => data.associationId === defaultAssociationId
     )
 
     if (selectedData) {
       const { associationId, ...rest } = selectedData
       setCurveData(rest)
+    } else if (dashboardData.length) {
+      dispatch(updateDefaultAssociationId(dashboardData[0].associationId))
     }
-  }, [dashboardData, dataId])
+  }, [dashboardData, defaultAssociationId, dispatch])
 
   return (
     <View style={styles.container}>
@@ -124,11 +134,11 @@ export default function TabOneScreen() {
             contentContainerStyle={styles.cardsContainer}
             renderItem={({ item }) => (
               <ReportCard
-                selected={item.id === dataId}
+                selected={item.id === defaultAssociationId}
                 acronym={item.acronym}
                 name={item.name}
                 currency={item.currency.code}
-                onPress={() => setDataId(item.id)}
+                onPress={() => dispatch(updateDefaultAssociationId(item.id))}
                 curveData={tontineCurve(dashboardData, item.id)}
               />
             )}

@@ -15,6 +15,7 @@ import SlugSkeletonLoader from "@components/ui/skeletonLoader/slug"
 import { Text } from "react-native-paper"
 import { useAuth } from "@services/context/auth"
 import WhoIsWho from "@components/ui/WhoIsWho"
+import { getDefaultAssociationId } from "@services/store/slices/dashboard"
 
 const specialRequestDict: Record<CustomPages, FC<CustomPagesProps>> = {
   whoIsWho: WhoIsWho
@@ -23,12 +24,12 @@ const specialRequestDict: Record<CustomPages, FC<CustomPagesProps>> = {
 export default function TabOneScreen() {
   const [fetchData, setFetData] = useState<boolean>(false)
   const [data, setData] = useState<any[]>([])
-  const [tables, setTables] = useState<tableData[]>([])
+  const [tables, setTables] = useState<TableData[]>([])
 
   const params = useLocalSearchParams() as DashboardSlugParam
+  const defaultAssociationId = getDefaultAssociationId()
   const { locale } = useContext(AppStateContext)
   const dispatch = useDispatch()
-  const { user } = useAuth()
 
   const pageName = params.slug
   const pageData = pages[pageName]
@@ -37,22 +38,16 @@ export default function TabOneScreen() {
 
   useEffect(() => {
     setFetData(true)
-  }, [pageName])
+  }, [pageName, defaultAssociationId])
 
   useEffect(() => {
-    if (!dataState?.data && fetchData) {
-      const id = user?.userInfos.defaultAssociationId || ""
+    if (fetchData) {
+      const id = defaultAssociationId || ""
 
       dispatch(pageData?.fetchData(id))
       setFetData(false)
     }
-  }, [
-    dataState,
-    dispatch,
-    fetchData,
-    pageData,
-    user?.userInfos.defaultAssociationId
-  ])
+  }, [defaultAssociationId, dispatch, fetchData, pageData])
 
   useEffect(() => {
     if (dataState?.data) {

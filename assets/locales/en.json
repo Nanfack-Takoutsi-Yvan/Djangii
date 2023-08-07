@@ -21,7 +21,8 @@
     "linkedInAccount": "LinkedIn Account",
     "facebookAccount": "Facebook Account",
     "twitterAccount": "Twitter Account",
-    "youtubeAccount": "YouTube Account"
+    "youtubeAccount": "YouTube Account",
+    "selectAssociation": "Select Association"
   },
   "commonErrors": {
     "title": "An error occurred",
