@@ -13,7 +13,6 @@ import pages from "@components/Pages"
 import { useDispatch } from "react-redux"
 import SlugSkeletonLoader from "@components/ui/skeletonLoader/slug"
 import { Text } from "react-native-paper"
-import { useAuth } from "@services/context/auth"
 import WhoIsWho from "@components/ui/WhoIsWho"
 import { getDefaultAssociationId } from "@services/store/slices/dashboard"
 

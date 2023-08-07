@@ -22,7 +22,8 @@
     "facebookAccount": "Facebook Account",
     "twitterAccount": "Twitter Account",
     "youtubeAccount": "YouTube Account",
-    "selectAssociation": "Select Association"
+    "selectAssociation": "Select Association",
+    "send": "Send"
   },
   "commonErrors": {
     "title": "An error occurred",
@@ -367,7 +368,18 @@
     "gender": "Gender",
     "activityArea": "Activity area",
     "hobby": "Hobby",
-    "interestCenters": "Interest center"
+    "interestCenters": "Interest center",
+    "administrator": "Administrator",
+    "president": "President",
+    "vicePresident": "Vice President",
+    "generalSecretary": "General Secretary (SG)",
+    "auditor": "auditor",
+    "treasurer": "Treasurer",
+    "member": "Member",
+    "censor": "Censor",
+    "selectARole": "Select a role",
+    "memberShipRequestAccepted": "Membership request accepted",
+    "membershipDeniedWithSuccess": "Membership request denied"
   },
   "file": {
     "canNotShareTheFile": "We can't share the file, try again later",

@@ -1,5 +1,12 @@
 /* eslint-disable react/no-array-index-key */
-import { FC, useCallback, useContext } from "react"
+import {
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from "react"
 import { ScrollView, StyleSheet, View } from "react-native"
 import Icon from "react-native-paper/src/components/Icon"
 import { Button, useTheme } from "react-native-paper"
@@ -15,6 +22,11 @@ import { useAppDispatch } from "@services/store"
 import { useAuth } from "@services/context/auth"
 import { userFullName } from "@services/utils/functions/format"
 import { shareExcel } from "@services/utils/functions/exel"
+import ValidateMembershipRequest from "@components/PagesActions/ValidateMembershipRequest"
+
+const pagesActionsDict: Record<PagesActions, FC<PagesActionsProps>> = {
+  validateMembershipRequest: ValidateMembershipRequest
+}
 
 const TableView: FC<TableViewProps> = ({
   data,
@@ -23,6 +35,8 @@ const TableView: FC<TableViewProps> = ({
   pageName,
   createData
 }) => {
+  const [dataId, setDataId] = useState<string>("")
+
   const { user } = useAuth()
   const { colors } = useTheme()
   const dispatch = useAppDispatch()
@@ -31,6 +45,7 @@ const TableView: FC<TableViewProps> = ({
     table,
     locale,
     data!,
+    setDataId,
     actions
   )
 
@@ -54,6 +69,25 @@ const TableView: FC<TableViewProps> = ({
       )
     }
   }, [createData, dispatch])
+
+  const snapPoints = useMemo(() => ["50%", "100%"], [])
+  const getAction = (action: TableDataAction, key: number) => {
+    if (action.pageAction && data) {
+      const Sheet = pagesActionsDict[action.pageAction]
+
+      return (
+        <Sheet
+          data={data}
+          snapPoints={snapPoints}
+          dataId={dataId}
+          setDataId={setDataId}
+          key={`pageActionDic-${key}`}
+        />
+      )
+    }
+
+    return null
+  }
 
   return (
     <View style={[styles.screen, styles.container]}>
@@ -132,6 +166,8 @@ const TableView: FC<TableViewProps> = ({
           {locale.t("pages.exportButton")}
         </Button>
       </View>
+
+      {actions?.map(getAction)}
     </View>
   )
 }

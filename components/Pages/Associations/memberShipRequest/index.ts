@@ -1,5 +1,6 @@
 import { associationActions } from "@store/slices/associations"
 
+import MembershipRequest from "@services/models/associations/membershipRequest"
 import { getMembershipRequests } from "./methods"
 import {
   acceptedMembershipRequestTable,
@@ -19,11 +20,16 @@ const membershipRequestsConfigs: configs = {
       actions: [
         {
           name: "validate",
-          method: (data: IUserAssociation[]) => null
+          method: () => null,
+          pageAction: "validateMembershipRequest"
         },
         {
           name: "discard",
-          method: (data: IUserAssociation[]) => null
+          method: async (data: any, id?: string) => {
+            if (id) {
+              await MembershipRequest.rejectMembershipRequest(id)
+            }
+          }
         }
       ]
     },

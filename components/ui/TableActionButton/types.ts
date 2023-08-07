@@ -5,6 +5,7 @@ type TableActionButton = {
   onCopy?: (data: any[], id: string) => any
   onValidate?: (data: any[], id: string) => any
   onDiscard?: (data: any[], id: string) => any
+  setDataId: (value: string) => void
   rowId: string
   data: any[]
 }

@@ -11,11 +11,13 @@ const TableActionButton: FC<TableActionButton> = ({
   onCopy,
   onDiscard,
   onValidate,
+  setDataId,
   data,
   rowId
 }) => {
   const { colors } = useTheme()
-  const { locale } = useContext(AppStateContext)
+  const { locale, setLoading, setActionModalProps } =
+    useContext(AppStateContext)
 
   const copyData = (value: string) => {
     if (value) {
@@ -24,6 +26,30 @@ const TableActionButton: FC<TableActionButton> = ({
         .catch(() => Alert.alert(locale.t("pages.clipboardFailed")))
     } else {
       Alert.alert(locale.t("pages.clipboardFailed"))
+    }
+  }
+
+  const discardData = async (value: string) => {
+    try {
+      setLoading(true)
+      if (onDiscard) {
+        await onDiscard([], value)
+      }
+      setLoading(false)
+      setActionModalProps({
+        icon: true,
+        state: "success",
+        shouldDisplay: true,
+        title: locale.t("tables.membershipDeniedWithSuccess")
+      })
+    } catch (e) {
+      setLoading(false)
+      setActionModalProps({
+        icon: true,
+        state: "error",
+        shouldDisplay: true,
+        title: locale.t("commonErrors.title")
+      })
     }
   }
 
@@ -78,7 +104,10 @@ const TableActionButton: FC<TableActionButton> = ({
           size={16}
           iconColor="white"
           style={{ backgroundColor: colors.secondary }}
-          onPress={() => onValidate(data, rowId)}
+          onPress={() => {
+            onValidate(data, rowId)
+            setDataId(rowId)
+          }}
         />
       ) : null}
 
@@ -88,7 +117,7 @@ const TableActionButton: FC<TableActionButton> = ({
           size={16}
           iconColor="white"
           style={{ backgroundColor: colors.error }}
-          onPress={() => onDiscard(data, rowId)}
+          onPress={() => discardData(rowId)}
         />
       ) : null}
     </View>

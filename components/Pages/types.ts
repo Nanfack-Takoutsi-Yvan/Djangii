@@ -4,13 +4,16 @@ type Pages = {
 
 type Actions = "edit" | "view" | "delete" | "copy" | "validate" | "discard"
 
+type TableDataAction = {
+  name: Actions
+  method: (data?: any, id?: string) => any
+  pageAction?: PagesActions
+}
+
 type TableData = {
   name: string
   table: TableConfigs
-  actions?: {
-    name: Actions
-    method: (data: any, id: string) => any
-  }[]
+  actions?: TableDataAction[]
 }
 
 type TableConfigs = {

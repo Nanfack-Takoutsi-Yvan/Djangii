@@ -11,7 +11,11 @@ export class AssociationController implements IAssociationController {
       created: "api/associations/me",
       userAssociation: "api/associations/members/me",
       associationPage: {
-        list: "api/association-pages/list"
+        base: "api/association-pages/",
+        list: "list",
+        info: "info",
+        accept: "accept",
+        reject: "reject"
       },
       membershipRequest: {
         all: "api/membership-requests"
@@ -90,7 +94,7 @@ export class AssociationController implements IAssociationController {
 
     try {
       const res = await apiClient.get<IAssociationPagesContent>(
-        this.resource.associationPage.list,
+        `${this.resource.associationPage.base}${this.resource.associationPage.list}`,
         { headers: { Authorization: token } }
       )
 
@@ -153,6 +157,75 @@ export class AssociationController implements IAssociationController {
     } catch (error) {
       const err = {
         message: `Error while getting associations members: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public getMembershipRequestInfo = async (token: string, userName: string) => {
+    assert(token, "Token is required to fetch association members")
+
+    try {
+      const url = `${this.resource.associationPage.base}${userName}/${this.resource.associationPage.info}`
+      const res = await apiClient.get<IAssociationPageInfo>(url, {
+        headers: { Authorization: token }
+      })
+
+      if (!res) {
+        throw new Error(`No association members found`)
+      }
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `Error while getting membership request info: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public acceptMembershipRequest = async (
+    token: string,
+    id: string,
+    role: string
+  ) => {
+    assert(token, "Token is required to fetch association members")
+
+    try {
+      const url = `${this.resource.associationPage.base}${id}/${this.resource.associationPage.accept}`
+      const res = await apiClient.put(url, {
+        headers: { Authorization: token },
+        params: { role }
+      })
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `Error while accepting membership request: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public rejectMembershipRequest = async (token: string, id: string) => {
+    assert(token, "Token is required to fetch association members")
+
+    try {
+      const url = `${this.resource.associationPage.base}${id}/${this.resource.associationPage.reject}`
+      const res = await apiClient.put(url, {
+        headers: { Authorization: token }
+      })
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `Error while rejecting membership request: ${error}`,
         error
       }
 
