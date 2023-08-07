@@ -30,7 +30,7 @@ const TableView: FC<TableViewProps> = ({
   const { tableHeadings, tableData, cellsSize } = useTableData(
     table,
     locale,
-    data,
+    data!,
     actions
   )
 

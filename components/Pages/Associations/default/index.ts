@@ -8,7 +8,16 @@ const associationConfigs: configs = {
     {
       name: "manageableAssociation",
       table: manageableAssociation,
-      actions: ["edit", "view"]
+      actions: [
+        {
+          name: "edit",
+          method: (data: IUserAssociation[]) => null
+        },
+        {
+          name: "view",
+          method: (data: IUserAssociation[]) => null
+        }
+      ]
     },
     {
       name: "associationJoined",

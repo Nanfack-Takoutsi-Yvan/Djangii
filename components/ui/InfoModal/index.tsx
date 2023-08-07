@@ -1,19 +1,26 @@
-import React, { FC } from "react"
+import React, { FC, useContext } from "react"
 import { useRouter } from "expo-router"
 import { Image, StyleSheet, View } from "react-native"
-
-import { useAuth } from "@services/context/auth"
-import logout from "@services/utils/functions/logout"
-import { getAvatarLetters } from "@utils/functions/format"
 import {
   IconButton,
   Divider,
   Modal,
   Text,
   useTheme,
-  Avatar,
   Button
 } from "react-native-paper"
+
+import { useAuth } from "@services/context/auth"
+import { useAppDispatch } from "@services/store"
+import logout from "@services/utils/functions/logout"
+import SelectDropdown from "react-native-select-dropdown"
+import AppStateContext from "@services/context/context"
+import { associationSelector } from "@services/store/slices/associations"
+import {
+  getDefaultAssociationId,
+  updateDefaultAssociationId
+} from "@services/store/slices/dashboard"
+
 import AppAvatar from "../AppAvatar"
 
 type InfoModalProps = {
@@ -21,14 +28,24 @@ type InfoModalProps = {
 }
 
 const InfoModal: FC<InfoModalProps> = ({ onLogout }) => {
+  const { locale } = useContext(AppStateContext)
   const { colors } = useTheme()
   const router = useRouter()
   const { user } = useAuth()
+
+  const {
+    data: { createdAssociation: associations }
+  } = associationSelector.getAssociations()
+  const defaultAssociationId = getDefaultAssociationId()
+  const dispatch = useAppDispatch()
 
   const goBack = () => router.back()
   const imageSize = 75
 
   const showEmail = user?.username === user?.userInfos?.email
+  const defaultAssociation = associations.find(
+    association => association?.id === defaultAssociationId || ""
+  )
 
   return (
     <Modal visible style={styles.screen} onDismiss={goBack}>
@@ -56,12 +73,7 @@ const InfoModal: FC<InfoModalProps> = ({ onLogout }) => {
           />
         </View>
         <Divider style={[styles.divider, { borderColor: colors.secondary }]} />
-        <View
-          style={{
-            paddingVertical: 10,
-            alignItems: "center"
-          }}
-        >
+        <View style={styles.description}>
           <View style={{ flexDirection: "row" }}>
             <View>
               {user ? (
@@ -98,6 +110,29 @@ const InfoModal: FC<InfoModalProps> = ({ onLogout }) => {
               </View>
             </View>
           </View>
+        </View>
+        <Divider style={[styles.divider, { borderColor: colors.secondary }]} />
+        <View
+          style={{ paddingHorizontal: 24, paddingVertical: 12, rowGap: 12 }}
+        >
+          <Text variant="titleLarge" style={styles.label}>
+            {locale.t("common.selectAssociation")}
+          </Text>
+          <SelectDropdown
+            data={associations}
+            defaultButtonText={defaultAssociation?.name}
+            buttonStyle={styles.uniqueDropdown}
+            buttonTextStyle={styles.dropdownTextStyles}
+            rowTextStyle={styles.dropdownTextStyles}
+            dropdownStyle={{ borderRadius: 12 }}
+            onSelect={selectedItem => {
+              dispatch(updateDefaultAssociationId(selectedItem.id))
+            }}
+            search
+            searchInputTxtStyle={{ fontFamily: "Sora" }}
+            buttonTextAfterSelection={selectedItem => selectedItem.name}
+            rowTextForSelection={item => item.name}
+          />
         </View>
         <Divider style={[styles.divider, { borderColor: colors.secondary }]} />
         <View style={styles.buttonContainer}>
@@ -156,6 +191,22 @@ const styles = StyleSheet.create({
   },
   button: {
     color: "white"
+  },
+  description: {
+    paddingVertical: 10,
+    alignItems: "center"
+  },
+  uniqueDropdown: {
+    height: 48,
+    width: "100%",
+    backgroundColor: "#fff",
+    borderBottomColor: "rgba(0,0,0,0.2)",
+    borderBottomWidth: 1,
+    borderRadius: 12
+  },
+  dropdownTextStyles: {
+    fontFamily: "Sora",
+    fontSize: 16
   }
 })
 

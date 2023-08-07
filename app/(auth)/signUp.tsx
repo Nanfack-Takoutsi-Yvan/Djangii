@@ -14,9 +14,9 @@ import Icon from "react-native-paper/src/components/Icon"
 
 import { HttpStatusCode } from "axios"
 import { useRouter } from "expo-router"
-import { Formik, useField } from "formik"
+import { Formik } from "formik"
 import { StatusBar } from "expo-status-bar"
-import { forwardRef, useContext, useRef, useState } from "react"
+import { useContext, useRef, useState } from "react"
 
 import AppStateContext from "@services/context/context"
 import PasswordIcon from "@components/ui/PasswordIcon"
@@ -25,6 +25,7 @@ import User from "@services/models/user"
 import LoadingModal from "@components/ui/LoadingModal"
 
 import validations from "@services/validations"
+import CustomPhoneInput from "@components/ui/CustomPhoneInput"
 
 export default function SignUp() {
   const [isOtpSending, setIsOtpSending] = useState<boolean>(false)
@@ -38,37 +39,6 @@ export default function SignUp() {
   const router = useRouter()
 
   const phoneInputRef = useRef<any>(null)
-
-  const CustomPhoneInput = forwardRef((props, ref) => {
-    const [field, meta] = useField({ name: "phoneNumber" })
-
-    return (
-      <View>
-        <TextInput
-          {...props}
-          placeholderTextColor="rgba(0, 0, 0, 0.20)"
-          style={styles.textInput}
-          dense
-          underlineColor="rgba(0,0,0,0.5)"
-          autoComplete="tel"
-          onBlur={field.onBlur("phoneNumber")}
-          error={!!meta.error && !!meta.touched}
-          ref={ref as any}
-        />
-        {meta.error && meta.touched && (
-          <View>
-            <Text
-              style={{
-                color: colors.error
-              }}
-            >
-              {locale.t(meta.error)}
-            </Text>
-          </View>
-        )}
-      </View>
-    )
-  })
 
   const sendOTP = async (values: userFormInputs, lang?: string) => {
     setLoading(true)
@@ -208,7 +178,6 @@ export default function SignUp() {
                           <TextInput
                             placeholder={locale.t("signUp.labels.firstName")}
                             placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                            keyboardType="name-phone-pad"
                             value={values.firstName}
                             onBlur={handleBlur("firstName")}
                             onChangeText={handleChange("firstName")}
@@ -248,7 +217,6 @@ export default function SignUp() {
                           <TextInput
                             placeholder={locale.t("signUp.labels.lastName")}
                             placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                            keyboardType="name-phone-pad"
                             value={values.lastName}
                             onBlur={handleBlur("lastName")}
                             onChangeText={handleChange("lastName")}

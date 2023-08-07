@@ -6,6 +6,8 @@ import { useRouter } from "expo-router"
 import { htmlToText } from "html-to-text"
 import MultiSelect from "react-native-multiple-select"
 import SelectDropdown from "react-native-select-dropdown"
+import PhoneInput from "react-native-phone-input"
+
 import DateTimePicker, {
   DateTimePickerEvent
 } from "@react-native-community/datetimepicker"
@@ -15,7 +17,8 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  View
+  View,
+  Image
 } from "react-native"
 
 import { useAuth } from "@services/context/auth"
@@ -29,6 +32,7 @@ import {
 import { useAppDispatch } from "@services/store"
 import FormSkeletonLoader from "@components/ui/skeletonLoader/formSkeletonLoader"
 import genders from "@assets/constants/settings/gender"
+import CustomPhoneInput from "@components/ui/CustomPhoneInput"
 
 const UpdateAccount: FC = () => {
   const [dateToggler, setDateToggler] = useState<Date>()
@@ -43,6 +47,7 @@ const UpdateAccount: FC = () => {
   const cities = djangiiDataSelector.getCitiesState()
   const djangiiData = djangiiDataSelector.getDjangiiDataState()
 
+  const phoneInputRef = useRef<any>(null)
   const triggerDispatch = useRef<boolean>(true)
   const triggerDispatchUsers = useRef<boolean>(true)
 
@@ -82,7 +87,11 @@ const UpdateAccount: FC = () => {
   }
 
   if (djangiiData.loading) {
-    return <FormSkeletonLoader />
+    return (
+      <ScrollView>
+        <FormSkeletonLoader />
+      </ScrollView>
+    )
   }
 
   return (
@@ -94,6 +103,7 @@ const UpdateAccount: FC = () => {
             <View style={styles.form}>
               <Formik
                 initialValues={{
+                  phoneNumber: user?.userInfos.phone,
                   description,
                   firstName: user?.userInfos.firstName,
                   lastName: user?.userInfos.lastName,
@@ -451,7 +461,7 @@ const UpdateAccount: FC = () => {
                       <View style={styles.field}>
                         <View style={styles.label}>
                           <Icon
-                            source="earth"
+                            source="city-variant-outline"
                             color={
                               errors.description && touched.description
                                 ? colors.error
@@ -504,7 +514,7 @@ const UpdateAccount: FC = () => {
                       <View style={styles.field}>
                         <View style={styles.label}>
                           <Icon
-                            source="earth"
+                            source="sitemap-outline"
                             color={
                               errors.description && touched.description
                                 ? colors.error
@@ -512,13 +522,13 @@ const UpdateAccount: FC = () => {
                             }
                             size={24}
                           />
-                          <Text>{locale.t("common.city")}</Text>
+                          <Text>{locale.t("common.interestCenters")}</Text>
                         </View>
                         <View style={styles.field}>
                           <View style={{ flex: 1 }}>
                             <MultiSelect
                               hideTags
-                              items={djangiiData.data.activitiesAreas.map(
+                              items={djangiiData.data.interestCenters.map(
                                 activity => ({
                                   id: activity.id,
                                   name: activity.description
@@ -556,6 +566,326 @@ const UpdateAccount: FC = () => {
                           )}
                         </View>
                       </View>
+
+                      <View style={styles.field}>
+                        <View style={styles.label}>
+                          <Icon
+                            source="ticket"
+                            color={
+                              errors.description && touched.description
+                                ? colors.error
+                                : colors.primary
+                            }
+                            size={24}
+                          />
+                          <Text>{locale.t("common.activityAreas")}</Text>
+                        </View>
+                        <View style={styles.field}>
+                          <View>
+                            <SelectDropdown
+                              data={djangiiData.data.activitiesAreas.map(
+                                el => el.description
+                              )}
+                              defaultButtonText={values.city}
+                              buttonStyle={styles.uniqueDropdown}
+                              buttonTextStyle={styles.dropdownTextStyles}
+                              rowTextStyle={styles.dropdownTextStyles}
+                              dropdownStyle={{ borderRadius: 12 }}
+                              onSelect={(selectedItem, index) => {
+                                console.log(selectedItem, index)
+                              }}
+                              search
+                              searchInputTxtStyle={{ fontFamily: "Sora" }}
+                              buttonTextAfterSelection={(selectedItem, index) =>
+                                // text represented after item is selected
+                                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                                selectedItem
+                              }
+                              rowTextForSelection={(item, index) =>
+                                // text represented for each item in dropdown
+                                // if data array is an array of objects then return item.property to represent item in dropdown
+                                item
+                              }
+                            />
+                          </View>
+                          {errors.countryCode && touched.countryCode && (
+                            <View>
+                              <Text
+                                style={{
+                                  color: colors.error
+                                }}
+                              >
+                                {locale.t(errors.countryCode)}
+                              </Text>
+                            </View>
+                          )}
+                        </View>
+                      </View>
+
+                      <View style={styles.field}>
+                        <View style={styles.label}>
+                          <Icon
+                            source="soccer"
+                            color={
+                              errors.description && touched.description
+                                ? colors.error
+                                : colors.primary
+                            }
+                            size={24}
+                          />
+                          <Text>{locale.t("common.hobbies")}</Text>
+                        </View>
+                        <View style={styles.field}>
+                          <View style={{ flex: 1 }}>
+                            <MultiSelect
+                              hideTags
+                              items={djangiiData.data.hobbies.map(activity => ({
+                                id: activity.id,
+                                name: activity.description
+                              }))}
+                              uniqueKey="id"
+                              onSelectedItemsChange={setHobbies}
+                              selectedItems={hobbies}
+                              selectText="Pick Items"
+                              searchInputPlaceholderText="Search Items..."
+                              onChangeInput={text => console.log(text)}
+                              altFontFamily="ProximaNova-Light"
+                              tagRemoveIconColor="#CCC"
+                              tagBorderColor="#CCC"
+                              tagTextColor="#CCC"
+                              selectedItemTextColor="#CCC"
+                              selectedItemIconColor="#CCC"
+                              itemTextColor="#000"
+                              displayKey="name"
+                              searchInputStyle={{ color: "#CCC" }}
+                              submitButtonColor="#CCC"
+                              submitButtonText="Submit"
+                            />
+                          </View>
+                          {errors.countryCode && touched.countryCode && (
+                            <View>
+                              <Text
+                                style={{
+                                  color: colors.error
+                                }}
+                              >
+                                {locale.t(errors.countryCode)}
+                              </Text>
+                            </View>
+                          )}
+                        </View>
+                      </View>
+
+                      <View style={styles.field}>
+                        <View style={styles.label}>
+                          <Icon
+                            source="linkedin"
+                            color={
+                              errors.description && touched.description
+                                ? colors.error
+                                : colors.primary
+                            }
+                            size={24}
+                          />
+                          <Text>{locale.t("common.linkedInAccount")}</Text>
+                        </View>
+                        <View style={styles.field}>
+                          <View>
+                            <TextInput
+                              placeholder={locale.t("common.linkedInAccount")}
+                              placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                              value={values.description}
+                              onBlur={handleBlur("description")}
+                              onChangeText={handleChange("description")}
+                              style={styles.textInput}
+                              multiline
+                              underlineColor="rgba(0,0,0,0.5)"
+                              error={
+                                !!errors.description && !!touched.description
+                              }
+                            />
+                          </View>
+                          {errors.description && touched.description && (
+                            <View>
+                              <Text
+                                style={{
+                                  color: colors.error
+                                }}
+                              >
+                                {locale.t(errors.description)}
+                              </Text>
+                            </View>
+                          )}
+                        </View>
+                      </View>
+
+                      <View style={styles.field}>
+                        <View style={styles.label}>
+                          <Icon
+                            source="facebook"
+                            color={
+                              errors.description && touched.description
+                                ? colors.error
+                                : colors.primary
+                            }
+                            size={24}
+                          />
+                          <Text>{locale.t("common.facebookAccount")}</Text>
+                        </View>
+                        <View style={styles.field}>
+                          <View>
+                            <TextInput
+                              placeholder={locale.t("common.facebookAccount")}
+                              placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                              value={values.description}
+                              onBlur={handleBlur("description")}
+                              onChangeText={handleChange("description")}
+                              style={styles.textInput}
+                              multiline
+                              underlineColor="rgba(0,0,0,0.5)"
+                              error={
+                                !!errors.description && !!touched.description
+                              }
+                            />
+                          </View>
+                          {errors.description && touched.description && (
+                            <View>
+                              <Text
+                                style={{
+                                  color: colors.error
+                                }}
+                              >
+                                {locale.t(errors.description)}
+                              </Text>
+                            </View>
+                          )}
+                        </View>
+                      </View>
+
+                      <View style={styles.field}>
+                        <View style={styles.label}>
+                          <Icon
+                            source="twitter"
+                            color={
+                              errors.description && touched.description
+                                ? colors.error
+                                : colors.primary
+                            }
+                            size={24}
+                          />
+                          <Text>{locale.t("common.twitterAccount")}</Text>
+                        </View>
+                        <View style={styles.field}>
+                          <View>
+                            <TextInput
+                              placeholder={locale.t("common.twitterAccount")}
+                              placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                              value={values.description}
+                              onBlur={handleBlur("description")}
+                              onChangeText={handleChange("description")}
+                              style={styles.textInput}
+                              multiline
+                              underlineColor="rgba(0,0,0,0.5)"
+                              error={
+                                !!errors.description && !!touched.description
+                              }
+                            />
+                          </View>
+                          {errors.description && touched.description && (
+                            <View>
+                              <Text
+                                style={{
+                                  color: colors.error
+                                }}
+                              >
+                                {locale.t(errors.description)}
+                              </Text>
+                            </View>
+                          )}
+                        </View>
+                      </View>
+
+                      <View style={styles.field}>
+                        <View style={styles.label}>
+                          <Icon
+                            source="youtube"
+                            color={
+                              errors.description && touched.description
+                                ? colors.error
+                                : colors.primary
+                            }
+                            size={24}
+                          />
+                          <Text>{locale.t("common.youtubeAccount")}</Text>
+                        </View>
+                        <View style={styles.field}>
+                          <View>
+                            <TextInput
+                              placeholder={locale.t("common.youtubeAccount")}
+                              placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                              value={values.description}
+                              onBlur={handleBlur("description")}
+                              onChangeText={handleChange("description")}
+                              style={styles.textInput}
+                              multiline
+                              underlineColor="rgba(0,0,0,0.5)"
+                              error={
+                                !!errors.description && !!touched.description
+                              }
+                            />
+                          </View>
+                          {errors.description && touched.description && (
+                            <View>
+                              <Text
+                                style={{
+                                  color: colors.error
+                                }}
+                              >
+                                {locale.t(errors.description)}
+                              </Text>
+                            </View>
+                          )}
+                        </View>
+                      </View>
+
+                      <PhoneInput
+                        autoFormat
+                        offset={20}
+                        initialCountry="cm"
+                        flagStyle={styles.flagStyle}
+                        allowZeroAfterCountryCode={false}
+                        onChangePhoneNumber={(value, iso) => {
+                          handleChange("phoneNumber")(`${value},${iso}`)
+                        }}
+                        confirmText={locale.t("signUp.pickerConfirm")}
+                        cancelText={locale.t("signUp.pickerCancel")}
+                        textStyle={
+                          errors.phoneNumber && touched.phoneNumber
+                            ? styles.phoneInputErrorState
+                            : styles.phoneInputTextStyle
+                        }
+                        confirmTextStyle={styles.phoneInputConfirmTextStyle}
+                        cancelTextStyle={styles.phoneInputCancelTextStyle}
+                        renderFlag={({ imageSource }) => (
+                          <View>
+                            <Image
+                              source={require("@assets/images/icons/chevron-down.png")}
+                              style={styles.flagChevronDown}
+                            />
+                            <Image
+                              source={imageSource}
+                              style={[
+                                styles.flag,
+                                errors.phoneNumber && touched.phoneNumber
+                                  ? styles.flagError
+                                  : undefined
+                              ]}
+                            />
+                          </View>
+                        )}
+                        textComponent={CustomPhoneInput}
+                        ref={phoneInputRef}
+                      />
                     </View>
                     <View style={styles.buttonContainer}>
                       <Button
@@ -655,6 +985,48 @@ const styles = StyleSheet.create({
   dropdownTextStyles: {
     fontFamily: "Sora",
     fontSize: 16
+  },
+  phoneInputTextStyle: {
+    height: 40,
+    fontSize: 16,
+    fontFamily: "SoraMedium",
+    borderBottomColor: "rgba(0,0,0,0.2)",
+    borderBottomWidth: 1,
+    marginBottom: 1
+  },
+  phoneInputErrorState: {
+    height: 40,
+    fontSize: 16,
+    fontFamily: "SoraMedium",
+    borderBottomColor: "#F72706",
+    borderBottomWidth: 1,
+    marginBottom: 1,
+    color: "#F72706"
+  },
+  phoneInputConfirmTextStyle: {
+    fontFamily: "SoraMedium",
+    color: "green"
+  },
+  phoneInputCancelTextStyle: {
+    fontFamily: "SoraMedium",
+    color: "red"
+  },
+  flagStyle: { borderRadius: 5 },
+  flagChevronDown: {
+    position: "absolute",
+    zIndex: 2,
+    right: -4,
+    bottom: -2
+  },
+  flag: {
+    width: 28,
+    height: 20,
+    borderRadius: 5,
+    marginLeft: 8
+  },
+  flagError: {
+    borderWidth: 1,
+    borderColor: "red"
   }
 })
 

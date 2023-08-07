@@ -2,12 +2,15 @@ type Pages = {
   [key in DashboardPages]?: configs
 }
 
-type Actions = "edit" | "view" | "delete"
+type Actions = "edit" | "view" | "delete" | "copy" | "validate" | "discard"
 
-type tableData = {
+type TableData = {
   name: string
   table: TableConfigs
-  actions?: Actions[]
+  actions?: {
+    name: Actions
+    method: (data: any, id: string) => any
+  }[]
 }
 
 type TableConfigs = {
@@ -39,7 +42,7 @@ type SearchFieldOptions = {
 }
 
 type configs = {
-  tables: tableData[]
+  tables: TableData[]
   getData: () => Data
   fetchData: (id: string) => any
   createData?: CreateData

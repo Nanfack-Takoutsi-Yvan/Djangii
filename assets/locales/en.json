@@ -14,7 +14,15 @@
     "female": "Female",
     "male": "Male",
     "other": "Other",
-    "city": "City"
+    "city": "City",
+    "interestCenters": "Interest Centers",
+    "activityAreas":"Activity areas",
+    "hobbies": "Hobbies",
+    "linkedInAccount": "LinkedIn Account",
+    "facebookAccount": "Facebook Account",
+    "twitterAccount": "Twitter Account",
+    "youtubeAccount": "YouTube Account",
+    "selectAssociation": "Select Association"
   },
   "commonErrors": {
     "title": "An error occurred",
@@ -208,7 +216,9 @@
     "createNewAdvertising": "Create New Advertising",
     "createNewAudience": "Create New Audience",
     "newAudience": "New Audience",
-    "newNotification": "New Notification"
+    "newNotification": "New Notification",
+    "savedClipboard": "Saved to clipboard",
+    "clipboardFailed": "Data not saved to clipboard"
   },
   "drawer": {
     "dashboard": "Dashboard",
