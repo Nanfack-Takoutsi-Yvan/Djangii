@@ -6,6 +6,7 @@ import passwordResetValidationSchema from "./yup/passwordReset.validation"
 import messageValidationSchema from "./yup/message.validation"
 import userDetailsValidationSchema from "./yup/userDetails.validation"
 import passwordChangeValidationSchema from "./yup/passwordChange.validation"
+import membershipRequestValidationSchema from "./yup/membershipRequest.validation"
 
 export default {
   loginValidationSchema,
@@ -15,5 +16,6 @@ export default {
   passwordResetValidationSchema,
   messageValidationSchema,
   userDetailsValidationSchema,
-  passwordChangeValidationSchema
+  passwordChangeValidationSchema,
+  membershipRequestValidationSchema
 }

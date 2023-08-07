@@ -74,3 +74,12 @@ type CustomPagesProps = {
   tables: tableData[]
   data: IUserAssociation[]
 }
+
+type PagesActions = "validateMembershipRequest"
+
+type PagesActionsProps = {
+  data: any[]
+  snapPoints: string[]
+  setDataId: (value: string) => void
+  dataId: string
+}

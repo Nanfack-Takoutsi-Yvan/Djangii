@@ -49,4 +49,32 @@ export default class MembershipRequest implements IMembershipRequest {
 
     return membershipRequests
   }
+
+  static async getMembershipRequestInfo(userName: string) {
+    const token = await getTokenFromStorage()
+    const controller = new AssociationController()
+
+    assert(token, "token is required")
+    const res = await controller.getMembershipRequestInfo(token, userName)
+
+    return res
+  }
+
+  static async acceptMembershipRequest(id: string, role: IUserRole) {
+    const token = await getTokenFromStorage()
+    const controller = new AssociationController()
+
+    assert(token, "token is required")
+    await controller.acceptMembershipRequest(token, id, role)
+  }
+
+  static async rejectMembershipRequest(id: string) {
+    const token = await getTokenFromStorage()
+    const controller = new AssociationController()
+
+    assert(token, "token is required to reject a membership requests")
+    const res = await controller.rejectMembershipRequest(token, id)
+
+    return res
+  }
 }

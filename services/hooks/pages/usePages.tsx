@@ -1,10 +1,11 @@
+/* eslint-disable react/no-array-index-key */
 import { I18n } from "i18n-js/typings/I18n"
 import { useEffect, useState } from "react"
 
 import TableView from "@components/ui/TableView"
 
 const usePages = (
-  rawTabs: tableData[],
+  rawTabs: TableData[],
   data: any[],
   locale: I18n,
   pageName: string,
@@ -18,7 +19,7 @@ const usePages = (
       const tempRoute: TabRoute[] = []
       const tempsTabs: Dict = {}
 
-      rawTabs.forEach(rawTab => {
+      rawTabs.forEach((rawTab, index) => {
         tempsTabs[rawTab.name] = () => (
           <TableView
             data={data}
@@ -26,6 +27,7 @@ const usePages = (
             actions={rawTab.actions}
             createData={createData}
             pageName={pageName}
+            key={index}
           />
         )
 

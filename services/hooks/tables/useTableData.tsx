@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { I18n } from "i18n-js/typings/I18n"
 
 import TableActionButton from "@components/ui/TableActionButton"
@@ -12,6 +12,7 @@ const useTableData = (
   table: TableConfigs,
   locale: I18n,
   data: any[],
+  setDataId: Dispatch<SetStateAction<string>>,
   actions?: TableData["actions"]
 ) => {
   const [tableHeadings, setTableHeadings] = useState<string[]>([])
@@ -72,6 +73,7 @@ const useTableData = (
               onDiscard={onDiscard}
               onValidate={onValidate}
               rowId={row.pop()}
+              setDataId={setDataId}
               data={data}
             />
           )
@@ -84,7 +86,7 @@ const useTableData = (
       setTableData(tempTableData)
       setTableHeadings(headings)
     }
-  }, [actions, data, dispatch, locale, table])
+  }, [actions, data, dispatch, locale, setDataId, table])
 
   return { tableHeadings, tableData, cellsSize }
 }

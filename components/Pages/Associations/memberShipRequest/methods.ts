@@ -43,7 +43,8 @@ export const pendingMembershipRequestData = (
       membershipRequest.alias,
       membershipRequest.associationPage.name,
       membershipRequest.associationPage.association.name,
-      membershipRequest.requestMotivation
+      membershipRequest.requestMotivation,
+      membershipRequest.id
     ])
 
 export const getMembershipRequests = () =>

@@ -31,6 +31,11 @@ interface IDjangiiFileRequestBody {
   encodedFileExtension: string
 }
 
+type Role = {
+  role: IUserRole
+  label: string
+}
+
 type IUserRole =
   | "ADMINISTRATOR"
   | "PRESIDENT"
@@ -42,6 +47,7 @@ type IUserRole =
   | "GENERAL_SECRETARY"
   | "CENSOR"
   | "UNDEFINED"
+  | "MEMBER"
 
 type Pageable = {
   sort: {

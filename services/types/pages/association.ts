@@ -113,7 +113,7 @@ interface IAssociationPenaltyRequestBody {
 }
 
 interface IMembershipRequest {
-  id?: string
+  id: string
   firstName: string
   lastName: string
   status: string
