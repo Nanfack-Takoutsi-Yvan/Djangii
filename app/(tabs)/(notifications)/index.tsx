@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react"
-import { FlatList, StyleSheet, View } from "react-native"
-import { FAB, Portal, useTheme } from "react-native-paper"
+import { FlatList, Image, StyleSheet, View } from "react-native"
+import { FAB, Portal, Text, useTheme } from "react-native-paper"
 
 import NotificationCard from "@components/ui/NotificationCard"
 import NotificationsSkeleton from "@components/ui/skeletonLoader/Notifications"
@@ -42,14 +42,31 @@ export default function NotificationScreen() {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={notifications}
-        style={styles.screen}
-        contentContainerStyle={styles.notificationContainer}
-        renderItem={({ item }) => <NotificationCard notification={item} />}
-        viewabilityConfig={console.log}
-        keyExtractor={item => item.id}
-      />
+      {notifications.length !== 0 ? (
+        <FlatList
+          data={notifications}
+          style={styles.screen}
+          contentContainerStyle={styles.notificationContainer}
+          renderItem={({ item }) => <NotificationCard notification={item} />}
+          keyExtractor={item => item.id}
+        />
+      ) : null}
+
+      {notifications.length === 0 ? (
+        <View style={styles.screen}>
+          <View style={styles.imageContainer}>
+            <Image
+              source={require("../../../assets/images/pictures/undraw_Fresh_notification_re_whq4-removebg-preview.png")}
+              style={styles.image}
+            />
+            <Text variant="titleLarge">
+              {locale.t("notifications.noNotification")}
+            </Text>
+            <Text>{locale.t("notifications.createNotification")}</Text>
+          </View>
+        </View>
+      ) : null}
+
       {shouldDisplayFAB() ? (
         <Portal>
           <FAB.Group
@@ -94,5 +111,15 @@ const styles = StyleSheet.create({
   },
   fab: {
     bottom: 40
+  },
+
+  image: {
+    width: 200,
+    height: 200
+  },
+  imageContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1
   }
 })

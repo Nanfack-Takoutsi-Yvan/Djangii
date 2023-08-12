@@ -102,7 +102,7 @@ export default function SignUp() {
               lastName: "",
               email: "",
               phoneNumber: "",
-              password: "",
+              password: "=",
               passwordConfirm: ""
             }}
             validationSchema={validations.signUpValidationSchema}

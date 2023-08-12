@@ -11,7 +11,7 @@ import Icon from "react-native-paper/src/components/Icon"
 import { Text, TextInput, Button, useTheme } from "react-native-paper"
 
 import { Formik } from "formik"
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useRouter, useLocalSearchParams } from "expo-router"
 import * as Haptics from "expo-haptics"
 
@@ -25,6 +25,8 @@ import { HttpStatusCode } from "axios"
 import { useAuth } from "@services/context/auth"
 
 export default function CheckOTP() {
+  const [userInfos, setUserInfo] = useState<userFormInputs>()
+
   const { signIn } = useAuth()
   const { colors } = useTheme()
   const { locale, setLoading, setActionModalProps } =
@@ -35,31 +37,40 @@ export default function CheckOTP() {
   const params = useLocalSearchParams() as Params
   const router = useRouter()
 
-  const userInfos = params
-    ? (JSON.parse(decodeURIComponent(params?.values)) as userFormInputs)
-    : ({} as userFormInputs)
+  console.log({ userInfos, params })
+
+  useEffect(() => {
+    const userParams = params
+      ? (JSON.parse(
+          decodeURIComponent(params?.values || "{}")
+        ) as userFormInputs)
+      : ({} as userFormInputs)
+    if (Object.keys(userParams).length) {
+      setUserInfo(userParams)
+    }
+  }, [params])
 
   const validateOTP = async ({ otp }: { otp: string }) => {
     setLoading(true)
 
     const countryCode = userInfos?.phoneNumber.split(",")[1].toLocaleUpperCase()
     const phone = userInfos?.phoneNumber.split(",")[0].split(" ").join("")
-    const email = decodeURIComponent(userInfos?.email)
+    const email = decodeURIComponent(userInfos?.email || "")
 
     const newUser: NewUserData = {
-      password: userInfos?.password,
+      password: userInfos?.password || "",
       userInfos: {
         countryCode,
         email,
-        firstName: userInfos?.firstName,
+        firstName: userInfos?.firstName || "",
         lang: locale.locale.split("-")[0],
-        lastName: userInfos?.lastName,
-        phone
+        lastName: userInfos?.lastName || "",
+        phone: phone || ""
       },
-      username: userInfos?.username
+      username: userInfos?.username || ""
     }
 
-    User.validateOTP(userInfos?.email, otp)
+    User.validateOTP(email || "", otp)
       .then(isOTPValid => {
         if (isOTPValid) {
           User.register(newUser, otp)
@@ -113,7 +124,7 @@ export default function CheckOTP() {
 
   const resentOTP = async () => {
     setLoading(true)
-    User.sendOTP(userInfos?.email, locale.locale)
+    User.sendOTP(userInfos?.email || "", locale.locale)
       .catch(err => {
         console.log("An error occurred white sending otp: ", err)
       })

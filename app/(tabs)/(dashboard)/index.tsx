@@ -78,6 +78,8 @@ export default function TabOneScreen() {
           dispatch(updateDashboardLoading(false))
         }
       })
+    } else {
+      dispatch(updateDashboardLoading(false))
     }
   }, [associations, dispatch])
 
@@ -87,8 +89,7 @@ export default function TabOneScreen() {
     )
 
     if (selectedData) {
-      const { associationId, ...rest } = selectedData
-      setCurveData(rest)
+      setCurveData(selectedData)
     } else if (dashboardData.length) {
       dispatch(updateDefaultAssociationId(dashboardData[0].associationId))
     }

@@ -2,5 +2,6 @@ import BottomSheet from "@gorhom/bottom-sheet/lib/typescript/components/bottomSh
 
 export type BottomSheetRef = BottomSheet
 export type BottomSheetProps = {
-  name?: string
+  name: DashboardPages
+  data: any[]
 }

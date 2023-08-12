@@ -9,7 +9,7 @@ const signUpValidationSchema = yup.object().shape({
   username: yup
     .string()
     .required("signUp.errors.username.required")
-    .matches(/^[0-9a-zA-ZÀ-ÿ-.]*$/gi, "signUp.errors.username.whiteSpace")
+    .matches(/^[0-9a-zA-ZÀ-ÿ-.@+]*$/gi, "signUp.errors.username.whiteSpace")
     .test("username", "signUp.errors.username.taken", async value => {
       try {
         await User.isUsernameUsed(value)

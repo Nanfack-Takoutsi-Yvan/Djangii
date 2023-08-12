@@ -42,7 +42,7 @@ const InfoModal: FC<InfoModalProps> = ({ onLogout }) => {
   const goBack = () => router.back()
   const imageSize = 75
 
-  const showEmail = user?.username === user?.userInfos?.email
+  const showEmail = user?.username !== user?.userInfos?.email
   const defaultAssociation = associations.find(
     association => association?.id === defaultAssociationId || ""
   )
@@ -111,29 +111,37 @@ const InfoModal: FC<InfoModalProps> = ({ onLogout }) => {
             </View>
           </View>
         </View>
-        <Divider style={[styles.divider, { borderColor: colors.secondary }]} />
-        <View
-          style={{ paddingHorizontal: 24, paddingVertical: 12, rowGap: 12 }}
-        >
-          <Text variant="titleLarge" style={styles.label}>
-            {locale.t("common.selectAssociation")}
-          </Text>
-          <SelectDropdown
-            data={associations}
-            defaultButtonText={defaultAssociation?.name}
-            buttonStyle={styles.uniqueDropdown}
-            buttonTextStyle={styles.dropdownTextStyles}
-            rowTextStyle={styles.dropdownTextStyles}
-            dropdownStyle={{ borderRadius: 12 }}
-            onSelect={selectedItem => {
-              dispatch(updateDefaultAssociationId(selectedItem.id))
-            }}
-            search
-            searchInputTxtStyle={{ fontFamily: "Sora" }}
-            buttonTextAfterSelection={selectedItem => selectedItem.name}
-            rowTextForSelection={item => item.name}
-          />
-        </View>
+
+        {associations.length !== 0 ? (
+          <>
+            <Divider
+              style={[styles.divider, { borderColor: colors.secondary }]}
+            />
+            <View
+              style={{ paddingHorizontal: 24, paddingVertical: 12, rowGap: 12 }}
+            >
+              <Text variant="titleLarge" style={styles.label}>
+                {locale.t("common.selectAssociation")}
+              </Text>
+              <SelectDropdown
+                data={associations}
+                defaultButtonText={defaultAssociation?.name}
+                buttonStyle={styles.uniqueDropdown}
+                buttonTextStyle={styles.dropdownTextStyles}
+                rowTextStyle={styles.dropdownTextStyles}
+                dropdownStyle={{ borderRadius: 12 }}
+                onSelect={selectedItem => {
+                  dispatch(updateDefaultAssociationId(selectedItem.id))
+                }}
+                search
+                searchInputTxtStyle={{ fontFamily: "Sora" }}
+                buttonTextAfterSelection={selectedItem => selectedItem.name}
+                rowTextForSelection={item => item.name}
+              />
+            </View>
+          </>
+        ) : null}
+
         <Divider style={[styles.divider, { borderColor: colors.secondary }]} />
         <View style={styles.buttonContainer}>
           <Button

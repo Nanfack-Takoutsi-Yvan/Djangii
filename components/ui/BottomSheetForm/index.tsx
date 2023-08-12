@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useContext, useState } from "react"
+import { FC, forwardRef, useCallback, useContext } from "react"
 
 import { Formik } from "formik"
 import { Button, Text } from "react-native-paper"
@@ -14,18 +14,54 @@ import {
   getBottomSheetForm
 } from "@services/store/slices/bottomSheetForm"
 import { snapPoints } from "@assets/constants/dashboard/bottomSheet"
+import CreateAssociation from "@components/PagesActions/createAssociation"
 
 import { BottomSheetProps, BottomSheetRef } from "./types"
 
-const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
-  ({ name }, ref) => {
-    const [value, setValue] = useState<string>()
+const creationPagesDic: Record<
+  DashboardPages,
+  FC<DashboardPagesCreationProps>
+> = {
+  association: CreateAssociation,
+  pages: undefined,
+  membershipRequest: undefined,
+  members: undefined,
+  identities: undefined,
+  fixedAmount: undefined,
+  variableAmount: undefined,
+  savings: undefined,
+  tontineTurn: undefined,
+  mySubscriptions: undefined,
+  sessions: undefined,
+  pendingLoans: undefined,
+  paidLoans: undefined,
+  canceledLoans: undefined,
+  penaltyType: undefined,
+  sanctionedMembers: undefined,
+  products: undefined,
+  productPayment: undefined,
+  chargeLine: undefined,
+  charges: undefined,
+  chargesType: undefined,
+  assistanceType: undefined,
+  chargePayment: undefined,
+  assistance: undefined,
+  assistanceRequest: undefined,
+  warranties: undefined,
+  sparingStates: undefined,
+  advertisement: undefined,
+  audience: undefined,
+  penalties: undefined,
+  productType: undefined
+}
 
+const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
+  ({ name, data }, ref) => {
     const { colors } = useTheme()
     const dispatch = useAppDispatch()
     const { locale } = useContext(AppStateContext)
 
-    const { position, title, form } = getBottomSheetForm()
+    const { position, title } = getBottomSheetForm()
 
     const handleSheetChanges = useCallback(
       (index: number) => {
@@ -34,7 +70,9 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
       [dispatch]
     )
 
-    if (form.length === 0) {
+    const CreationForm = creationPagesDic[name]
+
+    if (!CreationForm) {
       return null
     }
 
@@ -49,41 +87,7 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
         handleIndicatorStyle={{ backgroundColor: colors.primary }}
       >
         <BottomSheetScrollView style={styles.contentContainer}>
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
-            <Text variant="titleLarge">{locale.t(`pages.${title.label}`)}</Text>
-            <Icon source={title.icon} size={32} color={colors.secondary} />
-          </View>
-
-          <Formik
-            initialValues={{ otp: "", newPassword: "", passwordConfirm: "" }}
-            onSubmit={() => undefined}
-          >
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              errors,
-              touched
-            }) => (
-              <View style={styles.fieldsContainer}>
-                <View style={styles.buttonContainer}>
-                  <Button
-                    mode="contained"
-                    labelStyle={styles.labelColors}
-                    style={{ backgroundColor: colors.error }}
-                  >
-                    Annuler
-                  </Button>
-                  <Button mode="contained" labelStyle={styles.labelColors}>
-                    Confirmer
-                  </Button>
-                </View>
-              </View>
-            )}
-          </Formik>
+          <CreationForm data={data} />
         </BottomSheetScrollView>
       </BottomSheet>
     )

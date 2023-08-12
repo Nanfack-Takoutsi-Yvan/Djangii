@@ -219,7 +219,8 @@
     "newAudience": "New Audience",
     "newNotification": "New Notification",
     "savedClipboard": "Saved to clipboard",
-    "clipboardFailed": "Data not saved to clipboard"
+    "clipboardFailed": "Data not saved to clipboard",
+    "newAssociationPage": "New Association Page"
   },
   "drawer": {
     "dashboard": "Dashboard",
@@ -379,7 +380,9 @@
     "censor": "Censor",
     "selectARole": "Select a role",
     "memberShipRequestAccepted": "Membership request accepted",
-    "membershipDeniedWithSuccess": "Membership request denied"
+    "membershipDeniedWithSuccess": "Membership request denied",
+    "emptyTable": "Empty Table",
+    "createData": "Create new data with the create button"
   },
   "file": {
     "canNotShareTheFile": "We can't share the file, try again later",
@@ -394,7 +397,9 @@
     "newNotificationTitleLabel": "Title*",
     "newNotificationDescriptionLabel": "Description*",
     "cancel": "Cancel",
-    "sendNotification": "Send notification"
+    "sendNotification": "Send notification",
+    "noNotification": "No new notification",
+    "createNotification": "new notification will appear here"
   },
   "settings": {
     "title": "Settings",

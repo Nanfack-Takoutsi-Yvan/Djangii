@@ -103,7 +103,7 @@ export default function TabOneScreen() {
           pageName={pageTitle}
         />
         <TableViewerBottomSheet />
-        <BottomSheetForm />
+        <BottomSheetForm data={data} name={pageName} />
       </View>
     </View>
   )

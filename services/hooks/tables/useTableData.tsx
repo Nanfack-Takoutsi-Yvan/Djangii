@@ -64,19 +64,23 @@ const useTableData = (
           //   }
           // }
 
-          const actionComponent = (
-            <TableActionButton
-              onDelete={onDelete}
-              onView={onView}
-              onEdit={onEdit}
-              onCopy={onCopy}
-              onDiscard={onDiscard}
-              onValidate={onValidate}
-              rowId={row.pop()}
-              setDataId={setDataId}
-              data={data}
-            />
-          )
+          const actionComponent = (() => {
+            const rowData = [...row]
+
+            return (
+              <TableActionButton
+                onDelete={onDelete}
+                onView={onView}
+                onEdit={onEdit}
+                onCopy={onCopy}
+                onDiscard={onDiscard}
+                onValidate={onValidate}
+                rowId={rowData.pop()}
+                setDataId={setDataId}
+                data={data}
+              />
+            )
+          })()
 
           row.unshift(actionComponent)
         }

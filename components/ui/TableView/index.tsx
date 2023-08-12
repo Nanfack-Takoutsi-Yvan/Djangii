@@ -1,15 +1,8 @@
 /* eslint-disable react/no-array-index-key */
-import {
-  FC,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState
-} from "react"
-import { ScrollView, StyleSheet, View } from "react-native"
+import { FC, useCallback, useContext, useMemo, useState } from "react"
+import { Image, ScrollView, StyleSheet, View } from "react-native"
 import Icon from "react-native-paper/src/components/Icon"
-import { Button, useTheme } from "react-native-paper"
+import { Button, Text, useTheme } from "react-native-paper"
 import { Table, Row } from "react-native-reanimated-table"
 
 import {
@@ -91,32 +84,45 @@ const TableView: FC<TableViewProps> = ({
 
   return (
     <View style={[styles.screen, styles.container]}>
-      <ScrollView horizontal>
-        <View style={styles.tableContainer}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <Table style={styles.table}>
-              <Row
-                data={tableHeadings}
-                widthArr={cellsSize}
-                style={styles.head}
-                textStyle={styles.headerText}
-              />
-              {tableData.map((row, index) => (
+      {tableData.length !== 0 ? (
+        <ScrollView horizontal>
+          <View style={styles.tableContainer}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Table style={styles.table}>
                 <Row
-                  key={`row-${index}`}
-                  data={row}
+                  data={tableHeadings}
                   widthArr={cellsSize}
-                  style={[
-                    styles.row,
-                    index % 2 ? null : { backgroundColor: "#efefef" }
-                  ]}
-                  textStyle={styles.text}
+                  style={styles.head}
+                  textStyle={styles.headerText}
                 />
-              ))}
-            </Table>
-          </ScrollView>
+                {tableData.map((row, index) => (
+                  <Row
+                    key={`row-${index}`}
+                    data={row}
+                    widthArr={cellsSize}
+                    style={[
+                      styles.row,
+                      index % 2 ? null : { backgroundColor: "#efefef" }
+                    ]}
+                    textStyle={styles.text}
+                  />
+                ))}
+              </Table>
+            </ScrollView>
+          </View>
+        </ScrollView>
+      ) : null}
+
+      {tableData.length === 0 ? (
+        <View style={styles.imageContainer}>
+          <Image
+            source={require("../../../assets/images/pictures/undraw_data_input_fxv2-removebg-preview.png")}
+            style={styles.image}
+          />
+          <Text variant="titleLarge">{locale.t("tables.emptyTable")}</Text>
+          <Text>{locale.t("tables.createData")}</Text>
         </View>
-      </ScrollView>
+      ) : null}
 
       <View style={styles.buttonsContainer}>
         {createData ? (
@@ -138,33 +144,35 @@ const TableView: FC<TableViewProps> = ({
           </Button>
         ) : null}
 
-        <Button
-          textColor="white"
-          mode="contained"
-          style={styles.button}
-          contentStyle={styles.buttonContent}
-          onPress={() => {
-            shareExcel(
-              pageName,
-              getAppUserName(
-                user?.userInfos.firstName,
-                user?.userInfos.lastName
-              ),
-              tableHeadings,
-              tableData,
-              locale
-            )
-          }}
-          icon={() => (
-            <Icon
-              source="file-download-outline"
-              color={colors.secondary}
-              size={24}
-            />
-          )}
-        >
-          {locale.t("pages.exportButton")}
-        </Button>
+        {tableData.length !== 0 ? (
+          <Button
+            textColor="white"
+            mode="contained"
+            style={styles.button}
+            contentStyle={styles.buttonContent}
+            onPress={() => {
+              shareExcel(
+                pageName,
+                getAppUserName(
+                  user?.userInfos.firstName,
+                  user?.userInfos.lastName
+                ),
+                tableHeadings,
+                tableData,
+                locale
+              )
+            }}
+            icon={() => (
+              <Icon
+                source="file-download-outline"
+                color={colors.secondary}
+                size={24}
+              />
+            )}
+          >
+            {locale.t("pages.exportButton")}
+          </Button>
+        ) : null}
       </View>
 
       {actions?.map(getAction)}
@@ -214,7 +222,20 @@ const styles = StyleSheet.create({
     color: "#777",
     fontSize: 16
   },
-  buttonsContainer: { paddingHorizontal: 24, rowGap: 12, width: "100%" }
+  buttonsContainer: {
+    paddingHorizontal: 24,
+    rowGap: 12,
+    width: "100%"
+  },
+  image: {
+    width: 200,
+    height: 200
+  },
+  imageContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1
+  }
 })
 
 export default TableView

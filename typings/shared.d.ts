@@ -75,6 +75,10 @@ type CustomPagesProps = {
   data: IUserAssociation[]
 }
 
+type DashboardPagesCreationProps = {
+  data: any[]
+}
+
 type PagesActions = "validateMembershipRequest"
 
 type PagesActionsProps = {
