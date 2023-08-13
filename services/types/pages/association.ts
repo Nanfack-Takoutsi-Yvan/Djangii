@@ -146,3 +146,9 @@ interface IAssociationController {
   ) => Promise<IAssociationMemberContent>
   getAllAssociationPages: (token: string) => Promise<IAssociationPagesContent>
 }
+
+interface INewAssociation {
+  acronym: string
+  currency: ICurrency
+  name: string
+}

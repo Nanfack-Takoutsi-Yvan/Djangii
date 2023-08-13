@@ -6,6 +6,7 @@ import {
 } from "@reduxjs/toolkit"
 
 import loan from "./slices/loan"
+import utils from "./slices/utils"
 import authSlice from "./slices/auth"
 import payment from "./slices/payment"
 import members from "./slices/members"
@@ -28,6 +29,7 @@ const combinedReducer = combineReducers({
   bottomSheetForm,
   bottomSheetTables,
   NotificationParams,
+  ...utils,
   ...payment,
   ...members,
   ...tontines,

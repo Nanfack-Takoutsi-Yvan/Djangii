@@ -8,6 +8,7 @@ export class AssociationController implements IAssociationController {
 
   constructor() {
     this.resource = {
+      association: "api/associations",
       created: "api/associations/me",
       userAssociation: "api/associations/members/me",
       associationPage: {
@@ -226,6 +227,29 @@ export class AssociationController implements IAssociationController {
     } catch (error) {
       const err = {
         message: `Error while rejecting membership request: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public createAssociation = async (
+    token: string,
+    association: INewAssociation
+  ) => {
+    assert(token, "Token is required to create association")
+
+    try {
+      const url = `${this.resource.association}`
+      const res = await apiClient.post(url, association, {
+        headers: { Authorization: token }
+      })
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `Error while creating association: ${error}`,
         error
       }
 

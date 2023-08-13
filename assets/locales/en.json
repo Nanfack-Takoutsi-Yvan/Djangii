@@ -23,7 +23,8 @@
     "twitterAccount": "Twitter Account",
     "youtubeAccount": "YouTube Account",
     "selectAssociation": "Select Association",
-    "send": "Send"
+    "send": "Send",
+    "selectCurrency": " Select currency"
   },
   "commonErrors": {
     "title": "An error occurred",
@@ -220,7 +221,12 @@
     "newNotification": "New Notification",
     "savedClipboard": "Saved to clipboard",
     "clipboardFailed": "Data not saved to clipboard",
-    "newAssociationPage": "New Association Page"
+    "newAssociationPage": "New Association Page",
+    "createAssociation": "Create Association",
+    "nameRequired": "Name is required",
+    "acronymRequired": "Acronym is required",
+    "currencyRequired": "Currency is required",
+    "associationCreated": "Association created"
   },
   "drawer": {
     "dashboard": "Dashboard",
