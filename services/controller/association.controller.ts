@@ -256,4 +256,29 @@ export class AssociationController implements IAssociationController {
       throw new Error(JSON.stringify(err))
     }
   }
+
+  public createAssociationPage = async (
+    token: string,
+    associationPage: INewAssociationPage
+  ) => {
+    assert(token, "Token is required to create association page")
+
+    try {
+      const url = `${this.resource.associationPage.base}`
+      const res = await apiClient.post<IAssociationPage>(url, associationPage, {
+        headers: { Authorization: token }
+      })
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `Error while creating association page: ${error}`,
+        error
+      }
+
+      console.log({ error })
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
 }

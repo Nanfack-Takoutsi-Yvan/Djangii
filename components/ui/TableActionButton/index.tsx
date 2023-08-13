@@ -1,8 +1,8 @@
 import { FC, useContext } from "react"
 import { Alert, StyleSheet, View } from "react-native"
 import { useTheme, IconButton } from "react-native-paper"
-import * as Clipboard from "expo-clipboard"
 import AppStateContext from "@services/context/context"
+import { copyData } from "@services/utils/storage"
 
 const TableActionButton: FC<TableActionButton> = ({
   onEdit,
@@ -18,16 +18,6 @@ const TableActionButton: FC<TableActionButton> = ({
   const { colors } = useTheme()
   const { locale, setLoading, setActionModalProps } =
     useContext(AppStateContext)
-
-  const copyData = (value: string) => {
-    if (value) {
-      Clipboard.setStringAsync(value)
-        .then(() => Alert.alert(locale.t("pages.savedClipboard")))
-        .catch(() => Alert.alert(locale.t("pages.clipboardFailed")))
-    } else {
-      Alert.alert(locale.t("pages.clipboardFailed"))
-    }
-  }
 
   const discardData = async (value: string) => {
     try {
@@ -83,7 +73,7 @@ const TableActionButton: FC<TableActionButton> = ({
           style={{ backgroundColor: colors.backdrop }}
           onPress={() => {
             const value = onCopy(data, rowId)
-            copyData(value)
+            copyData(value, locale)
           }}
         />
       ) : null}

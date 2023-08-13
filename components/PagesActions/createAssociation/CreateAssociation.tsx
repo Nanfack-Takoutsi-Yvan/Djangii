@@ -15,7 +15,7 @@ import {
   fetchCurrencies,
   getAllCurrencies
 } from "@services/store/slices/utils/currency"
-import associationValidationSchema from "@services/validations/yup/association.validation"
+import { associationValidationSchema } from "@services/validations/yup/association.validation"
 
 type Values = { name: string; acronym: string; currency: string }
 
@@ -90,9 +90,7 @@ const CreateAssociation: FC = () => {
     <View style={styles.screen}>
       <View style={styles.titleContainer}>
         <View style={styles.title}>
-          <Text variant="titleLarge">
-            {locale.t(`pages.newAssociationPage`)}
-          </Text>
+          <Text variant="titleLarge">{locale.t(`pages.newAssociation`)}</Text>
         </View>
         <View style={styles.titleIcon}>
           <Icon

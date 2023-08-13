@@ -152,3 +152,13 @@ interface INewAssociation {
   currency: ICurrency
   name: string
 }
+
+interface INewAssociationPage {
+  pageName: string
+  customUrl: string
+  description: string
+  isPublic: boolean
+  visible: boolean
+  associationId: string
+  username: string
+}

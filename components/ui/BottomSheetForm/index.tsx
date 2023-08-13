@@ -1,11 +1,8 @@
 import { FC, forwardRef, useCallback, useContext } from "react"
 
-import { Formik } from "formik"
-import { Button, Text } from "react-native-paper"
-import { StyleSheet, View } from "react-native"
+import { StyleSheet } from "react-native"
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet"
 import { useTheme } from "react-native-paper/src/core/theming"
-import Icon from "react-native-paper/src/components/Icon"
 
 import { useAppDispatch } from "@services/store"
 import AppStateContext from "@services/context/context"
@@ -15,6 +12,7 @@ import {
 } from "@services/store/slices/bottomSheetForm"
 import { snapPoints } from "@assets/constants/dashboard/bottomSheet"
 import CreateAssociation from "@components/PagesActions/createAssociation"
+import CreateAssociationPage from "@components/PagesActions/CreateAssociationPage"
 
 import { BottomSheetProps, BottomSheetRef } from "./types"
 
@@ -23,7 +21,7 @@ const creationPagesDic: Record<
   FC<DashboardPagesCreationProps>
 > = {
   association: CreateAssociation,
-  pages: undefined,
+  pages: CreateAssociationPage,
   membershipRequest: undefined,
   members: undefined,
   identities: undefined,

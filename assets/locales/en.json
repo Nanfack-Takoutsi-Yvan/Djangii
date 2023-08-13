@@ -24,7 +24,9 @@
     "youtubeAccount": "YouTube Account",
     "selectAssociation": "Select Association",
     "send": "Send",
-    "selectCurrency": " Select currency"
+    "selectCurrency": " Select currency",
+    "visible": "Visible",
+    "mask": "Mask"
   },
   "commonErrors": {
     "title": "An error occurred",
@@ -226,7 +228,20 @@
     "nameRequired": "Name is required",
     "acronymRequired": "Acronym is required",
     "currencyRequired": "Currency is required",
-    "associationCreated": "Association created"
+    "associationCreated": "Association created",
+    "createAssociationPage": "Create Association Page",
+    "selectAssociation":"Select Association",
+    "pageName":"Page Name",
+    "customUrl": "Custom Url Link",
+    "customUrlPreview": "Custom Url link Preview",
+    "aboutUs": "About Us",
+    "publicProfileDescription": "Everyone can see group members and what's posted",
+    "publicProfile": "Public",
+    "privateProfile": "Private",
+    "privateProfileDescription": "Only members can see the specifics of this group and what's posted Private pages cannot become public in order to protect members confidentiality",
+    "choosePrivacy": "Choose privacy",
+    "chooseVisibility": "Choose visibility",
+    "associationPageCreated": "Association page created"
   },
   "drawer": {
     "dashboard": "Dashboard",

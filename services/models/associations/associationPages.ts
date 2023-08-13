@@ -49,4 +49,19 @@ export default class AssociationPage implements IAssociationPage {
     const rawData = await controller.getAllAssociationPages(token)
     return rawData.content
   }
+
+  static createAssociationPages = async (
+    associationPage: INewAssociationPage
+  ) => {
+    const token = await getTokenFromStorage()
+    const controller = new AssociationController()
+
+    assert(token, "token is required to create associations pages")
+
+    const newAssociation = await controller.createAssociationPage(
+      token,
+      associationPage
+    )
+    return newAssociation
+  }
 }

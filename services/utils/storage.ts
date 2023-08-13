@@ -1,5 +1,8 @@
 import * as SecureStore from "expo-secure-store"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import * as Clipboard from "expo-clipboard"
+import { Alert } from "react-native"
+import { I18n } from "i18n-js"
 
 export async function saveInSecureStore(key: string, value: string) {
   const isStoreAvailable = await SecureStore.isAvailableAsync()
@@ -60,5 +63,15 @@ export async function deleteFromAsyncStorage(key: string) {
     await AsyncStorage.removeItem(key)
   } catch (e) {
     // error reading value
+  }
+}
+
+export const copyData = (value: string, locale: I18n) => {
+  if (value) {
+    Clipboard.setStringAsync(value)
+      .then(() => Alert.alert(locale.t("pages.savedClipboard")))
+      .catch(() => Alert.alert(locale.t("pages.clipboardFailed")))
+  } else {
+    Alert.alert(locale.t("pages.clipboardFailed"))
   }
 }

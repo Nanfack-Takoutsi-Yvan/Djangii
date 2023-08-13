@@ -1,9 +1,13 @@
 import * as yup from "yup"
 
-const associationValidationSchema = yup.object().shape({
+export const associationValidationSchema = yup.object().shape({
   name: yup.string().required("pages.nameRequired"),
   acronym: yup.string().required("pages.acronymRequired"),
   currency: yup.string().required("pages.currencyRequired")
 })
 
-export default associationValidationSchema
+export const associationPageValidationSchema = yup.object().shape({
+  associationId: yup.string().required("pages.nameRequired"),
+  pageName: yup.string().required("pages.acronymRequired"),
+  customUrl: yup.string().required("pages.currencyRequired")
+})
