@@ -154,8 +154,7 @@ interface INewAssociation {
 }
 
 interface INewAssociationPage {
-  pageName: string
-  customUrl: string
+  name: string
   description: string
   isPublic: boolean
   visible: boolean

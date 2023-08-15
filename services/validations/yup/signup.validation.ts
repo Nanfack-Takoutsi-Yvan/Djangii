@@ -4,6 +4,7 @@ import * as yup from "yup"
 
 import field from "@assets/constants/validation/limits"
 import User from "@services/models/user"
+import { testEmailAvailability, testUsername } from "./utils"
 
 const signUpValidationSchema = yup.object().shape({
   username: yup
@@ -32,38 +33,12 @@ const signUpValidationSchema = yup.object().shape({
       field.phoneNumberLength.min,
       () => "signUp.errors.phoneNumber.required"
     )
-    .test("phoneNumber", "signUp.errors.phoneNumber.taken", async value => {
-      const phoneNumber = value.split(",")[0].split(" ").join("")
-      try {
-        if (phoneNumber.length > field.phoneNumberLength.min) {
-          await User.isPhoneNumberUsed(phoneNumber)
-        }
-        return false
-      } catch (err) {
-        if (isAxiosError(err) && err.status === HttpStatusCode.NotFound) {
-          return false
-        }
-
-        return true
-      }
-    }),
+    .test("phoneNumber", "signUp.errors.phoneNumber.taken", testUsername),
   email: yup
     .string()
     .email("signUp.errors.email.notValid")
     .required("signUp.errors.email.required")
-    .test("email", "signUp.errors.email.taken", async value => {
-      try {
-        await User.isEmailUsed(value)
-
-        return false
-      } catch (err) {
-        if (isAxiosError(err) && err.status === HttpStatusCode.NotFound) {
-          return false
-        }
-
-        return true
-      }
-    }),
+    .test("email", "signUp.errors.email.taken", testEmailAvailability),
   password: yup
     .string()
     .min(field.passwordLength.min, () => "signUp.errors.password.length")

@@ -220,7 +220,7 @@ const ValidateMembershipRequest: FC<PagesActionsProps> = ({
                             onBlur={() => handleBlur("role")}
                           />
                         </View>
-                        {errors.role && touched.role && (
+                        {errors.role && (
                           <View>
                             <Text
                               style={{

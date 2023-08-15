@@ -1,4 +1,4 @@
-import { FC, forwardRef, useCallback, useContext } from "react"
+import { FC, forwardRef, useCallback, useContext, useEffect } from "react"
 
 import { StyleSheet } from "react-native"
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet"
@@ -10,6 +10,7 @@ import {
   changeBottomSheetFormPosition,
   getBottomSheetForm
 } from "@services/store/slices/bottomSheetForm"
+import AddMember from "@components/PagesActions/AddMember"
 import { snapPoints } from "@assets/constants/dashboard/bottomSheet"
 import CreateAssociation from "@components/PagesActions/createAssociation"
 import CreateAssociationPage from "@components/PagesActions/CreateAssociationPage"
@@ -23,7 +24,7 @@ const creationPagesDic: Record<
   association: CreateAssociation,
   pages: CreateAssociationPage,
   membershipRequest: undefined,
-  members: undefined,
+  members: AddMember,
   identities: undefined,
   fixedAmount: undefined,
   variableAmount: undefined,
@@ -67,6 +68,8 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
       },
       [dispatch]
     )
+
+    useEffect(() => () => handleSheetChanges(-1), [handleSheetChanges])
 
     const CreationForm = creationPagesDic[name]
 

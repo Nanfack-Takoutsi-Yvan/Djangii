@@ -1,4 +1,5 @@
 import * as yup from "yup"
+import { testAssociationUsername } from "./utils"
 
 export const associationValidationSchema = yup.object().shape({
   name: yup.string().required("pages.nameRequired"),
@@ -7,7 +8,11 @@ export const associationValidationSchema = yup.object().shape({
 })
 
 export const associationPageValidationSchema = yup.object().shape({
-  associationId: yup.string().required("pages.nameRequired"),
-  pageName: yup.string().required("pages.acronymRequired"),
-  customUrl: yup.string().required("pages.currencyRequired")
+  name: yup.string().required("pages.pageNameRequired"),
+  associationId: yup.string().required("pages.associationMandatory"),
+  username: yup
+    .string()
+    .matches(/^[0-9a-zA-ZÀ-ÿ-._]*$/gi, "pages.linkShouldNotContainWhiteSpaces")
+    .test("username", "pages.linkNotAvailable", testAssociationUsername)
+    .required("pages.linkRequired")
 })

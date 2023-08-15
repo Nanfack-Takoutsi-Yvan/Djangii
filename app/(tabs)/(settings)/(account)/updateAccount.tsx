@@ -389,7 +389,7 @@ const UpdateAccount: FC = () => {
                               }
                             />
                           </View>
-                          {errors.gender && touched.gender && (
+                          {errors.gender && (
                             <View>
                               <Text
                                 style={{
@@ -444,7 +444,7 @@ const UpdateAccount: FC = () => {
                               }
                             />
                           </View>
-                          {errors.countryCode && touched.countryCode && (
+                          {errors.countryCode && (
                             <View>
                               <Text
                                 style={{
@@ -497,7 +497,7 @@ const UpdateAccount: FC = () => {
                               }
                             />
                           </View>
-                          {errors.countryCode && touched.countryCode && (
+                          {errors.countryCode && (
                             <View>
                               <Text
                                 style={{
@@ -608,7 +608,7 @@ const UpdateAccount: FC = () => {
                               }
                             />
                           </View>
-                          {errors.countryCode && touched.countryCode && (
+                          {errors.countryCode && (
                             <View>
                               <Text
                                 style={{
