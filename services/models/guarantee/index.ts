@@ -27,4 +27,15 @@ export default class Guarantee implements IGuarantee {
 
     return rawData.content
   }
+
+  static async createGuaranteeType(payload: GuaranteeTypePayload) {
+    const token = await getTokenFromStorage()
+    const controller = new ConfigurationController()
+
+    assert(token, "Token is required to create guarantees")
+
+    const rawData = await controller.createGuaranteeTypes(token, payload)
+
+    return rawData
+  }
 }

@@ -13,3 +13,5 @@ type ChargeLine = {
   designation: string
   id: string
 }
+
+type ChargeLinePayload = Omit<ChargeLine, "datation" | "id">

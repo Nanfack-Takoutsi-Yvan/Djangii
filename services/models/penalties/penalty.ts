@@ -35,4 +35,14 @@ export default class Penalty implements IAssociationPenalty {
 
     return rawData.content
   }
+
+  static async createPenaltyType(payload: IAssociationPenaltyRequestBody) {
+    const token = await getTokenFromStorage()
+    const controller = new ConfigurationController()
+
+    assert(token, "Token is required to create penalty type")
+
+    const rawData = await controller.createPenaltyTypes(token, payload)
+    return rawData
+  }
 }

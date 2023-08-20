@@ -21,10 +21,21 @@ export default class Charge implements ChargeLine {
     const token = await getTokenFromStorage()
     const controller = new ConfigurationController()
 
-    assert(token, "Token is required to chargeLines list")
+    assert(token, "Token is required to get charge lines list")
 
     const rawData = await controller.getChargeLineList(token, associationId)
 
     return rawData.content
+  }
+
+  static async createChargeLine(chargeLine: ChargeLinePayload) {
+    const token = await getTokenFromStorage()
+    const controller = new ConfigurationController()
+
+    assert(token, "Token is required to create charge lines list")
+
+    const rawData = await controller.createChargeLine(token, chargeLine)
+
+    return rawData
   }
 }

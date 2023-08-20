@@ -310,7 +310,17 @@
     "interestAssociationPercentRequired": "Association's interest rate is required",
     "noNegativeInterestRate": "Sale interest rate should be greater than zero",
     "interestRateRequired": "Sale interest rate is required",
-    "newSavingCreated": "Saving created"
+    "newSavingCreated": "Saving created",
+    "designation": "Designation",
+    "majoration": "Majoration",
+    "description": "Description",
+    "createNewPenaltyType": "Create new penalty type",
+    "newPenaltyTypeAdded": "New penalty type added",
+    "noNegativeMajoration": "Majoration should be greater than zero",
+    "majorationRequired": "Majoration is required",
+    "descriptionRequired": "Description is required",
+    "designationRequired": "Designation is required",
+    "newGuaranteeTypeAdded": "New guarantee type added"
   },
   "drawer": {
     "dashboard": "Dashboard",

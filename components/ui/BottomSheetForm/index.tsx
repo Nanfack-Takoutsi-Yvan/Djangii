@@ -16,6 +16,9 @@ import CreateAssociation from "@components/PagesActions/CreateAssociation"
 import CreateAssociationPage from "@components/PagesActions/CreateAssociationPage"
 import TontineContribution from "@components/PagesActions/TontineContribution"
 import Savings from "@components/PagesActions/Savings"
+import PenaltiesTypes from "@components/PagesActions/Configurations/penalties"
+import ChargeLineForm from "@components/PagesActions/Configurations/chargeLine"
+import GuaranteeType from "@components/PagesActions/Configurations/guarantee"
 
 import { BottomSheetProps, BottomSheetRef } from "./types"
 
@@ -37,18 +40,18 @@ const creationPagesDic: Record<
   pendingLoans: () => null,
   paidLoans: () => null,
   canceledLoans: () => null,
-  penaltyType: () => null,
+  penaltyType: PenaltiesTypes,
   sanctionedMembers: () => null,
   products: () => null,
   productPayment: () => null,
-  chargeLine: () => null,
+  chargeLine: ChargeLineForm,
   charges: () => null,
   chargesType: () => null,
   assistanceType: () => null,
   chargePayment: () => null,
   assistance: () => null,
   assistanceRequest: () => null,
-  warranties: () => null,
+  warranties: GuaranteeType,
   sparingStates: () => null,
   advertisement: () => null,
   audience: () => null,
