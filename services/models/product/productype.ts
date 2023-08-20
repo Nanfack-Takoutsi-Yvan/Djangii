@@ -29,10 +29,21 @@ export default class ProductType implements IProduct {
     const token = await getTokenFromStorage()
     const controller = new ConfigurationController()
 
-    assert(token, "Token is required to product payment list")
+    assert(token, "Token is required to product list")
 
     const rawData = await controller.getProductTypesList(token, associationId)
 
     return rawData.content
+  }
+
+  static async createProductType(payload: IProductPayload) {
+    const token = await getTokenFromStorage()
+    const controller = new ConfigurationController()
+
+    assert(token, "Token is required to create product ")
+
+    const rawData = await controller.createProductTypes(token, payload)
+
+    return rawData
   }
 }

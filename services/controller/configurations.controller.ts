@@ -222,4 +222,26 @@ export default class ConfigurationController
       throw new Error(JSON.stringify(err))
     }
   }
+
+  public async createProductTypes(token: string, payload: IProductPayload) {
+    try {
+      assert(token, "token is required to create product type")
+      const res = await apiClient.post<IProduct>(
+        this.resources.product,
+        payload,
+        {
+          headers: { Authorization: token }
+        }
+      )
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `An error occurred while creating product type: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
 }

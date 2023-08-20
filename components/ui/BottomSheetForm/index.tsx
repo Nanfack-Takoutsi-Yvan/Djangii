@@ -19,6 +19,7 @@ import Savings from "@components/PagesActions/Savings"
 import PenaltiesTypes from "@components/PagesActions/Configurations/penalties"
 import ChargeLineForm from "@components/PagesActions/Configurations/chargeLine"
 import GuaranteeType from "@components/PagesActions/Configurations/guarantee"
+import ProductType from "@components/PagesActions/Configurations/products"
 
 import { BottomSheetProps, BottomSheetRef } from "./types"
 
@@ -56,7 +57,7 @@ const creationPagesDic: Record<
   advertisement: () => null,
   audience: () => null,
   penalties: () => null,
-  productType: () => null
+  productType: ProductType
 }
 
 const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(

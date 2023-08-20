@@ -82,10 +82,10 @@ const GuaranteeType: FC<DashboardPagesCreationProps> = () => {
     <View style={styles.singleMemberContainer}>
       <View style={styles.titleContainer}>
         <View style={styles.title}>
-          <Text variant="titleLarge">{locale.t(`pages.newPenaltyType`)}</Text>
+          <Text variant="titleLarge">{locale.t(`pages.newGuaranteeType`)}</Text>
         </View>
         <View style={styles.titleIcon}>
-          <Icon source="alert-plus-outline" size={32} color={colors.primary} />
+          <Icon source="license" size={32} color={colors.primary} />
         </View>
       </View>
 

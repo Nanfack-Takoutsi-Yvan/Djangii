@@ -22,3 +22,18 @@ export const guaranteeValidationForm = yup.object().shape({
   description: yup.string().required("pages.descriptionRequired"),
   designation: yup.string().required("pages.designationRequired")
 })
+
+export const productTypesValidation = yup.object().shape({
+  designation: yup.string().required("pages.designationRequired"),
+  amount: yup
+    .number()
+    .positive("pages.noNegativeAmount")
+    .required("pages.amountRequired"),
+
+  frequency: yup
+    .number()
+    .positive("pages.noNegativeFrequency")
+    .required("pages.frequencyRequired"),
+  value: yup.string().required("pages.valueRequired"),
+  required: yup.boolean()
+})

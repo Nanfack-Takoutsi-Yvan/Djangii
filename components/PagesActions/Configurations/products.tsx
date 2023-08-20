@@ -1,27 +1,38 @@
+/* eslint-disable no-nested-ternary */
 import { FC, useCallback, useContext, useEffect, useState } from "react"
-import { Button, Text, TextInput, useTheme } from "react-native-paper"
+import { Button, Checkbox, Text, TextInput, useTheme } from "react-native-paper"
 
 import AppStateContext from "@services/context/context"
 import { useAppDispatch } from "@services/store"
-import { StyleSheet, View } from "react-native"
+import { Platform, StyleSheet, TouchableOpacity, View } from "react-native"
 import { Formik } from "formik"
-import FREQUENCIES from "@assets/constants/dashboard/frequencies"
+import SelectDropdown from "react-native-select-dropdown"
 import Icon from "react-native-paper/src/components/Icon"
 import { getDefaultAssociationId } from "@services/store/slices/dashboard"
 import { associationSelector } from "@services/store/slices/associations"
-import Penalty from "@services/models/penalties/penalty"
-import { fetchPenaltiesTypes } from "@services/store/slices/configurations/penaltyTypes"
-import { penaltyTypesValidation } from "@services/validations/yup/pagesActions.validation"
+import PERIODICITY from "@assets/constants/dashboard/periodicity"
+import FREQUENCIES from "@assets/constants/dashboard/frequencies"
+import { productTypesValidation } from "@services/validations/yup/pagesActions.validation"
+import ProductType from "@services/models/product/productype"
+import { fetchProductsTypes } from "@services/store/slices/configurations/productTypes"
 
 const FormDefault = {
   amount: 0,
-  description: "",
   designation: "",
-  majoration: 0
+  frequency: 0,
+  value: "",
+  required: false
 }
 
-const PenaltiesTypes: FC<DashboardPagesCreationProps> = () => {
+const ProductsType: FC<DashboardPagesCreationProps> = () => {
   const [association, setAssociation] = useState<IAssociation>()
+  const [customPeriodicity, setCustomPeriodicity] = useState<boolean>()
+  const [selectedFrequency, setSelectedFrequencies] = useState<
+    typeof FREQUENCIES
+  >([])
+  const [selectedPeriodicity, setSelectedPeriodicity] = useState<
+    typeof PERIODICITY
+  >([])
 
   const { colors } = useTheme()
   const dispatch = useAppDispatch()
@@ -32,29 +43,33 @@ const PenaltiesTypes: FC<DashboardPagesCreationProps> = () => {
     data: { createdAssociation: associations }
   } = associationSelector.getAssociations()
 
-  const addPenaltyType = useCallback(
+  const addSavingTontine = useCallback(
     (values: typeof FormDefault, { resetForm }: { resetForm: () => void }) => {
       if (association) {
         setLoading(true)
-        const payload: IAssociationPenaltyRequestBody = {
-          amount: values.amount,
+        const payload: IProductPayload = {
           association,
-          description: values.description,
+          amount: values.amount,
           designation: values.designation,
-          majoration: values.majoration
+          periodicity: {
+            frequency: values.frequency,
+            value: values.value
+          },
+          required: values.required
         }
 
-        Penalty.createPenaltyType(payload)
+        ProductType.createProductType(payload)
           .then(() => {
             setActionModalProps({
               icon: true,
               state: "success",
               shouldDisplay: true,
-              title: locale.t("pages.newPenaltyTypeAdded")
+              title: locale.t("pages.newProductCreated")
             })
+
             resetForm()
             if (association) {
-              dispatch(fetchPenaltiesTypes(association.id))
+              dispatch(fetchProductsTypes(association.id))
             }
           })
           .catch(() =>
@@ -80,20 +95,25 @@ const PenaltiesTypes: FC<DashboardPagesCreationProps> = () => {
     }
   }, [associationId, associations])
 
+  useEffect(() => {
+    setSelectedFrequencies(FREQUENCIES)
+    setSelectedPeriodicity(PERIODICITY)
+  }, [])
+
   return (
     <View style={styles.singleMemberContainer}>
       <View style={styles.titleContainer}>
         <View style={styles.title}>
-          <Text variant="titleLarge">{locale.t(`pages.newPenaltyType`)}</Text>
+          <Text variant="titleLarge">{locale.t(`pages.newProduct`)}</Text>
         </View>
         <View style={styles.titleIcon}>
-          <Icon source="alert-plus-outline" size={32} color={colors.primary} />
+          <Icon source="piggy-bank-outline" size={32} color={colors.primary} />
         </View>
       </View>
 
       <Formik
-        validationSchema={penaltyTypesValidation}
-        onSubmit={addPenaltyType}
+        validationSchema={productTypesValidation}
+        onSubmit={addSavingTontine}
         initialValues={FormDefault}
       >
         {({
@@ -120,6 +140,7 @@ const PenaltiesTypes: FC<DashboardPagesCreationProps> = () => {
                     style={styles.textInput}
                     dense
                     underlineColor="rgba(0,0,0,0.5)"
+                    autoComplete="username"
                     error={!!errors.designation && !!touched.designation}
                   />
                 </View>
@@ -174,69 +195,221 @@ const PenaltiesTypes: FC<DashboardPagesCreationProps> = () => {
               </View>
             </View>
 
+            <View
+              style={[
+                styles.banner,
+                { backgroundColor: `${colors.primary}11` }
+              ]}
+            >
+              <Text variant="bodyMedium">
+                {locale.t("pages.periodicityDescription")}
+              </Text>
+            </View>
+
             <View style={styles.field}>
               <View style={styles.screen}>
                 <View>
-                  <TextInput
-                    placeholder={locale.t("pages.majoration")}
-                    label={locale.t("pages.majoration")}
-                    placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                    keyboardType="numeric"
-                    value={values.majoration?.toString() || "0"}
-                    onBlur={handleBlur("majoration")}
-                    onChangeText={value =>
-                      setFieldValue(
-                        "majoration",
-                        value ? parseInt(value, 10) : null,
-                        true
-                      )
+                  <SelectDropdown
+                    data={selectedPeriodicity}
+                    defaultButtonText={locale.t("pages.selectPeriodicity")}
+                    buttonStyle={[
+                      styles.uniqueDropdown,
+                      {
+                        borderColor: errors.value
+                          ? colors.error
+                          : "rgba(0,0,0,0.2)"
+                      }
+                    ]}
+                    buttonTextStyle={[
+                      styles.dropdownTextStyles,
+                      styles.buttonDropDownText,
+                      {
+                        color: errors.value ? colors.error : undefined
+                      }
+                    ]}
+                    rowTextStyle={styles.dropdownTextStyles}
+                    dropdownStyle={styles.dropdown}
+                    onSelect={periodicity => {
+                      if (periodicity.custom) {
+                        setCustomPeriodicity(true)
+                        if (periodicity.frequency) {
+                          setFieldValue("frequency", 0, true)
+                          setFieldValue("value", "", true)
+                        }
+                      } else {
+                        setCustomPeriodicity(false)
+                        if (periodicity.frequency) {
+                          setFieldValue(
+                            "frequency",
+                            parseInt(periodicity.frequency, 10),
+                            true
+                          )
+                          setFieldValue("value", periodicity.value, true)
+                        } else {
+                          setFieldValue("frequency", 0, true)
+                          setFieldValue("value", "", true)
+                        }
+                      }
+                    }}
+                    search
+                    searchInputTxtStyle={{ fontFamily: "Sora" }}
+                    renderSearchInputRightIcon={() => (
+                      <Icon size={24} source="magnify" color={colors.primary} />
+                    )}
+                    buttonTextAfterSelection={selectedItem =>
+                      locale.t(selectedItem.label)
                     }
-                    style={styles.textInput}
-                    dense
-                    underlineColor="rgba(0,0,0,0.5)"
-                    error={!!errors.majoration && !!touched.majoration}
+                    rowTextForSelection={item => locale.t(item.label)}
+                    dropdownIconPosition="right"
+                    renderDropdownIcon={() => (
+                      <Icon
+                        size={24}
+                        source="menu-down"
+                        color={errors.value ? colors.error : colors.primary}
+                      />
+                    )}
+                    onBlur={() => handleBlur("value")}
                   />
                 </View>
-                {errors.majoration && touched.majoration && (
+                {errors.value && (
                   <View>
                     <Text
                       style={{
                         color: colors.error
                       }}
                     >
-                      {locale.t(errors.majoration)}
+                      {locale.t(errors.value)}
                     </Text>
                   </View>
                 )}
               </View>
             </View>
 
+            {customPeriodicity ? (
+              <View style={styles.frequency}>
+                <View style={styles.screen}>
+                  <View>
+                    <TextInput
+                      placeholder={locale.t("pages.frequency")}
+                      label={locale.t("pages.frequency")}
+                      placeholderTextColor="rgba(0, 0, 0, 0.20)"
+                      keyboardType="numeric"
+                      value={values.frequency?.toString() || "0"}
+                      onBlur={handleBlur("frequency")}
+                      onChangeText={value =>
+                        setFieldValue(
+                          "frequency",
+                          value ? parseInt(value, 10) : null,
+                          true
+                        )
+                      }
+                      style={styles.textInput}
+                      dense
+                      underlineColor="rgba(0,0,0,0.5)"
+                      error={!!errors.frequency && !!touched.frequency}
+                    />
+                  </View>
+                  {errors.frequency && touched.frequency && (
+                    <View>
+                      <Text
+                        style={{
+                          color: colors.error
+                        }}
+                      >
+                        {locale.t(errors.frequency)}
+                      </Text>
+                    </View>
+                  )}
+                </View>
+
+                <View style={styles.screen}>
+                  <SelectDropdown
+                    data={selectedFrequency}
+                    defaultButtonText={locale.t("pages.value")}
+                    buttonStyle={{
+                      ...styles.uniqueDropdown,
+                      borderBottomColor: errors.value
+                        ? colors.error
+                        : "rgba(0,0,0,0.2)"
+                    }}
+                    buttonTextStyle={{
+                      ...styles.dropdownTextStyles,
+                      color: errors.value ? colors.error : undefined
+                    }}
+                    rowTextStyle={styles.dropdownTextStyles}
+                    dropdownStyle={{ borderRadius: 12 }}
+                    onSelect={item => {
+                      handleChange("value")(item.value)
+                    }}
+                    search
+                    searchInputTxtStyle={{ fontFamily: "Sora" }}
+                    buttonTextAfterSelection={selectedItem =>
+                      locale.t(selectedItem.label)
+                    }
+                    rowTextForSelection={item => locale.t(item.label)}
+                    onChangeSearchInputText={text => {
+                      setSelectedFrequencies(
+                        FREQUENCIES.filter(frequency =>
+                          locale
+                            .t(frequency.label)
+                            .toLocaleLowerCase()
+                            .includes(text.toLocaleLowerCase())
+                        )
+                      )
+                    }}
+                  />
+                  {errors.value && (
+                    <View>
+                      <Text
+                        style={{
+                          color: colors.error
+                        }}
+                      >
+                        {locale.t(errors.value)}
+                      </Text>
+                    </View>
+                  )}
+                </View>
+              </View>
+            ) : null}
+
             <View style={styles.field}>
               <View style={styles.screen}>
-                <View>
-                  <TextInput
-                    placeholder={locale.t("pages.description")}
-                    label={locale.t("pages.description")}
-                    placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                    keyboardType="numeric"
-                    value={values.description}
-                    onBlur={handleBlur("description")}
-                    onChangeText={handleChange("description")}
-                    style={styles.textInput}
-                    dense
-                    multiline
-                    underlineColor="rgba(0,0,0,0.5)"
-                    error={!!errors.description && !!touched.description}
-                  />
-                </View>
-                {errors.description && touched.description && (
+                <TouchableOpacity
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between"
+                  }}
+                  onPress={() =>
+                    setFieldValue("required", !values.required, true)
+                  }
+                >
+                  <View>
+                    <Text variant="bodyMedium">
+                      {locale.t("pages.productRequired")}
+                    </Text>
+                  </View>
+                  <View>
+                    <Checkbox
+                      status={
+                        values.required
+                          ? "checked"
+                          : Platform.OS === "ios"
+                          ? "indeterminate"
+                          : "unchecked"
+                      }
+                    />
+                  </View>
+                </TouchableOpacity>
+                {errors.required && touched.required && (
                   <View>
                     <Text
                       style={{
                         color: colors.error
                       }}
                     >
-                      {locale.t(errors.description)}
+                      {locale.t(errors.required)}
                     </Text>
                   </View>
                 )}
@@ -251,7 +424,7 @@ const PenaltiesTypes: FC<DashboardPagesCreationProps> = () => {
                   handleSubmit()
                 }}
               >
-                {locale.t(`pages.createNewPenaltyType`)}
+                {locale.t(`pages.createNewProduct`)}
               </Button>
             </View>
           </View>
@@ -277,6 +450,20 @@ const styles = StyleSheet.create({
   textInput: {
     paddingHorizontal: 0
   },
+  uniqueDropdown: {
+    height: 48,
+    width: "100%",
+    backgroundColor: "#fff",
+    borderBottomWidth: 1
+  },
+  dropdownTextStyles: {
+    fontFamily: "Sora",
+    fontSize: 16
+  },
+  dateTimeButton: {
+    justifyContent: "space-around",
+    flexDirection: "row"
+  },
   banner: {
     borderRadius: 4,
     padding: 8
@@ -289,6 +476,29 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     padding: 8,
     rowGap: 12
+  },
+  instructionTitle: {
+    flexDirection: "row",
+    columnGap: 8,
+    alignItems: "baseline"
+  },
+  uploadContainer: {
+    rowGap: 8,
+    paddingBottom: 24
+  },
+  checkboxContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+  checkboxTitleContainer: {
+    rowGap: 8,
+    width: "80%"
+  },
+  checkboxTitle: {
+    flexDirection: "row",
+    alignItems: "center",
+    columnGap: 8
   },
   label: {
     flexDirection: "row",
@@ -314,7 +524,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "flex-end",
     justifyContent: "center"
+  },
+  buttonDropDownText: { paddingLeft: 0, textAlign: "left", marginLeft: 0 },
+  buttonContainer: { flexDirection: "row", columnGap: 8 },
+  buttonContent: {
+    flexDirection: "row-reverse"
+  },
+  dropdown: {
+    borderRadius: 12
   }
 })
 
-export default PenaltiesTypes
+export default ProductsType

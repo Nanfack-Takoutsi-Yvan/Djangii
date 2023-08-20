@@ -34,7 +34,13 @@
     "day": "Day",
     "month": "Month",
     "week": "Week",
-    "year": "Year"
+    "year": "Year",
+    "once": "Once",
+    "daily": "Daily",
+    "weekly": "Weekly",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "custom": "Custom"
   },
   "commonErrors": {
     "title": "An error occurred",
@@ -320,7 +326,14 @@
     "majorationRequired": "Majoration is required",
     "descriptionRequired": "Description is required",
     "designationRequired": "Designation is required",
-    "newGuaranteeTypeAdded": "New guarantee type added"
+    "newGuaranteeTypeAdded": "New guarantee type added",
+    "newGuaranteeType": "New guarantee type",
+    "newProduct": "New product",
+    "periodicityDescription": "Select a periodicity",
+    "productRequired": "Product is Required",
+    "selectPeriodicity": "Select a periodicity",
+    "newProductCreated": "New product created",
+    "createNewProduct": "Create new product"
   },
   "drawer": {
     "dashboard": "Dashboard",
