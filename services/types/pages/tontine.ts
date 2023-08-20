@@ -32,7 +32,7 @@ interface ITontineDrawModel {
 }
 
 interface ITontinePeriodicity {
-  frequency: string
+  frequency: number
   value: string
 }
 

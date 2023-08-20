@@ -30,7 +30,11 @@
     "alias": "Alias",
     "role": "Role",
     "english": "English",
-    "french": "Français"
+    "french": "Français",
+    "day": "Day",
+    "month": "Month",
+    "week": "Week",
+    "year": "Year"
   },
   "commonErrors": {
     "title": "An error occurred",
@@ -281,7 +285,20 @@
     "membersSuccessfullyInvited": "Members Successfully Invited",
     "fileInvitationsFailure": "We failed to invite members, check if your file match the sample file, your internet connection then try again.",
     "dateJoinAssociationRequired": "Date Join Association Required",
-    "dateJoinAssociation": "Date Join Association"
+    "dateJoinAssociation": "Date Join Association",
+    "name": "Name",
+    "amount": "Amount",
+    "value": "Value",
+    "frequency": "Frequency",
+    "frequencyTitle": "Tontine will be held every",
+    "amountRequired": "Amount is required",
+    "frequencyRequired": "Frequency is required",
+    "valueRequired": "Value is required",
+    "noNegativeFrequency": "Frequency must be positive",
+    "noNegativeAmount": "Amount must be positive",
+    "newTontine": "New Tontine",
+    "newTontineCreated": "New Tontine Created",
+    "createNewTontine": "Create New Tontine"
   },
   "drawer": {
     "dashboard": "Dashboard",

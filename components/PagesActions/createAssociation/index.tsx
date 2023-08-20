@@ -1,3 +1,3 @@
-import CreateAssociation from "./CreateAssociation"
+import CreateAssociation from "./createAssociation"
 
 export default CreateAssociation

@@ -18,3 +18,11 @@ type VirtualMemberConfig = {
   dateJoinAssociation: string
   associationId: string
 }
+
+type NewTontine = {
+  amount: number
+  association: IAssociation
+  name: string
+  periodicity: ITontinePeriodicity
+  type: string
+}

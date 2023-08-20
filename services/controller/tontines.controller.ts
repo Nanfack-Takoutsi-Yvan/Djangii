@@ -132,4 +132,23 @@ export default class TontineController implements ITontineController {
       throw new Error(JSON.stringify(err))
     }
   }
+
+  public async createNewTontine(token: string, payload: NewTontine) {
+    try {
+      assert(token, "token is required to creating new Tontine")
+
+      await apiClient.post(this.resource.list, payload, {
+        headers: {
+          Authorization: token
+        }
+      })
+    } catch (error) {
+      const err = {
+        message: `An error occurred while getting creating new tontine: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
 }

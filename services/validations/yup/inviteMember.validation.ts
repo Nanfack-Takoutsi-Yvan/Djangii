@@ -11,6 +11,8 @@ const singleMemberValidation = yup.object().shape({
   role: yup.string().required("pages.roleRequiredForMembers")
 })
 
+export default singleMemberValidation
+
 export const virtualMemberValidation = yup.object().shape({
   firstNameMember: yup.string().required("signUp.errors.firstName"),
   lastNameMember: yup.string().required("signUp.errors.lastName"),
@@ -21,4 +23,15 @@ export const virtualMemberValidation = yup.object().shape({
     .required("pages.dateJoinAssociationRequired")
 })
 
-export default singleMemberValidation
+export const tontineRoundValidation = yup.object().shape({
+  name: yup.string().required("pages.nameRequired"),
+  amount: yup
+    .number()
+    .positive("pages.amountRequired")
+    .required("pages.amountRequired"),
+  frequency: yup
+    .number()
+    .positive("pages.frequencyRequired")
+    .required("pages.frequencyRequired"),
+  value: yup.string().required("pages.valueRequired")
+})

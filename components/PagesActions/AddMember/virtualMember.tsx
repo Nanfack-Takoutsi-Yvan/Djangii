@@ -1,5 +1,5 @@
-import { Formik } from "formik"
-import { FC, useCallback, useContext, useEffect, useState } from "react"
+import { Formik, FormikProps } from "formik"
+import { FC, useCallback, useContext, useEffect, useRef, useState } from "react"
 import { Platform, StyleSheet, TouchableOpacity, View } from "react-native"
 import { Button, Text, TextInput, useTheme } from "react-native-paper"
 import SelectDropdown from "react-native-select-dropdown"
@@ -20,6 +20,8 @@ const VirtualMember: FC<NewMemberProps> = ({ association }) => {
   const [dateToggler, setDateToggler] = useState<Date>(new Date())
   const [showPicker, setShowPicker] = useState<boolean>(false)
   const [selectedRoles, setSelectedRoles] = useState<typeof roles>([])
+
+  const virtualMemberRef = useRef<FormikProps<VirtualMemberConfig>>(null)
 
   const { colors } = useTheme()
   const dispatch = useAppDispatch()
@@ -80,6 +82,12 @@ const VirtualMember: FC<NewMemberProps> = ({ association }) => {
     setSelectedRoles(roles)
   }, [])
 
+  useEffect(() => {
+    if (association && virtualMemberRef.current) {
+      virtualMemberRef.current.setFieldValue("associationId", association.id)
+    }
+  }, [association])
+
   return (
     <View style={styles.singleMemberContainer}>
       <View style={[styles.banner, { backgroundColor: `${colors.primary}33` }]}>
@@ -91,6 +99,7 @@ const VirtualMember: FC<NewMemberProps> = ({ association }) => {
       <Formik
         validationSchema={virtualMemberValidation}
         onSubmit={sendVirtualMemberInvitation}
+        innerRef={virtualMemberRef}
         initialValues={{
           firstNameMember: "",
           lastNameMember: "",
@@ -455,4 +464,5 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 })
+
 export default VirtualMember

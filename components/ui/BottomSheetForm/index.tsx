@@ -12,8 +12,9 @@ import {
 } from "@services/store/slices/bottomSheetForm"
 import AddMember from "@components/PagesActions/AddMember"
 import { snapPoints } from "@assets/constants/dashboard/bottomSheet"
-import CreateAssociation from "@components/PagesActions/createAssociation"
+import CreateAssociation from "@components/PagesActions/CreateAssociation"
 import CreateAssociationPage from "@components/PagesActions/CreateAssociationPage"
+import TontineContribution from "@components/PagesActions/TontineContribution"
 
 import { BottomSheetProps, BottomSheetRef } from "./types"
 
@@ -23,35 +24,35 @@ const creationPagesDic: Record<
 > = {
   association: CreateAssociation,
   pages: CreateAssociationPage,
-  membershipRequest: undefined,
+  membershipRequest: () => null,
   members: AddMember,
-  identities: undefined,
-  fixedAmount: undefined,
-  variableAmount: undefined,
-  savings: undefined,
-  tontineTurn: undefined,
-  mySubscriptions: undefined,
-  sessions: undefined,
-  pendingLoans: undefined,
-  paidLoans: undefined,
-  canceledLoans: undefined,
-  penaltyType: undefined,
-  sanctionedMembers: undefined,
-  products: undefined,
-  productPayment: undefined,
-  chargeLine: undefined,
-  charges: undefined,
-  chargesType: undefined,
-  assistanceType: undefined,
-  chargePayment: undefined,
-  assistance: undefined,
-  assistanceRequest: undefined,
-  warranties: undefined,
-  sparingStates: undefined,
-  advertisement: undefined,
-  audience: undefined,
-  penalties: undefined,
-  productType: undefined
+  identities: () => null,
+  fixedAmount: TontineContribution,
+  variableAmount: TontineContribution,
+  savings: () => null,
+  tontineTurn: () => null,
+  mySubscriptions: () => null,
+  sessions: () => null,
+  pendingLoans: () => null,
+  paidLoans: () => null,
+  canceledLoans: () => null,
+  penaltyType: () => null,
+  sanctionedMembers: () => null,
+  products: () => null,
+  productPayment: () => null,
+  chargeLine: () => null,
+  charges: () => null,
+  chargesType: () => null,
+  assistanceType: () => null,
+  chargePayment: () => null,
+  assistance: () => null,
+  assistanceRequest: () => null,
+  warranties: () => null,
+  sparingStates: () => null,
+  advertisement: () => null,
+  audience: () => null,
+  penalties: () => null,
+  productType: () => null
 }
 
 const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
@@ -88,7 +89,7 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
         handleIndicatorStyle={{ backgroundColor: colors.primary }}
       >
         <BottomSheetScrollView style={styles.contentContainer}>
-          <CreationForm data={data} />
+          <CreationForm data={data} pageName={name} />
         </BottomSheetScrollView>
       </BottomSheet>
     )
