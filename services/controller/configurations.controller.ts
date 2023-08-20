@@ -266,4 +266,29 @@ export default class ConfigurationController
       throw new Error(JSON.stringify(err))
     }
   }
+
+  public async createAssistanceTypes(
+    token: string,
+    payload: IAssistanceLineRequestBody
+  ) {
+    try {
+      assert(token, "token is required to create assistance type")
+      const res = await apiClient.post<IAssistanceLine>(
+        this.resources.assistance,
+        payload,
+        {
+          headers: { Authorization: token }
+        }
+      )
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `An error occurred while creating assistance type: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
 }

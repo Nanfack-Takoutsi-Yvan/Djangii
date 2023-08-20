@@ -337,7 +337,14 @@
     "selectChargeLine": "Select a charge line",
     "chargeLineRequired": "Charge line is required",
     "newChargeTypeCreated": "New charge type created",
-    "createNewChargeType": "Create New Charge Type"
+    "createNewChargeType": "Create New Charge Type",
+    "condition": "Condition",
+    "memo": "Memo",
+    "conditionRequired": "Condition is required",
+    "memoRequired": "Memo is required",
+    "newAssistanceType": "New Assistance Type",
+    "createAssistanceType": "Create Assistance Type",
+    "newAssistanceTypeCreated": "New Assistance Type Created"
   },
   "drawer": {
     "dashboard": "Dashboard",

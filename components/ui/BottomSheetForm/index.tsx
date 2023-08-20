@@ -21,6 +21,7 @@ import ChargeLineForm from "@components/PagesActions/Configurations/chargeLine"
 import GuaranteeType from "@components/PagesActions/Configurations/guarantee"
 import ProductType from "@components/PagesActions/Configurations/products"
 import ChargeTypesForm from "@components/PagesActions/Configurations/chargetype"
+import AssistanceTypeForm from "@components/PagesActions/Configurations/assistanceType"
 
 import { BottomSheetProps, BottomSheetRef } from "./types"
 
@@ -49,7 +50,7 @@ const creationPagesDic: Record<
   chargeLine: ChargeLineForm,
   charges: () => null,
   chargesType: ChargeTypesForm,
-  assistanceType: () => null,
+  assistanceType: AssistanceTypeForm,
   chargePayment: () => null,
   assistance: () => null,
   assistanceRequest: () => null,

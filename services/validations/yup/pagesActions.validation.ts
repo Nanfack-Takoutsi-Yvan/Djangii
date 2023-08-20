@@ -29,7 +29,6 @@ export const productTypesValidation = yup.object().shape({
     .number()
     .positive("pages.noNegativeAmount")
     .required("pages.amountRequired"),
-
   frequency: yup
     .number()
     .positive("pages.noNegativeFrequency")
@@ -46,4 +45,19 @@ export const chargeTypeValidation = yup.object().shape({
     .number()
     .positive("pages.noNegativeAmount")
     .required("pages.amountRequired")
+})
+
+export const assistanceTypeValidation = yup.object().shape({
+  contition: yup.string().required("pages.conditionRequired"),
+  designation: yup.string().required("pages.designationRequired"),
+  memo: yup.string().required("pages.memoRequired"),
+  amount: yup
+    .number()
+    .positive("pages.noNegativeAmount")
+    .required("pages.amountRequired"),
+  frequency: yup
+    .number()
+    .positive("pages.noNegativeFrequency")
+    .required("pages.frequencyRequired"),
+  value: yup.string().required("pages.valueRequired")
 })

@@ -101,13 +101,19 @@ const ChargeTypesForm: FC<DashboardPagesCreationProps> = () => {
   }, [associationId, associations])
 
   useEffect(() => {
-    if (!chargesLines.data && association) {
-      dispatch(fetchChargeLines(association?.id))
-    } else if (chargesLines.data) {
-      setCurrentChargeLine(chargesLines.data)
+    if (associationId) {
+      const currentAssociation = associations.find(
+        asso => asso.id === associationId
+      )
+      setAssociation(currentAssociation)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chargesLines.data, association])
+  }, [associationId, associations])
+
+  useEffect(() => {
+    if (association) {
+      dispatch(fetchChargeLines(association?.id))
+    }
+  }, [association, dispatch])
 
   useEffect(() => {
     setSelectedChargeLine(currentChargeLine)
@@ -166,8 +172,8 @@ const ChargeTypesForm: FC<DashboardPagesCreationProps> = () => {
                     ]}
                     rowTextStyle={styles.dropdownTextStyles}
                     dropdownStyle={styles.dropdown}
-                    onSelect={periodicity =>
-                      setFieldValue("chargeLines", periodicity.id, true)
+                    onSelect={chargeLines =>
+                      setFieldValue("chargeLines", chargeLines.id, true)
                     }
                     search
                     onChangeSearchInputText={text => {
