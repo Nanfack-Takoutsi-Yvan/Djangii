@@ -53,10 +53,8 @@ const TontineContribution: FC<DashboardPagesCreationProps> = ({ pageName }) => {
               ? "CONTRIBUTION"
               : "VARIABLE_CONTRIBUTION"
         }
-        console.log(payload)
 
         Tontine.createTontine(payload)
-
           .then(() => {
             setActionModalProps({
               icon: true,

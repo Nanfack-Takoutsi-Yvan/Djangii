@@ -1,8 +1,8 @@
 interface ITontine {
   amount: number
   association: IAssociation
-  datation: IHistory
-  id: string
+  datation?: IHistory
+  id?: string
   interestAssociationPercent: number
   interestRate: number
   interestRefundFailPercent: number

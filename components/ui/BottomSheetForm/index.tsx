@@ -15,6 +15,7 @@ import { snapPoints } from "@assets/constants/dashboard/bottomSheet"
 import CreateAssociation from "@components/PagesActions/CreateAssociation"
 import CreateAssociationPage from "@components/PagesActions/CreateAssociationPage"
 import TontineContribution from "@components/PagesActions/TontineContribution"
+import Savings from "@components/PagesActions/Savings"
 
 import { BottomSheetProps, BottomSheetRef } from "./types"
 
@@ -29,7 +30,7 @@ const creationPagesDic: Record<
   identities: () => null,
   fixedAmount: TontineContribution,
   variableAmount: TontineContribution,
-  savings: () => null,
+  savings: Savings,
   tontineTurn: () => null,
   mySubscriptions: () => null,
   sessions: () => null,

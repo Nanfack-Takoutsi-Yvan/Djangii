@@ -27,11 +27,41 @@ export const tontineRoundValidation = yup.object().shape({
   name: yup.string().required("pages.nameRequired"),
   amount: yup
     .number()
-    .positive("pages.amountRequired")
+    .positive("pages.noNegativeAmount")
     .required("pages.amountRequired"),
   frequency: yup
     .number()
-    .positive("pages.frequencyRequired")
+    .positive("pages.noNegativeFrequency")
     .required("pages.frequencyRequired"),
   value: yup.string().required("pages.valueRequired")
+})
+
+export const savingValidation = yup.object().shape({
+  name: yup.string().required("pages.nameRequired"),
+  maxAmountLoanPerMember: yup
+    .number()
+    .positive("pages.noNegativeAmount")
+    .required("pages.amountRequired"),
+  frequency: yup
+    .number()
+    .positive("pages.noNegativeFrequency")
+    .required("pages.frequencyRequired"),
+  value: yup.string().required("pages.valueRequired"),
+  interestRefundFailPercent: yup
+    .number()
+    .positive("pages.noNegativeInterestRefundFailPercent")
+    .required("pages.interestRefundFailPercentRequired"),
+  interestRate: yup
+    .number()
+    .positive("pages.noNegativeInterestRate")
+    .required("pages.interestRateRequired"),
+  interestAssociationPercent: yup
+    .number()
+    .positive("pages.noNegativeInterestAssociationPercent")
+    .required("pages.interestAssociationPercentRequired"),
+  refundPeriodicityFrequency: yup
+    .number()
+    .positive("pages.noNegativeFrequency")
+    .required("pages.frequencyRequired"),
+  refundPeriodicityValue: yup.string().required("pages.valueRequired")
 })
