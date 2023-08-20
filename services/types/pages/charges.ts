@@ -15,3 +15,5 @@ type ChargeLine = {
 }
 
 type ChargeLinePayload = Omit<ChargeLine, "datation" | "id">
+
+type ChargePayload = Omit<ICharge, "datation" | "id">

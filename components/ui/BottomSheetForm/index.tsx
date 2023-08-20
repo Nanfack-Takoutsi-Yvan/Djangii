@@ -20,6 +20,7 @@ import PenaltiesTypes from "@components/PagesActions/Configurations/penalties"
 import ChargeLineForm from "@components/PagesActions/Configurations/chargeLine"
 import GuaranteeType from "@components/PagesActions/Configurations/guarantee"
 import ProductType from "@components/PagesActions/Configurations/products"
+import ChargeTypesForm from "@components/PagesActions/Configurations/chargetype"
 
 import { BottomSheetProps, BottomSheetRef } from "./types"
 
@@ -47,7 +48,7 @@ const creationPagesDic: Record<
   productPayment: () => null,
   chargeLine: ChargeLineForm,
   charges: () => null,
-  chargesType: () => null,
+  chargesType: ChargeTypesForm,
   assistanceType: () => null,
   chargePayment: () => null,
   assistance: () => null,

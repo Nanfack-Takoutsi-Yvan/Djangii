@@ -14,7 +14,7 @@ export default class ConfigurationController
       guarantee: "api/guarantee-types",
       charges: {
         line: "api/charge-lines",
-        types: "api/associations/members/me"
+        types: "api/charges"
       }
     }
   }
@@ -228,6 +228,28 @@ export default class ConfigurationController
       assert(token, "token is required to create product type")
       const res = await apiClient.post<IProduct>(
         this.resources.product,
+        payload,
+        {
+          headers: { Authorization: token }
+        }
+      )
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `An error occurred while creating product type: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public async createChargeTypes(token: string, payload: ChargePayload) {
+    try {
+      assert(token, "token is required to create product type")
+      const res = await apiClient.post<ICharge>(
+        this.resources.charges.types,
         payload,
         {
           headers: { Authorization: token }

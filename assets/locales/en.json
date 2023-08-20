@@ -333,7 +333,11 @@
     "productRequired": "Product is Required",
     "selectPeriodicity": "Select a periodicity",
     "newProductCreated": "New product created",
-    "createNewProduct": "Create new product"
+    "createNewProduct": "Create new product",
+    "selectChargeLine": "Select a charge line",
+    "chargeLineRequired": "Charge line is required",
+    "newChargeTypeCreated": "New charge type created",
+    "createNewChargeType": "Create New Charge Type"
   },
   "drawer": {
     "dashboard": "Dashboard",
@@ -372,7 +376,8 @@
     "assistanceRequest": "Assistance request",
     "assistanceType": "Assistance type",
     "audience": "Audience",
-    "advertisements": "Advertisements"
+    "advertisements": "Advertisements",
+    "newChargeType": "New Charge Type"
   },
   "tabs": {
     "page": "Pages ({{number}})",

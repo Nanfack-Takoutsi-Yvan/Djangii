@@ -37,3 +37,13 @@ export const productTypesValidation = yup.object().shape({
   value: yup.string().required("pages.valueRequired"),
   required: yup.boolean()
 })
+
+export const chargeTypeValidation = yup.object().shape({
+  description: yup.string().required("pages.descriptionRequired"),
+  designation: yup.string().required("pages.designationRequired"),
+  chargeLines: yup.string().required("pages.chargeLineRequired"),
+  amount: yup
+    .number()
+    .positive("pages.noNegativeAmount")
+    .required("pages.amountRequired")
+})
