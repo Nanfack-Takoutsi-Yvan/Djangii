@@ -39,4 +39,43 @@ export default class Association implements IAssociation {
     const rawData = await controller.createAssociation(token, association)
     return rawData.content
   }
+
+  static isUsernameAvailable = async (username: string) => {
+    const token = await getTokenFromStorage()
+    const controller = new AssociationController()
+
+    assert(token, "token is required to get association username information")
+
+    await controller.isUsernameAvailable(token, username)
+  }
+
+  static inviteNewMember = async (payload: SingleMemberObj) => {
+    const token = await getTokenFromStorage()
+    const controller = new AssociationController()
+
+    assert(token, "token is required to invite new member")
+
+    await controller.inviteMember(token, payload)
+  }
+
+  static inviteVirtualMember = async (payload: VirtualMemberConfig) => {
+    const token = await getTokenFromStorage()
+    const controller = new AssociationController()
+
+    assert(token, "token is required to invite virtual member")
+
+    await controller.inviteVirtualMember(token, payload)
+  }
+
+  static uploadNewMembersSheet = async (
+    payload: ExcelMemberFile,
+    associationId: string
+  ) => {
+    const token = await getTokenFromStorage()
+    const controller = new AssociationController()
+
+    assert(token, "token is required to upload new members sheet")
+
+    await controller.upLoadMembersSheet(token, payload, associationId)
+  }
 }

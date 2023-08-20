@@ -73,4 +73,15 @@ export default class UserAssociation implements IUserAssociation {
 
     return rawData.content
   }
+
+  static isUserInDjangii = async (query: string) => {
+    const token = await getTokenFromStorage()
+    const controller = new AssociationController()
+
+    assert(token, "token is required to get email info")
+
+    const rawData = await controller.isUserInDjangii(token, query)
+
+    return rawData
+  }
 }

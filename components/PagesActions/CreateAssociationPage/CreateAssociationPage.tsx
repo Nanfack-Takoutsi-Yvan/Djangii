@@ -1,14 +1,17 @@
-import AppStateContext from "@services/context/context"
-import AssociationPage from "@services/models/associations/associationPages"
-import { useAppDispatch } from "@services/store"
-import { associationSelector } from "@services/store/slices/associations"
-import { fetchAssociationPages } from "@services/store/slices/associations/associationsPages"
-import { changeBottomSheetFormPosition } from "@services/store/slices/bottomSheetForm"
-import { copyData } from "@services/utils/storage"
-import { associationPageValidationSchema } from "@services/validations/yup/association.validation"
-import { Formik } from "formik"
-import { FC, useCallback, useContext, useEffect, useState } from "react"
 import { StyleSheet, TouchableOpacity, View } from "react-native"
+import { FC, useCallback, useContext, useEffect, useState } from "react"
+
+import { Formik } from "formik"
+import { useAppDispatch } from "@services/store"
+import { copyData } from "@services/utils/storage"
+import AppStateContext from "@services/context/context"
+import Icon from "react-native-paper/src/components/Icon"
+import SelectDropdown from "react-native-select-dropdown"
+import AssociationPage from "@services/models/associations/associationPages"
+import FormSkeletonLoader from "@components/ui/skeletonLoader/formSkeletonLoader"
+import { changeBottomSheetFormPosition } from "@services/store/slices/bottomSheetForm"
+import { fetchAssociationPages } from "@services/store/slices/associations/associationsPages"
+import { associationPageValidationSchema } from "@services/validations/yup/association.validation"
 import {
   Button,
   IconButton,
@@ -17,11 +20,13 @@ import {
   TextInput,
   useTheme
 } from "react-native-paper"
-import Icon from "react-native-paper/src/components/Icon"
-import SelectDropdown from "react-native-select-dropdown"
+import {
+  associationSelector,
+  associationActions
+} from "@services/store/slices/associations"
 
 const CreateAssociationPage: FC = () => {
-  const [selectedAssociationPage, setSelectedAssociationPage] = useState<
+  const [selectedAssociations, setSelectedAssociations] = useState<
     IAssociation[]
   >([])
 
@@ -29,25 +34,33 @@ const CreateAssociationPage: FC = () => {
   const dispatch = useAppDispatch()
   const { locale, setLoading, setActionModalProps } =
     useContext(AppStateContext)
-  const associations = associationSelector.getAssociations()
+  const associations = associationSelector.getEligibleAssociations()
 
-  const updateFields = (associationId: string, setFieldValue: any) => {
-    const selectedAssociation = associations.data.createdAssociation.find(
+  const updateFields = (
+    associationId: string,
+    setFieldValue: (
+      field: string,
+      value: boolean | string,
+      shouldValidate?: boolean | undefined
+    ) => void
+  ) => {
+    const selectedAssociation = associations.data?.find(
       association => association.id === associationId
     )
-    setFieldValue("associationId", associationId)
 
     if (selectedAssociation) {
-      setFieldValue("pageName", selectedAssociation.name, true)
-      setFieldValue("customUrl", selectedAssociation.acronym, true)
-      setFieldValue("username", selectedAssociation.acronym, true)
+      setFieldValue("name", selectedAssociation.name, true)
+      setFieldValue(
+        "username",
+        selectedAssociation.name.replace(/\s/gi, "_"),
+        true
+      )
     }
   }
 
   const submitAssociationPage = useCallback(
     (values: INewAssociationPage, { resetForm }: { resetForm: () => void }) => {
       setLoading(true)
-
       AssociationPage.createAssociationPages(values)
         .then(() => {
           setActionModalProps({
@@ -76,11 +89,24 @@ const CreateAssociationPage: FC = () => {
   )
 
   useEffect(() => {
-    setSelectedAssociationPage(associations.data.createdAssociation)
-  }, [associations.data.createdAssociation])
+    if (associations.data) {
+      setSelectedAssociations(associations.data)
+    } else {
+      dispatch(associationActions.fetchEligibleAssociations())
+    }
+  }, [associations.data, dispatch])
+
+  const areAssociationsAvailable = useCallback(
+    () => !!associations.data?.length,
+    [associations.data]
+  )
+
+  if (associations.loading) {
+    return <FormSkeletonLoader />
+  }
 
   return (
-    <View style={styles.screen}>
+    <View style={[styles.screen, { paddingBottom: 24 }]}>
       <View style={styles.titleContainer}>
         <View style={styles.title}>
           <Text variant="titleLarge">
@@ -98,8 +124,7 @@ const CreateAssociationPage: FC = () => {
       <Formik
         initialValues={{
           associationId: "",
-          pageName: "",
-          customUrl: "",
+          name: "",
           description: "",
           username: "",
           isPublic: true,
@@ -122,7 +147,7 @@ const CreateAssociationPage: FC = () => {
               <View style={styles.field}>
                 <View style={styles.screen}>
                   <SelectDropdown
-                    data={selectedAssociationPage}
+                    data={selectedAssociations}
                     defaultButtonText={locale.t("pages.selectAssociation")}
                     buttonStyle={{
                       ...styles.uniqueDropdown,
@@ -136,20 +161,23 @@ const CreateAssociationPage: FC = () => {
                     }}
                     rowTextStyle={styles.dropdownTextStyles}
                     dropdownStyle={{ borderRadius: 12 }}
-                    onSelect={item => updateFields(item.id, setFieldValue)}
+                    onSelect={item => {
+                      handleChange("associationId")(item.id)
+                      updateFields(item.id, setFieldValue)
+                    }}
                     search
                     searchInputTxtStyle={{ fontFamily: "Sora" }}
                     buttonTextAfterSelection={selectedItem => selectedItem.name}
                     rowTextForSelection={item => item.name}
                     onChangeSearchInputText={text =>
-                      setSelectedAssociationPage(
-                        associations.data.createdAssociation.filter(page =>
+                      setSelectedAssociations(currentSelection =>
+                        currentSelection.filter(page =>
                           page.name.includes(text)
                         )
                       )
                     }
                   />
-                  {errors.associationId && touched.associationId && (
+                  {errors.associationId && (
                     <View>
                       <Text
                         style={{
@@ -170,22 +198,23 @@ const CreateAssociationPage: FC = () => {
                       label={locale.t("pages.pageName")}
                       placeholder={locale.t("pages.pageName")}
                       placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                      value={values.pageName}
+                      value={values.name}
                       onBlur={handleBlur("pageName")}
                       onChangeText={handleChange("pageName")}
                       style={styles.textInput}
                       dense
+                      disabled={!areAssociationsAvailable()}
                       underlineColor="rgba(0,0,0,0.5)"
-                      error={!!errors.pageName && !!touched.pageName}
+                      error={!!errors.name && !!touched.name}
                     />
-                    {errors.pageName && touched.pageName && (
+                    {errors.name && touched.name && (
                       <View>
                         <Text
                           style={{
                             color: colors.error
                           }}
                         >
-                          {locale.t(errors.pageName)}
+                          {locale.t(errors.name)}
                         </Text>
                       </View>
                     )}
@@ -195,7 +224,7 @@ const CreateAssociationPage: FC = () => {
 
               <View style={styles.field}>
                 <View style={styles.screen}>
-                  {values.customUrl ? (
+                  {values.username ? (
                     <View
                       style={[
                         styles.urlContainer,
@@ -210,7 +239,7 @@ const CreateAssociationPage: FC = () => {
                           {locale.t("pages.customUrlPreview")}
                         </Text>
                         <Text>
-                          {`https://test.djangii.com/#/page/${values.customUrl}`.toLocaleLowerCase()}
+                          {`https://test.djangii.com/#/page/${values.username}`.toLocaleLowerCase()}
                         </Text>
                       </View>
                       <View>
@@ -219,7 +248,7 @@ const CreateAssociationPage: FC = () => {
                           icon="content-copy"
                           onPress={() =>
                             copyData(
-                              `https://test.djangii.com/#/page/${values.customUrl}`.toLocaleLowerCase(),
+                              `https://test.djangii.com/#/page/${values.username}`.toLocaleLowerCase(),
                               locale
                             )
                           }
@@ -227,27 +256,29 @@ const CreateAssociationPage: FC = () => {
                       </View>
                     </View>
                   ) : null}
+
                   <View>
                     <TextInput
                       label={locale.t("pages.customUrl")}
                       placeholder={locale.t("pages.customUrl")}
                       placeholderTextColor="rgba(0, 0, 0, 0.20)"
-                      value={values.customUrl}
+                      value={values.username}
                       onBlur={handleBlur("customUrl")}
                       onChangeText={handleChange("customUrl")}
                       style={styles.textInput}
                       dense
+                      disabled={!areAssociationsAvailable()}
                       underlineColor="rgba(0,0,0,0.5)"
-                      error={!!errors.customUrl && !!touched.customUrl}
+                      error={!!errors.username && !!touched.username}
                     />
-                    {errors.customUrl && touched.customUrl && (
+                    {errors.username && touched.username && (
                       <View>
                         <Text
                           style={{
                             color: colors.error
                           }}
                         >
-                          {locale.t(errors.customUrl)}
+                          {locale.t(errors.username)}
                         </Text>
                       </View>
                     )}
@@ -267,6 +298,7 @@ const CreateAssociationPage: FC = () => {
                       onChangeText={handleChange("description")}
                       style={styles.textInput}
                       multiline
+                      disabled={!areAssociationsAvailable()}
                       underlineColor="rgba(0,0,0,0.5)"
                       error={!!errors.description && !!touched.description}
                     />
@@ -404,17 +436,19 @@ const CreateAssociationPage: FC = () => {
               </View>
             </View>
 
-            <View>
-              <Button
-                mode="contained"
-                textColor={colors.surface}
-                onPress={() => {
-                  handleSubmit()
-                }}
-              >
-                {locale.t("pages.createAssociationPage")}
-              </Button>
-            </View>
+            {areAssociationsAvailable() ? (
+              <View>
+                <Button
+                  mode="contained"
+                  textColor={colors.surface}
+                  onPress={() => {
+                    handleSubmit()
+                  }}
+                >
+                  {locale.t("pages.createAssociationPage")}
+                </Button>
+              </View>
+            ) : null}
           </View>
         )}
       </Formik>

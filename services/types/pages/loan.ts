@@ -46,6 +46,14 @@ interface IGuaranteeType {
   id: string
 }
 
+type GuaranteeTypePayload = {
+  description: string
+  designation: string
+  association: {
+    id: IAssociation["id"]
+  }
+}
+
 interface ILoanRequestBody {
   amount: number
   dateLimitRefund: string

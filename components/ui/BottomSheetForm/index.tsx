@@ -1,4 +1,4 @@
-import { FC, forwardRef, useCallback, useContext } from "react"
+import { FC, forwardRef, useCallback, useContext, useEffect } from "react"
 
 import { StyleSheet } from "react-native"
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet"
@@ -10,9 +10,18 @@ import {
   changeBottomSheetFormPosition,
   getBottomSheetForm
 } from "@services/store/slices/bottomSheetForm"
+import AddMember from "@components/PagesActions/AddMember"
 import { snapPoints } from "@assets/constants/dashboard/bottomSheet"
-import CreateAssociation from "@components/PagesActions/createAssociation"
+import CreateAssociation from "@components/PagesActions/CreateAssociation"
 import CreateAssociationPage from "@components/PagesActions/CreateAssociationPage"
+import TontineContribution from "@components/PagesActions/TontineContribution"
+import Savings from "@components/PagesActions/Savings"
+import PenaltiesTypes from "@components/PagesActions/Configurations/penalties"
+import ChargeLineForm from "@components/PagesActions/Configurations/chargeLine"
+import GuaranteeType from "@components/PagesActions/Configurations/guarantee"
+import ProductType from "@components/PagesActions/Configurations/products"
+import ChargeTypesForm from "@components/PagesActions/Configurations/chargetype"
+import AssistanceTypeForm from "@components/PagesActions/Configurations/assistanceType"
 
 import { BottomSheetProps, BottomSheetRef } from "./types"
 
@@ -22,35 +31,35 @@ const creationPagesDic: Record<
 > = {
   association: CreateAssociation,
   pages: CreateAssociationPage,
-  membershipRequest: undefined,
-  members: undefined,
-  identities: undefined,
-  fixedAmount: undefined,
-  variableAmount: undefined,
-  savings: undefined,
-  tontineTurn: undefined,
-  mySubscriptions: undefined,
-  sessions: undefined,
-  pendingLoans: undefined,
-  paidLoans: undefined,
-  canceledLoans: undefined,
-  penaltyType: undefined,
-  sanctionedMembers: undefined,
-  products: undefined,
-  productPayment: undefined,
-  chargeLine: undefined,
-  charges: undefined,
-  chargesType: undefined,
-  assistanceType: undefined,
-  chargePayment: undefined,
-  assistance: undefined,
-  assistanceRequest: undefined,
-  warranties: undefined,
-  sparingStates: undefined,
-  advertisement: undefined,
-  audience: undefined,
-  penalties: undefined,
-  productType: undefined
+  membershipRequest: () => null,
+  members: AddMember,
+  identities: () => null,
+  fixedAmount: TontineContribution,
+  variableAmount: TontineContribution,
+  savings: Savings,
+  tontineTurn: () => null,
+  mySubscriptions: () => null,
+  sessions: () => null,
+  pendingLoans: () => null,
+  paidLoans: () => null,
+  canceledLoans: () => null,
+  penaltyType: PenaltiesTypes,
+  sanctionedMembers: () => null,
+  products: () => null,
+  productPayment: () => null,
+  chargeLine: ChargeLineForm,
+  charges: () => null,
+  chargesType: ChargeTypesForm,
+  assistanceType: AssistanceTypeForm,
+  chargePayment: () => null,
+  assistance: () => null,
+  assistanceRequest: () => null,
+  warranties: GuaranteeType,
+  sparingStates: () => null,
+  advertisement: () => null,
+  audience: () => null,
+  penalties: () => null,
+  productType: ProductType
 }
 
 const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
@@ -67,6 +76,8 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
       },
       [dispatch]
     )
+
+    useEffect(() => () => handleSheetChanges(-1), [handleSheetChanges])
 
     const CreationForm = creationPagesDic[name]
 
@@ -85,7 +96,7 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
         handleIndicatorStyle={{ backgroundColor: colors.primary }}
       >
         <BottomSheetScrollView style={styles.contentContainer}>
-          <CreationForm data={data} />
+          <CreationForm data={data} pageName={name} />
         </BottomSheetScrollView>
       </BottomSheet>
     )

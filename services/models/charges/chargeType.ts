@@ -31,4 +31,15 @@ export default class ChargeType implements ICharge {
 
     return rawData.content
   }
+
+  static async createChargeType(payload: ChargePayload) {
+    const token = await getTokenFromStorage()
+    const controller = new ConfigurationController()
+
+    assert(token, "Token is required to create charges types")
+
+    const rawData = await controller.createChargeTypes(token, payload)
+
+    return rawData
+  }
 }

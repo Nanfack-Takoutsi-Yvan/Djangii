@@ -77,6 +77,7 @@ type CustomPagesProps = {
 
 type DashboardPagesCreationProps = {
   data: any[]
+  pageName: string
 }
 
 type PagesActions = "validateMembershipRequest"

@@ -8,3 +8,5 @@ interface IProduct {
   periodicity: ITontinePeriodicity
   required: boolean
 }
+
+type IProductPayload = Omit<IProduct, "id" | "activated" | "datation">

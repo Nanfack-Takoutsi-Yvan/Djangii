@@ -1,8 +1,8 @@
 interface ITontine {
   amount: number
   association: IAssociation
-  datation: IHistory
-  id: string
+  datation?: IHistory
+  id?: string
   interestAssociationPercent: number
   interestRate: number
   interestRefundFailPercent: number
@@ -32,7 +32,7 @@ interface ITontineDrawModel {
 }
 
 interface ITontinePeriodicity {
-  frequency: string
+  frequency: number
   value: string
 }
 

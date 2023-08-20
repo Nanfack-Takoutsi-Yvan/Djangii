@@ -1,5 +1,4 @@
 import PaymentController from "@services/controller/payments.controller"
-import TontineController from "@services/controller/tontines.controller"
 import getTokenFromStorage from "@services/utils/functions/token"
 import assert from "assert"
 

@@ -11,10 +11,10 @@ export default class ConfigurationController
       penalty: "api/association-penalties",
       product: "api/products",
       assistance: "api/assistance-lines",
-      Guarantee: "guarantee-types",
+      guarantee: "api/guarantee-types",
       charges: {
         line: "api/charge-lines",
-        types: "api/associations/members/me"
+        types: "api/charges"
       }
     }
   }
@@ -109,9 +109,9 @@ export default class ConfigurationController
 
   public async getGuaranteeTypeList(token: string, associationId: string) {
     try {
-      assert(token, "token is required to fetch Guarantee types list")
+      assert(token, "token is required to fetch guarantee types list")
       const res = await apiClient.get<IGuaranteeTypesContent>(
-        this.resources.Guarantee,
+        this.resources.guarantee,
         {
           headers: { Authorization: token },
           params: { associationId }
@@ -121,7 +121,7 @@ export default class ConfigurationController
       return res.data
     } catch (error) {
       const err = {
-        message: `An error occurred while getting the list of Guarantee types request: ${error}`,
+        message: `An error occurred while getting the list of guarantee types request: ${error}`,
         error
       }
 
@@ -144,6 +144,147 @@ export default class ConfigurationController
     } catch (error) {
       const err = {
         message: `An error occurred while getting the list of assistance types request: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public async createPenaltyTypes(
+    token: string,
+    payload: IAssociationPenaltyRequestBody
+  ) {
+    try {
+      assert(token, "token is required to create penalty type")
+      const res = await apiClient.post<IAssociationPenalty>(
+        this.resources.penalty,
+        payload,
+        {
+          headers: { Authorization: token }
+        }
+      )
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `An error occurred while creating penalty type: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public async createChargeLine(token: string, payload: ChargeLinePayload) {
+    try {
+      assert(token, "token is required to create charge line type")
+      const res = await apiClient.post<ChargeLine>(
+        this.resources.charges.line,
+        payload,
+        {
+          headers: { Authorization: token }
+        }
+      )
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `An error occurred while creating charge line type: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public async createGuaranteeTypes(
+    token: string,
+    payload: GuaranteeTypePayload
+  ) {
+    try {
+      assert(token, "token is required to create guarantee type")
+      const res = await apiClient.post<IGuaranteeType>(
+        this.resources.guarantee,
+        payload,
+        {
+          headers: { Authorization: token }
+        }
+      )
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `An error occurred while creating guarantee type: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public async createProductTypes(token: string, payload: IProductPayload) {
+    try {
+      assert(token, "token is required to create product type")
+      const res = await apiClient.post<IProduct>(
+        this.resources.product,
+        payload,
+        {
+          headers: { Authorization: token }
+        }
+      )
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `An error occurred while creating product type: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public async createChargeTypes(token: string, payload: ChargePayload) {
+    try {
+      assert(token, "token is required to create product type")
+      const res = await apiClient.post<ICharge>(
+        this.resources.charges.types,
+        payload,
+        {
+          headers: { Authorization: token }
+        }
+      )
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `An error occurred while creating product type: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public async createAssistanceTypes(
+    token: string,
+    payload: IAssistanceLineRequestBody
+  ) {
+    try {
+      assert(token, "token is required to create assistance type")
+      const res = await apiClient.post<IAssistanceLine>(
+        this.resources.assistance,
+        payload,
+        {
+          headers: { Authorization: token }
+        }
+      )
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `An error occurred while creating assistance type: ${error}`,
         error
       }
 

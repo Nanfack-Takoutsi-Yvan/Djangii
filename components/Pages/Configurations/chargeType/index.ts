@@ -2,7 +2,7 @@ import { configurationsActions } from "@services/store/slices/configurations"
 import { getChargeLinesData } from "./methods"
 import { createData, chargeLinesPageTable } from "./configs"
 
-const chargeLineConfigs: configs = {
+const chargeTypeConfigs: configs = {
   tables: [
     {
       name: "chargeLine",
@@ -10,8 +10,8 @@ const chargeLineConfigs: configs = {
     }
   ],
   getData: getChargeLinesData,
-  fetchData: configurationsActions.fetchChargeLines,
+  fetchData: configurationsActions.fetchChargeTypes,
   createData
 }
 
-export default chargeLineConfigs
+export default chargeTypeConfigs

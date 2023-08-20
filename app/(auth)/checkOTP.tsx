@@ -37,8 +37,6 @@ export default function CheckOTP() {
   const params = useLocalSearchParams() as Params
   const router = useRouter()
 
-  console.log({ userInfos, params })
-
   useEffect(() => {
     const userParams = params
       ? (JSON.parse(

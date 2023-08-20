@@ -3,9 +3,9 @@ import { getDate } from "@services/utils/functions/format"
 
 export const getGuaranteesData = () => configurationsSelector.getAllGuarantees()
 
-export const guaranteesDataTables = (guarantees: IGuarantee[]) =>
+export const guaranteesDataTables = (guarantees: IGuaranteeType[]) =>
   guarantees.map(guarantee => [
-    getDate(guarantee.type.datation.creationTime),
-    guarantee.type.designation,
-    guarantee.type.description
+    getDate(guarantee.datation.creationTime),
+    guarantee.designation,
+    guarantee.description
   ])

@@ -214,7 +214,7 @@ const CreateAssociation: FC = () => {
                         )
                       }}
                     />
-                    {errors.currency && touched.currency && (
+                    {errors.currency && (
                       <View>
                         <Text
                           style={{

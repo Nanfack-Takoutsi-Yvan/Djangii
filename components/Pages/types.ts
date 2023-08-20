@@ -26,9 +26,6 @@ type CreateData = {
   buttonTitle: string
   formTitle: string
   formIcon: string
-  model: IAssociation | IUserAssociation
-  validation: any
-  fields: Field[]
 }
 
 type Field = {

@@ -43,4 +43,13 @@ export default class Tontine implements ITontine {
 
     return rawData.content
   }
+
+  static async createTontine(payload: NewTontine) {
+    const token = await getTokenFromStorage()
+    const controller = new TontineController()
+
+    assert(token, "Token is required to create new tontine")
+
+    await controller.createNewTontine(token, payload)
+  }
 }

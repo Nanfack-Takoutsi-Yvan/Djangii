@@ -16,7 +16,9 @@ export class AssociationController implements IAssociationController {
         list: "list",
         info: "info",
         accept: "accept",
-        reject: "reject"
+        reject: "reject",
+        eligibleAssociation: "eligible-associations",
+        isUsernameAvailable: "username-used"
       },
       membershipRequest: {
         all: "api/membership-requests"
@@ -26,7 +28,11 @@ export class AssociationController implements IAssociationController {
           start: "api/associations/",
           end: "/members"
         }
-      }
+      },
+      isUserInDjangii: "api/users/search",
+      inviteMember: "api/associations/members/send-invitation",
+      uploadMembersSheet: "api/associations/members/upload",
+      inviteVirtualMember: "api/associations/inactive-members"
     }
   }
 
@@ -276,7 +282,129 @@ export class AssociationController implements IAssociationController {
         error
       }
 
-      console.log({ error })
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public getEligibleAssociation = async (token: string) => {
+    assert(token, "Token is required to get eligible association")
+
+    try {
+      const url = `${this.resource.associationPage.base}${this.resource.associationPage.eligibleAssociation}`
+      const res = await apiClient.get<IAssociation[]>(url, {
+        headers: { Authorization: token }
+      })
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `Error while getting eligible associations: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public isUsernameAvailable = async (token: string, username: string) => {
+    assert(token, "Token is required to get association username information")
+
+    try {
+      const url = `${this.resource.associationPage.base}${this.resource.associationPage.isUsernameAvailable}`
+      const res = await apiClient.get(url, {
+        headers: { Authorization: token },
+        params: { username }
+      })
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `Error while getting association username information: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public isUserInDjangii = async (token: string, query: string) => {
+    assert(token, "Token is required to verify user information")
+
+    try {
+      const url = `${this.resource.isUserInDjangii}`
+      const res = await apiClient.get<IUserInfo[]>(url, {
+        headers: { Authorization: token },
+        params: { query, return: "full" }
+      })
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `Error while verifying user information: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public inviteMember = async (token: string, payload: SingleMemberObj) => {
+    assert(token, "Token is required to invite new member")
+
+    try {
+      const url = `${this.resource.inviteMember}`
+      await apiClient.post(url, payload, {
+        headers: { Authorization: token }
+      })
+    } catch (error) {
+      const err = {
+        message: `Error while inviting new member: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public inviteVirtualMember = async (
+    token: string,
+    payload: VirtualMemberConfig
+  ) => {
+    assert(token, "Token is required to invite new virtual member")
+
+    try {
+      const url = `${this.resource.inviteVirtualMember}`
+      await apiClient.post(url, payload, {
+        headers: { Authorization: token }
+      })
+    } catch (error) {
+      const err = {
+        message: `Error while inviting new virtual member: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public upLoadMembersSheet = async (
+    token: string,
+    payload: ExcelMemberFile,
+    associationId: string
+  ) => {
+    assert(token, "Token is required to upload new members sheet")
+
+    try {
+      const url = `${this.resource.uploadMembersSheet}`
+      await apiClient.post(url, payload, {
+        headers: { Authorization: token },
+        params: { associationId }
+      })
+    } catch (error) {
+      const err = {
+        message: `Error while uploading new members sheet: ${error}`,
+        error
+      }
 
       throw new Error(JSON.stringify(err))
     }

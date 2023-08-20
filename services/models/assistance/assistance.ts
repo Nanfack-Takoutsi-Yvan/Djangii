@@ -35,4 +35,15 @@ export default class Assistance implements IAssistanceLine {
 
     return rawData.content
   }
+
+  static async createAssistanceType(payload: IAssistanceLineRequestBody) {
+    const token = await getTokenFromStorage()
+    const controller = new ConfigurationController()
+
+    assert(token, "Token is required to create assistance type")
+
+    const rawData = await controller.createAssistanceTypes(token, payload)
+
+    return rawData
+  }
 }

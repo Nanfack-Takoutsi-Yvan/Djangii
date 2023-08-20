@@ -6,7 +6,7 @@ import { I18n } from "i18n-js/typings/I18n"
 import { Alert } from "react-native"
 import * as XLSX from "xlsx"
 
-const findLongestChainLength = (
+export const findLongestChainLength = (
   table: Record<string, string | number | boolean>[]
 ) => {
   let longestChain = ""
@@ -109,7 +109,6 @@ export const shareExcel = async (
       console.error("Error", error)
     })
   } catch (err) {
-    console.log({ err })
     Alert.alert(locale.t("file.canNotShareTheFile"))
   }
 }
