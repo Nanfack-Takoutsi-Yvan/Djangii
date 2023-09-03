@@ -9,6 +9,7 @@ export default class TontineController implements ITontineController {
       list: "api/tontines",
       round: "api/tontine-rounds",
       sessions: "api/tontine-sessions",
+      eligibility: "api/loans/eligible-tontine-rounds",
       mySubscription: "api/tontine-rounds/my-subscription"
     }
   }

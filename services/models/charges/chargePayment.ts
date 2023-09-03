@@ -37,4 +37,15 @@ export default class ChargePayment implements IChargePayment {
 
     return rawData.content
   }
+
+  static async saveChargePayment(payload: IChargePaymentRequestBody) {
+    const token = await getTokenFromStorage()
+    const controller = new PaymentController()
+
+    assert(token, "Token is required to save charge payment list")
+
+    const rawData = await controller.saveChargePayment(token, payload)
+
+    return rawData
+  }
 }

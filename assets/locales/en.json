@@ -41,7 +41,12 @@
     "monthly": "Monthly",
     "yearly": "Yearly",
     "custom": "Custom",
-    "tontine": "Tontine"
+    "tontine": "Tontine",
+    "reason": "Reason",
+    "reference": "Reference",
+    "products": "Products",
+    "charges": "Charges",
+    "comments": "Comments"
   },
   "commonErrors": {
     "title": "An error occurred",
@@ -355,7 +360,27 @@
     "associationParticiped": "Include the Association",
     "newTontineRoundCreated": "New Tontine Round Created Created",
     "roundOpenedErrorDescription": "A Round with this tontine is already open. It must be completed first!",
-    "roundOpenedError": "The round could not be created!"
+    "roundOpenedError": "The round could not be created!",
+    "newPayment": "New Payment",
+    "amountPaid": "Amount paid",
+    "paidBy": "Paid by",
+    "selectMembers": "Select members",
+    "payProduct": "Save payments",
+    "emptyAssociation": "This association has no members",
+    "productIdRequired": "You must select a product",
+    "reasonRequired": "you must enter a reason",
+    "referenceRequired": "You must enter a reference",
+    "userInfosIds": "You must select at least one user",
+    "productPaymentSaved": "Product payment has been saved",
+    "productPaymentSavedConflict": " The selected users have already made the payment",
+    "chargePaymentSaved": "Charge payment has been saved",
+    "chargePaymentSavedConflict": " The selected users have already pay the charge",
+    "chargeIdRequired": "You must select a charge",
+    "commentRequired": "Please enter a comment",
+    "assistanceLineRequired": "Please select an assistance",
+    "assistanceRequestSaved": "Assistance request has been saved",
+    "assistanceRequestSavedConflict": " The selected users have already created this assistance request"
+
   },
   "drawer": {
     "dashboard": "Dashboard",

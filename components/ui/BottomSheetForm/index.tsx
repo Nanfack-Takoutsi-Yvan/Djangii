@@ -23,6 +23,9 @@ import ProductType from "@components/PagesActions/Configurations/products"
 import ChargeTypesForm from "@components/PagesActions/Configurations/chargetype"
 import AssistanceTypeForm from "@components/PagesActions/Configurations/assistanceType"
 import CreateTontineRounds from "@components/PagesActions/CreateTontineRounds/CreateTontineRounds"
+import PayProducts from "@components/PagesActions/Payments/PayProducts"
+import CreateChargePayment from "@components/PagesActions/Payments/chargePayment"
+import SaveAssistanceRequest from "@components/PagesActions/Payments/assistanceRequest"
 
 import { BottomSheetProps, BottomSheetRef } from "./types"
 
@@ -47,14 +50,14 @@ const creationPagesDic: Record<
   penaltyType: PenaltiesTypes,
   sanctionedMembers: () => null,
   products: () => null,
-  productPayment: () => null,
+  productPayment: PayProducts,
   chargeLine: ChargeLineForm,
   charges: () => null,
   chargesType: ChargeTypesForm,
   assistanceType: AssistanceTypeForm,
-  chargePayment: () => null,
+  chargePayment: CreateChargePayment,
   assistance: () => null,
-  assistanceRequest: () => null,
+  assistanceRequest: SaveAssistanceRequest,
   warranties: GuaranteeType,
   sparingStates: () => null,
   advertisement: () => null,

@@ -540,7 +540,7 @@ const UpdateAccount: FC = () => {
                               selectText="Pick Items"
                               searchInputPlaceholderText="Search Items..."
                               onChangeInput={text => console.log(text)}
-                              altFontFamily="ProximaNova-Light"
+                              altFontFamily="Sora"
                               tagRemoveIconColor="#CCC"
                               tagBorderColor="#CCC"
                               tagTextColor="#CCC"
@@ -649,7 +649,7 @@ const UpdateAccount: FC = () => {
                               selectText="Pick Items"
                               searchInputPlaceholderText="Search Items..."
                               onChangeInput={text => console.log(text)}
-                              altFontFamily="ProximaNova-Light"
+                              altFontFamily="Sora"
                               tagRemoveIconColor="#CCC"
                               tagBorderColor="#CCC"
                               tagTextColor="#CCC"

@@ -37,7 +37,6 @@ interface ProductPaymentRequestBody {
   productId: string
   reason: string
   reference: string
-  userInfosId: string
   userInfosIds: string[]
 }
 

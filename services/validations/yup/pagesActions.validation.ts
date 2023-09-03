@@ -61,3 +61,51 @@ export const assistanceTypeValidation = yup.object().shape({
     .required("pages.frequencyRequired"),
   value: yup.string().required("pages.valueRequired")
 })
+
+export const productPaymentValidation = yup.object().shape({
+  amount: yup
+    .number()
+    .positive("pages.noNegativeAmount")
+    .required("pages.amountRequired"),
+  productId: yup.string().required("pages.productIdRequired"),
+  reason: yup.string().required("pages.reasonRequired"),
+  reference: yup.string().required("pages.referenceRequired"),
+  userInfosIds: yup
+    .array()
+    .of(yup.string())
+    .min(1, "pages.userInfosIds")
+    .required("pages.userInfosIds")
+})
+
+export const chargePaymentValidation = yup.object().shape({
+  amount: yup
+    .number()
+    .positive("pages.noNegativeAmount")
+    .required("pages.amountRequired"),
+  chargeId: yup.string().required("pages.chargeIdRequired"),
+  reason: yup.string().required("pages.reasonRequired"),
+  reference: yup.string().required("pages.referenceRequired"),
+  userInfosIds: yup
+    .array()
+    .of(yup.string())
+    .min(1, "pages.userInfosIds")
+    .required("pages.userInfosIds")
+})
+
+export const assistanceValidation = yup.object().shape({
+  amount: yup
+    .number()
+    .positive("pages.noNegativeAmount")
+    .required("pages.amountRequired"),
+  comments: yup.string().required("pages.commentRequired"),
+  userInfosIds: yup
+    .array()
+    .of(yup.string())
+    .min(1, "pages.userInfosIds")
+    .required("pages.userInfosIds"),
+  assistanceLines: yup
+    .array()
+    .of(yup.string())
+    .min(1, "pages.assistanceLineRequired")
+    .required("pages.assistanceLineRequired")
+})

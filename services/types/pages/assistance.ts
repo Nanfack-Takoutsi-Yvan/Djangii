@@ -34,7 +34,7 @@ interface IAssistanceLineRequestBody {
 
 interface IAssistanceRequestBody {
   amount: number
-  assistanceLines: IAssistanceLine
+  assistanceLines: IAssistanceLine[]
   comments: string
   date: string
   userInfosId: string
