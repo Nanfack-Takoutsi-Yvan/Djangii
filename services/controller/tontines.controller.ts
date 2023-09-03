@@ -151,4 +151,26 @@ export default class TontineController implements ITontineController {
       throw new Error(JSON.stringify(err))
     }
   }
+
+  public async createNewTontineRound(
+    token: string,
+    payload: ITontineRoundRequestBody
+  ) {
+    try {
+      assert(token, "token is required to creating new Tontine round")
+
+      await apiClient.post(this.resource.round, payload, {
+        headers: {
+          Authorization: token
+        }
+      })
+    } catch (error) {
+      const err = {
+        message: `An error occurred while getting creating new tontine round: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
 }

@@ -15,7 +15,7 @@ import { useAppDispatch } from "@services/store"
 import { useAuth } from "@services/context/auth"
 import { userFullName } from "@services/utils/functions/format"
 import { shareExcel } from "@services/utils/functions/exel"
-import ValidateMembershipRequest from "@components/PagesActions/ValidateMembershipRequest"
+import ValidateMembershipRequest from "@components/PagesActions/ValidateMembershipRequest/ValidateMembershipRequest"
 
 const pagesActionsDict: Record<PagesActions, FC<PagesActionsProps>> = {
   validateMembershipRequest: ValidateMembershipRequest
@@ -47,7 +47,7 @@ const TableView: FC<TableViewProps> = ({
   const openBottomSheet = useCallback(() => {
     dispatch(changeBottomSheetFormPosition(0))
     if (createData) {
-      const { formIcon, formTitle, fields } = createData
+      const { formIcon, formTitle } = createData
       dispatch(
         updateBottomSheetFormState({
           title: {
@@ -56,8 +56,8 @@ const TableView: FC<TableViewProps> = ({
           },
           model: undefined,
           validation: undefined,
-          form: fields,
-          buttonTitle: ""
+          buttonTitle: "",
+          form: undefined
         })
       )
     }

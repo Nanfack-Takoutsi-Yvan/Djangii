@@ -40,7 +40,8 @@
     "weekly": "Weekly",
     "monthly": "Monthly",
     "yearly": "Yearly",
-    "custom": "Custom"
+    "custom": "Custom",
+    "tontine": "Tontine"
   },
   "commonErrors": {
     "title": "An error occurred",
@@ -344,7 +345,17 @@
     "memoRequired": "Memo is required",
     "newAssistanceType": "New Assistance Type",
     "createAssistanceType": "Create Assistance Type",
-    "newAssistanceTypeCreated": "New Assistance Type Created"
+    "newAssistanceTypeCreated": "New Assistance Type Created",
+    "newTontineRound": "New Tontine Round",
+    "dateStart": "Starting Date",
+    "contributionFailurePenalty": "Penalty for contribution failure",
+    "latenessPenalty": "Penalty for lateness",
+    "tontineRequired": "You must select a tontine",
+    "createNewTontineRound": "Create Tontine Round",
+    "associationParticiped": "Include the Association",
+    "newTontineRoundCreated": "New Tontine Round Created Created",
+    "roundOpenedErrorDescription": "A Round with this tontine is already open. It must be completed first!",
+    "roundOpenedError": "The round could not be created!"
   },
   "drawer": {
     "dashboard": "Dashboard",

@@ -12,8 +12,8 @@ import {
 } from "@services/store/slices/bottomSheetForm"
 import AddMember from "@components/PagesActions/AddMember"
 import { snapPoints } from "@assets/constants/dashboard/bottomSheet"
-import CreateAssociation from "@components/PagesActions/CreateAssociation"
-import CreateAssociationPage from "@components/PagesActions/CreateAssociationPage"
+import CreateAssociation from "@components/PagesActions/CreateAssociation/CreateAssociation"
+import CreateAssociationPage from "@components/PagesActions/CreateAssociationPage/CreateAssociationPage"
 import TontineContribution from "@components/PagesActions/TontineContribution"
 import Savings from "@components/PagesActions/Savings"
 import PenaltiesTypes from "@components/PagesActions/Configurations/penalties"
@@ -22,6 +22,7 @@ import GuaranteeType from "@components/PagesActions/Configurations/guarantee"
 import ProductType from "@components/PagesActions/Configurations/products"
 import ChargeTypesForm from "@components/PagesActions/Configurations/chargetype"
 import AssistanceTypeForm from "@components/PagesActions/Configurations/assistanceType"
+import CreateTontineRounds from "@components/PagesActions/CreateTontineRounds/CreateTontineRounds"
 
 import { BottomSheetProps, BottomSheetRef } from "./types"
 
@@ -37,7 +38,7 @@ const creationPagesDic: Record<
   fixedAmount: TontineContribution,
   variableAmount: TontineContribution,
   savings: Savings,
-  tontineTurn: () => null,
+  tontineTurn: CreateTontineRounds,
   mySubscriptions: () => null,
   sessions: () => null,
   pendingLoans: () => null,

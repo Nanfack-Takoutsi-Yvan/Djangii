@@ -65,3 +65,11 @@ export const savingValidation = yup.object().shape({
     .required("pages.frequencyRequired"),
   refundPeriodicityValue: yup.string().required("pages.valueRequired")
 })
+
+export const tontineRoundValidationSchema = yup.object().shape({
+  tontineId: yup.string().required("pages.tontineRequired"),
+  interestRate: yup.number(),
+  maxAmountLoanPerMember: yup.number(),
+  interestRefundFailPercent: yup.number(),
+  interestAssociationPercent: yup.number()
+})
