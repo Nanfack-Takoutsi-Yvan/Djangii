@@ -17,8 +17,7 @@ export default function SettingsStack() {
           color: "white"
         },
         headerBackTitle: locale.t("settings.title"),
-        headerBackTitleStyle: { fontFamily: "Sora" },
-        headerLargeTitle: true
+        headerBackTitleStyle: { fontFamily: "Sora" }
       }}
     >
       <Stack.Screen

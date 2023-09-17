@@ -22,7 +22,10 @@ import { FAB, Portal, Text, useTheme } from "react-native-paper"
 import NotificationCard from "@components/ui/NotificationCard"
 import NotificationsSkeleton from "@components/ui/skeletonLoader/Notifications"
 import { useAppDispatch } from "@services/store"
-import { fetchAllNotifications } from "@services/store/slices/notifications/actions"
+import {
+  fetchAllNotifications,
+  fetchNotificationsStats
+} from "@services/store/slices/notifications/actions"
 import AppStateContext from "@services/context/context"
 import { useRouter, useSegments } from "expo-router"
 import NotificationFilter from "@components/ui/NotificationFilter/NotificationFilter"
@@ -140,9 +143,10 @@ export default function NotificationScreen() {
       changed.forEach(data => {
         const notif: Notification = data.item
         if (!notif.displayed) {
-          notif.setAsDisplayed(() =>
+          notif.setAsDisplayed(() => {
             dispatch(markNotificationAsDisplayed(notif.id))
-          )
+            dispatch(fetchNotificationsStats())
+          })
         }
       })
     },
