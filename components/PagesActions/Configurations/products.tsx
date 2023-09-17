@@ -101,7 +101,7 @@ const ProductsType: FC<DashboardPagesCreationProps> = () => {
   }, [])
 
   return (
-    <View style={styles.singleMemberContainer}>
+    <View>
       <View style={styles.titleContainer}>
         <View style={styles.title}>
           <Text variant="titleLarge">{locale.t(`pages.newProduct`)}</Text>
@@ -468,7 +468,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 8
   },
-  singleMemberContainer: {},
   fileContainer: {
     rowGap: 12
   },

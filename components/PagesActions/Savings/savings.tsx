@@ -46,7 +46,7 @@ const Savings: FC<DashboardPagesCreationProps> = ({ pageName }) => {
     (values: typeof FormDefault, { resetForm }: { resetForm: () => void }) => {
       if (association) {
         setLoading(true)
-        const payload: ITontine = {
+        const payload: Omit<ITontine, "id"> = {
           name: values.name,
           amount: values.amount,
           periodicity: {
@@ -593,20 +593,6 @@ const styles = StyleSheet.create({
   uploadContainer: {
     rowGap: 8,
     paddingBottom: 24
-  },
-  checkboxContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-  checkboxTitleContainer: {
-    rowGap: 8,
-    width: "80%"
-  },
-  checkboxTitle: {
-    flexDirection: "row",
-    alignItems: "center",
-    columnGap: 8
   },
   label: {
     flexDirection: "row",

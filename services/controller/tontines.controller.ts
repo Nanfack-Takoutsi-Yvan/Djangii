@@ -9,6 +9,7 @@ export default class TontineController implements ITontineController {
       list: "api/tontines",
       round: "api/tontine-rounds",
       sessions: "api/tontine-sessions",
+      eligibility: "api/loans/eligible-tontine-rounds",
       mySubscription: "api/tontine-rounds/my-subscription"
     }
   }
@@ -145,6 +146,28 @@ export default class TontineController implements ITontineController {
     } catch (error) {
       const err = {
         message: `An error occurred while getting creating new tontine: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public async createNewTontineRound(
+    token: string,
+    payload: ITontineRoundRequestBody
+  ) {
+    try {
+      assert(token, "token is required to creating new Tontine round")
+
+      await apiClient.post(this.resource.round, payload, {
+        headers: {
+          Authorization: token
+        }
+      })
+    } catch (error) {
+      const err = {
+        message: `An error occurred while getting creating new tontine round: ${error}`,
         error
       }
 

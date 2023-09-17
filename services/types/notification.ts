@@ -12,7 +12,7 @@ interface INotification {
 
 interface INotificationData {
   association: IAssociation
-  author: IUserInfo
+  author?: IUserInfo
   category: INotificationCategory
   data: string
   datation: IHistory

@@ -37,4 +37,15 @@ export default class ProductPayment implements IProductPayment {
 
     return rawData.content
   }
+
+  static async saveProductPayment(payload: ProductPaymentRequestBody) {
+    const token = await getTokenFromStorage()
+    const controller = new PaymentController()
+
+    assert(token, "Token is required to save a product payment")
+
+    const rawData = await controller.saveProductPayment(token, payload)
+
+    return rawData
+  }
 }

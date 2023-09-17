@@ -389,20 +389,6 @@ const styles = StyleSheet.create({
     rowGap: 8,
     paddingBottom: 24
   },
-  checkboxContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-  checkboxTitleContainer: {
-    rowGap: 8,
-    width: "80%"
-  },
-  checkboxTitle: {
-    flexDirection: "row",
-    alignItems: "center",
-    columnGap: 8
-  },
   label: {
     flexDirection: "row",
     columnGap: 8,

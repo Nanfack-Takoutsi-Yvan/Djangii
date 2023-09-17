@@ -40,4 +40,15 @@ export default class AssistanceRequest implements IAssistanceRequest {
 
     return rawData.content
   }
+
+  static async saveAssistanceRequest(payload: IAssistanceRequestBody) {
+    const token = await getTokenFromStorage()
+    const controller = new PaymentController()
+
+    assert(token, "Token is required to save assistance request list")
+
+    const rawData = await controller.saveAssistanceRequest(token, payload)
+
+    return rawData
+  }
 }

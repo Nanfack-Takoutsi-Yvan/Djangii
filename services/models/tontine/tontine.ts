@@ -52,4 +52,13 @@ export default class Tontine implements ITontine {
 
     await controller.createNewTontine(token, payload)
   }
+
+  static async createTontineRound(payload: ITontineRoundRequestBody) {
+    const token = await getTokenFromStorage()
+    const controller = new TontineController()
+
+    assert(token, "Token is required to create new tontine")
+
+    await controller.createNewTontineRound(token, payload)
+  }
 }

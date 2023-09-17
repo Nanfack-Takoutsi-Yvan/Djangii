@@ -10,7 +10,6 @@ export default function SettingsStack() {
   return (
     <Stack
       screenOptions={{
-        headerShown: true,
         headerStyle: {
           backgroundColor: colors.primary
         },
@@ -24,12 +23,15 @@ export default function SettingsStack() {
       <Stack.Screen
         name="index"
         options={{
+          headerShown: false,
           title: locale.t("settings.title")
         }}
       />
       <Stack.Screen
         name="(account)"
-        options={{ title: locale.t("settings.account") }}
+        options={{
+          title: locale.t("settings.account")
+        }}
       />
       <Stack.Screen name="language" />
       <Stack.Screen name="notification" />

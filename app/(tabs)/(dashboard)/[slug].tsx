@@ -2,7 +2,7 @@
 import { FC, useContext, useEffect, useState } from "react"
 import { StatusBar } from "expo-status-bar"
 import { Drawer } from "expo-router/drawer"
-import { StyleSheet, View } from "react-native"
+import { KeyboardAvoidingView, StyleSheet, View } from "react-native"
 import { useLocalSearchParams } from "expo-router"
 
 import AppStateContext from "@services/context/context"
@@ -88,24 +88,26 @@ export default function TabOneScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="light" />
-      <Drawer.Screen
-        options={{
-          headerTitle: pageTitle
-        }}
-      />
-      <View style={styles.screen}>
-        <TablesTabView
-          data={data}
-          tables={tables}
-          createData={pageData?.createData}
-          pageName={pageTitle}
+    <KeyboardAvoidingView style={styles.screen}>
+      <View style={styles.container}>
+        <StatusBar style="light" />
+        <Drawer.Screen
+          options={{
+            headerTitle: pageTitle
+          }}
         />
-        <TableViewerBottomSheet />
-        <BottomSheetForm data={data} name={pageName} />
+        <View style={styles.screen}>
+          <TablesTabView
+            data={data}
+            tables={tables}
+            createData={pageData?.createData}
+            pageName={pageTitle}
+          />
+          <TableViewerBottomSheet />
+          <BottomSheetForm data={data} name={pageName} />
+        </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 

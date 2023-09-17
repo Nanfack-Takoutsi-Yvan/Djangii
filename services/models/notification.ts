@@ -24,7 +24,9 @@ export default class Notification implements INotification {
   private controller = new NotificationController()
 
   constructor(notification: INotification) {
-    Object.assign(this, notification)
+    if (notification) {
+      Object.assign(this, notification)
+    }
   }
 
   static getUserNotificationStats = async () => {
@@ -83,5 +85,25 @@ export default class Notification implements INotification {
     const newParams = await controller.upDateGroupParam(token, params)
 
     return newParams
+  }
+
+  public setAsDisplayed = async (callBack: () => void) => {
+    const token = await getTokenFromStorage()
+    assert(token, "token is required to mark notification as displayed")
+    this.displayed = await this.controller.markAsDisplayed(token, this.id)
+    if (this.displayed) {
+      callBack()
+    }
+  }
+
+  public setAsRead = async (callBack: () => void) => {
+    const token = await getTokenFromStorage()
+    assert(token, "token is required to mark notification as displayed")
+    const res = await this.controller.markAsRead(token, this.id)
+    if (res) {
+      this.opened = res.opened
+      this.displayed = res.displayed
+      callBack()
+    }
   }
 }

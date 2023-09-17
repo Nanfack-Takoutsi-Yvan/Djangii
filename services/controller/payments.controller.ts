@@ -106,4 +106,79 @@ export default class PaymentController implements IPaymentController {
       throw new Error(JSON.stringify(err))
     }
   }
+
+  public async saveProductPayment(
+    token: string,
+    payload: ProductPaymentRequestBody
+  ) {
+    try {
+      assert(token, "token is required to save a product payment")
+      const res = await apiClient.post<IProductPayment>(
+        this.resource.product.list,
+        payload,
+        {
+          headers: { Authorization: token }
+        }
+      )
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `An error occurred while saving a product payment: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public async saveChargePayment(
+    token: string,
+    payload: IChargePaymentRequestBody
+  ) {
+    try {
+      assert(token, "token is required to save a charge payment")
+      const res = await apiClient.post<IChargePayment>(
+        this.resource.charge.list,
+        payload,
+        {
+          headers: { Authorization: token }
+        }
+      )
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `An error occurred while saving a charge payment: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public async saveAssistanceRequest(
+    token: string,
+    payload: IAssistanceRequestBody
+  ) {
+    try {
+      assert(token, "token is required to save a assistance request")
+      const res = await apiClient.post<IAssistanceRequest>(
+        this.resource.assistanceRequest,
+        payload,
+        {
+          headers: { Authorization: token }
+        }
+      )
+
+      return res.data
+    } catch (error) {
+      const err = {
+        message: `An error occurred while saving a assistance request: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
 }
