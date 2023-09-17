@@ -1,7 +1,11 @@
-/* eslint-disable react/style-prop-object */
-import { StatusBar } from "expo-status-bar"
 import { Text } from "react-native-paper"
-import { Image, StyleSheet, View, useWindowDimensions } from "react-native"
+import {
+  Image,
+  StatusBar,
+  StyleSheet,
+  View,
+  useWindowDimensions
+} from "react-native"
 
 import { useCallback, useContext, useEffect, useRef, useState } from "react"
 import { FlatList } from "react-native-gesture-handler"
@@ -97,7 +101,7 @@ export default function TabOneScreen() {
 
   return (
     <View style={styles.container}>
-      <StatusBar style="light" />
+      <StatusBar barStyle="light-content" />
 
       {curveData ? (
         <Chart

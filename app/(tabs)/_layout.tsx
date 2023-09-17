@@ -61,7 +61,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="(notifications)"
         options={{
-          title: locale.t("notifications.title"),
+          headerShown: false,
+          title: "Notifications",
           tabBarIcon: ({ color }) => (
             <View>
               <Icon source="bell-outline" size={24} color={color} />

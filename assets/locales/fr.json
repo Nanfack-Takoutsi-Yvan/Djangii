@@ -542,7 +542,7 @@
     "shareFile": "Partager le fichier: {{fileName}}"
   },
   "notifications": {
-    "title": "Notifications",
+    "title": "Notifications ({{number}}):",
     "modalHeader": "Message de: {{sender}}",
     "messageTitle": "Titre",
     "association": "Association",
@@ -552,7 +552,16 @@
     "cancel": "Annuler",
     "sendNotification": "Envoyer une notification",
     "noNotification": "Aucune nouvelle notification",
-    "createNotification": "Les nouvelles notifications apparaitront ici"
+    "createNotification": "Les nouvelles notifications apparaitront ici",
+    "search": "Rechercher...",
+    "selectFilters": "Selectionner des filtres",
+    "djangii": "Djangii",
+    "member": "Utilisateurs",
+    "opened": "Ouverts",
+    "read": "Lus",
+    "undisplayed": "Non affichée",
+    "unread": "Non lu",
+    "selectedText": "Selectionnés"
   },
   "settings": {
     "title": "Configurations",

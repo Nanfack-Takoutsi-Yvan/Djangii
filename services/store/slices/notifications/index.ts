@@ -1,8 +1,10 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable react-hooks/rules-of-hooks */
-import { createSlice } from "@reduxjs/toolkit"
+import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { AxiosError } from "axios"
 
 import { useAppSelector } from "@services/store"
+import Notification from "@services/models/notification"
 import { fetchAllNotifications, fetchNotificationsStats } from "./actions"
 
 type NotificationState = {
@@ -24,7 +26,33 @@ const initialState: NotificationState = {
 const NotificationSlice = createSlice({
   name: "notification",
   initialState,
-  reducers: {},
+  reducers: {
+    markNotificationAsRead: (
+      state,
+      action: PayloadAction<INotification["id"]>
+    ) => {
+      state.notification.map(notification => {
+        if (notification.id === action.payload) {
+          notification.opened = true
+          notification.displayed = true
+        }
+
+        return notification
+      })
+    },
+    markNotificationAsDisplayed: (
+      state,
+      action: PayloadAction<INotification["id"]>
+    ) => {
+      state.notification.map(notification => {
+        if (notification.id === action.payload) {
+          notification.displayed = true
+        }
+
+        return notification
+      })
+    }
+  },
   extraReducers: builder => {
     builder.addCase(fetchNotificationsStats.fulfilled, (state, action) => {
       state.stats = action.payload
@@ -51,9 +79,14 @@ export const getNotificationsStats = () =>
   useAppSelector(({ notifications }) => notifications.stats)
 export const getNotifications = () =>
   useAppSelector(({ notifications }) => ({
-    notifications: notifications.notification,
+    error: notifications.error,
     loading: notifications.loading,
-    error: notifications.error
+    notifications: notifications.notification.map(
+      notification => new Notification(notification)
+    )
   }))
+
+export const { markNotificationAsRead, markNotificationAsDisplayed } =
+  NotificationSlice.actions
 
 export default NotificationSlice.reducer
