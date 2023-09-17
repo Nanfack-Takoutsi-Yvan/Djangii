@@ -569,7 +569,8 @@
     "read": "Read",
     "undisplayed": "Undisplayed",
     "unread": "Unread",
-    "selectedText": "Selected"
+    "selectedText": "Selected",
+    "pagination": "Page {{currentPage}} on {{numberOfPages}}"
   },
   "settings": {
     "title": "Settings",

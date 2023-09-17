@@ -561,7 +561,8 @@
     "read": "Lus",
     "undisplayed": "Non affichée",
     "unread": "Non lu",
-    "selectedText": "Selectionnés"
+    "selectedText": "Selectionnés",
+    "pagination": "Page {{currentPage}} sur {{numberOfPages}}"
   },
   "settings": {
     "title": "Configurations",

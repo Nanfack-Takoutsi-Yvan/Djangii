@@ -44,7 +44,6 @@ export enum FilterKeys {
 }
 
 export default function NotificationScreen() {
-  const triggerFetchNotification = useRef<boolean>(true)
   const [searchText, setSearchText] = useState<string>("")
   const [isFABOpen, setIsFABOpen] = useState<boolean>(false)
   const [selectedFilters, setSelectedFilters] = useState<string[]>([])
@@ -56,13 +55,6 @@ export default function NotificationScreen() {
   const router = useRouter()
   const segment = useSegments()
   const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    if (triggerFetchNotification.current) {
-      dispatch(fetchAllNotifications())
-      triggerFetchNotification.current = false
-    }
-  }, [dispatch])
 
   const shouldDisplayFAB = useCallback(() => {
     if (segment.includes("(notifications)")) return true
@@ -180,7 +172,7 @@ export default function NotificationScreen() {
     >
       <KeyboardAvoidingView style={styles.container}>
         <View style={styles.screen}>
-          <StatusBar barStyle="dark-content" />
+          <StatusBar networkActivityIndicatorVisible barStyle="dark-content" />
           {notifications.length !== 0 ? (
             <View style={styles.filterContainer}>
               <NotificationFilter
