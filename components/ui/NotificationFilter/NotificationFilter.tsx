@@ -1,4 +1,4 @@
-import { FilterKeys } from "@app/(tabs)/(notifications)"
+import { FilterKeys } from "@services/constant"
 import AppStateContext from "@services/context/context"
 import { FC, useCallback, useContext, useEffect, useState } from "react"
 import { StyleSheet, View } from "react-native"
