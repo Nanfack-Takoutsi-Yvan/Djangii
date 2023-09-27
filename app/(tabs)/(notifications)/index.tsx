@@ -22,10 +22,7 @@ import { FAB, Portal, Text, useTheme } from "react-native-paper"
 import NotificationCard from "@components/ui/NotificationCard"
 import NotificationsSkeleton from "@components/ui/skeletonLoader/Notifications"
 import { useAppDispatch } from "@services/store"
-import {
-  fetchAllNotifications,
-  fetchNotificationsStats
-} from "@services/store/slices/notifications/actions"
+import { fetchNotificationsStats } from "@services/store/slices/notifications/actions"
 import AppStateContext from "@services/context/context"
 import { useRouter, useSegments } from "expo-router"
 import NotificationFilter from "@components/ui/NotificationFilter/NotificationFilter"
@@ -34,14 +31,7 @@ import {
   getNotifications,
   markNotificationAsDisplayed
 } from "@services/store/slices/notifications"
-
-export enum FilterKeys {
-  DJANGII = "djangii",
-  MEMBER = "member",
-  OPENED = "opened",
-  UNREAD = "unread",
-  UNDISPLAYED = "undisplayed"
-}
+import { FilterKeys } from "@services/constant"
 
 export default function NotificationScreen() {
   const [searchText, setSearchText] = useState<string>("")
