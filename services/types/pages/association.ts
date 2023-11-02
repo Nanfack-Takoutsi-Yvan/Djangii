@@ -154,6 +154,7 @@ interface INewAssociation {
 }
 
 interface INewAssociationPage {
+  id?: string
   name: string
   description: string
   isPublic: boolean

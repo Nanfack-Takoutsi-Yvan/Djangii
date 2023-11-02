@@ -118,7 +118,7 @@ const NotificationSettings: FC = () => {
               </Text>
             </View>
             <View style={[styles.checkBoxLabel, { marginRight: 8 }]}>
-              <Text variant="labelSmall">Djangii yvan</Text>
+              <Text variant="labelSmall">Djangii</Text>
               <Text variant="labelSmall">Email</Text>
             </View>
           </View>
@@ -246,7 +246,8 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   title: {
-    width: "60%"
+    width: "60%",
+    flexWrap: "wrap"
   },
   checkBoxLabel: {
     flexDirection: "row",

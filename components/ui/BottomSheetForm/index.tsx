@@ -70,7 +70,6 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
   ({ name, data }, ref) => {
     const { colors } = useTheme()
     const dispatch = useAppDispatch()
-    const { locale } = useContext(AppStateContext)
 
     const { position, title } = getBottomSheetForm()
 

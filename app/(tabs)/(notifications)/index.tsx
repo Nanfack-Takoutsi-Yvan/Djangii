@@ -1,11 +1,4 @@
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from "react"
+import { useCallback, useContext, useMemo, useState } from "react"
 import {
   FlatList,
   Image,
@@ -174,7 +167,7 @@ export default function NotificationScreen() {
                 <View style={styles.notificationCount}>
                   <Text variant="bodyLarge">
                     {locale.t("notifications.title", {
-                      number: filterNotifications.length
+                      number: filteredNotifications.length
                     })}
                   </Text>
                 </View>
@@ -235,7 +228,7 @@ export default function NotificationScreen() {
             </Portal>
           ) : null}
 
-          {shouldDisplayFAB() && Platform.OS === "web" ? (
+          {shouldDisplayFAB() && Platform.OS !== "ios" ? (
             <Portal>
               <>
                 <FAB

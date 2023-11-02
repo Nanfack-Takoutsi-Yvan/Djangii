@@ -25,7 +25,11 @@ import {
   associationActions
 } from "@services/store/slices/associations"
 
-const CreateAssociationPage: FC = () => {
+type Props = {
+  currentAssociation?: INewAssociationPage
+} & DashboardPagesCreationProps
+
+const CreateAssociationPage: FC<Props> = ({ currentAssociation }) => {
   const [selectedAssociations, setSelectedAssociations] = useState<
     IAssociation[]
   >([])

@@ -2,6 +2,7 @@ import AppStateContext from "@services/context/context"
 import { Stack } from "expo-router"
 import { useContext } from "react"
 import { useTheme } from "react-native-paper"
+import Icon from "react-native-paper/src/components/Icon"
 
 export default function SettingsStack() {
   const { locale } = useContext(AppStateContext)
