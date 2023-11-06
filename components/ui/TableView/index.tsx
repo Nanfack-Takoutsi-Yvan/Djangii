@@ -79,21 +79,20 @@ const TableView: FC<TableViewProps> = ({
   }, [currentPage, filteredTableData])
 
   const openBottomSheet = useCallback(() => {
-    dispatch(changeBottomSheetFormPosition(0))
     if (createData) {
       const { formIcon, formTitle } = createData
       dispatch(
         updateBottomSheetFormState({
-          title: {
+          titleItems: {
             label: formTitle,
             icon: formIcon
           },
-          model: undefined,
-          validation: undefined,
           buttonTitle: "",
-          form: undefined
+          position: 0
         })
       )
+    } else {
+      dispatch(changeBottomSheetFormPosition(0))
     }
   }, [createData, dispatch])
 

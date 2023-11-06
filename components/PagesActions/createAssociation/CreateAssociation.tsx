@@ -1,5 +1,5 @@
-import { Formik } from "formik"
-import { FC, useCallback, useContext, useEffect, useState } from "react"
+import { Formik, useFormikContext } from "formik"
+import { FC, useCallback, useContext, useEffect, useRef, useState } from "react"
 import { StyleSheet, View } from "react-native"
 import { Button, Text, TextInput, useTheme } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
@@ -10,24 +10,54 @@ import AppStateContext from "@services/context/context"
 import Association from "@services/models/associations/association"
 import { useAppDispatch } from "@services/store"
 import { fetchUserAssociations } from "@services/store/slices/associations/associations"
-import { changeBottomSheetFormPosition } from "@services/store/slices/bottomSheetForm"
+import {
+  changeBottomSheetFormPosition,
+  getBottomSheetForm
+} from "@services/store/slices/bottomSheetForm"
 import {
   fetchCurrencies,
   getAllCurrencies
 } from "@services/store/slices/utils/currency"
 import { associationValidationSchema } from "@services/validations/yup/association.validation"
+import UserAssociation from "@services/models/associations/userAssociations"
 
-type Values = { name: string; acronym: string; currency: string }
+type Values = { id: string; name: string; acronym: string; currency: string }
 
 const CreateAssociation: FC = () => {
   const [selectedCurrencies, setSelectedCurrencies] = useState<ICurrency[]>([])
 
   const { colors } = useTheme()
   const dispatch = useAppDispatch()
+  const selectFormRef = useRef<SelectDropdown>(null)
   const { locale, setActionModalProps, setLoading } =
     useContext(AppStateContext)
 
   const currencies = getAllCurrencies()
+  const { currentData }: { currentData?: UserAssociation } =
+    getBottomSheetForm()
+
+  const UpdateFields = () => {
+    const { setFieldValue } = useFormikContext()
+    useEffect(() => {
+      if (currentData) {
+        setFieldValue("name", currentData.association.name, true)
+        setFieldValue("acronym", currentData.association.acronym, true)
+        setFieldValue("id", currentData.association.id, false)
+        if (selectFormRef.current)
+          selectFormRef.current.selectIndex(
+            selectedCurrencies.findIndex(
+              el => el.id === currentData.association.currency.id
+            )
+          )
+      } else {
+        setFieldValue("name", "", false)
+        setFieldValue("acronym", "", false)
+        setFieldValue("id", "", false)
+        if (selectFormRef.current) selectFormRef.current.reset()
+      }
+    }, [setFieldValue])
+    return null
+  }
 
   const createAssociation = useCallback(
     async (values: Values, { resetForm }: { resetForm: () => void }) => {
@@ -37,6 +67,7 @@ const CreateAssociation: FC = () => {
       )
       if (tempCurrency) {
         const association = {
+          id: values.id,
           name: values.name,
           acronym: values.acronym,
           currency: tempCurrency
@@ -48,7 +79,9 @@ const CreateAssociation: FC = () => {
               icon: true,
               state: "success",
               shouldDisplay: true,
-              title: locale.t("pages.associationCreated")
+              title: locale.t(
+                currentData ? "associationUpdated" : "pages.associationCreated"
+              )
             })
 
             resetForm()
@@ -67,7 +100,14 @@ const CreateAssociation: FC = () => {
           .finally(() => setLoading(false))
       }
     },
-    [dispatch, locale, selectedCurrencies, setActionModalProps, setLoading]
+    [
+      currentData,
+      dispatch,
+      locale,
+      selectedCurrencies,
+      setActionModalProps,
+      setLoading
+    ]
   )
 
   useEffect(() => {
@@ -90,7 +130,11 @@ const CreateAssociation: FC = () => {
     <View style={styles.screen}>
       <View style={styles.titleContainer}>
         <View style={styles.title}>
-          <Text variant="titleLarge">{locale.t(`pages.newAssociation`)}</Text>
+          <Text variant="titleLarge">
+            {locale.t(
+              currentData ? "pages.updateAssociation" : "pages.newAssociation"
+            )}
+          </Text>
         </View>
         <View style={styles.titleIcon}>
           <Icon
@@ -103,6 +147,7 @@ const CreateAssociation: FC = () => {
       <View>
         <Formik
           initialValues={{
+            id: "",
             name: "",
             acronym: "",
             currency: ""
@@ -185,6 +230,7 @@ const CreateAssociation: FC = () => {
                 <View style={styles.field}>
                   <View style={styles.screen}>
                     <SelectDropdown
+                      ref={selectFormRef}
                       data={selectedCurrencies}
                       defaultButtonText={locale.t("common.selectCurrency")}
                       buttonStyle={{
@@ -199,7 +245,9 @@ const CreateAssociation: FC = () => {
                       }}
                       rowTextStyle={styles.dropdownTextStyles}
                       dropdownStyle={{ borderRadius: 12 }}
-                      onSelect={item => handleChange("currency")(item.id)}
+                      onSelect={item => {
+                        handleChange("currency")(item.id)
+                      }}
                       search
                       searchInputTxtStyle={{ fontFamily: "Sora" }}
                       buttonTextAfterSelection={selectedItem =>
@@ -237,9 +285,15 @@ const CreateAssociation: FC = () => {
                     handleSubmit()
                   }}
                 >
-                  {locale.t("pages.createAssociation")}
+                  {locale.t(
+                    currentData
+                      ? "pages.updateAssociation"
+                      : "pages.newAssociation"
+                  )}
                 </Button>
               </View>
+
+              <UpdateFields />
             </View>
           )}
         </Formik>

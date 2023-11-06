@@ -379,8 +379,9 @@
     "commentRequired": "Please enter a comment",
     "assistanceLineRequired": "Please select an assistance",
     "assistanceRequestSaved": "Assistance request has been saved",
-    "assistanceRequestSavedConflict": " The selected users have already created this assistance request"
-
+    "assistanceRequestSavedConflict": " The selected users have already created this assistance request",
+    "updateAssociation": "Update association",
+    "associationUpdated": "Association updated"
   },
   "drawer": {
     "dashboard": "Dashboard",

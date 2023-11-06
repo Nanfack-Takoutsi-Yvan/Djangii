@@ -13,7 +13,8 @@ export const manageableAssociationsDataTable = (
       getDate(userAssociation.association.datation.creationTime),
       userAssociation.association.acronym,
       userAssociation.association.name,
-      `${userAssociation.association.activated}`
+      `${userAssociation.association.activated}`,
+      userAssociation.id
     ])
 
 export const joinedAssociationsDataTable = (
@@ -23,7 +24,8 @@ export const joinedAssociationsDataTable = (
     getDate(userAssociation.datation.creationTime),
     userAssociation.association.acronym,
     userAssociation.association.name,
-    `${userAssociation.association.activated}`
+    `${userAssociation.association.activated}`,
+    userAssociation.id
   ])
 
 export const getUserAssociationState = () => {

@@ -1,6 +1,3 @@
-import Association from "@services/models/associations/association"
-import fieldNames from "@components/ui/Form/__form.utils"
-
 import {
   joinedAssociationsDataTable,
   manageableAssociationsDataTable
@@ -18,7 +15,7 @@ export const joinedAssociation = {
   widthArr: [150, 150, 150, 150]
 }
 
-export const createData: CreateData = {
+export const createData: pageLabels = {
   buttonTitle: "createAssociationButton",
   formTitle: "newAssociationPage",
   formIcon: "plus-box-outline"

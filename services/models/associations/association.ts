@@ -36,6 +36,10 @@ export default class Association implements IAssociation {
 
     assert(token, "token is required to create associations")
 
+    if (association.id) {
+      return ""
+    }
+
     const rawData = await controller.createAssociation(token, association)
     return rawData.content
   }

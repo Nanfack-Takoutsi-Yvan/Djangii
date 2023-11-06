@@ -9,7 +9,10 @@ import Icon from "react-native-paper/src/components/Icon"
 import SelectDropdown from "react-native-select-dropdown"
 import AssociationPage from "@services/models/associations/associationPages"
 import FormSkeletonLoader from "@components/ui/skeletonLoader/formSkeletonLoader"
-import { changeBottomSheetFormPosition } from "@services/store/slices/bottomSheetForm"
+import {
+  changeBottomSheetFormPosition,
+  getBottomSheetForm
+} from "@services/store/slices/bottomSheetForm"
 import { fetchAssociationPages } from "@services/store/slices/associations/associationsPages"
 import { associationPageValidationSchema } from "@services/validations/yup/association.validation"
 import {
@@ -25,11 +28,7 @@ import {
   associationActions
 } from "@services/store/slices/associations"
 
-type Props = {
-  currentAssociation?: INewAssociationPage
-} & DashboardPagesCreationProps
-
-const CreateAssociationPage: FC<Props> = ({ currentAssociation }) => {
+const CreateAssociationPage: FC<DashboardPagesCreationProps> = () => {
   const [selectedAssociations, setSelectedAssociations] = useState<
     IAssociation[]
   >([])
@@ -114,7 +113,7 @@ const CreateAssociationPage: FC<Props> = ({ currentAssociation }) => {
       <View style={styles.titleContainer}>
         <View style={styles.title}>
           <Text variant="titleLarge">
-            {locale.t(`pages.newAssociationPage`)}
+            {locale.t(`pages.newAssociationPage`)} hello world
           </Text>
         </View>
         <View style={styles.titleIcon}>
