@@ -88,3 +88,5 @@ type PagesActionsProps = {
   setDataId: (value: string) => void
   dataId: string
 }
+
+type AuthProvider = "FACEBOOK" | "GOOGLE"

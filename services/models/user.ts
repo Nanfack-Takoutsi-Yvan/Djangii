@@ -92,6 +92,12 @@ export default class User implements IUser {
     return new User(res.data)
   }
 
+  static loginWIthAuthProvider = async (provider: AuthProvider) => {
+    const controller = new AuthController()
+    const res = await controller.loginWithAuthProvider(provider)
+    return res.data
+  }
+
   static logout = async () => {
     const userKey = process.env.SECURE_STORE_CREDENTIALS
     if (userKey) await deleteValueFromSecureStoreFor(userKey)

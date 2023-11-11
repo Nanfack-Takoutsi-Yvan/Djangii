@@ -5,14 +5,15 @@ import {
   ScrollView,
   ImageBackground,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  Image
 } from "react-native"
 
-import { Text, TextInput, Button, useTheme } from "react-native-paper"
+import { Text, TextInput, Button, useTheme, Divider } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
 
 import { Formik } from "formik"
-import { useContext, useState } from "react"
+import { useCallback, useContext, useState } from "react"
 import { useRouter } from "expo-router"
 import * as Haptics from "expo-haptics"
 import { StatusBar } from "expo-status-bar"
@@ -23,52 +24,77 @@ import validationSchema from "@services/validations"
 import User from "@services/models/user"
 import { HttpStatusCode } from "axios"
 import { useAuth } from "@services/context/auth"
+import { TouchableOpacity } from "react-native-gesture-handler"
+import * as WebBrowser from "expo-web-browser"
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
+  const router = useRouter()
+  const { signIn } = useAuth()
+  const { colors } = useTheme()
   const { locale, setLoading, setActionModalProps } =
     useContext(AppStateContext)
-  const { colors } = useTheme()
-  const { signIn } = useAuth()
 
-  const router = useRouter()
+  WebBrowser.maybeCompleteAuthSession()
 
-  const handleLogin = ({
-    username,
-    password
-  }: {
-    username: string
-    password: string
-  }) => {
-    setLoading(true)
-    User.login(username, password)
-      .then(user => {
-        signIn(user)
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
-      })
-      .catch(err => {
+  const handleLogin = useCallback(
+    ({ username, password }: { username: string; password: string }) => {
+      setLoading(true)
+      User.login(username, password)
+        .then(user => {
+          signIn(user)
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+        })
+        .catch(err => {
+          setLoading(false)
+
+          const error = JSON.parse(err.message)
+          const error401 = error.error.status === HttpStatusCode.Unauthorized
+
+          setActionModalProps({
+            icon: true,
+            state: "error",
+            shouldDisplay: true,
+            title: locale.t(
+              error401 ? "login.errors.notFoundTitle" : "commonErrors.title"
+            ),
+            description: locale.t(
+              error401
+                ? "login.errors.notFoundDescription"
+                : "commonErrors.description"
+            )
+          })
+        })
+        .finally(() => setLoading(false))
+    },
+    [locale, setActionModalProps, setLoading, signIn]
+  )
+
+  const handleLoginWithProvider = useCallback(
+    async (provider: AuthProvider) => {
+      try {
+        setLoading(true)
+        const uri = await User.loginWIthAuthProvider(provider)
+        const result = await WebBrowser.openAuthSessionAsync(
+          uri,
+          "https://test.djangii.com/#/home"
+        )
+        console.log({ result })
         setLoading(false)
-
-        const error = JSON.parse(err.message)
-        const error401 = error.error.status === HttpStatusCode.Unauthorized
-
+      } catch (err) {
+        setLoading(false)
         setActionModalProps({
           icon: true,
           state: "error",
           shouldDisplay: true,
-          title: locale.t(
-            error401 ? "login.errors.notFoundTitle" : "commonErrors.title"
-          ),
-          description: locale.t(
-            error401
-              ? "login.errors.notFoundDescription"
-              : "commonErrors.description"
-          )
+          title: locale.t("commonErrors.title"),
+          description: locale.t("commonErrors.description")
         })
-      })
-      .finally(() => setLoading(false))
-  }
+      }
+    },
+    [locale, setActionModalProps, setLoading]
+  )
 
   return (
     <KeyboardAvoidingView
@@ -237,6 +263,48 @@ export default function Login() {
                         {locale.t("login.connect")}
                       </Button>
                     </View>
+
+                    <View style={styles.loginAlternativeContainer}>
+                      <View style={styles.loginAlternativeText}>
+                        <Divider
+                          style={[
+                            styles.divider,
+                            { borderColor: colors.primary }
+                          ]}
+                        />
+                        <Text>{locale.t("common.continueWith")}</Text>
+                        <Divider
+                          style={[
+                            styles.divider,
+                            { borderColor: colors.primary }
+                          ]}
+                        />
+                      </View>
+                      <View style={styles.loginAlternativeButtonContainer}>
+                        <View style={styles.loginAlternativeButton}>
+                          <TouchableOpacity
+                            onPress={() => handleLoginWithProvider("GOOGLE")}
+                          >
+                            <View>
+                              <Image
+                                source={require("@assets/images/icons/google.png")}
+                                style={styles.loginIcon}
+                              />
+                            </View>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => handleLoginWithProvider("FACEBOOK")}
+                          >
+                            <View>
+                              <Image
+                                source={require("@assets/images/icons/facebook-round.png")}
+                                style={styles.loginIcon}
+                              />
+                            </View>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    </View>
                   </View>
                 </ScrollView>
               </View>
@@ -315,5 +383,36 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexWrap: "wrap"
+  },
+  loginAlternativeContainer: {
+    rowGap: 16,
+    paddingVertical: 8,
+    flex: 1
+  },
+  loginAlternativeText: {
+    flexDirection: "row",
+    flex: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
+    columnGap: 8
+  },
+  loginAlternativeButtonContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center"
+  },
+  loginAlternativeButton: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "40%"
+  },
+  divider: {
+    borderWidth: 0.5,
+    borderStyle: "solid",
+    flex: 1
+  },
+  loginIcon: {
+    width: 36,
+    height: 36
   }
 })
