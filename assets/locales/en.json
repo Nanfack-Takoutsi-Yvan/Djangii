@@ -47,7 +47,8 @@
     "products": "Products",
     "charges": "Charges",
     "comments": "Comments",
-    "continueWith": "Or continue with"
+    "continueWith": "Or continue with",
+    "version": "{{appName}} version: {{number}}"
   },
   "commonErrors": {
     "title": "An error occurred",
@@ -382,7 +383,10 @@
     "assistanceRequestSaved": "Assistance request has been saved",
     "assistanceRequestSavedConflict": " The selected users have already created this assistance request",
     "updateAssociation": "Update association",
-    "associationUpdated": "Association updated"
+    "associationUpdated": "Association updated",
+    "addNewMember": "Add new member",
+    "updateMember": "Update member's info",
+    "userMemberShipUpdated": "Membership Updated"
   },
   "drawer": {
     "dashboard": "Dashboard",

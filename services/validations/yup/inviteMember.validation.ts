@@ -7,8 +7,10 @@ const singleMemberValidation = yup.object().shape({
     .required("pages.emailRequiredForMembers"),
   firstNameMember: yup.string().required("signUp.errors.firstName"),
   lastNameMember: yup.string().required("signUp.errors.lastName"),
-  aliasMember: yup.string().required("pages.aliasMemberRequired"),
-  role: yup.string().required("pages.roleRequiredForMembers")
+  aliasMember: yup.string(),
+  role: yup.string().required("pages.roleRequiredForMembers"),
+  associationId: yup.string().required(),
+  userInfosId: yup.string().required()
 })
 
 export default singleMemberValidation

@@ -36,9 +36,9 @@ const AccountSettings: FC = () => {
   type PasswordForm = { confirmPassword: string } & PasswordPayload
 
   const submitNewPassword = useCallback(
-    ({ confirmPassword, ...rest }: PasswordForm) => {
+    ({ oldPassword, newPassword }: PasswordForm) => {
       setLoading(true)
-      User.updatePassword(rest)
+      User.updatePassword({ oldPassword, newPassword })
         .then(() => {
           setActionModalProps({
             icon: true,

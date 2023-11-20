@@ -11,12 +11,17 @@ import { Card, Text, useTheme } from "react-native-paper"
 
 import AppStateContext from "@services/context/context"
 import { useAppDispatch } from "@services/store"
-import { changeBottomSheetFormPosition } from "@services/store/slices/bottomSheetForm"
+import {
+  changeBottomSheetFormPosition,
+  getBottomSheetForm
+} from "@services/store/slices/bottomSheetForm"
 import { getDefaultAssociationId } from "@services/store/slices/dashboard"
 import { associationSelector } from "@services/store/slices/associations"
+import PageActionTitle from "@components/ui/PageActionTitle"
 import SingleMember from "./singleMember"
 import ExcelFile from "./exelFile"
 import VirtualMember from "./virtualMember"
+import UpdateMember from "./updateMember"
 
 const AddMember: FC = () => {
   const [selectedCard, setSelectedCard] = useState<number>(-1)
@@ -26,6 +31,8 @@ const AddMember: FC = () => {
   const {
     data: { createdAssociation: associations }
   } = associationSelector.getAssociations()
+  const { currentData }: { currentData?: IUserAssociation } =
+    getBottomSheetForm()
 
   const { colors } = useTheme()
   const dispatch = useAppDispatch()
@@ -71,12 +78,20 @@ const AddMember: FC = () => {
     }
   }, [associationId, associations])
 
+  if (currentData) {
+    return <UpdateMember member={currentData} />
+  }
+
   return (
     <KeyboardAvoidingView
       style={styles.screen}
       contentContainerStyle={[styles.screen, { rowGap: 24, marginBottom: 24 }]}
       behavior="position"
     >
+      <PageActionTitle
+        text={locale.t("pages.addNewMember")}
+        icon="account-multiple-plus"
+      />
       <View style={styles.cardContainer}>
         {cards.map((card, index) => (
           <Card
@@ -146,10 +161,6 @@ const styles = StyleSheet.create({
   dropdownTextStyles: {
     fontFamily: "Sora",
     fontSize: 16
-  },
-  dateTimeButton: {
-    justifyContent: "space-around",
-    flexDirection: "row"
   },
   banner: {
     borderRadius: 4,

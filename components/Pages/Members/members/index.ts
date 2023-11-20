@@ -6,7 +6,20 @@ const associationMembersConfigs: configs = {
   tables: [
     {
       name: "members",
-      table: associationMemberPageTable
+      table: associationMemberPageTable,
+      actions: [
+        {
+          name: "edit",
+          pageLabels: {
+            formIcon: "helloworld",
+            formTitle: "hello world",
+            buttonTitle: "hello world"
+          }
+        },
+        {
+          name: "view"
+        }
+      ]
     }
   ],
   getData: getAssociationsMemberPages,

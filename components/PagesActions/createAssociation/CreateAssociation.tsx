@@ -2,7 +2,6 @@ import { Formik, useFormikContext } from "formik"
 import { FC, useCallback, useContext, useEffect, useRef, useState } from "react"
 import { StyleSheet, View } from "react-native"
 import { Button, Text, TextInput, useTheme } from "react-native-paper"
-import Icon from "react-native-paper/src/components/Icon"
 import SelectDropdown from "react-native-select-dropdown"
 
 import FormSkeletonLoader from "@components/ui/skeletonLoader/formSkeletonLoader"
@@ -20,6 +19,7 @@ import {
 } from "@services/store/slices/utils/currency"
 import { associationValidationSchema } from "@services/validations/yup/association.validation"
 import UserAssociation from "@services/models/associations/userAssociations"
+import PageActionTitle from "@components/ui/PageActionTitle"
 
 type Values = { id: string; name: string; acronym: string; currency: string }
 
@@ -28,7 +28,7 @@ const CreateAssociation: FC = () => {
 
   const { colors } = useTheme()
   const dispatch = useAppDispatch()
-  const selectFormRef = useRef<SelectDropdown>(null)
+  const selectInputRef = useRef<SelectDropdown>(null)
   const { locale, setActionModalProps, setLoading } =
     useContext(AppStateContext)
 
@@ -43,17 +43,22 @@ const CreateAssociation: FC = () => {
         setFieldValue("name", currentData.association.name, true)
         setFieldValue("acronym", currentData.association.acronym, true)
         setFieldValue("id", currentData.association.id, false)
-        if (selectFormRef.current)
-          selectFormRef.current.selectIndex(
+        if (selectInputRef.current) {
+          selectInputRef.current.selectIndex(
             selectedCurrencies.findIndex(
               el => el.id === currentData.association.currency.id
             )
           )
+          setFieldValue("currency", currentData.association.currency.id, true)
+        }
       } else {
         setFieldValue("name", "", false)
         setFieldValue("acronym", "", false)
         setFieldValue("id", "", false)
-        if (selectFormRef.current) selectFormRef.current.reset()
+        if (selectInputRef.current) {
+          selectInputRef.current.reset()
+          setFieldValue("currency", "", false)
+        }
       }
     }, [setFieldValue])
     return null
@@ -80,7 +85,9 @@ const CreateAssociation: FC = () => {
               state: "success",
               shouldDisplay: true,
               title: locale.t(
-                currentData ? "associationUpdated" : "pages.associationCreated"
+                currentData
+                  ? "pages.associationUpdated"
+                  : "pages.associationCreated"
               )
             })
 
@@ -128,22 +135,12 @@ const CreateAssociation: FC = () => {
 
   return (
     <View style={styles.screen}>
-      <View style={styles.titleContainer}>
-        <View style={styles.title}>
-          <Text variant="titleLarge">
-            {locale.t(
-              currentData ? "pages.updateAssociation" : "pages.newAssociation"
-            )}
-          </Text>
-        </View>
-        <View style={styles.titleIcon}>
-          <Icon
-            source="account-multiple-plus"
-            size={32}
-            color={colors.secondary}
-          />
-        </View>
-      </View>
+      <PageActionTitle
+        text={locale.t(
+          currentData ? "pages.updateAssociation" : "pages.newAssociation"
+        )}
+        icon="account-multiple-plus"
+      />
       <View>
         <Formik
           initialValues={{
@@ -230,7 +227,7 @@ const CreateAssociation: FC = () => {
                 <View style={styles.field}>
                   <View style={styles.screen}>
                     <SelectDropdown
-                      ref={selectFormRef}
+                      ref={selectInputRef}
                       data={selectedCurrencies}
                       defaultButtonText={locale.t("common.selectCurrency")}
                       buttonStyle={{
@@ -251,9 +248,11 @@ const CreateAssociation: FC = () => {
                       search
                       searchInputTxtStyle={{ fontFamily: "Sora" }}
                       buttonTextAfterSelection={selectedItem =>
-                        selectedItem.code
+                        `${selectedItem.code} (${selectedItem.countryCode})`
                       }
-                      rowTextForSelection={item => item.code}
+                      rowTextForSelection={item =>
+                        `${item.code} (${item.countryCode})`
+                      }
                       onChangeSearchInputText={text => {
                         setSelectedCurrencies(
                           currencies.data.filter(currentCurrency =>

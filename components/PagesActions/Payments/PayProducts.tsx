@@ -419,10 +419,6 @@ const styles = StyleSheet.create({
     fontFamily: "Sora",
     fontSize: 16
   },
-  dateTimeButton: {
-    justifyContent: "space-around",
-    flexDirection: "row"
-  },
   banner: {
     borderRadius: 4,
     padding: 8

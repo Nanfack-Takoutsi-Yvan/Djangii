@@ -9,11 +9,13 @@ import {
   View
 } from "react-native"
 
-import AppStateContext from "@services/context/context"
-import SettingItem from "@components/ui/SettingItem"
-import settingsConfigs from "@assets/constants/settings/settings"
 import { useRouter } from "expo-router"
 import { Text } from "react-native-paper"
+import { nativeApplicationVersion, applicationName } from "expo-application"
+
+import SettingItem from "@components/ui/SettingItem"
+import AppStateContext from "@services/context/context"
+import settingsConfigs from "@assets/constants/settings/settings"
 
 export default function SettingsScreen() {
   const router = useRouter()
@@ -51,6 +53,14 @@ export default function SettingsScreen() {
               </View>
             ))}
           </View>
+          <View style={styles.appVersion}>
+            <Text variant="labelSmall">
+              {locale.t("common.version", {
+                number: nativeApplicationVersion,
+                appName: applicationName
+              })}
+            </Text>
+          </View>
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -81,6 +91,11 @@ const styles = StyleSheet.create({
     rowGap: 12
   },
   screenMarginTop: {
+    marginTop: 24
+  },
+  appVersion: {
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 24
   }
 })

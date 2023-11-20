@@ -36,10 +36,6 @@ export default class Association implements IAssociation {
 
     assert(token, "token is required to create associations")
 
-    if (association.id) {
-      return ""
-    }
-
     const rawData = await controller.createAssociation(token, association)
     return rawData.content
   }
@@ -60,6 +56,15 @@ export default class Association implements IAssociation {
     assert(token, "token is required to invite new member")
 
     await controller.inviteMember(token, payload)
+  }
+
+  static updateMembership = async (payload: UpdateMemberObj) => {
+    const token = await getTokenFromStorage()
+    const controller = new AssociationController()
+
+    assert(token, "token is required to invite new member")
+
+    await controller.updateMembership(token, payload)
   }
 
   static inviteVirtualMember = async (payload: VirtualMemberConfig) => {
