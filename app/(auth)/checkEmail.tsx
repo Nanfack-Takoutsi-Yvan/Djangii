@@ -7,7 +7,7 @@ import {
   Platform
 } from "react-native"
 
-import { useContext } from "react"
+import { useCallback, useContext } from "react"
 import { StatusBar } from "expo-status-bar"
 import { useRouter } from "expo-router"
 
@@ -30,41 +30,44 @@ export default function CheckEmail() {
 
   const router = useRouter()
 
-  const sendOTP = ({ email }: { email: string }) => {
-    setLoading(true)
-    User.getPasswordChangeOTP(email)
-      .then(user => {
-        if (user) {
-          signIn(user)
-          router.replace({
-            pathname: "passwordReset",
-            params: { email: encodeURIComponent(email) }
-          })
-        }
-      })
-      .catch(err => {
-        setLoading(false)
-        const error = JSON.parse(err.message)
-        const error404 = error.error.status === HttpStatusCode.NotFound
-
-        setActionModalProps({
-          icon: true,
-          state: "error",
-          shouldDisplay: true,
-          title: locale.t(
-            error404
-              ? "checkEmail.errors.emailCheck.noUserFound"
-              : "commonErrors.title"
-          ),
-          description: locale.t(
-            error404
-              ? "checkEmail.errors.emailCheck.userNotFoundDescription"
-              : "commonErrors.description"
-          )
+  const sendOTP = useCallback(
+    ({ email }: { email: string }) => {
+      setLoading(true)
+      User.getPasswordChangeOTP(email)
+        .then(user => {
+          if (user) {
+            signIn(user)
+            router.replace({
+              pathname: "passwordReset",
+              params: { email: encodeURIComponent(email) }
+            })
+          }
         })
-      })
-      .finally(() => setLoading(false))
-  }
+        .catch(err => {
+          setLoading(false)
+          const error = JSON.parse(err.message)
+          const error404 = error.error.status === HttpStatusCode.NotFound
+
+          setActionModalProps({
+            icon: true,
+            state: "error",
+            shouldDisplay: true,
+            title: locale.t(
+              error404
+                ? "checkEmail.errors.emailCheck.noUserFound"
+                : "commonErrors.title"
+            ),
+            description: locale.t(
+              error404
+                ? "checkEmail.errors.emailCheck.userNotFoundDescription"
+                : "commonErrors.description"
+            )
+          })
+        })
+        .finally(() => setLoading(false))
+    },
+    [locale, router, setActionModalProps, setLoading, signIn]
+  )
 
   return (
     <KeyboardAvoidingView

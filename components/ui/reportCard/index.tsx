@@ -1,5 +1,5 @@
-import { FC, useContext, useState } from "react"
-import { StyleSheet, View, useWindowDimensions } from "react-native"
+import { FC, useContext, useEffect, useRef, useState } from "react"
+import { Platform, StyleSheet, View, useWindowDimensions } from "react-native"
 import { Card, Text, useTheme } from "react-native-paper"
 
 import AppStateContext from "@services/context/context"
@@ -78,7 +78,7 @@ const ReportCard: FC<ReportCardProps> = ({
 
 const styles = StyleSheet.create({
   card: {
-    height: "85%",
+    height: Platform.OS === "ios" ? "85%" : undefined,
     backgroundColor: "#fff",
     borderRadius: 30,
     padding: 10

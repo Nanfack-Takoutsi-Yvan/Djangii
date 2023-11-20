@@ -16,6 +16,7 @@ export default class AuthController implements IAuthController {
       verifyPhoneNumber: "api/public/users/phone-used",
       verifyEmail: "api/public/users/email-used",
       changePassword: "api/users/me/change-password",
+      authProvider: "login/oauth",
       resetPasswordOTP: {
         start: "api/public/users/",
         end: "/reset-password-request"
@@ -41,6 +42,35 @@ export default class AuthController implements IAuthController {
     } catch (error) {
       const err = {
         message: `Error while getting user: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public loginWithAuthProvider = async (provider: AuthProvider) => {
+    assert(provider, "Provider cannot be empty")
+
+    try {
+      const response = await apiClient.post<string>(
+        this.resource.authProvider,
+        null,
+        {
+          params: {
+            account: provider
+          }
+        }
+      )
+
+      if (!response) {
+        throw new Error(`Unable to login using: ${provider}`)
+      }
+
+      return response
+    } catch (error) {
+      const err = {
+        message: `Error while logging in with ${provider}: ${error}`,
         error
       }
 

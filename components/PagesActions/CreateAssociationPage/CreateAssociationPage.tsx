@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native"
-import { FC, useCallback, useContext, useEffect, useState } from "react"
+import { FC, useCallback, useContext, useEffect, useRef, useState } from "react"
 
-import { Formik } from "formik"
+import { Formik, useFormikContext } from "formik"
 import { useAppDispatch } from "@services/store"
 import { copyData } from "@services/utils/storage"
 import AppStateContext from "@services/context/context"
@@ -9,7 +9,10 @@ import Icon from "react-native-paper/src/components/Icon"
 import SelectDropdown from "react-native-select-dropdown"
 import AssociationPage from "@services/models/associations/associationPages"
 import FormSkeletonLoader from "@components/ui/skeletonLoader/formSkeletonLoader"
-import { changeBottomSheetFormPosition } from "@services/store/slices/bottomSheetForm"
+import {
+  changeBottomSheetFormPosition,
+  getBottomSheetForm
+} from "@services/store/slices/bottomSheetForm"
 import { fetchAssociationPages } from "@services/store/slices/associations/associationsPages"
 import { associationPageValidationSchema } from "@services/validations/yup/association.validation"
 import {
@@ -25,16 +28,25 @@ import {
   associationActions
 } from "@services/store/slices/associations"
 
-const CreateAssociationPage: FC = () => {
+const CreateAssociationPage: FC<DashboardPagesCreationProps> = () => {
   const [selectedAssociations, setSelectedAssociations] = useState<
     IAssociation[]
   >([])
+
+  const selectInputRef = useRef<SelectDropdown>(null)
 
   const { colors } = useTheme()
   const dispatch = useAppDispatch()
   const { locale, setLoading, setActionModalProps } =
     useContext(AppStateContext)
   const associations = associationSelector.getEligibleAssociations()
+
+  const { currentData }: { currentData?: IAssociationPage } =
+    getBottomSheetForm()
+
+  const {
+    data: { createdAssociation: allAssociations }
+  } = associationSelector.getAssociations()
 
   const updateFields = (
     associationId: string,
@@ -49,6 +61,7 @@ const CreateAssociationPage: FC = () => {
     )
 
     if (selectedAssociation) {
+      setFieldValue("associationId", associationId, true)
       setFieldValue("name", selectedAssociation.name, true)
       setFieldValue(
         "username",
@@ -56,6 +69,45 @@ const CreateAssociationPage: FC = () => {
         true
       )
     }
+  }
+
+  const UpdateFields = () => {
+    const { setFieldValue } = useFormikContext()
+    useEffect(() => {
+      if (currentData) {
+        setFieldValue("name", currentData.association.name, true)
+        setFieldValue("description", currentData.description, true)
+        setFieldValue("isPublic", currentData.isPublic, true)
+        setFieldValue("visible", currentData.visible, true)
+        setFieldValue(
+          "username",
+          currentData.association.name.replace(/\s/gi, "_"),
+          true
+        )
+        if (selectInputRef.current) {
+          const index = allAssociations.findIndex(
+            el => el.id === currentData.association.creator.defaultAssociationId
+          )
+          selectInputRef.current.selectIndex(index)
+          setFieldValue(
+            "associationId",
+            currentData.association.currency.id,
+            true
+          )
+        }
+      } else {
+        setFieldValue("name", "", false)
+        setFieldValue("description", "", false)
+        setFieldValue("isPublic", true, false)
+        setFieldValue("visible", true, false)
+        setFieldValue("username", "", false)
+        if (selectInputRef.current) {
+          selectInputRef.current.reset()
+          setFieldValue("associationId", "", false)
+        }
+      }
+    }, [setFieldValue])
+    return null
   }
 
   const submitAssociationPage = useCallback(
@@ -147,7 +199,9 @@ const CreateAssociationPage: FC = () => {
               <View style={styles.field}>
                 <View style={styles.screen}>
                   <SelectDropdown
-                    data={selectedAssociations}
+                    ref={selectInputRef}
+                    // disabled={!!currentData}
+                    data={currentData ? selectedAssociations : allAssociations}
                     defaultButtonText={locale.t("pages.selectAssociation")}
                     buttonStyle={{
                       ...styles.uniqueDropdown,
@@ -162,20 +216,28 @@ const CreateAssociationPage: FC = () => {
                     rowTextStyle={styles.dropdownTextStyles}
                     dropdownStyle={{ borderRadius: 12 }}
                     onSelect={item => {
-                      handleChange("associationId")(item.id)
                       updateFields(item.id, setFieldValue)
                     }}
                     search
                     searchInputTxtStyle={{ fontFamily: "Sora" }}
                     buttonTextAfterSelection={selectedItem => selectedItem.name}
                     rowTextForSelection={item => item.name}
-                    onChangeSearchInputText={text =>
+                    onChangeSearchInputText={text => {
+                      if (currentData) {
+                        setSelectedAssociations(
+                          allAssociations.filter(page =>
+                            page.name.includes(text)
+                          )
+                        )
+                        return
+                      }
+
                       setSelectedAssociations(currentSelection =>
                         currentSelection.filter(page =>
                           page.name.includes(text)
                         )
                       )
-                    }
+                    }}
                   />
                   {errors.associationId && (
                     <View>
@@ -435,6 +497,7 @@ const CreateAssociationPage: FC = () => {
                 </TouchableOpacity>
               </View>
             </View>
+            <UpdateFields />
 
             {areAssociationsAvailable() ? (
               <View>

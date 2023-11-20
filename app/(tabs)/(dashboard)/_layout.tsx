@@ -1,14 +1,12 @@
 /* eslint-disable no-unsafe-optional-chaining */
-import { useContext } from "react"
+import { useContext, useRef } from "react"
 import { Drawer } from "expo-router/drawer"
 import { Platform, StyleSheet, TouchableOpacity } from "react-native"
 import { useTheme } from "react-native-paper"
 import Icon from "react-native-paper/src/components/Icon"
-
 import NavigationDrawer from "@components/ui/NavigationDrawer"
 import AppStateContext from "@services/context/context"
 import { useRouter } from "expo-router"
-import { getAvatarLetters } from "@utils/functions/format"
 import { useAuth } from "@services/context/auth"
 import AppAvatar from "@components/ui/AppAvatar"
 
@@ -22,15 +20,15 @@ export default function DashboardLayout() {
     <Drawer
       screenOptions={{
         headerStyle: styles.header,
-        headerTitleStyle: styles.headerLabel,
-        drawerIcon: ({ size }) => (
-          <Icon size={size} source="menu" color={colors.primary} />
-        ),
         drawerStyle: styles.drawer,
+        headerTitleStyle: styles.headerLabel,
         headerRight: () => (
           <TouchableOpacity onPress={() => router.push("appInfoModal")}>
             {user ? <AppAvatar size={24} user={user.userInfos} /> : null}
           </TouchableOpacity>
+        ),
+        drawerIcon: ({ size }) => (
+          <Icon size={size} source="menu" color={colors.primary} />
         )
       }}
       drawerContent={NavigationDrawer}

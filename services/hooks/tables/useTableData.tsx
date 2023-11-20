@@ -3,10 +3,6 @@ import { I18n } from "i18n-js/typings/I18n"
 
 import TableActionButton from "@components/ui/TableActionButton"
 import { useAppDispatch } from "@services/store"
-import {
-  changeViewPosition,
-  updateViewData
-} from "@services/store/slices/bottomSheetTables"
 
 const useTableData = (
   table: TableConfigs,
@@ -38,43 +34,11 @@ const useTableData = (
 
       tempTableData.forEach(row => {
         if (actions && actions.length) {
-          const onEdit = actions.find(action => action.name === "edit")?.method
-          const onView = actions.find(action => action.name === "view")?.method
-          const onCopy = actions.find(action => action.name === "copy")?.method
-          const onDelete = actions.find(
-            action => action.name === "delete"
-          )?.method
-          const onValidate = actions.find(
-            action => action.name === "validate"
-          )?.method
-          const onDiscard = actions.find(
-            action => action.name === "discard"
-          )?.method
-
-          // if (actions.includes("view")) {
-          //   view = () => {
-          //     dispatch(changeViewPosition(1))
-          //     dispatch(
-          //       updateViewData({
-          //         tableHead: headings,
-          //         tableData: JSON.parse(JSON.stringify(row)),
-          //         widthArr: table.widthArr
-          //       })
-          //     )
-          //   }
-          // }
-
           const actionComponent = (() => {
             const rowData = [...row]
-
             return (
               <TableActionButton
-                onDelete={onDelete}
-                onView={onView}
-                onEdit={onEdit}
-                onCopy={onCopy}
-                onDiscard={onDiscard}
-                onValidate={onValidate}
+                actions={actions}
                 rowId={rowData.pop()}
                 setDataId={setDataId}
                 data={data}

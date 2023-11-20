@@ -114,9 +114,12 @@ const SingleMember: FC<NewMemberProps> = ({ association }) => {
       </View>
 
       <Formik
-        validationSchema={singleMemberValidation}
         onSubmit={sendSingleMemberInvitation}
         innerRef={singleMemberFormRef}
+        validationSchema={singleMemberValidation.omit([
+          "userInfosId",
+          "associationId"
+        ])}
         initialValues={{
           emailMember: "",
           firstNameMember: "",
@@ -481,10 +484,6 @@ const styles = StyleSheet.create({
   dropdownTextStyles: {
     fontFamily: "Sora",
     fontSize: 16
-  },
-  dateTimeButton: {
-    justifyContent: "space-around",
-    flexDirection: "row"
   },
   banner: {
     borderRadius: 4,

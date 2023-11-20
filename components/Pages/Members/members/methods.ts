@@ -14,5 +14,6 @@ export const associationsMembersPagesData = (
     `${associationMember.author.firstName} ${associationMember.author.lastName}`,
     associationMember.role,
     associationMember.type,
-    associationMember.association.name
+    associationMember.association.name,
+    associationMember.id
   ])

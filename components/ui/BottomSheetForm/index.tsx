@@ -8,6 +8,7 @@ import { useAppDispatch } from "@services/store"
 import AppStateContext from "@services/context/context"
 import {
   changeBottomSheetFormPosition,
+  clearBottomSheetFormState,
   getBottomSheetForm
 } from "@services/store/slices/bottomSheetForm"
 import AddMember from "@components/PagesActions/AddMember"
@@ -70,18 +71,22 @@ const BottomSheetForm = forwardRef<BottomSheetRef, BottomSheetProps>(
   ({ name, data }, ref) => {
     const { colors } = useTheme()
     const dispatch = useAppDispatch()
-    const { locale } = useContext(AppStateContext)
 
-    const { position, title } = getBottomSheetForm()
+    const { position } = getBottomSheetForm()
+
+    const clearForm = useCallback(() => {
+      dispatch(clearBottomSheetFormState())
+    }, [dispatch])
 
     const handleSheetChanges = useCallback(
       (index: number) => {
-        dispatch(changeBottomSheetFormPosition(index))
+        if (index === -1) dispatch(clearBottomSheetFormState())
+        else dispatch(changeBottomSheetFormPosition(index))
       },
       [dispatch]
     )
 
-    useEffect(() => () => handleSheetChanges(-1), [handleSheetChanges])
+    useEffect(() => () => clearForm(), [clearForm])
 
     const CreationForm = creationPagesDic[name]
 

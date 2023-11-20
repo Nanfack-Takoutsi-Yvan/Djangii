@@ -148,12 +148,14 @@ interface IAssociationController {
 }
 
 interface INewAssociation {
+  id?: string
   acronym: string
   currency: ICurrency
   name: string
 }
 
 interface INewAssociationPage {
+  id?: string
   name: string
   description: string
   isPublic: boolean

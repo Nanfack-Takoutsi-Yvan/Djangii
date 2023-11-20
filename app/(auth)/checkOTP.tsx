@@ -11,7 +11,7 @@ import Icon from "react-native-paper/src/components/Icon"
 import { Text, TextInput, Button, useTheme } from "react-native-paper"
 
 import { Formik } from "formik"
-import { useContext, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect, useState } from "react"
 import { useRouter, useLocalSearchParams } from "expo-router"
 import * as Haptics from "expo-haptics"
 
@@ -48,79 +48,96 @@ export default function CheckOTP() {
     }
   }, [params])
 
-  const validateOTP = async ({ otp }: { otp: string }) => {
-    setLoading(true)
+  const validateOTP = useCallback(
+    async ({ otp }: { otp: string }) => {
+      setLoading(true)
 
-    const countryCode = userInfos?.phoneNumber.split(",")[1].toLocaleUpperCase()
-    const phone = userInfos?.phoneNumber.split(",")[0].split(" ").join("")
-    const email = decodeURIComponent(userInfos?.email || "")
+      const countryCode = userInfos?.phoneNumber
+        .split(",")[1]
+        .toLocaleUpperCase()
+      const phone = userInfos?.phoneNumber.split(",")[0].split(" ").join("")
+      const email = decodeURIComponent(userInfos?.email || "")
 
-    const newUser: NewUserData = {
-      password: userInfos?.password || "",
-      userInfos: {
-        countryCode,
-        email,
-        firstName: userInfos?.firstName || "",
-        lang: locale.locale.split("-")[0],
-        lastName: userInfos?.lastName || "",
-        phone: phone || ""
-      },
-      username: userInfos?.username || ""
-    }
+      const newUser: NewUserData = {
+        password: userInfos?.password || "",
+        userInfos: {
+          countryCode,
+          email,
+          firstName: userInfos?.firstName || "",
+          lang: locale.locale.split("-")[0],
+          lastName: userInfos?.lastName || "",
+          phone: phone || ""
+        },
+        username: userInfos?.username || ""
+      }
 
-    User.validateOTP(email || "", otp)
-      .then(isOTPValid => {
-        if (isOTPValid) {
-          User.register(newUser, otp)
-            .then(user => {
-              signIn(user)
-              const key = process.env.SECURE_STORE_CREDENTIALS as string
+      User.validateOTP(email || "", otp)
+        .then(isOTPValid => {
+          if (isOTPValid) {
+            User.register(newUser, otp)
+              .then(user => {
+                signIn(user)
+                const key = process.env.SECURE_STORE_CREDENTIALS as string
 
-              saveInSecureStore(key, JSON.stringify(newUser))
-              Haptics.notificationAsync(
-                Haptics.NotificationFeedbackType.Success
-              )
-              router.replace("(tabs)")
-            })
-            .catch(() => {
-              setLoading(false)
-
-              setActionModalProps({
-                icon: true,
-                state: "error",
-                shouldDisplay: true,
-                title: locale.t("commonErrors.title"),
-                description: locale.t("commonErrors.description")
+                saveInSecureStore(key, JSON.stringify(newUser))
+                Haptics.notificationAsync(
+                  Haptics.NotificationFeedbackType.Success
+                )
+                router.replace("(tabs)")
               })
-            })
-            .finally(() => {
-              setLoading(false)
-            })
-        }
-      })
-      .catch(err => {
-        console.log("error occurred when validating the otp", err)
-        const error = JSON.parse(err.message)
-        const error400 = error.error.status === HttpStatusCode.BadRequest
+              .catch(() => {
+                setLoading(false)
 
-        setLoading(false)
-
-        setActionModalProps({
-          icon: true,
-          state: "error",
-          shouldDisplay: true,
-          title: locale.t(
-            error400 ? "commonErrors.badOtp" : "commonErrors.title"
-          ),
-          description: error400 ? "" : locale.t("commonErrors.description")
+                setActionModalProps({
+                  icon: true,
+                  state: "error",
+                  shouldDisplay: true,
+                  title: locale.t("commonErrors.title"),
+                  description: locale.t("commonErrors.description")
+                })
+              })
+              .finally(() => {
+                setLoading(false)
+              })
+          }
         })
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-  }
+        .catch(err => {
+          console.log("error occurred when validating the otp", err)
+          const error = JSON.parse(err.message)
+          const error400 = error.error.status === HttpStatusCode.BadRequest
 
-  const resentOTP = async () => {
+          setLoading(false)
+
+          setActionModalProps({
+            icon: true,
+            state: "error",
+            shouldDisplay: true,
+            title: locale.t(
+              error400 ? "commonErrors.badOtp" : "commonErrors.title"
+            ),
+            description: error400 ? "" : locale.t("commonErrors.description")
+          })
+        })
+        .finally(() => {
+          setLoading(false)
+        })
+    },
+    [
+      locale,
+      router,
+      setActionModalProps,
+      setLoading,
+      signIn,
+      userInfos?.email,
+      userInfos?.firstName,
+      userInfos?.lastName,
+      userInfos?.password,
+      userInfos?.phoneNumber,
+      userInfos?.username
+    ]
+  )
+
+  const resentOTP = useCallback(async () => {
     setLoading(true)
     User.sendOTP(userInfos?.email || "", locale.locale)
       .catch(err => {
@@ -129,7 +146,7 @@ export default function CheckOTP() {
       .finally(() => {
         setLoading(false)
       })
-  }
+  }, [locale.locale, setLoading, userInfos?.email])
 
   return (
     <KeyboardAvoidingView

@@ -6,8 +6,9 @@ type Actions = "edit" | "view" | "delete" | "copy" | "validate" | "discard"
 
 type TableDataAction = {
   name: Actions
-  method: (data?: any, id?: string) => any
+  method?: (data?: any, id?: string) => any
   pageAction?: PagesActions
+  pageLabels?: pageLabels
 }
 
 type TableData = {
@@ -22,7 +23,7 @@ type TableConfigs = {
   widthArr: number[]
 }
 
-type CreateData = {
+type pageLabels = {
   buttonTitle: string
   formTitle: string
   formIcon: string
@@ -45,6 +46,6 @@ type configs = {
   tables: TableData[]
   getData: () => Data
   fetchData: (id: string) => any
-  createData?: CreateData
+  createData?: pageLabels
   customPage?: CustomPages
 }

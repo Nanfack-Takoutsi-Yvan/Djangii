@@ -11,11 +11,14 @@ const associationConfigs: configs = {
       actions: [
         {
           name: "edit",
-          method: (data: IUserAssociation[]) => null
+          pageLabels: {
+            formIcon: "helloworld",
+            formTitle: "hello world",
+            buttonTitle: "hello world"
+          }
         },
         {
-          name: "view",
-          method: (data: IUserAssociation[]) => null
+          name: "view"
         }
       ]
     },

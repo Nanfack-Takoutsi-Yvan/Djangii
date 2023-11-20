@@ -32,7 +32,8 @@ export class AssociationController implements IAssociationController {
       isUserInDjangii: "api/users/search",
       inviteMember: "api/associations/members/send-invitation",
       uploadMembersSheet: "api/associations/members/upload",
-      inviteVirtualMember: "api/associations/inactive-members"
+      inviteVirtualMember: "api/associations/inactive-members",
+      updateMembership: "api/associations/member-info"
     }
   }
 
@@ -359,6 +360,24 @@ export class AssociationController implements IAssociationController {
     } catch (error) {
       const err = {
         message: `Error while inviting new member: ${error}`,
+        error
+      }
+
+      throw new Error(JSON.stringify(err))
+    }
+  }
+
+  public updateMembership = async (token: string, payload: UpdateMemberObj) => {
+    assert(token, "Token is required to invite new member")
+
+    try {
+      const url = `${this.resource.updateMembership}`
+      await apiClient.put<IUserAssociation>(url, payload, {
+        headers: { Authorization: token }
+      })
+    } catch (error) {
+      const err = {
+        message: `Error while updating new membership info: ${error}`,
         error
       }
 

@@ -46,7 +46,8 @@
     "reference": "Reference",
     "products": "Produits",
     "charges": "Charges",
-    "comments": "Commentaires"
+    "comments": "Commentaires",
+    "continueWith": "Ou continuer avec"
   },
   "commonErrors": {
     "title": "Une erreur s'est produite",

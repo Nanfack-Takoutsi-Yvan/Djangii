@@ -19,6 +19,10 @@ type VirtualMemberConfig = {
   associationId: string
 }
 
+type UpdateMemberObj = VirtualMemberConfig & {
+  userInfosId: string
+}
+
 type NewTontine = {
   amount: number
   association: IAssociation

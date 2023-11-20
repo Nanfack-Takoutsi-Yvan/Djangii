@@ -13,7 +13,7 @@ import Icon from "react-native-paper/src/components/Icon"
 import { Formik } from "formik"
 import * as Haptics from "expo-haptics"
 import { StatusBar } from "expo-status-bar"
-import { useContext, useState } from "react"
+import { useCallback, useContext, useState } from "react"
 import { useRouter, useLocalSearchParams } from "expo-router"
 
 import AppStateContext from "@services/context/context"
@@ -37,45 +37,48 @@ export default function PasswordReset() {
   const router = useRouter()
   const params = useLocalSearchParams() as Params
 
-  const resetPassword = ({
-    otp,
-    newPassword,
-    passwordConfirm
-  }: {
-    otp: string
-    passwordConfirm: string
-    newPassword: string
-  }) => {
-    setIsUserLoading(true)
-    User.resetPassword(
+  const resetPassword = useCallback(
+    ({
       otp,
       newPassword,
-      decodeURIComponent(params?.email?.toLocaleLowerCase())
-    )
-      .then(() => {
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
-        router.replace("login")
-      })
-      .catch(err => {
-        setLoading(false)
-
-        const error = JSON.parse(err.message)
-        const error400 = error.error.status === HttpStatusCode.BadRequest
-
-        setActionModalProps({
-          icon: true,
-          state: "error",
-          shouldDisplay: true,
-          title: locale.t(
-            `${error400 ? "commonErrors.badOtp" : "commonErrors.title"}`
-          ),
-          description: error400 ? "" : locale.t("commonErrors.description")
+      passwordConfirm
+    }: {
+      otp: string
+      passwordConfirm: string
+      newPassword: string
+    }) => {
+      setIsUserLoading(true)
+      User.resetPassword(
+        otp,
+        newPassword,
+        decodeURIComponent(params?.email?.toLocaleLowerCase())
+      )
+        .then(() => {
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+          router.replace("login")
         })
-      })
-      .finally(() => {
-        setIsUserLoading(false)
-      })
-  }
+        .catch(err => {
+          setLoading(false)
+
+          const error = JSON.parse(err.message)
+          const error400 = error.error.status === HttpStatusCode.BadRequest
+
+          setActionModalProps({
+            icon: true,
+            state: "error",
+            shouldDisplay: true,
+            title: locale.t(
+              `${error400 ? "commonErrors.badOtp" : "commonErrors.title"}`
+            ),
+            description: error400 ? "" : locale.t("commonErrors.description")
+          })
+        })
+        .finally(() => {
+          setIsUserLoading(false)
+        })
+    },
+    [locale, params?.email, router, setActionModalProps, setLoading]
+  )
 
   return (
     <KeyboardAvoidingView

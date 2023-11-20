@@ -1,6 +1,7 @@
 import { Text } from "react-native-paper"
 import {
   Image,
+  Platform,
   StatusBar,
   StyleSheet,
   View,
@@ -170,9 +171,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   cardsContainer: {
-    alignItems: "center",
+    alignItems: Platform.OS === "ios" ? "center" : undefined,
     paddingHorizontal: 30,
-    columnGap: 16
+    columnGap: 16,
+    paddingVertical: Platform.OS === "android" ? 12 : undefined
   },
   card: {
     height: "85%",

@@ -58,6 +58,15 @@ export default class Association implements IAssociation {
     await controller.inviteMember(token, payload)
   }
 
+  static updateMembership = async (payload: UpdateMemberObj) => {
+    const token = await getTokenFromStorage()
+    const controller = new AssociationController()
+
+    assert(token, "token is required to invite new member")
+
+    await controller.updateMembership(token, payload)
+  }
+
   static inviteVirtualMember = async (payload: VirtualMemberConfig) => {
     const token = await getTokenFromStorage()
     const controller = new AssociationController()

@@ -16,7 +16,7 @@ import { HttpStatusCode } from "axios"
 import { useRouter } from "expo-router"
 import { Formik } from "formik"
 import { StatusBar } from "expo-status-bar"
-import { useContext, useRef, useState } from "react"
+import { useCallback, useContext, useRef, useState } from "react"
 
 import AppStateContext from "@services/context/context"
 import PasswordIcon from "@components/ui/PasswordIcon"
@@ -40,40 +40,46 @@ export default function SignUp() {
 
   const phoneInputRef = useRef<any>(null)
 
-  const sendOTP = async (values: userFormInputs, lang?: string) => {
-    setLoading(true)
-    User.sendOTP(values.email, lang)
-      .then(otpSent => {
-        if (otpSent)
-          router.replace({
-            pathname: "checkOTP",
-            params: { values: encodeURIComponent(JSON.stringify(values)) }
-          })
-      })
-      .catch(err => {
-        const error = JSON.parse(err.message)
-        const error429 = error.error.status === HttpStatusCode.TooManyRequests
-
-        setActionModalProps({
-          icon: true,
-          state: "error",
-          shouldDisplay: true,
-          title: locale.t(
-            error429 ? "commonErrors.tooManyAttempts" : "commonErrors.title"
-          ),
-          description: error429 ? "" : locale.t("commonErrors.description")
+  const sendOTP = useCallback(
+    async (values: userFormInputs, lang?: string) => {
+      setLoading(true)
+      User.sendOTP(values.email, lang)
+        .then(otpSent => {
+          if (otpSent)
+            router.replace({
+              pathname: "checkOTP",
+              params: { values: encodeURIComponent(JSON.stringify(values)) }
+            })
         })
-      })
-      .finally(() => setLoading(false))
-  }
+        .catch(err => {
+          const error = JSON.parse(err.message)
+          const error429 = error.error.status === HttpStatusCode.TooManyRequests
 
-  const vaidateFormik = async (values: userFormInputs) => {
-    setIsOtpSending(true)
-    sendOTP(values, locale.locale.split("-")[0])
-      // eslint-disable-next-line no-console
-      .catch(err => console.log(err))
-      .finally(() => setIsOtpSending(false))
-  }
+          setActionModalProps({
+            icon: true,
+            state: "error",
+            shouldDisplay: true,
+            title: locale.t(
+              error429 ? "commonErrors.tooManyAttempts" : "commonErrors.title"
+            ),
+            description: error429 ? "" : locale.t("commonErrors.description")
+          })
+        })
+        .finally(() => setLoading(false))
+    },
+    [locale, router, setActionModalProps, setLoading]
+  )
+
+  const vaidateFormik = useCallback(
+    async (values: userFormInputs) => {
+      setIsOtpSending(true)
+      sendOTP(values, locale.locale.split("-")[0])
+        // eslint-disable-next-line no-console
+        .catch(err => console.log(err))
+        .finally(() => setIsOtpSending(false))
+    },
+    [locale.locale, sendOTP]
+  )
 
   return (
     <KeyboardAvoidingView
